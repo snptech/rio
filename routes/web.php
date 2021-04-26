@@ -91,12 +91,21 @@ $router->group(['middleware' => ['auth']], function ($router)
       Route::get("/manufacturer/remove/{id}",[App\Http\Controllers\ManufacturerController::class,"destroy"])->name("delete-manufacturer")->middleware("adminmaster");;
 
        // RawMaterial managment
-       Route::get("rawmeterial",[App\Http\Controllers\RawmeterialController::class,"index"])->name("rawmeterial")->middleware("adminmaster");
-       Route::get("new-rawmeterial",[App\Http\Controllers\RawmeterialController::class,"create"])->name("new-rawmeterial")->middleware("adminmaster");;
-       Route::post("rawmeterial-store",[App\Http\Controllers\RawmeterialController::class,"store"])->name("rawmeterial-store")->middleware("adminmaster");;
-       Route::get("/rawmeterial/edit/{id}",[App\Http\Controllers\RawmeterialController::class,"edit"])->name("edit-rawmeterial")->middleware("adminmaster");;
-       Route::post("rawmeterial/update/{id}",[App\Http\Controllers\RawmeterialController::class,"update"])->name("rawmeterial-update")->middleware("adminmaster");;
-       Route::get("/rawmeterial/remove/{id}",[App\Http\Controllers\RawmeterialController::class,"destroy"])->name("delete-rawmeterial")->middleware("adminmaster");;
+       Route::get("rawmaterial",[App\Http\Controllers\RawmaterialController::class,"index"])->name("rawmaterial")->middleware("adminmaster");
+       Route::get("new-rawmaterial",[App\Http\Controllers\RawmaterialController::class,"create"])->name("new-rawmaterial")->middleware("adminmaster");;
+       Route::post("rawmaterial-store",[App\Http\Controllers\RawmaterialController::class,"store"])->name("rawmaterial-store")->middleware("adminmaster");;
+       Route::get("/rawmaterial/edit/{id}",[App\Http\Controllers\RawmaterialController::class,"edit"])->name("edit-rawmaterial")->middleware("adminmaster");;
+       Route::post("rawmaterial/update/{id}",[App\Http\Controllers\RawmaterialController::class,"update"])->name("rawmaterial-update")->middleware("adminmaster");;
+       Route::get("/rawmaterial/remove/{id}",[App\Http\Controllers\RawmaterialController::class,"destroy"])->name("delete-rawmaterial")->middleware("adminmaster");;
 
+        // Supplier managment
+        Route::get("supplier",[App\Http\Controllers\SupplierController::class,"index"])->name("supplier")->middleware("adminmaster");
+        Route::get("new-supplier",[App\Http\Controllers\SupplierController::class,"create"])->name("new-supplier")->middleware("adminmaster");;
+        Route::post("supplier-store",[App\Http\Controllers\SupplierController::class,"store"])->name("supplier-store")->middleware("adminmaster");;
+        Route::get("/supplier/edit/{id}",[App\Http\Controllers\SupplierController::class,"edit"])->name("edit-supplier")->middleware("adminmaster");;
+        Route::post("supplier/update/{id}",[App\Http\Controllers\SupplierController::class,"update"])->name("supplier-update")->middleware("adminmaster");;
+        Route::get("/supplier/remove/{id}",[App\Http\Controllers\SupplierController::class,"destroy"])->name("delete-supplier")->middleware("adminmaster");;
+        Route::post("/supplier/view",[App\Http\Controllers\SupplierController::class,"show"])->name("show-supplier")->middleware("adminmaster");;
+ 
 
 });

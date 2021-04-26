@@ -84,10 +84,10 @@
             <li class="nav-item"><a class="nav-link" href="{{ route("role") }}">Role</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route("designation") }}">Designation</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route("grade") }}">Grade</a></li>
-            <li class="nav-item"><a class="nav-link" href="packing-annexure.html">Supplier</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route("supplier") }}">Supplier</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route("modedispatch") }}">Mode of Dispatch</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route("manufacturer") }}">Manufacturers</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure-VI.html">Raw Matrials</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route("rawmaterial") }}">Raw Matrials</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route("controller") }}">Controllers</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route("action") }}">Actions</a></li>
             <li class="nav-item"><a class="nav-link" href="annexure-VI.html">User Permisition</a></li>

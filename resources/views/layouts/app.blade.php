@@ -49,6 +49,7 @@ input.error, textarea.error {
             </div>
     </div>
 </div>
+@stack('models')
 <!-- End plugin js for this page -->
   <!-- inject:js -->
   <script src="{{ asset('assets/mdbootstrap4/jquery.min.js')  }}"></script>
