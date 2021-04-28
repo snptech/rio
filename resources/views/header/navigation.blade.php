@@ -25,19 +25,19 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="new-stock.html">
+        <a class="nav-link" href="new_stock">
           <i class="menu-icon" data-feather="shopping-cart"></i>
           <span class="menu-title">Inward Finished Goods -<br />New Stock</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="dispatch-finished-goods.html">
+        <a class="nav-link" href="dispatch_finished_goods">
           <i class="menu-icon" data-feather="truck"></i>
           <span class="menu-title">Dispatch Finished Goods</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="quality-control.html">
+        <a class="nav-link" href="quality_control">
           <i class="menu-icon" data-feather="check-square"></i>
           <span class="menu-title">Quality Control</span>
         </a>
@@ -50,12 +50,12 @@
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="annexure-i.html">Finished Goods Inward (Annexure - I)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure-ii.html">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure-iii.html">Issed by Stores for Production (Annexure - III)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure-iv.html">Goods Receipt Note (Annexure - IV)</a></li>
-            <li class="nav-item"><a class="nav-link" href="packing-annexure.html">Packing Material Inward (Annexure - IV)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure-VI.html">Quality Control Approval/Rejection (Annexure -VI)</a></li>
+            <li class="nav-item"><a class="nav-link" href="annexure_i">Finished Goods Inward (Annexure - I)</a></li>
+            <li class="nav-item"><a class="nav-link" href="annexure_ii">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
+            <li class="nav-item"><a class="nav-link" href="annexure_iii">Issed by Stores for Production (Annexure - III)</a></li>
+            <li class="nav-item"><a class="nav-link" href="annexure_iv">Goods Receipt Note (Annexure - IV)</a></li>
+            <li class="nav-item"><a class="nav-link" href="packing_annexure">Packing Material Inward (Annexure - IV)</a></li>
+            <li class="nav-item"><a class="nav-link" href="annexure_vi">Quality Control Approval/Rejection (Annexure -VI)</a></li>
           </ul>
         </div>
       </li>

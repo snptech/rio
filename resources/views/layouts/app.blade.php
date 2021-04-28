@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,21 +18,28 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" />
     <style>
+        .error {
+            color: red;
+            font-size: 13px;
+        }
 
-label.error {
-    color: red;
-    font-size: 1rem;
-    display: block;
-    margin-top: 5px;
-}
+        label.error {
 
-input.error, textarea.error {
-    border: 1px dashed red;
-    font-weight: 300;
-    color: red;
-}
-        </style>
+            color: red;
+            font-size: 1rem;
+            display: block;
+            margin-top: 5px;
+        }
+
+        input.error,
+        textarea.error {
+            border: 1px dashed red;
+            font-weight: 300;
+            color: red;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container-scroller">
         @include("header.top")
@@ -47,19 +55,20 @@ input.error, textarea.error {
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-@stack('models')
-<!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="{{ asset('assets/mdbootstrap4/jquery.min.js')  }}"></script>
-  <script src="{{ asset('assets/mdbootstrap4/popper.min.js')  }}"></script>
-  <script src="{{ asset('assets/mdbootstrap4/bootstrap.min.js')  }}"></script>
-  <script src="{{ asset('assets/js/feather.min.js')  }}"></script>
-  <script>
-    feather.replace()
-</script>
-  @stack('scripts')
+    @stack('models')
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{{ asset('assets/mdbootstrap4/jquery.min.js')  }}"></script>
+    <script src="{{ asset('assets/mdbootstrap4/popper.min.js')  }}"></script>
+    <script src="{{ asset('assets/mdbootstrap4/bootstrap.min.js')  }}"></script>
+    <script src="{{ asset('assets/js/feather.min.js')  }}"></script>
+    <script>
+        feather.replace()
+    </script>
+    @stack('scripts')
 
 </body>
+
 </html>
