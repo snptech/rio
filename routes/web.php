@@ -106,6 +106,12 @@ $router->group(['middleware' => ['auth']], function ($router)
         Route::post("supplier/update/{id}",[App\Http\Controllers\SupplierController::class,"update"])->name("supplier-update")->middleware("adminmaster");;
         Route::get("/supplier/remove/{id}",[App\Http\Controllers\SupplierController::class,"destroy"])->name("delete-supplier")->middleware("adminmaster");;
         Route::post("/supplier/view",[App\Http\Controllers\SupplierController::class,"show"])->name("show-supplier")->middleware("adminmaster");;
- 
+
+
+        // inward Raw Materials
+        Route::get("inward-rawmaterials",[App\Http\Controllers\InwardMaterialController::class,"index"])->name("inward-rawmaterials");
+        Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
+        Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
+
 
 });

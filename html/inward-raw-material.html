@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>RIOCare India PVT LTD :: Inventory and Stock Management</title>
-  
+
   <link rel="stylesheet" href="assets/mdbootstrap4/bootstrap.min.css">
   <link rel="stylesheet" href="assets/mdbootstrap4/mdb.min.css">
   <link rel="stylesheet" href="assets/mdbootstrap4/mdb-plugins-gathered.min.css">
@@ -160,7 +160,7 @@
       </div>
     </nav>
     <div class="container-fluid page-body-wrapper">
-    
+
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
@@ -339,7 +339,7 @@
 					<div class="col-12 col-md-12 col-lg-12 col-xl-12">
 						<div class="form-group input_fields_wrap" id="MaterialReceived">
 							<label class="control-label d-flex">Details of Material Received
-								<div class="input-group-btn"> 
+								<div class="input-group-btn">
 									<button class="btn btn-dark add-more add_field_button" type="button">Add More +</button>
 								</div>
 							</label>
@@ -455,7 +455,7 @@
           var html = $(".copy").html();
           $(".after-add-more").after(html);
       });
-      $("body").on("click",".remove",function(){ 
+      $("body").on("click",".remove",function(){
           $(this).parents(".add-more-new").remove();
       });
     });*/
@@ -463,7 +463,7 @@
 		var max_fields      = 15; //maximum input boxes allowed
 		var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
 		var add_button      = $(".add_field_button"); //Add button ID
-		
+
 		var x = 1; //initlal text box count
 		$(add_button).click(function(e){ //on add input button click
 			e.preventDefault();
@@ -473,11 +473,12 @@
 			}
 			feather.replace()
 		});
-		
+
 		$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
 			e.preventDefault(); $(this).parents('div.row').remove(); x--;
 		})
 	});
+
   </script>
 </body>
 </html>
