@@ -13,13 +13,13 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="inward-packing-material.html">
+        <a class="nav-link" href="inward_packing_material">
           <i class="menu-icon" data-feather="package"></i>
           <span class="menu-title">Inward Packing Material</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="Issue-Material-For-Production.html">
+        <a class="nav-link" href="issue_material_for_production">
           <i class="menu-icon" data-feather="hard-drive"></i>
           <span class="menu-title">Issue Material For Production</span>
         </a>

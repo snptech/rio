@@ -107,6 +107,10 @@ $router->group(['middleware' => ['auth']], function ($router) {
     Route::get("/supplier/remove/{id}", [App\Http\Controllers\SupplierController::class, "destroy"])->name("delete-supplier")->middleware("adminmaster");;
     Route::post("/supplier/view", [App\Http\Controllers\SupplierController::class, "show"])->name("show-supplier")->middleware("adminmaster");;
     // pages
+    Route::get('/inward_packing_material', [App\Http\Controllers\GoodsreceiptnotepackingmaterialController::class, 'inward_packing_material']);
+    Route::get('/add_inward_packing_material', [App\Http\Controllers\GoodsreceiptnotepackingmaterialController::class, 'add_inward_packing_material']);
+    Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production']);
+
     Route::get('/new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock']);
     Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods']);
     Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods']);

@@ -14,31 +14,31 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-        <form action=""  id="vali_issue_material"class="form-control">
+            <form action="" id="vali_issue_material" class="form-control">
 
-            <div class="form-row">
+                <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Requisition">Requisition No.</label>
-                            <input type="text" class="form-control" name="requisition" id="requisition" placeholder="Requisition">
+                            <input type="text" class="form-control" name="requisition_no" id="requisition_no" placeholder="Requisition">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="MaterialName">Raw Material Name</label>
-                            <input type="text" class="form-control" name="material_name" id="material_name" placeholder="Material Name">
+                            <input type="text" class="form-control" name="material" id="material" placeholder="Material Name">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="OpeningBalance">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_balance" id="opening_balance" placeholder="Balance Stock">
+                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="RawBatchNo">Raw Material Batch No.</label>
-                            <input type="text" class="form-control"  name="raw_batch_no"id="raw_batch_no" placeholder="Batch No.">
+                            <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch No.">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -74,25 +74,25 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Wastage">Wastage</label>
-                            <input type="text" class="form-control"  name="wastage"id="wastage" placeholder="Wastage">
+                            <input type="text" class="form-control" name="wastage" id="wastage" placeholder="Wastage">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="returnDayStore">Returned from Day Store</label>
-                            <input type="text" class="form-control"  name="return_day_store"id="return_day_store" placeholder="Returned">
+                            <input type="text" class="form-control" name="returned_from_day_store" id="returned_from_day_store" placeholder="Returned">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="ClosingBalance">Closing balance Qty.</label>
-                            <input type="text" class="form-control"  name="closing_balance"id="closing_balance" placeholder="Closing Balance">
+                            <input type="text" class="form-control" name="closing_balance_qty" id="closing_balance_qty" placeholder="Closing Balance">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Dispensed by</label>
-                            <select class="form-control select" name="supplier_name" id="supplier_name">
+                            <select class="form-control select" name="dispensed_by" id="dispensed_by">
                                 <option>Select</option>
                                 <option>Employee Name</option>
                             </select>
@@ -101,16 +101,16 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="Remark">Note / Remark</label>
-                            <textarea class="form-control"  name="remark_note"id="remark_note" placeholder="Note / Remark"></textarea>
+                            <textarea class="form-control" name="remark" id="remark" placeholder="Note / Remark"></textarea>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-md ml-0 form-btn data_submit">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-md ml-0 form-btn data_submit">Submit</button>
                             <button type="button" class="btn btn-light btn-md form-btn data_clear">Clear</button>
                         </div>
                     </div>
-               </div>
+                </div>
             </form>
         </div>
     </div>
@@ -120,7 +120,65 @@
 
 
 
-    @endsection
-    @push('custom-scripts')
-    <script type="text/javascript" src="{{URL('js/issue-materia-production.js')}}"></script>
-    @endpush
+@endsection
+@push('custom-scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#vali_issue_material").validate({
+            rules: {
+                requisition_no: "required",
+                material: "required",
+                opening_bal: "required",
+                batch_no: "required",
+                viscosity: "required",
+                issual_date: "required",
+                issued_quantity: "required",
+                excess: "required",
+                excefinished_batch_noss: "required",
+                wastage: "required",
+                returned_from_day_store: "required",
+                closing_balance_qty: "required",
+                dispensed_by: "required",
+                remark: "required",
+
+            },
+            messages: {
+                requisition_no:"Please  Enter The Requisition No",
+                material:"Please  Enter The Material Name",
+                opening_bal:"Please  Enter The Opening Balance",
+                batch_no:"Please  Enter The Batch No ",
+                viscosity:"Please  Enter The Viscosity Name",
+                issual_date:"Please  Enter The Issual Date ",
+                issued_quantity:"Please  Enter The Issued Quantity ",
+                finished_batch_no:"Please  Enter The Finished Batch No ",
+                excess:"Please  Enter The Excess",
+                wastage:"Please  Enter The Wastage",
+                returned_from_day_store:"Please  Enter The Returned From Day Store",
+                closing_balance_qty:"Please  Enter The Closing Balance qty ",
+                dispensed_by:"Please  Enter The Dispensed By Name",
+                remark:"Please  Enter The Remark",
+            },
+        });
+        $('.data_clear').click(function() {
+            $('#requisition_no').val('');
+            $('#material').val('');
+            $('#opening_bal').val('');
+            $('#batch_no').val('');
+            $('#viscosity').val('');
+            $('#issual_date').val('');
+            $('#issued_quantity').val('');
+            $('#finished_batch_no').val('');
+            $('#excess').val('');
+            $('#wastage').val('');
+            $('#returned_from_day_store').val('');
+            $('#closing_balance_qty').val('');
+            $('#dispensed_by').val('');
+            $('#remark').val('');
+
+
+
+        });
+    });
+</script>
+@endpush
