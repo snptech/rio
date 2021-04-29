@@ -119,7 +119,7 @@
       controller_id: {
         required: "Please select Controller Name",
 
-      }
+      },
       publish: {
         required: "Please select publish option",
 

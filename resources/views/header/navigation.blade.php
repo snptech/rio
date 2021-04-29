@@ -7,7 +7,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="inward-raw-material.html">
+        <a class="nav-link" href="{{ route("inward-rawmaterials") }}">
           <i class="menu-icon" data-feather="layers"></i>
           <span class="menu-title">Inward Raw Material</span>
         </a>

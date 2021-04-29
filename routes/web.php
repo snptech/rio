@@ -67,45 +67,52 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
 
     // Action managment
-    Route::get("action", [App\Http\Controllers\ActionController::class, "index"])->name("action")->middleware("adminmaster");
-    Route::get("new-action", [App\Http\Controllers\ActionController::class, "create"])->name("new-action")->middleware("adminmaster");;
-    Route::post("action-store", [App\Http\Controllers\ActionController::class, "store"])->name("action-store")->middleware("adminmaster");;
-    Route::get("/action/edit/{id}", [App\Http\Controllers\ActionController::class, "edit"])->name("edit-action")->middleware("adminmaster");;
-    Route::post("action/update/{id}", [App\Http\Controllers\ActionController::class, "update"])->name("action-update")->middleware("adminmaster");;
-    Route::get("/action/remove/{id}", [App\Http\Controllers\ActionController::class, "destroy"])->name("delete-action")->middleware("adminmaster");;
+    Route::get("action",[App\Http\Controllers\ActionController::class,"index"])->name("action")->middleware("adminmaster");
+    Route::get("new-action",[App\Http\Controllers\ActionController::class,"create"])->name("new-action")->middleware("adminmaster");;
+    Route::post("action-store",[App\Http\Controllers\ActionController::class,"store"])->name("action-store")->middleware("adminmaster");;
+    Route::get("/action/edit/{id}",[App\Http\Controllers\ActionController::class,"edit"])->name("edit-action")->middleware("adminmaster");;
+    Route::post("action/update/{id}",[App\Http\Controllers\ActionController::class,"update"])->name("action-update")->middleware("adminmaster");;
+    Route::get("/action/remove/{id}",[App\Http\Controllers\ActionController::class,"destroy"])->name("delete-action")->middleware("adminmaster");;
 
-    // Controller managment
-    Route::get("controller", [App\Http\Controllers\MaincontrollerController::class, "index"])->name("controller")->middleware("adminmaster");
-    Route::get("new-controller", [App\Http\Controllers\MaincontrollerController::class, "create"])->name("new-controller")->middleware("adminmaster");;
-    Route::post("controller-store", [App\Http\Controllers\MaincontrollerController::class, "store"])->name("controller-store")->middleware("adminmaster");;
-    Route::get("/controller/edit/{id}", [App\Http\Controllers\MaincontrollerController::class, "edit"])->name("edit-controller")->middleware("adminmaster");;
-    Route::post("controller/update/{id}", [App\Http\Controllers\MaincontrollerController::class, "editsave"])->name("controller-update")->middleware("adminmaster");;
-    Route::get("/controller/remove/{id}", [App\Http\Controllers\MaincontrollerController::class, "remove"])->name("remove-controller")->middleware("adminmaster");;
+     // Controller managment
+     Route::get("controller",[App\Http\Controllers\MaincontrollerController::class,"index"])->name("controller")->middleware("adminmaster");
+     Route::get("new-controller",[App\Http\Controllers\MaincontrollerController::class,"create"])->name("new-controller")->middleware("adminmaster");;
+     Route::post("controller-store",[App\Http\Controllers\MaincontrollerController::class,"store"])->name("controller-store")->middleware("adminmaster");;
+     Route::get("/controller/edit/{id}",[App\Http\Controllers\MaincontrollerController::class,"edit"])->name("edit-controller")->middleware("adminmaster");;
+     Route::post("controller/update/{id}",[App\Http\Controllers\MaincontrollerController::class,"editsave"])->name("controller-update")->middleware("adminmaster");;
+     Route::get("/controller/remove/{id}",[App\Http\Controllers\MaincontrollerController::class,"remove"])->name("remove-controller")->middleware("adminmaster");;
 
-    // Manufacturer managment
-    Route::get("manufacturer", [App\Http\Controllers\ManufacturerController::class, "index"])->name("manufacturer")->middleware("adminmaster");
-    Route::get("new-manufacturer", [App\Http\Controllers\ManufacturerController::class, "create"])->name("new-manufacturer")->middleware("adminmaster");;
-    Route::post("manufacturer-store", [App\Http\Controllers\ManufacturerController::class, "store"])->name("manufacturer-store")->middleware("adminmaster");;
-    Route::get("/manufacturer/edit/{id}", [App\Http\Controllers\ManufacturerController::class, "edit"])->name("edit-manufacturer")->middleware("adminmaster");;
-    Route::post("manufacturer/update/{id}", [App\Http\Controllers\ManufacturerController::class, "update"])->name("manufacturer-update")->middleware("adminmaster");;
-    Route::get("/manufacturer/remove/{id}", [App\Http\Controllers\ManufacturerController::class, "destroy"])->name("delete-manufacturer")->middleware("adminmaster");;
+      // Manufacturer managment
+      Route::get("manufacturer",[App\Http\Controllers\ManufacturerController::class,"index"])->name("manufacturer")->middleware("adminmaster");
+      Route::get("new-manufacturer",[App\Http\Controllers\ManufacturerController::class,"create"])->name("new-manufacturer")->middleware("adminmaster");;
+      Route::post("manufacturer-store",[App\Http\Controllers\ManufacturerController::class,"store"])->name("manufacturer-store")->middleware("adminmaster");;
+      Route::get("/manufacturer/edit/{id}",[App\Http\Controllers\ManufacturerController::class,"edit"])->name("edit-manufacturer")->middleware("adminmaster");;
+      Route::post("manufacturer/update/{id}",[App\Http\Controllers\ManufacturerController::class,"update"])->name("manufacturer-update")->middleware("adminmaster");;
+      Route::get("/manufacturer/remove/{id}",[App\Http\Controllers\ManufacturerController::class,"destroy"])->name("delete-manufacturer")->middleware("adminmaster");;
 
-    // RawMaterial managment
-    Route::get("rawmaterial", [App\Http\Controllers\RawmaterialController::class, "index"])->name("rawmaterial")->middleware("adminmaster");
-    Route::get("new-rawmaterial", [App\Http\Controllers\RawmaterialController::class, "create"])->name("new-rawmaterial")->middleware("adminmaster");;
-    Route::post("rawmaterial-store", [App\Http\Controllers\RawmaterialController::class, "store"])->name("rawmaterial-store")->middleware("adminmaster");;
-    Route::get("/rawmaterial/edit/{id}", [App\Http\Controllers\RawmaterialController::class, "edit"])->name("edit-rawmaterial")->middleware("adminmaster");;
-    Route::post("rawmaterial/update/{id}", [App\Http\Controllers\RawmaterialController::class, "update"])->name("rawmaterial-update")->middleware("adminmaster");;
-    Route::get("/rawmaterial/remove/{id}", [App\Http\Controllers\RawmaterialController::class, "destroy"])->name("delete-rawmaterial")->middleware("adminmaster");;
+       // RawMaterial managment
+       Route::get("rawmaterial",[App\Http\Controllers\RawmaterialController::class,"index"])->name("rawmaterial")->middleware("adminmaster");
+       Route::get("new-rawmaterial",[App\Http\Controllers\RawmaterialController::class,"create"])->name("new-rawmaterial")->middleware("adminmaster");;
+       Route::post("rawmaterial-store",[App\Http\Controllers\RawmaterialController::class,"store"])->name("rawmaterial-store")->middleware("adminmaster");;
+       Route::get("/rawmaterial/edit/{id}",[App\Http\Controllers\RawmaterialController::class,"edit"])->name("edit-rawmaterial")->middleware("adminmaster");;
+       Route::post("rawmaterial/update/{id}",[App\Http\Controllers\RawmaterialController::class,"update"])->name("rawmaterial-update")->middleware("adminmaster");;
+       Route::get("/rawmaterial/remove/{id}",[App\Http\Controllers\RawmaterialController::class,"destroy"])->name("delete-rawmaterial")->middleware("adminmaster");;
 
-    // Supplier managment
-    Route::get("supplier", [App\Http\Controllers\SupplierController::class, "index"])->name("supplier")->middleware("adminmaster");
-    Route::get("new-supplier", [App\Http\Controllers\SupplierController::class, "create"])->name("new-supplier")->middleware("adminmaster");;
-    Route::post("supplier-store", [App\Http\Controllers\SupplierController::class, "store"])->name("supplier-store")->middleware("adminmaster");;
-    Route::get("/supplier/edit/{id}", [App\Http\Controllers\SupplierController::class, "edit"])->name("edit-supplier")->middleware("adminmaster");;
-    Route::post("supplier/update/{id}", [App\Http\Controllers\SupplierController::class, "update"])->name("supplier-update")->middleware("adminmaster");;
-    Route::get("/supplier/remove/{id}", [App\Http\Controllers\SupplierController::class, "destroy"])->name("delete-supplier")->middleware("adminmaster");;
-    Route::post("/supplier/view", [App\Http\Controllers\SupplierController::class, "show"])->name("show-supplier")->middleware("adminmaster");;
+        // Supplier managment
+        Route::get("supplier",[App\Http\Controllers\SupplierController::class,"index"])->name("supplier")->middleware("adminmaster");
+        Route::get("new-supplier",[App\Http\Controllers\SupplierController::class,"create"])->name("new-supplier")->middleware("adminmaster");;
+        Route::post("supplier-store",[App\Http\Controllers\SupplierController::class,"store"])->name("supplier-store")->middleware("adminmaster");;
+        Route::get("/supplier/edit/{id}",[App\Http\Controllers\SupplierController::class,"edit"])->name("edit-supplier")->middleware("adminmaster");;
+        Route::post("supplier/update/{id}",[App\Http\Controllers\SupplierController::class,"update"])->name("supplier-update")->middleware("adminmaster");;
+        Route::get("/supplier/remove/{id}",[App\Http\Controllers\SupplierController::class,"destroy"])->name("delete-supplier")->middleware("adminmaster");;
+        Route::post("/supplier/view",[App\Http\Controllers\SupplierController::class,"show"])->name("show-supplier")->middleware("adminmaster");;
+
+
+        // inward Raw Materials
+        Route::get("inward-rawmaterials",[App\Http\Controllers\InwardMaterialController::class,"index"])->name("inward-rawmaterials");
+        Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
+        Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
+
     // pages
     Route::get('/inward_packing_material', [App\Http\Controllers\GoodsreceiptnotepackingmaterialController::class, 'inward_packing_material']);
     Route::get('/add_inward_packing_material', [App\Http\Controllers\GoodsreceiptnotepackingmaterialController::class, 'add_inward_packing_material']);
