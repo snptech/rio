@@ -13,7 +13,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="inward-packing-material.html">
+        <a class="nav-link" href="{{ route("inwardpackingrawmaterial-list") }}">
           <i class="menu-icon" data-feather="package"></i>
           <span class="menu-title">Inward Packing Material</span>
         </a>

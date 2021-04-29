@@ -14,6 +14,14 @@
           </div>
 		  <div class="card main-card">
 			<div class="card-body">
+                @if (Session::has('error'))
+                <div id="" class="alert alert-danger col-md-12">{!! Session::get('error') !!}
+                </div>
+                @endif
+                @if (Session::has('message'))
+                    <div id="" class="alert alert-success col-md-12">{!! Session::get('message') !!}
+                    </div>
+                @endif
                 <form class="login100-form validate-form" action="{{ route('inwardrawmaterial-store') }}" method="POST" id="inwardrawmaterialForm">
                 @csrf
 				<div class="form-row">

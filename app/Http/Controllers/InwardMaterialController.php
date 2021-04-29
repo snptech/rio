@@ -122,6 +122,11 @@ class InwardMaterialController extends Controller
                     $itemdata["ar_no_date"] = $request->ARNo[$i]?($request->ARNo[$i]):"";
 
                     $resultsItem = Rawmaterialitems::create($itemdata);
+                    $datas = array();
+                    $stock = Rawmeterial::find($value);
+                    $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
+
+                    $stock->update($datas);
 
                     $i++;
                 }
