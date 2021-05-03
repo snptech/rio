@@ -12,18 +12,18 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form id="add_inward_packing_vali">
+            <form id="inward_packing_material" name="inward_packing_material" method="post" action="{{ route("inwardpackingrawmaterial-save") }}">
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="from">From</label>
-                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value="Store">
+                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value="Store" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="to">TO</label>
-                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value="Quality Control and Purchase">
+                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value="Quality Control and Purchase" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -37,18 +37,15 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="ManufacturerName">Name of Manufacturer</label>
-                            <input type="text" class="form-control" name="manufacturer" id="manufacturer" placeholder="Name of Manufacturer">
+                            {{ Form::select("manufacturer",$manufacturer,old("manufacturer"),array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Manufacturer")) }}
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Name of Supplier</label>
-                            <select class="form-control select" name="supplier" id="supplier">
-                                <option>Select Supplier Name</option>
-                                <option>Select Supplier Name</option>
-                                <option>Select Supplier Name</option>
+                            {{ Form::select("supplier",$supplier,old("supplier"),array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Supplier")) }}
 
-                            </select>
                         </div>
                     </div>
 
@@ -76,23 +73,21 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="packingMaterialName">Packing Material Name</label>
-                                        <select class="form-control select" name="material" id="material">
-                                            <option>Select Material Name</option>
-                                            <option>Select Material Name</option>
-                                            <option>Select Material Name</option>
-                                        </select>
+                                        {{ Form::select("material[]",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Material")) }}
+
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="Quantity">Total Quantity Received (Nos.)</label>
-                                        <input type="text" class="form-control" name="total_qty" id="total_qty" placeholder="Quantity">
+                                        <input type="text" class="form-control" name="total_qty[]" id="total_qty" placeholder="Quantity">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ARNo">AR No. / Date</label>
-                                        <input type="text" class="form-control" name="ar_no_date" id="ar_no_date" placeholder="AR No. / Date">
+                                        <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date">
                                     </div>
                                 </div>
                             </div>

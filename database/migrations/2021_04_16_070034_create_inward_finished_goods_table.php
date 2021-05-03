@@ -15,6 +15,7 @@ class CreateInwardFinishedGoodsTable extends Migration
     {
         Schema::create('inward_finished_goods', function (Blueprint $table) {
             $table->id();
+            $table->string("inward_no",100);
             $table->string("inward_date",20);
             $table->string("product_name",100);
             $table->string("batch_no",50);

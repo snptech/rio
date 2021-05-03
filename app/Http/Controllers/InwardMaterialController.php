@@ -13,6 +13,12 @@ use Auth;
 class InwardMaterialController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+
+    }
     public function index()
     {
         $rawmaterial = Rawmeterial::pluck("material_name","id");

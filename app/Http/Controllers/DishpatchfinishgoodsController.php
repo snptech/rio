@@ -6,28 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\InwardPackingMaterial;
 use App\Models\Modedispatch;
 use App\Models\Grade;
-use App\Models\Supplier;
-use App\Models\Manufacturer;
-use APP\Models\Rawmeterial;
 use DB;
-class InwardPackingMaterialController extends Controller
+class DishpatchfinishgoodsController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-
-
-    }
-    public function index(){
-        return view('inward_packing_material');
-    }
     public function add()
     {
-        $rawmaterial = Rawmeterial::pluck("material_name","id");
-        $supplier  = Supplier::where("publish",1)->pluck("name","id");
-        $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
-        return view("add_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer]);
+        $modeofdispatch = Modedispatch::where("publish",1)->pluck("mode","id");
+        $grade = Grade::where("publish",1)->pluck("grade","id");
+        $inwordno = InwardPackingMaterial::select(DB::raw("max(id) as lastnumber"))->first();
+        $nextnum = 0;
+        if($inwordno->lastnumber >0)
+        {
+            $nextnum = $inwordno->lastnumber +1;
+        }
+        else
+            $nextnum = 1;
+        return view("add_dispatch_finished_goods")->with(["mode"=>$modeofdispatch,"grade"=>$grade,"nextnum"=>$nextnum]);
     }
     public function store(Request $request)
     {

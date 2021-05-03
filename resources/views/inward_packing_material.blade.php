@@ -1,4 +1,5 @@
 @extends("layouts.app")
+@section("title","Finished Goods Dispatch")
 @section('content')
 <div class="content-wrapper">
     <div class="row">
@@ -8,25 +9,35 @@
                     <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Goods Receipt Note (Packing Material)</h4>
                 </div>
                 <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
-                    <a href="add_inward_packing_material" class="btn btn-md btn-primary">Add New +</a>
+                    <a href="{{ route("inwardpackingrawmaterial-new") }}" class="btn btn-md btn-primary">Add New +</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="card main-card">
         <div class="card-body">
+            @if (Session::has('error'))
+            <div id="" class="alert alert-danger col-md-12">{!! Session::get('error') !!}
+            </div>
+            @endif
+            @if (Session::has('message'))
+                <div id="" class="alert alert-success col-md-12">{!! Session::get('message') !!}
+                </div>
+            @endif
             <div class="filter">
                 <h3>Filter</h3>
-                <form id="filter_vali">
+                <form id="inward_packing_material" name="inward_packing_material" method="post" action="">
                     <div class="form-row">
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
                                 <input type="date" class="form-control" name="ReceiptDate" id="ReceiptDate" placeholder="Date of Receipt">
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="ReceiptNo" id="ReceiptNo" placeholder="Receipt No.">
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">

@@ -10,7 +10,7 @@ class GoodsreceiptnotepackingmaterialController extends Controller
    public function inward_packing_material()
    {
 
-       return view('admin.inward_packing_material');
+       return view('admin.pinward_packing_material');
    }
 
    public function add_inward_packing_material()

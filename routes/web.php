@@ -113,6 +113,13 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
+        Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
+        Route::post("inwardpackingrawmaterial/save",[App\Http\Controllers\InwardPackingMaterialController::class,"store"])->name("inwardpackingrawmaterial-save");
+
+
+        // dispatch finish Goods Receipt
+        Route::get("dishpatchfinishgoods/new",[App\Http\Controllers\DishpatchfinishgoodsController::class,"add"])->name("dishpatchfinishgoods-new");
+        Route::post("dishpatchfinishgoods/save",[App\Http\Controllers\DishpatchfinishgoodsController::class,"store"])->name("dishpatchfinishgoods-save");
 
         // pages
         Route::get('/new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock']);
