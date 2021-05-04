@@ -116,8 +116,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
         Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
         Route::post("inwardpackingrawmaterial/save",[App\Http\Controllers\InwardPackingMaterialController::class,"store"])->name("inwardpackingrawmaterial-save");
-        Route::get("inwardpackingrawmaterial/view/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
+        Route::post("inwardpackingrawmaterial/view",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
         Route::get("inwardpackingrawmaterial/edit/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"edit"])->name("inwardpackingrawmaterial-edit");
+        Route::post("inwardpackingrawmaterial/update/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"update"])->name("inwardpackingrawmaterial-update");
         Route::get("inwardpackingrawmaterial/remove/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"remove"])->name("inwardpackingrawmaterial-remove");
 
 

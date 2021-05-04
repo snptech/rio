@@ -24,7 +24,7 @@ class InwardPackingMaterialController extends Controller
 
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
-        return view('inward_packing_material')->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer]);
+        return view('inwardpackingmatrial.inward_packing_material')->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer]);
     }
     public function add()
     {
@@ -32,7 +32,7 @@ class InwardPackingMaterialController extends Controller
 
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
-        return view("add_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer]);
+        return view("inwardpackingmatrial.add_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer]);
     }
     public function listAjax(Request $request)
     {
@@ -118,7 +118,7 @@ class InwardPackingMaterialController extends Controller
 
             foreach ($data as $post) {
 
-                $show =  route('inwardpackingrawmaterial-view', ["id"=>$post->id]);
+                //$show =  route('inwardpackingrawmaterial-view', ["id"=>$post->id]);
                 $delete =  route('inwardpackingrawmaterial-remove', ["id"=>$post->id]);
                 $edit =  route('inwardpackingrawmaterial-edit', ["id"=>$post->id]);
 
@@ -132,7 +132,7 @@ class InwardPackingMaterialController extends Controller
                 $nestedData['invoice_no'] = $post->invoice_no;
                 $nestedData['goods_receipt_no'] = $post->goods_receipt_no;
                 $nestedData["submited_by"] = $post->uname;
-                $nestedData['action'] = '<div class="actions"><a href="'.$show.'" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove(\''.$delete.'\')"><i data-feather="trash"></i></a></div>';
+                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View" onclick="viewrawmatrial('.$post->id.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove(\''.$delete.'\')"><i data-feather="trash"></i></a></div>';
 
                 $datas[] = $nestedData;
 
@@ -216,7 +216,7 @@ class InwardPackingMaterialController extends Controller
                 }
 
 
-                    return redirect("inwardpackingrawmaterial/list")->with('message', "Designation created successfully");
+                    return redirect("inwardpackingrawmaterial/list")->with('message', "Inward packing rawmaterial created successfully");
 
 
             }
@@ -237,10 +237,115 @@ class InwardPackingMaterialController extends Controller
             $packingrawmaterial = InwardPackingMaterial::find($id);
 
 
-            return view("edit_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"packingrawmaterial"=>$packingrawmaterial]);
+            return view("inwardpackingmatrial.edit_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"packingrawmaterial"=>$packingrawmaterial]);
         }
         else
             throw(404);
+    }
+    public function update(Request $request,$id)
+    {
+        if($id)
+        {
+            $arrRules = ["received_from"=>"required",
+                        "received_to"=>"required",
+                        "date_of_receipt"=>"required",
+                        "manufacturer"=>"required",
+                        "supplier"=>"required",
+                        "invoice_no"=>"required",
+                        "goods_receipt_no"=>"required",
+                        "material"=>"required|array",
+                        "total_qty"=>"required|array",
+                        "ar_no_date"=>"required|array"
+                        ];
+
+
+            $arrMessages = [
+                "received_from"=>"This :attribute field is required.",
+                "received_to"=>"This :attribute field is required.",
+                "date_of_receipt"=>"This :attribute field is required.",
+                "manufacturer"=>"This :attribute field is required.",
+                "supplier"=>"This :attribute field is required.",
+                "invoice_no"=>"This :attribute field is required.",
+                "goods_receipt_no"=>"This :attribute field is required.",
+                "material"=>"This :attribute field is required.",
+                "total_qty"=>"This :attribute field is required.",
+                "ar_no_date"=>"This :attribute field is required.",
+
+            ];
+
+            $attributes = array();
+            foreach ($request->input() as $key => $val)
+                $attributes[$key] = ucwords(str_replace("_", " ", $key));
+
+            $validateData = $request->validate($arrRules, $arrMessages,$attributes);
+
+            $data = array();
+            $data["goods_going_from"]=$request->received_from;
+            $data["goods_going_to"]=$request->received_to;
+            $data["date_of_receipt"]=$request->date_of_receipt?strtotime($request->date_of_receipt):"";
+
+            $data["manufacurer"]=$request->manufacturer;
+            $data["supplier"]=$request->supplier;
+            $data["invoice_no"]=$request->invoice_no;
+            $data["goods_receipt_no"]=$request->goods_receipt_no;
+            $data["created_by"]=Auth::user()->id;
+            $data["remark"]= $request->remark?$request->remark:"";
+            $InwardPackingMaterial = InwardPackingMaterial::find($id);
+            $result = $InwardPackingMaterial->update($data);
+
+            if($result)
+            {
+                if($request->material)
+                {
+                    $olddata = InwardPackingMaterialItems::where("good_receipt_id",$id)->get();
+                    if(isset($olddata) && count($olddata) >0)
+                    {
+                        foreach($olddata as $val)
+                        {
+                            $res = InwardPackingMaterialItems::find($val->id);
+                            $res->delete();
+                        }
+                    }
+                    $i=0;
+                    foreach($request->material as $key=>$value)
+                    {
+                        $datas = array();
+                        $datas["good_receipt_id"] = $id;
+                        $datas["material"] = $value;
+                        $datas["total_qty"] = $request->total_qty[$i];
+                        $datas["ar_no_date"] = $request->ar_no_date[$i];
+                        $result = InwardPackingMaterialItems::create($datas);
+                        $i++;
+                    }
+
+
+                        return redirect("inwardpackingrawmaterial/list")->with('message', "Inward packing rawmaterial updated successfully");
+
+
+                }
+            }
+            else
+                return redirect("inwardpackingrawmaterial/list")->with('error', "Something went wrong");
+        }
+        else
+            throw(404);
+
+
+    }
+    public function view(Request $request)
+    {
+        if($request->id)
+        {
+            $InwardPackingMaterial = InwardPackingMaterial::where("id",$request->id)->first();
+
+             $view = view('inwardpackingmatrial.view', ['matarial'=> $InwardPackingMaterial])->render();
+             return response()->json(['html'=>$view]);
+
+        }
+        else
+        {
+            redirect(404);
+        }
     }
 
 }
