@@ -10,6 +10,7 @@ use App\Models\Supplier;
 use App\Models\Manufacturer;
 use App\Models\Rawmeterial;
 use Auth;
+use DB;
 class InwardPackingMaterialController extends Controller
 {
     //
@@ -132,7 +133,7 @@ class InwardPackingMaterialController extends Controller
                 $nestedData['invoice_no'] = $post->invoice_no;
                 $nestedData['goods_receipt_no'] = $post->goods_receipt_no;
                 $nestedData["submited_by"] = $post->uname;
-                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View" onclick="viewrawmatrial('.$post->id.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove(\''.$delete.'\')"><i data-feather="trash"></i></a></div>';
+                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewrawmatrial('.$post->id.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove(\''.$delete.'\')"><i data-feather="trash"></i></a></div>';
 
                 $datas[] = $nestedData;
 
@@ -336,7 +337,10 @@ class InwardPackingMaterialController extends Controller
     {
         if($request->id)
         {
-            $InwardPackingMaterial = InwardPackingMaterial::where("id",$request->id)->first();
+            $InwardPackingMaterial =  InwardPackingMaterial::select("goods_receipt_notes.*","suppliers.name","manufacturers.manufacturer","users.name as uname")
+            ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
+            ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
+            ->leftJoin("users","users.id","goods_receipt_notes.created_by")->where("goods_receipt_notes.id",$request->id)->first();
 
              $view = view('inwardpackingmatrial.view', ['matarial'=> $InwardPackingMaterial])->render();
              return response()->json(['html'=>$view]);
@@ -345,6 +349,27 @@ class InwardPackingMaterialController extends Controller
         else
         {
             redirect(404);
+        }
+    }
+    public function remove(Request $request,$id)
+    {
+        if($id)
+        {
+            $material = InwardPackingMaterial::find($id);
+            if($material)
+            {
+                $items = InwardPackingMaterialItems::where("good_receipt_id",$id)->get();
+                if(isset($items))
+                {
+                    DB::table('goods_receipt_note_items')->where('good_receipt_id', $id)->delete();
+                }
+
+                $material->delete();
+                return redirect("inwardpackingrawmaterial/list")->with('message', "Inward packing rawmaterial deleted successfully");
+            }
+        }
+        else{
+            throw(404);
         }
     }
 
