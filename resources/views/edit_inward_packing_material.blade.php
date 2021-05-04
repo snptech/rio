@@ -1,11 +1,12 @@
 @extends("layouts.app")
+@section('title',"Edit Inward Packing Material")
 @section('content')
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-xl-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Goods Receipt Note (Packing Material)</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Edit Goods Receipt Note (Packing Material)</h4>
                 </div>
             </div>
         </div>
@@ -19,7 +20,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="from">From</label>
-                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value="Store" readonly>
+                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value={{ $packingrawmaterial->goods_going_from }} readonly>
                             @if ($errors->has('dispath_no'))
                             <span class="text-danger">{{ $errors->first('received_from') }}</span>
                           @endif
@@ -28,7 +29,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="to">TO</label>
-                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value="Quality Control and Purchase" readonly>.
+                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value={{ $packingrawmaterial->goods_going_from }}"  readonly>.
                             @if ($errors->has('received_to'))
                             <span class="text-danger">{{ $errors->first('received_to') }}</span>
                           @endif
@@ -37,7 +38,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="receiptDate">Date of Receipt</label>
-                            <input type="date" class="form-control calendar" name="date_of_receipt" id="date_of_receipt" placeholder="DD-MM-YYYY" value="{{ old("date_of_receipt") }}">
+                            <input type="date" class="form-control calendar" name="date_of_receipt" id="date_of_receipt"  placeholder="DD-MM-YYYY" value={{ $packingrawmaterial->goods_going_from }}">
                             @if ($errors->has('date_of_receipt'))
                             <span class="text-danger">{{ $errors->first('date_of_receipt') }}</span>
                           @endif

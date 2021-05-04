@@ -112,9 +112,13 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("inward-rawmaterials",[App\Http\Controllers\InwardMaterialController::class,"index"])->name("inward-rawmaterials");
         Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
+        Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
         Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
         Route::post("inwardpackingrawmaterial/save",[App\Http\Controllers\InwardPackingMaterialController::class,"store"])->name("inwardpackingrawmaterial-save");
+        Route::get("inwardpackingrawmaterial/view/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
+        Route::get("inwardpackingrawmaterial/edit/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"edit"])->name("inwardpackingrawmaterial-edit");
+        Route::get("inwardpackingrawmaterial/remove/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"remove"])->name("inwardpackingrawmaterial-remove");
 
 
         // dispatch finish Goods Receipt
