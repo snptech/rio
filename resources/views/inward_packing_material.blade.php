@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","Finished Goods Dispatch")
+@section("title","Inword Packing Material")
 @section('content')
 <div class="content-wrapper">
     <div class="row">
@@ -30,7 +30,7 @@
                     <div class="form-row">
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
-                                <input type="date" class="form-control" name="ReceiptDate" id="ReceiptDate" placeholder="Date of Receipt">
+                                <input type="date" class="form-control calendar" name="ReceiptDate" id="ReceiptDate" placeholder="Date of Receipt">
 
                             </div>
                         </div>
@@ -40,19 +40,17 @@
 
                             </div>
                         </div>
+
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="MaterialName" id="MaterialName" placeholder="Material Name">
+                                {{ Form::select("manufacturer",$manufacturer,old("manufacturer"),array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Manufacturer")) }}
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="Manufacturer" id="Manufacturer" placeholder="Name of Manufacturer">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="Supplier" id="Supplier" placeholder="Name of Supplier">
+                                {{ Form::select("supplier",$supplier,old("supplier"),array("class"=>"form-control select","id"=>"supplier","placeholder"=>"Name of Supplier")) }}
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
@@ -67,165 +65,25 @@
                 </form>
             </div>
             <div class="tbl-sticky">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered datatable">
                     <thead>
                         <tr>
+                            <th>#</th>
+                            <th>From</th>
+                            <th>To</th>
                             <th>Date of Receipt</th>
-                            <th>Packing Material Name</th>
                             <th>Name of Manufacturer</th>
                             <th>Name of Supplier</th>
                             <th>Invoice No./ Challan</th>
-                            <th>Pack Size</th>
-                            <th>Quantity</th>
-                            <th>GRN</th>
-                            <th>Checked by</th>
+                            <th>Goods Receipt No.</th>
+                            <th>Submited by</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-toggle="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
-                        </tr>
-                    </tbody>
+
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -233,33 +91,151 @@
 
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
-<script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script src="{{ asset('assets/mdbootstrap4/mdb.min.js')  }}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{ asset('assets/js/custom.js')  }}"></script>
+  <!-- End custom js for this page-->
+  <script>
+      feather.replace()
     $(document).ready(function() {
-        $("#filter_vali").validate({
-            rules: {
+        var table = $('.datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        drawCallback: function( settings ) {
+            feather.replace();
+        },
+        ajax: {
+            "url": "{{route('inwardpackingrawmaterial-listAjax')}}",
+            "type": "POST",
+            "dataType": "json",
+            'data': function(data){
+                // Read values
+                var rcdate = $('#ReceiptDate').val();
+                var ReceiptNo = $('#ReceiptNo').val();
+                var manufacturer = $('#manufacturer').val();
+                var supplier = $('#supplier').val();
+                var invoiceNo = $('#invoiceNo').val();
 
-                ReceiptDate: "required",
-                ReceiptNo: "required",
-                MaterialName: "required",
-                Manufacturer: "required",
-                Supplier: "required",
-                invoiceNo: "required",
 
+                // Append to data
+                data.rcdate = rcdate;
+                data.ReceiptNo = ReceiptNo;
+                data.manufacturer = manufacturer;
+                data.supplier = supplier;
+                data.invoiceNo = invoiceNo;
+                data._token = '{{csrf_token()}}';
+
+                feather.replace()
+            }
+
+        },
+        columns: [
+            {
+                "data": "id"
             },
-            messages: {
-                inward_date: "Please  Enter The Inward Date  ",
-                ReceiptDate: "Please  Enter The Receipt Date  ",
-                ReceiptNo: "Please  Enter The Receipt No  ",
-                MaterialName: "Please  Enter The Material Name ",
-                Manufacturer: "Please  Enter The Manufacturer Name",
-                Supplier: "Please  Enter The Supplier Name",
-                invoiceNo: "Please  Enter The Invoice No  ",
-            },
 
+            {
+                "data": "from",
+                "orderable": true
+            },
+            {
+                "data": "to",
+                "orderable": true
+            },
+            {
+                "data": "date_of_receipt",
+                "orderable": true
+            },
+            {
+                "data": "manufacturer",
+                "orderable": false
+            },
+            {
+                "data": "supplier",
+                "orderable": false
+            },
+            {
+                "data": "invoice_no",
+                "orderable": true
+            },
+            {
+                "data": "goods_receipt_no",
+                "orderable": true
+            },
+            {
+                "data": "submited_by",
+                "orderable": false
+            },
+            {
+                "data": "action",
+                "orderable": false
+            }
+        ]
+        });
+        $('#ReceiptDate').change(function(){
+        table.draw();
         });
 
-    });
-</script>
-@endpush
+        $('#ReceiptNo').keyup(function(){
+        table.draw();
+        });
+
+        $('#manufacturer').change(function(){
+        table.draw();
+        });
+        $('#supplier').change(function(){
+        table.draw();
+        });
+        $('#invoiceNo').keyup(function(){
+        table.draw();
+        });
+    } );
+    function remove(url) {
+
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url;
+            swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your record has been deleted.',
+            'success'
+            )
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+            )
+        }
+        })
+    }
+  </script>
+  @endpush

@@ -112,27 +112,35 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("inward-rawmaterials",[App\Http\Controllers\InwardMaterialController::class,"index"])->name("inward-rawmaterials");
         Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
+        Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
         Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
         Route::post("inwardpackingrawmaterial/save",[App\Http\Controllers\InwardPackingMaterialController::class,"store"])->name("inwardpackingrawmaterial-save");
+        Route::get("inwardpackingrawmaterial/view/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
+        Route::get("inwardpackingrawmaterial/edit/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"edit"])->name("inwardpackingrawmaterial-edit");
+        Route::get("inwardpackingrawmaterial/remove/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"remove"])->name("inwardpackingrawmaterial-remove");
 
 
         // dispatch finish Goods Receipt
         Route::get("dishpatchfinishgoods/new",[App\Http\Controllers\DishpatchfinishgoodsController::class,"add"])->name("dishpatchfinishgoods-new");
         Route::post("dishpatchfinishgoods/save",[App\Http\Controllers\DishpatchfinishgoodsController::class,"store"])->name("dishpatchfinishgoods-save");
 
-        // inwar _finished good
-        Route::get('/new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock']);
-        Route::post('/inward_finished_insert', [App\Http\Controllers\InwardFinishedController::class,'inward_finished_insert']);
 
-        Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods']);
-        Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods']);
-        Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control']);
+        // pages
+        Route::get('new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock'])->name("new_stock");
+        Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
+        Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods'])->name("add_dispatch_finished_goods");
+        Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
+
         // Reports//
-        Route::get('/annexure_i', [App\Http\Controllers\ReportsController::class, 'annexure_i']);
-        Route::get('/annexure_ii', [App\Http\Controllers\ReportsController::class, 'annexure_ii']);
-        Route::get('/annexure_iii', [App\Http\Controllers\ReportsController::class, 'annexure_iii']);
-        Route::get('/annexure_iv', [App\Http\Controllers\ReportsController::class, 'annexure_iv']);
-        Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure']);
-        Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi']);
+        Route::get('/annexure_i', [App\Http\Controllers\ReportsController::class, 'annexure_i'])->name("annexure_i");
+        Route::get('/annexure_ii', [App\Http\Controllers\ReportsController::class, 'annexure_ii'])->name("annexure_ii");
+        Route::get('/annexure_iii', [App\Http\Controllers\ReportsController::class, 'annexure_iii'])->name("annexure_iii");
+        Route::get('/annexure_iv', [App\Http\Controllers\ReportsController::class, 'annexure_iv'])->name("annexure_iv");
+        Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
+        Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
+
+        Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+
+
 });
