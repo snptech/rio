@@ -27,19 +27,19 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="new_stock">
+        <a class="nav-link" href="{{ route("new_stock") }}">
           <i class="menu-icon" data-feather="shopping-cart"></i>
           <span class="menu-title">Inward Finished Goods -<br />New Stock</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="dispatch_finished_goods">
+        <a class="nav-link" href="{{ route("dispatch_finished_goods") }}">
           <i class="menu-icon" data-feather="truck"></i>
           <span class="menu-title">Dispatch Finished Goods</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="quality_control">
+        <a class="nav-link" href="{{ route('quality_control') }}">
           <i class="menu-icon" data-feather="check-square"></i>
           <span class="menu-title">Quality Control</span>
         </a>
@@ -52,12 +52,12 @@
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="annexure_i">Finished Goods Inward (Annexure - I)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure_ii">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure_iii">Issed by Stores for Production (Annexure - III)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure_iv">Goods Receipt Note (Annexure - IV)</a></li>
-            <li class="nav-item"><a class="nav-link" href="packing_annexure">Packing Material Inward (Annexure - IV)</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure_vi">Quality Control Approval/Rejection (Annexure -VI)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_i') }}">Finished Goods Inward (Annexure - I)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_ii') }}">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iii') }}">Issed by Stores for Production (Annexure - III)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iv') }}">Goods Receipt Note (Annexure - IV)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('packing_annexure') }}">Packing Material Inward (Annexure - IV)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vi') }}">Quality Control Approval/Rejection (Annexure -VI)</a></li>
           </ul>
         </div>
       </li>
