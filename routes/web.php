@@ -137,4 +137,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_iv', [App\Http\Controllers\ReportsController::class, 'annexure_iv']);
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure']);
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi']);
+
+        Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+
+
 });

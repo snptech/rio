@@ -21,7 +21,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="issue_material_for_production">
+        <a class="nav-link" href="{{ route("issue_material_for_production") }}">
           <i class="menu-icon" data-feather="hard-drive"></i>
           <span class="menu-title">Issue Material For Production</span>
         </a>
