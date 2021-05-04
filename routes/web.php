@@ -126,11 +126,13 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("dishpatchfinishgoods/new",[App\Http\Controllers\DishpatchfinishgoodsController::class,"add"])->name("dishpatchfinishgoods-new");
         Route::post("dishpatchfinishgoods/save",[App\Http\Controllers\DishpatchfinishgoodsController::class,"store"])->name("dishpatchfinishgoods-save");
 
+
         // pages
         Route::get('new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock'])->name("new_stock");
         Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
         Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods'])->name("add_dispatch_finished_goods");
         Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
+
         // Reports//
         Route::get('/annexure_i', [App\Http\Controllers\ReportsController::class, 'annexure_i'])->name("annexure_i");
         Route::get('/annexure_ii', [App\Http\Controllers\ReportsController::class, 'annexure_ii'])->name("annexure_ii");

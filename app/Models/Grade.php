@@ -10,8 +10,10 @@ class Grade extends Model
     use HasFactory;
     protected $table = 'grades';
     protected $fillable = [
+        'id',
         'grade',
         'publish',
-        'id',
+        'created_at',
+        'updated_at',
     ];
 }

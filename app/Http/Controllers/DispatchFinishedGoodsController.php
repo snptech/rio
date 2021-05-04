@@ -13,6 +13,7 @@ class DispatchFinishedGoodsController extends Controller
 
     public function add_dispatch_finished_goods()
     {
+
         return view('admin.add_dispatch_finished_goods');
     }
 }
