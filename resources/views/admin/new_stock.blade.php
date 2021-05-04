@@ -12,7 +12,8 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form id="inward_finished_vali">
+            <form id="inward_finished_vali" method="post">
+            {{csrf_field()}}
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
@@ -36,8 +37,13 @@
                         <div class="form-group">
                             <label for="grade">Grade</label>
                             <select class="form-control select" name="grade" id="grade">
-                                <option>Select</option>
-                                <option>Grade 1</option>
+                            <option value="">  Select</option>
+                            @if(count($grade_master))
+                            @foreach($grade_master as $temp)
+                             <option value="{{$temp->id}}">{{$temp->grade}}</option>
+                            @endforeach
+                            @endif
+
                             </select>
                         </div>
                     </div>
@@ -111,8 +117,12 @@
                         <div class="form-group">
                             <label for="SupplierName">Received by</label>
                             <select class="form-control select" name="received_by" id="received_by">
-                                <option>Select</option>
-                                <option>Employee Name</option>
+                            <option value="">  Select</option>
+                            @if(count($grade_master))
+                            @foreach($grade_master as $temp)
+                             <option value="{{$temp->id}}">{{$temp->grade}}</option>
+                            @endforeach
+                            @endif
                             </select>
                         </div>
                     </div>
@@ -124,7 +134,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-md ml-0 form-btn">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-md ml-0 form-btn submit_data">Submit</button>
                             <button type="button" class="btn btn-light btn-md form-btn clear_submit">Clear</button>
                         </div>
                     </div>
@@ -136,9 +146,17 @@
 </div>
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
+  $.ajaxSetup({
+   headers: {
+     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   }
+});
     $(document).ready(function() {
+
         $("#inward_finished_vali").validate({
             rules: {
                 inward_date: "required",
@@ -200,6 +218,63 @@
             $('#received_by').val('');
             $('#remark').val('');
         });
+        $('.submit_data').click(function() {
+
+            var inward_date = $('#inward_date').val();
+            var product_name = $('#product_name').val();
+            var batch_no = $('#batch_no').val();
+            var grade = $('#grade').val();
+            var grade = $('#grade').val();
+            var viscosity = $('#viscosity').val();
+            var mfg_date = $('#mfg_date').val();
+            var expiry_ratest_date = $('#expiry_ratest_date ').val();
+            var total_no_of_200kg_drums = $('#total_no_of_200kg_drums').val();
+            var total_no_of_50kg_drums = $('#total_no_of_50kg_drums').val();
+            var total_no_of_30kg_drums = $('#total_no_of_30kg_drums').val();
+            var total_no_of_5kg_drums = $('#total_no_of_5kg_drums').val();
+            var total_no_of_fiber_board_drums = $('#total_no_of_fiber_board_drums').val();
+            var total_quantity = $('#total_quantity').val();
+            var ar_no = $('#ar_no').val();
+            var approval_data = $('#approval_data').val();
+            var received_by = $('#received_by').val();
+            var remark = $('#remark').val();
+        $.ajax({
+                url: "inward_finished_insert",
+                method: "POST",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                data: {
+                    inward_date: inward_date,
+                    product_name: product_name,
+                    batch_no: batch_no,
+                    grade: grade,
+                    grade: grade,
+                    viscosity: viscosity,
+                    mfg_date: mfg_date,
+                    expiry_ratest_date: expiry_ratest_date,
+                    total_no_of_200kg_drums: total_no_of_200kg_drums,
+                    total_no_of_50kg_drums: total_no_of_50kg_drums,
+                    total_no_of_30kg_drums: total_no_of_30kg_drums,
+                    total_no_of_5kg_drums: total_no_of_5kg_drums,
+                    total_no_of_fiber_board_drums: total_no_of_fiber_board_drums,
+                    total_quantity: total_quantity,
+                    ar_no: ar_no,
+                    approval_data: approval_data,
+                    received_by: received_by,
+                    remark: remark
+
+                },
+                     success: function(success) {
+                    console.log(success);
+
+                    alert('Data Successfully Submit');
+
+
+                }
+
+            });
+
+        });
+
     });
 </script>
 

@@ -121,8 +121,10 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("dishpatchfinishgoods/new",[App\Http\Controllers\DishpatchfinishgoodsController::class,"add"])->name("dishpatchfinishgoods-new");
         Route::post("dishpatchfinishgoods/save",[App\Http\Controllers\DishpatchfinishgoodsController::class,"store"])->name("dishpatchfinishgoods-save");
 
-        // pages
+        // inwar _finished good
         Route::get('/new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock']);
+        Route::post('/inward_finished_insert', [App\Http\Controllers\InwardFinishedController::class,'inward_finished_insert']);
+
         Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods']);
         Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods']);
         Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control']);
