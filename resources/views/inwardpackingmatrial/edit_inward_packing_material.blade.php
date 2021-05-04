@@ -13,14 +13,14 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form id="inward_packing_material" name="inward_packing_material" method="post" action="{{ route("inwardpackingrawmaterial-save") }}">
+            <form id="inward_packing_material" name="inward_packing_material" method="post" action="{{ route("inwardpackingrawmaterial-update",["id"=>$packingrawmaterial->id]) }}">
                 @csrf
 
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="from">From</label>
-                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value={{ $packingrawmaterial->goods_going_from }} readonly>
+                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value="{{ $packingrawmaterial->goods_going_from }}" readonly>
                             @if ($errors->has('dispath_no'))
                             <span class="text-danger">{{ $errors->first('received_from') }}</span>
                           @endif
@@ -29,7 +29,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="to">TO</label>
-                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value={{ $packingrawmaterial->goods_going_from }}"  readonly>.
+                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value="{{ $packingrawmaterial->goods_going_to }}"  readonly>.
                             @if ($errors->has('received_to'))
                             <span class="text-danger">{{ $errors->first('received_to') }}</span>
                           @endif
@@ -38,7 +38,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="receiptDate">Date of Receipt</label>
-                            <input type="date" class="form-control calendar" name="date_of_receipt" id="date_of_receipt"  placeholder="DD-MM-YYYY" value={{ $packingrawmaterial->goods_going_from }}">
+                            <input type="date" class="form-control calendar" name="date_of_receipt" id="date_of_receipt"  placeholder="DD-MM-YYYY" value="{{ $packingrawmaterial->date_of_receipt?date("Y-m-d",$packingrawmaterial->date_of_receipt):'' }}">
                             @if ($errors->has('date_of_receipt'))
                             <span class="text-danger">{{ $errors->first('date_of_receipt') }}</span>
                           @endif
@@ -49,7 +49,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="ManufacturerName">Name of Manufacturer</label>
-                            {{ Form::select("manufacturer",$manufacturer,old("manufacturer"),array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Manufacturer")) }}
+                            {{ Form::select("manufacturer",$manufacturer,old("manufacturer")?old("manufacturer"):$packingrawmaterial->manufacurer,array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Manufacturer")) }}
                             @if ($errors->has('manufacturer'))
                           <span class="text-danger">{{ $errors->first('manufacturer') }}</span>
                           @endif
@@ -59,7 +59,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Name of Supplier</label>
-                            {{ Form::select("supplier",$supplier,old("supplier"),array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Supplier")) }}
+                            {{ Form::select("supplier",$supplier,old("supplier")?old("supplier"):$packingrawmaterial->supplier,array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Supplier")) }}
                             @if ($errors->has('supplier'))
                           <span class="text-danger">{{ $errors->first('supplier') }}</span>
                           @endif
@@ -69,7 +69,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="invoiceNo">Invoice No.</label>
-                            <input type="text" class="form-control" name="invoice_no" id="invoice_no" placeholder="Invoice No" value="{{ old("invoice_no") }}">
+                            <input type="text" class="form-control" name="invoice_no" id="invoice_no" placeholder="Invoice No" value="{{ $packingrawmaterial->invoice_no }}">
                             @if ($errors->has('invoice_no'))
                           <span class="text-danger">{{ $errors->first('invoice_no') }}</span>
                           @endif
@@ -78,12 +78,13 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="receiptNo">Goods Receipt No.</label>
-                            <input type="text" class="form-control" name="goods_receipt_no" id="goods_receipt_no" value="{{ old("goods_receipt_no") }}"placeholder="GRM/RM/Receipt No.">
+                            <input type="text" class="form-control" name="goods_receipt_no" id="goods_receipt_no" value="{{ $packingrawmaterial->goods_receipt_no }}" placeholder="GRM/RM/Receipt No.">
                             @if ($errors->has('goods_receipt_no'))
                           <span class="text-danger">{{ $errors->first('goods_receipt_no') }}</span>
                           @endif
                         </div>
                     </div>
+                    @if(isset($packingrawmaterial->items))
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group input_fields_wrap" id="MaterialReceived">
                             <label class="control-label d-flex">Details of Material Received
@@ -91,43 +92,83 @@
                                     <button class="btn btn-dark add-more add_field_button" type="button">Add More +</button>
                                 </div>
                             </label>
-                            <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                <span class="add-count">1</span>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="packingMaterialName">Packing Material Name</label>
-                                        {{ Form::select("material[]",$rawmaterial,isset(old("material")[0])?old("material")[0]:"",array("class"=>"form-control select","id"=>"material","placeholder"=>"Name of Material")) }}
-                                        @if ($errors->has('material'))
-                                        <span class="text-danger">{{ $errors->first('material') }}</span>
-                                        @endif
+                            @if(count($packingrawmaterial->items) >0)
+                                @php $i=1; @endphp
+                                @foreach ($packingrawmaterial->items as $val)
 
+                                <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                    <span class="add-count">{{ $i }}</span>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="packingMaterialName">Packing Material Name</label>
+                                            {{ Form::select("material[]",$rawmaterial,isset(old("material")[0])?old("material")[0]:$val->material,array("class"=>"form-control select","id"=>"material","placeholder"=>"Name of Material")) }}
+                                            @if ($errors->has('material'))
+                                            <span class="text-danger">{{ $errors->first('material') }}</span>
+                                            @endif
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="Quantity">Total Quantity Received (Nos.)</label>
-                                        <input type="text" class="form-control" name="total_qty[]" id="total_qty" placeholder="Quantity" value="{{ old("total_qty") }}">
-                                        @if ($errors->has('total_qty'))
-                                        <span class="text-danger">{{ $errors->first('total_qty') }}</span>
-                                        @endif
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="Quantity">Total Quantity Received (Nos.)</label>
+                                            <input type="text" class="form-control" name="total_qty[]" id="total_qty" placeholder="Quantity" value="{{ isset(old("total_qty")[0])?old("total_qty")[0]:$val->total_qty }}">
+                                            @if ($errors->has('total_qty'))
+                                            <span class="text-danger">{{ $errors->first('total_qty') }}</span>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="ARNo">AR No. / Date</label>
-                                        <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value="{{ old("ar_no_date") }}">
-                                        @if ($errors->has('ar_no_date'))
-                                        <span class="text-danger">{{ $errors->first('ar_no_date') }}</span>
-                                        @endif
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="ARNo">AR No. / Date</label>
+                                            <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value="{{ isset(old("ar_no_date")[0])?old("ar_no_date")[0]:$val->ar_no_date }}">
+                                            @if ($errors->has('ar_no_date'))
+                                            <span class="text-danger">{{ $errors->first('ar_no_date') }}</span>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                    @php $i++; @endphp
+                                    @endforeach
+                                  @else
+                                  <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                    <span class="add-count">1</span>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="packingMaterialName">Packing Material Name</label>
+                                            {{ Form::select("material[]",$rawmaterial,isset(old("material")[0])?old("material")[0]:"",array("class"=>"form-control select","id"=>"material","placeholder"=>"Name of Material")) }}
+                                            @if ($errors->has('material'))
+                                            <span class="text-danger">{{ $errors->first('material') }}</span>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="Quantity">Total Quantity Received (Nos.)</label>
+                                            <input type="text" class="form-control" name="total_qty[]" id="total_qty" placeholder="Quantity" value="{{ isset(old("total_qty")[0])?old("total_qty")[0]:'' }}">
+                                            @if ($errors->has('total_qty'))
+                                            <span class="text-danger">{{ $errors->first('total_qty') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="ARNo">AR No. / Date</label>
+                                            <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value=""{{ isset(old("ar_no_date")[0])?old("ar_no_date")[0]:'' }}">
+                                            @if ($errors->has('ar_no_date'))
+                                            <span class="text-danger">{{ $errors->first('ar_no_date') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                  @endif
+
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="col-12">
                         <div class="form-group">
                             <label for="Remark">Note / Remark</label>
-                            <textarea class="form-control" name="remark" id="remark" placeholder="Note / Remark"></textarea>
+                            <textarea class="form-control" name="remark" id="remark" placeholder="Note / Remark">{{ $packingrawmaterial->remark }}</textarea>
                         </div>
                     </div>
                     <div class="col-12">
