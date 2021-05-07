@@ -1,4 +1,4 @@
-@extends('section.app')
+@extends('layouts.app')
 
 @section('content')
 <!-- Main Container -->
@@ -26,13 +26,14 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="MaterialName">Raw Material Name</label>
-                            <input type="text" class="form-control" name="material" id="material" placeholder="Material Name">
+                            {{ Form::select("material",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"material","placeholder"=>"Material Name")) }}
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="OpeningBalance">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock">
+                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock" readonly="readonly">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -179,6 +180,23 @@
 
 
         });
+
+        $("#material").change(function(){
+
+            $.ajax({
+                url:'{{ route("get-material") }}',
+                method:'POST',
+                data:{
+                    "id":$(this).val(),
+                    "_token": '{{ csrf_token() }}',
+
+                },
+                datatype:JSON
+            }).success(function(data){
+                    $("#supplierAddress").val(data.address);
+                    $("#supplierGST").val(data.gst);
+            })
+        })
     });
 </script>
 @endpush
