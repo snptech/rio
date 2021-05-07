@@ -146,4 +146,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
 
 
+        //comming Soon
+        Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
+
+
 });

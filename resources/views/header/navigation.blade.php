@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ rount("/home") }}">
           <i class="menu-icon" data-feather="home"></i>
           <span class="menu-title">Dashboard</span>
         </a>
@@ -62,13 +62,13 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="product-masters.html">
+        <a class="nav-link" href="{{ route('comingsoon') }}">
           <i class="menu-icon" data-feather="shopping-bag"></i>
           <span class="menu-title">Product Masters</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="user-masters.html">
+        <a class="nav-link" href="{{ route('comingsoon') }}">
           <i class="menu-icon" data-feather="users"></i>
           <span class="menu-title">User Masters</span>
         </a>
