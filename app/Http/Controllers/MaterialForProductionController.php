@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use App\Models\Rawmeterial;
 use App\Models\Issuematerialproduction;
 
 class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
     {
+        $rawmaterial = Rawmeterial::pluck("material_name","id");
+        $data["rawmaterial"] = $rawmaterial;
         $data['supplier_master']=Supplier::all();
         return view('issue_material_for_production',$data);
     }
