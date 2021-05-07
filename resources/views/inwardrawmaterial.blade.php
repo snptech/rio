@@ -39,7 +39,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="from">From</label>
-                          {{ Form::select("from",$department,$old("from"),array("class"=>"form-control select","id"=>"from","placeholder"=>"From")) }}
+                          {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","placeholder"=>"From")) }}
 
                           @if ($errors->has('from'))
                                     <span class="text-danger">{{ $errors->first('from') }}</span>
@@ -49,7 +49,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="to">TO</label>
-                          {{ Form::select("to",$department,$old("to"),array("class"=>"form-control select","id"=>"to","placeholder"=>"To Department")) }}
+                          {{ Form::select("to",$department,old("to"),array("class"=>"form-control select","id"=>"to","placeholder"=>"To Department")) }}
 
                           @if ($errors->has('to'))
                             <span class="text-danger">{{ $errors->first('to') }}</span>
