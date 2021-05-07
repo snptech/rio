@@ -140,8 +140,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
 
 
-        Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
-        Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods'])->name("add_dispatch_finished_goods");
+        Route::get('/dispatch_finished_goods', [App\Http\Controllers\DishpatchfinishgoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
+
 
 
         // Reports//

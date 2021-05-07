@@ -19,6 +19,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="no">No.</label>
+                          {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","placeholder"=>"From")) }}
 						  <input type="text" class="form-control" name="dispath_no" id="dispath_no" placeholder="no"value="{{ $nextnum }}" readonly>
                           @if ($errors->has('dispath_no'))
                           <span class="text-danger">{{ $errors->first('dispath_no') }}</span>
@@ -28,7 +29,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="from">From</label>
-						  <input type="text" class="form-control" name="dispatch_form" id="dispatch_form" placeholder="from"value="Dispatch" readonly>
+                          {{ Form::select("dispatch_form",$department,old("dispatch_form"),array("class"=>"form-control select","id"=>"dispatch_form","placeholder"=>"From")) }}
+
                           @if ($errors->has('dispatch_form'))
                           <span class="text-danger">{{ $errors->first('dispatch_form') }}</span>
                           @endif
@@ -37,7 +39,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="to">To</label>
-						  <input type="text" class="form-control" name="dispatch_to" id="dispatch_to" placeholder="to"value="Store" readonly>
+                          {{ Form::select("dispatch_to",$department,old("dispatch_to"),array("class"=>"form-control select","id"=>"dispatch_to","placeholder"=>"From")) }}
+
                           @if ($errors->has('dispatch_to'))
                           <span class="text-danger">{{ $errors->first('dispatch_to') }}</span>
                           @endif

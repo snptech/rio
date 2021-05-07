@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\InwardPackingMaterial;
 use App\Models\Modedispatch;
+use App\Models\Department;
 use App\Models\Grade;
 use DB;
 class DishpatchfinishgoodsController extends Controller
 {
     //
+    public function dispatch_finished_goods()
+    {
+        return view("dispatch_finished_goods");
+    }
     public function add()
     {
         $modeofdispatch = Modedispatch::where("publish",1)->pluck("mode","id");
         $grade = Grade::where("publish",1)->pluck("grade","id");
+        $department = Department::pluck("department","id");
         $inwordno = InwardPackingMaterial::select(DB::raw("max(id) as lastnumber"))->first();
         $nextnum = 0;
         if($inwordno->lastnumber >0)
@@ -22,7 +28,7 @@ class DishpatchfinishgoodsController extends Controller
         }
         else
             $nextnum = 1;
-        return view("add_dispatch_finished_goods")->with(["mode"=>$modeofdispatch,"grade"=>$grade,"nextnum"=>$nextnum]);
+        return view("add_dispatch_finished_goods")->with(["mode"=>$modeofdispatch,"grade"=>$grade,"nextnum"=>$nextnum,"department"=>$department]);
     }
     public function store(Request $request)
     {
