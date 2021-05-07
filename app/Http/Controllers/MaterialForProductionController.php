@@ -10,7 +10,7 @@ class MaterialForProductionController extends Controller
     public function issue_material_for_production()
     {
         $data['supplier_master']=Supplier::all();
-        return view('admin.issue_material_for_production',$data);
+        return view('issue_material_for_production',$data);
     }
     public function issue_material_insert(Request $request)
     {
@@ -34,7 +34,7 @@ class MaterialForProductionController extends Controller
         $result= Issuematerialproduction::create($data);
         if($result)
         {
-        return redirect("issue_material_for_production")->with('success', "Data created successfully");
+        return redirect("issue_material_for_production")->with('message', "Data created successfully");
         }
     }
 }

@@ -9,7 +9,7 @@ class QualityControlController extends Controller
 {
     public function quality_control()
     {
-        return view('admin.quality_control');
+        return view('quality_control');
     }
 
     public function quality_control_insert(Request $request)

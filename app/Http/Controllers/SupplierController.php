@@ -52,7 +52,7 @@ class SupplierController extends Controller
                     "address"=>"required",
                     "company_name"=>"required",
                     "contact_per_name"=>"required",
-                    "contact_number"=>"required",                   
+                    "contact_number"=>"required",
                      "publish"=>"required"];
 
 
@@ -86,7 +86,7 @@ class SupplierController extends Controller
         $data["contact_per_name"] = $request->contact_per_name;
         $data["company_name"] = $request->company_name;
         $data["publish"] = $request->publish;
-       
+
 
         $result = Supplier::create($data);
 
@@ -156,7 +156,7 @@ class SupplierController extends Controller
                     "address"=>"required",
                     "company_name"=>"required",
                     "contact_per_name"=>"required",
-                    "contact_number"=>"required",                   
+                    "contact_number"=>"required",
                      "publish"=>"required"];
 
 

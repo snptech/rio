@@ -116,8 +116,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
         Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
         Route::post("inwardpackingrawmaterial/save",[App\Http\Controllers\InwardPackingMaterialController::class,"store"])->name("inwardpackingrawmaterial-save");
-        Route::get("inwardpackingrawmaterial/view/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
+        Route::post("inwardpackingrawmaterial/view",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
         Route::get("inwardpackingrawmaterial/edit/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"edit"])->name("inwardpackingrawmaterial-edit");
+        Route::post("inwardpackingrawmaterial/update/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"update"])->name("inwardpackingrawmaterial-update");
         Route::get("inwardpackingrawmaterial/remove/{id}",[App\Http\Controllers\InwardPackingMaterialController::class,"remove"])->name("inwardpackingrawmaterial-remove");
 
 
@@ -150,6 +151,14 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_iv', [App\Http\Controllers\ReportsController::class, 'annexure_iv'])->name("annexure_iv");
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
+
+        // Issue Material For Production
+        Route::get('issue-material-for-production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue-material-for-production");
+        Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
+
+
+        //comming Soon
+        Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
 
 
 });

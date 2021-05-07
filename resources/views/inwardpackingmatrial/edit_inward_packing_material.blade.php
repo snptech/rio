@@ -13,7 +13,7 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form id="inward_packing_material" name="inward_packing_material" method="post" action="{{ route("inwardpackingrawmaterial-save") }}">
+            <form id="inward_packing_material" name="inward_packing_material" method="post" action="{{ route("inwardpackingrawmaterial-update",["id"=>$packingrawmaterial->id]) }}">
                 @csrf
 
                 <div class="form-row">
@@ -49,7 +49,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="ManufacturerName">Name of Manufacturer</label>
-                            {{ Form::select("manufacturer",$manufacturer,old("manufacturer")?old("manufacturer"):$packingrawmaterial->manufacturer,array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Manufacturer")) }}
+                            {{ Form::select("manufacturer",$manufacturer,old("manufacturer")?old("manufacturer"):$packingrawmaterial->manufacurer,array("class"=>"form-control select","id"=>"manufacturer","placeholder"=>"Name of Manufacturer")) }}
                             @if ($errors->has('manufacturer'))
                           <span class="text-danger">{{ $errors->first('manufacturer') }}</span>
                           @endif

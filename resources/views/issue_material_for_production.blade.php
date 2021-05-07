@@ -1,4 +1,5 @@
-@extends("layouts.app")
+
+@extends('layouts.app')
 @section('content')
 <div class="col-md-12">
     @if ($message = Session::get('success'))
@@ -33,13 +34,14 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="MaterialName">Raw Material Name</label>
-                            <input type="text" class="form-control" name="material" id="material" placeholder="Material Name">
+                            {{ Form::select("material",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"material","placeholder"=>"Material Name")) }}
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="OpeningBalance">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock">
+                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock" readonly="readonly">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
