@@ -39,7 +39,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="from">From</label>
-						  <input type="text" class="form-control" id="from" name="from" placeholder="Store" value="Store" readonly>
+                          {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","placeholder"=>"From")) }}
+
                           @if ($errors->has('from'))
                                     <span class="text-danger">{{ $errors->first('from') }}</span>
                             @endif
@@ -48,7 +49,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="to">TO</label>
-						  <input type="text" class="form-control" name="to" id="to" placeholder="Quality Control and Purchase" value="Quality Control and Purchase" readonly>
+                          {{ Form::select("to",$department,old("to"),array("class"=>"form-control select","id"=>"to","placeholder"=>"To Department")) }}
+
                           @if ($errors->has('to'))
                             <span class="text-danger">{{ $errors->first('to') }}</span>
                           @endif
