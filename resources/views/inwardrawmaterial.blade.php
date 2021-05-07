@@ -328,9 +328,9 @@
           "RIOExpiryDate[]":{
               required:true
           },
-          "ARNo[]":{
+          /*"ARNo[]":{
               required:true
-          },
+          },*/
           createdby:{
               required:true
           },

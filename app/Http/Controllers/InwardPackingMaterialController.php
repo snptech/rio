@@ -162,7 +162,7 @@ class InwardPackingMaterialController extends Controller
                      "goods_receipt_no"=>"required",
                      "material"=>"required|array",
                      "total_qty"=>"required|array",
-                     "ar_no_date"=>"required|array"
+
                     ];
 
 
@@ -256,7 +256,7 @@ class InwardPackingMaterialController extends Controller
                         "goods_receipt_no"=>"required",
                         "material"=>"required|array",
                         "total_qty"=>"required|array",
-                        "ar_no_date"=>"required|array"
+
                         ];
 
 

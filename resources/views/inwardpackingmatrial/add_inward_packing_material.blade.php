@@ -196,7 +196,7 @@
                 goods_receipt_no: "required",
 
                 "total_qty[]": "required",
-                "ar_no_date[]": "required",
+                /*"ar_no_date[]": "required",*/
                 "material[]": "required",
 
             },
