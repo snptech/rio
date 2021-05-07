@@ -55,7 +55,7 @@ class InwardMaterialController extends Controller
          "mfgDate.*"=>"required",
          "ExpiryDate.*"=>"required",
          "RIOExpiryDate.*"=>"required",
-         "ARNo.*"=>"required",
+
          "createdby"=>"required",
          "cdate"=>"required",
          "ctime"=>"required"];
