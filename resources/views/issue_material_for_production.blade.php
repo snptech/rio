@@ -1,6 +1,14 @@
-@extends('layouts.app')
 
+@extends('layouts.app')
 @section('content')
+<div class="col-md-12">
+    @if ($message = Session::get('success'))
+    <div class="alert alert-info alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+</div>
 <!-- Main Container -->
 <div class="content-wrapper">
     <div class="row">
@@ -14,8 +22,8 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form action="" id="vali_issue_material" class="form-control">
-
+            <form  id="vali_issue_material" method="post" action="issue_material_insert">
+            {{csrf_field()}}
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
@@ -57,7 +65,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="IssuedQuantity">Issued Quantity</label>
-                            <input type="date" class="form-control" name="issued_quantity" id="issued_quantity" placeholder="Quantity">
+                            <input type="text" class="form-control" name="issued_quantity" id="issued_quantity" placeholder="Quantity">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -94,9 +102,13 @@
                         <div class="form-group">
                             <label for="SupplierName">Dispensed by</label>
                             <select class="form-control select" name="dispensed_by" id="dispensed_by">
-                                <option>Select</option>
-                                <option>Employee Name</option>
-                            </select>
+                                <option value="">Select</option>
+                                @if(count($supplier_master))
+                                @foreach ($supplier_master as $temp)
+                                <option value="{{$temp->id}}">{{$temp->name}}</option>
+                                @endforeach
+                                @endif
+                          </select>
                         </div>
                     </div>
                     <div class="col-12">
@@ -107,7 +119,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-md ml-0 form-btn data_submit">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-md ml-0 form-btn ">Submit</button>
                             <button type="button" class="btn btn-light btn-md form-btn data_clear">Clear</button>
                         </div>
                     </div>
@@ -116,49 +128,45 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 @endsection
 @push('custom-scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="//unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
-    $(document).ready(function() {
+ $(document).ready(function() {
         $("#vali_issue_material").validate({
             rules: {
-                requisition_no: "required",
-                material: "required",
-                opening_bal: "required",
-                batch_no: "required",
-                viscosity: "required",
-                issual_date: "required",
-                issued_quantity: "required",
+                requisition_no:"required",
+                material:"required",
+                opening_bal:"required",
+                batch_no:"required",
+                viscosity:"required",
+                issual_date:"required",
+                issued_quantity:"required",
                 excess: "required",
-                excefinished_batch_noss: "required",
+                finished_batch_no:"required",
                 wastage: "required",
-                returned_from_day_store: "required",
-                closing_balance_qty: "required",
-                dispensed_by: "required",
-                remark: "required",
-
+                returned_from_day_store:"required",
+                closing_balance_qty:"required",
+                dispensed_by:"required",
+                remark:"required",
             },
             messages: {
-                requisition_no:"Please  Enter The Requisition No",
-                material:"Please  Enter The Material Name",
-                opening_bal:"Please  Enter The Opening Balance",
-                batch_no:"Please  Enter The Batch No ",
-                viscosity:"Please  Enter The Viscosity Name",
-                issual_date:"Please  Enter The Issual Date ",
-                issued_quantity:"Please  Enter The Issued Quantity ",
-                finished_batch_no:"Please  Enter The Finished Batch No ",
-                excess:"Please  Enter The Excess",
-                wastage:"Please  Enter The Wastage",
-                returned_from_day_store:"Please  Enter The Returned From Day Store",
-                closing_balance_qty:"Please  Enter The Closing Balance qty ",
-                dispensed_by:"Please  Enter The Dispensed By Name",
-                remark:"Please  Enter The Remark",
+                requisition_no: "Please  Enter The Requisition No",
+                material: "Please  Enter The Material Name",
+                opening_bal: "Please  Enter The Opening Balance",
+                batch_no: "Please  Enter The Batch No ",
+                viscosity: "Please  Enter The Viscosity Name",
+                issual_date: "Please  Enter The Issual Date ",
+                issued_quantity: "Please  Enter The Issued Quantity ",
+                finished_batch_no: "Please  Enter The Finished Batch No ",
+                excess: "Please  Enter The Excess",
+                wastage: "Please  Enter The Wastage",
+                returned_from_day_store: "Please  Enter The Returned From Day Store",
+                closing_balance_qty: "Please  Enter The Closing Balance qty ",
+                dispensed_by: "Please  Enter The Dispensed By Name",
+                remark: "Please  Enter The Remark",
             },
         });
         $('.data_clear').click(function() {
@@ -176,27 +184,8 @@
             $('#closing_balance_qty').val('');
             $('#dispensed_by').val('');
             $('#remark').val('');
-
-
-
         });
 
-        $("#material").change(function(){
-
-            $.ajax({
-                url:'{{ route("get-material") }}',
-                method:'POST',
-                data:{
-                    "id":$(this).val(),
-                    "_token": '{{ csrf_token() }}',
-
-                },
-                datatype:JSON
-            }).success(function(data){
-                    $("#supplierAddress").val(data.address);
-                    $("#supplierGST").val(data.gst);
-            })
-        })
     });
 </script>
 @endpush
