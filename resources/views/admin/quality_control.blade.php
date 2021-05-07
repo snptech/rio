@@ -1,6 +1,13 @@
 @extends("layouts.app")
 @section('content')
-
+<div class="col-md-12">
+    @if ($message = Session::get('success'))
+    <div class="alert alert-info alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+</div>
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 grid-margin">
@@ -30,114 +37,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
-                            <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                        </tr>
                         <tr>
                             <td>16/03/2021</td>
                             <td>100</td>
@@ -184,7 +83,8 @@
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
             </div>
             <div class="modal-body">
-                <form action="#" method="_post" id="checkQuantity">
+                <form method="post" id="checkQuantity" action="quality_control_insert">
+                    {{csrf_field()}}
                     <div class="form-row">
                         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group">
@@ -201,10 +101,10 @@
                         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group">
                                 <label for="Status">Status</label>
-                                <select class="form-control select"  name="quantity_status"id="quantity_status">
+                                <select class="form-control select" name="quantity_status" id="quantity_status">
                                     <option>Select</option>
-                                    <option>Approved</option>
-                                    <option>Rejected</option>
+                                    <option value="Approved">Approved</option>
+                                    <option Rejected="Rejected">Rejected</option>
                                 </select>
                             </div>
                         </div>
@@ -217,12 +117,12 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="Remark">Remark</label>
-                                <textarea class="form-control" id="Remark" name="remark" placeholder="remark"></textarea>
+                                <textarea class="form-control" id="remark" name="remark" placeholder="remark"></textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-md m-0">Submit</button>
+                                <button type="submit" class="btn btn-primary btn-md m-0 submit_data">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -233,20 +133,25 @@
 </div>
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $(document).ready(function() {
         $("#checkQuantity").validate({
             rules: {
-                meterial: "required",
                 quantity_approved: "required",
                 quantity_rejected: "required",
                 quantity_status: "required",
                 date_of_approval: "required",
                 remark: "required",
-             },
+            },
             messages: {
-                meterial:"Please  Enter The Meterial Name ",
                 quantity_approved: "Please  Enter The Quantity Approved Name ",
                 quantity_rejected: "Please  Enter The Quantity Rejected Name ",
                 quantity_status: "Please  Enter The Quantity Status Name ",
@@ -256,5 +161,4 @@
         });
     });
 </script>
-
 @endpush

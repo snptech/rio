@@ -3,12 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Qualitycontroll;
 
 class QualityControlController extends Controller
 {
     public function quality_control()
     {
         return view('admin.quality_control');
+    }
 
+    public function quality_control_insert(Request $request)
+    {
+        $data = [
+            'quantity_approved' => $request['quantity_approved'],
+            'quantity_rejected' => $request['quantity_rejected'],
+            'quantity_status' => $request['quantity_status'],
+            'date_of_approval' => $request['date_of_approval'],
+            'remark' => $request['remark'],
+        ];
+        $result =Qualitycontroll::create($data);
+
+         if($result)
+         {
+         return redirect("quality_control")->with('success', "Data created successfully");
+         }
     }
 }

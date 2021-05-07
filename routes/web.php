@@ -126,11 +126,22 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post("dishpatchfinishgoods/save",[App\Http\Controllers\DishpatchfinishgoodsController::class,"store"])->name("dishpatchfinishgoods-save");
 
 
-        // pages
+        // Inward Finished Goods - New Stock
+
         Route::get('new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock'])->name("new_stock");
+        Route::post('inward_finished_insert', [App\Http\Controllers\InwardFinishedController::class, 'inward_finished_insert']);
+
+        // issue material for production
+        Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+        Route::post('issue_material_insert', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_insert']);
+         // quality control
+         Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
+         Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
+
+
         Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
         Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods'])->name("add_dispatch_finished_goods");
-        Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
+
 
         // Reports//
         Route::get('/annexure_i', [App\Http\Controllers\ReportsController::class, 'annexure_i'])->name("annexure_i");
@@ -139,8 +150,6 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_iv', [App\Http\Controllers\ReportsController::class, 'annexure_iv'])->name("annexure_iv");
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
-
-        Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
 
 
 });
