@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 
     <style>
         .error {
@@ -62,9 +62,9 @@
     @stack('models')
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="{{ asset('assets/mdbootstrap4/jquery.min.js')  }}"></script>
-    <script src="{{ asset('assets/mdbootstrap4/popper.min.js')  }}"></script>
-    <script src="{{ asset('assets/mdbootstrap4/bootstrap.min.js')  }}"></script>
+    <script src="{{ asset('assets/mdbootstrap4/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/mdbootstrap4/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/mdbootstrap4/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/feather.min.js')  }}"></script>
     <script>
         feather.replace()

@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inwardfinishedgoods;
 use App\Models\Grade;
+use App\Models\Arnomaster;
+use App\Models\Supplier;
 
 class InwardFinishedController extends Controller
 {
     public function new_stock()
     {
         $data['grade_master']=Grade::all();
-        return view('admin.new_stock',$data);
+        $data['supplier_master']=Supplier::all();
+        $data['arno_master']=Arnomaster::all();
+        return view('new_stock',$data);
     }
     public function inward_finished_insert(Request $request)
     {
@@ -36,14 +40,12 @@ class InwardFinishedController extends Controller
             'remark' => $request['remark'],
 
         ];
-      
-        Inwardfinishedgoods::create($data);
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data inserted successfully'
-            ]
-        );
+       $result= Inwardfinishedgoods::create($data);
+
+        if($result)
+        {
+        return redirect("new_stock")->with('success', "Data created successfully");
+        }
     }
 }
