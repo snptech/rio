@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\InwardPackingMaterial;
 use App\Models\InwardPackingMaterialItems;
-
+use App\Models\Department;
 use App\Models\Supplier;
 use App\Models\Manufacturer;
 use App\Models\Rawmeterial;
@@ -30,10 +30,10 @@ class InwardPackingMaterialController extends Controller
     public function add()
     {
         $rawmaterial = Rawmeterial::pluck("material_name","id");
-
+        $department = Department::pluck("department","id");
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
-        return view("inwardpackingmatrial.add_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer]);
+        return view("inwardpackingmatrial.add_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"department"=>$department]);
     }
     public function listAjax(Request $request)
     {
@@ -232,13 +232,13 @@ class InwardPackingMaterialController extends Controller
         if($id)
         {
             $rawmaterial = Rawmeterial::pluck("material_name","id");
-
+            $department = Department::pluck("department","id");
             $supplier  = Supplier::where("publish",1)->pluck("name","id");
             $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
             $packingrawmaterial = InwardPackingMaterial::find($id);
 
 
-            return view("inwardpackingmatrial.edit_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"packingrawmaterial"=>$packingrawmaterial]);
+            return view("inwardpackingmatrial.edit_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"packingrawmaterial"=>$packingrawmaterial,"department"=>$department]);
         }
         else
             throw(404);

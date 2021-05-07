@@ -19,7 +19,8 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="from">From</label>
-                            <input type="text" class="form-control" name="received_from" id="received_from" placeholder="Store" value="Store" readonly>
+                            {{ Form::select("received_from",$department,old("received_from"),array("class"=>"form-control select","id"=>"received_from","placeholder"=>"From")) }}
+
                             @if ($errors->has('dispath_no'))
                             <span class="text-danger">{{ $errors->first('received_from') }}</span>
                           @endif
@@ -28,7 +29,8 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="to">TO</label>
-                            <input type="text" class="form-control" name="received_to" id="received_to" placeholder="Quality Control and Purchase" value="Quality Control and Purchase" readonly>.
+                            {{ Form::select("received_to",$department,old("to"),array("class"=>"form-control select","id"=>"received_to","placeholder"=>"To Department")) }}
+
                             @if ($errors->has('received_to'))
                             <span class="text-danger">{{ $errors->first('received_to') }}</span>
                           @endif
