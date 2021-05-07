@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Modedispatch;
-class ModeDispatchController extends Controller
+class ModedispatchController extends Controller
 {
     //
     public function __construct()
