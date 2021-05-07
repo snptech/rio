@@ -39,7 +39,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="to">To</label>
-                          {{ Form::select("dispatch_to",$department,old("dispatch_to"),array("class"=>"form-control select","id"=>"dispatch_to","placeholder"=>"From")) }}
+                          {{ Form::select("dispatch_to",$department,old("dispatch_to"),array("class"=>"form-control select","id"=>"dispatch_to","placeholder"=>"To")) }}
 
                           @if ($errors->has('dispatch_to'))
                           <span class="text-danger">{{ $errors->first('dispatch_to') }}</span>
