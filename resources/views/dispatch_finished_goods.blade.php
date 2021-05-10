@@ -8,7 +8,7 @@
                     <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="truck"></i>Finished Goods Dispatch</h4>
                 </div>
                 <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
-                    <a href="add_dispatch_finished_goods" class="btn btn-md btn-primary">Add New +</a>
+                    <a href="{{ route("dishpatchfinishgoods-new") }}" class="btn btn-md btn-primary">Add New +</a>
                 </div>
             </div>
         </div>
