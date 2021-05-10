@@ -7,9 +7,9 @@
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
                     <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Inward Finished Goods - New Stock</h4>
                 </div>
-                <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
+                <!-- <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
                     <a href="{{ route('new_stock_add') }}" class="btn btn-md btn-primary">Add New +</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
                             <th rowspan="2">AR No.</th>
                             <th rowspan="2">Approval Date</th>
                             <th rowspan="2">Received by</th>
-                            <th rowspan="2">Action</th>
+
                         </tr>
                         <tr>
                             <th>200 Kg</th>
@@ -62,10 +62,7 @@
                             <td>{{$temp->ar_no}}</td>
                             <td>{{$temp->approval_data}}</td>
                             <td>{{$temp->received_by}}</td>
-                            <td>
-                            <a href="{{ route('view_new_stock',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>
 
-                            </td>
 
                         </tr>
 

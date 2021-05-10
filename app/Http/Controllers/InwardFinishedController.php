@@ -10,12 +10,26 @@ use App\Models\Supplier;
 
 class InwardFinishedController extends Controller
 {
+
     public function new_stock()
+    {
+
+        $data['inward_goods']=Inwardfinishedgoods::all();
+
+        return view('new_stock',$data);
+    }
+    public function view_new_stock($id)
+    {
+
+        $data['inward_goods']=Inwardfinishedgoods::where("id", $id)->get();
+        return view('view_new_stock',$data);
+    }
+    public function new_stock_add()
     {
         $data['grade_master']=Grade::all();
         $data['supplier_master']=Supplier::all();
         $data['arno_master']=Arnomaster::all();
-        return view('new_stock',$data);
+        return view('new_stock_add',$data);
     }
     public function inward_finished_insert(Request $request)
     {

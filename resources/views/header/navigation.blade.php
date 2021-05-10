@@ -1,39 +1,39 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ route("home") }}">
+        <a class="nav-link" href="{{ route('home') }}">
           <i class="menu-icon" data-feather="home"></i>
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route("inward-rawmaterials") }}">
+        <a class="nav-link" href="{{ route('inward-rawmaterials') }}">
           <i class="menu-icon" data-feather="layers"></i>
           <span class="menu-title">Inward Raw Material</span>
         </a>
       </li>
       <li class="nav-item">
 
-        <a class="nav-link" href="{{ route("inwardpackingrawmaterial-list") }}">
+        <a class="nav-link" href="{{ route('inwardpackingrawmaterial-list') }}">
 
           <i class="menu-icon" data-feather="package"></i>
           <span class="menu-title">Inward Packing Material</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route("issue-material-for-production") }}">
+        <a class="nav-link" href="{{ route('issue_material_for_production') }}">
           <i class="menu-icon" data-feather="hard-drive"></i>
           <span class="menu-title">Issue Material For Production</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route("new_stock") }}">
+        <a class="nav-link" href="{{ route('new_stock') }}">
           <i class="menu-icon" data-feather="shopping-cart"></i>
           <span class="menu-title">Inward Finished Goods -<br />New Stock</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route("dispatch_finished_goods") }}">
+        <a class="nav-link" href="{{ route('dispatch_finished_goods') }}">
           <i class="menu-icon" data-feather="truck"></i>
           <span class="menu-title">Dispatch Finished Goods</span>
         </a>
@@ -82,22 +82,23 @@
         </a>
         <div class="collapse" id="ui-master">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{ route("department") }}">Department</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("role") }}">Role</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("designation") }}">Designation</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("grade") }}">Grade</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("supplier") }}">Supplier</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("modedispatch") }}">Mode of Dispatch</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("manufacturer") }}">Manufacturers</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("rawmaterial") }}">Raw Matrials</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("controller") }}">Controllers</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route("action") }}">Actions</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('department') }}">Department</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('role') }}">Role</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('designation') }}">Designation</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('grade') }}">Grade</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('supplier') }}">Supplier</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('modedispatch') }}">Mode of Dispatch</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('manufacturer') }}">Manufacturers</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('rawmaterial') }}">Raw Matrials</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('controller') }}">Controllers</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('action') }}">Actions</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('ar_no') }}">AR .NO</a></li>
             <li class="nav-item"><a class="nav-link" href="annexure-VI.html">User Permisition</a></li>
           </ul>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href=""{{ route('logout') }}" onclick="event.preventDefault();
+        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
           <i class="menu-icon" data-feather="power"></i>
           <span class="menu-title">Logout</span>

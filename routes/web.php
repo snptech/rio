@@ -68,13 +68,21 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
     // Action managment
     Route::get("action",[App\Http\Controllers\ActionController::class,"index"])->name("action")->middleware("adminmaster");
-    Route::get("new-action",[App\Http\Controllers\ActionController::class,"create"])->name("new-action")->middleware("adminmaster");;
+    Route::get("new-ar_no",[App\Http\Controllers\ActionController::class,"create"])->name("new-action")->middleware("adminmaster");;
     Route::post("action-store",[App\Http\Controllers\ActionController::class,"store"])->name("action-store")->middleware("adminmaster");;
     Route::get("/action/edit/{id}",[App\Http\Controllers\ActionController::class,"edit"])->name("edit-action")->middleware("adminmaster");;
     Route::post("action/update/{id}",[App\Http\Controllers\ActionController::class,"update"])->name("action-update")->middleware("adminmaster");;
     Route::get("/action/remove/{id}",[App\Http\Controllers\ActionController::class,"destroy"])->name("delete-action")->middleware("adminmaster");;
+     // Ar no master
+    Route::get("ar_no",[App\Http\Controllers\ARnoController::class,"ar_no"])->name("ar_no")->middleware("adminmaster");
+    Route::get("new_ar_no",[App\Http\Controllers\ARnoController::class,"new_ar_no"])->name("new_ar_no")->middleware("adminmaster");
+    Route::post("ar_no_insert",[App\Http\Controllers\ARnoController::class,"ar_no_insert"])->name("ar_no_insert")->middleware("adminmaster");
+    Route::get("edit_arno/{id}",[App\Http\Controllers\ARnoController::class,"edit_arno"])->name("edit_arno")->middleware("adminmaster");
+    Route::get("delete_arno/{id}",[App\Http\Controllers\ARnoController::class,"delete_arno"])->name("delete_arno")->middleware("adminmaster");
+    Route::post("ar_no_update/{id}",[App\Http\Controllers\ARnoController::class,"ar_no_update"])->name("ar_no_update")->middleware("adminmaster");
 
-     // Controller managment
+
+    // Controller managment
      Route::get("controller",[App\Http\Controllers\MaincontrollerController::class,"index"])->name("controller")->middleware("adminmaster");
      Route::get("new-controller",[App\Http\Controllers\MaincontrollerController::class,"create"])->name("new-controller")->middleware("adminmaster");;
      Route::post("controller-store",[App\Http\Controllers\MaincontrollerController::class,"store"])->name("controller-store")->middleware("adminmaster");;
@@ -110,6 +118,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
         // inward Raw Materials
         Route::get("inward-rawmaterials",[App\Http\Controllers\InwardMaterialController::class,"index"])->name("inward-rawmaterials");
+        Route::get("inward-rawmaterials_add",[App\Http\Controllers\InwardMaterialController::class,"create"])->name("inward-rawmaterials_add");
         Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
         Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
@@ -130,18 +139,27 @@ $router->group(['middleware' => ['auth']], function ($router) {
         // Inward Finished Goods - New Stock
 
         Route::get('new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock'])->name("new_stock");
+        Route::get('view_new_stock/{id}', [App\Http\Controllers\InwardFinishedController::class, 'view_new_stock'])->name("view_new_stock");
+        Route::get('new_stock_add', [App\Http\Controllers\InwardFinishedController::class, 'new_stock_add'])->name("new_stock_add");
         Route::post('inward_finished_insert', [App\Http\Controllers\InwardFinishedController::class, 'inward_finished_insert']);
 
         // issue material for production
         Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+        Route::get('/view_issue_material/{id}', [App\Http\Controllers\MaterialForProductionController::class, 'view_issue_material'])->name("view_issue_material");
+        Route::get('/issue_material_for_production_add', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production_add'])->name("issue_material_for_production_add");
         Route::post('issue_material_insert', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_insert']);
          // quality control
          Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
 
-
+         //dispath finshed googds
         Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
         Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods'])->name("add_dispatch_finished_goods");
+        Route::post('/dispatch_finished_good_insert', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_good_insert'])->name("dispatch_finished_good_insert");
+        Route::get('/edit_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'edit_dispatch_finished'])->name("edit_dispatch_finished");
+        Route::get('/delete_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'delete_dispatch_finished'])->name("delete_dispatch_finished");
+        Route::get('/view_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'view_dispatch_finished'])->name("view_dispatch_finished");
+        Route::post('/update_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'update_dispatch_finished'])->name("update_dispatch_finished");
 
 
         // Reports//
@@ -153,7 +171,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
 
         // Issue Material For Production
-        Route::get('issue-material-for-production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue-material-for-production");
+        Route::get('issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
         Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
 
 

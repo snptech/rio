@@ -9,8 +9,20 @@ class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
     {
-        $data['supplier_master']=Supplier::all();
+        $data['issue_material']=Issuematerialproduction::all();
         return view('issue_material_for_production',$data);
+    }
+    public function view_issue_material($id)
+    {
+
+
+        $data['issue_material']=Issuematerialproduction::where("id", $id)->get();
+        return view('view_issue_material',$data);
+    }
+    public function issue_material_for_production_add()
+    {
+        $data['supplier_master']=Supplier::all();
+        return view('issue_material_for_production_add',$data);
     }
     public function issue_material_insert(Request $request)
     {

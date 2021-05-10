@@ -16,7 +16,6 @@ class Inwardfinishedgoods extends Model
         "product_name" ,
         "batch_no" ,
         "grade" ,
-        "grade" ,
         "viscosity" ,
         "mfg_date" ,
         "expiry_ratest_date" ,
