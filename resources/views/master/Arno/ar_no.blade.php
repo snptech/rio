@@ -1,14 +1,14 @@
 @extends("layouts.app");
-@section("title","Raw Material Master")
+@section("title","Ar No Master")
 @section("content")
 <div class="row">
     <div class="col-md-12 grid-margin">
       <div class="row page-heading">
         <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-          <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Raw Material</h4>
+          <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Ar No Master</h4>
         </div>
         <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
-          <a href="{{ route("new-rawmaterial") }}" class="btn btn-md btn-primary">Add New +</a>
+          <a href="{{ route('new_ar_no') }}" class="btn btn-md btn-primary">Add New +</a>
         </div>
       </div>
     </div>
@@ -16,50 +16,50 @@
   <div class="card main-card">
     <div class="card-body">
        <div class="tbl-sticky">
-        @if (Session::has('error'))
-        <div id="" class="alert alert-danger col-md-12">{!! Session::get('error') !!}
-        </div>
-        @endif
-        @if (Session::has('message'))
-            <div id="" class="alert alert-success col-md-12">{!! Session::get('message') !!}
-            </div>
-        @endif
+
+        @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+    @if ($message = Session::get('danger'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+    @if ($message = Session::get('update'))
+    <div class="alert alert-info alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
             <table class="table table-hover table-bordered datatable">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Material Name</th>
-                        <th>Material Mesurment</th>
-                        <th>Material Stock</th>
-                        <th>Material Minimum Stock</th>
-                        <th>Exp. Date</th>
-                        <th>Rio Exp. Date</th>
+                        <th>Id</th>
+                        <th>Name</th>
                         <th>Created At</th>
                         <th>Updated At</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($rawmaterials))
-                        @php($i=1)
-                        @foreach($rawmaterials as $val)
+                    @if(count($arno_master))
+                       @foreach($arno_master as $temp)
                     <tr>
-                        <td>{{ $i }}</td>
-                        <td>{{ $val->material_name	 }}</td>
-                        <td>{{ $val->mesurment }}</td>
-                        <td>{{ $val->material_stock	}}</td>
-                        <td>{{ $val->material_preorder_stock }}</td>
-                        <td>{{ $val->expiry_date?date("d/m/Y",$val->expiry_date):""}}</td>
-                        <td>{{ $val->rio_expiry_date?date("d/m/Y",$val->rio_expiry_date):""}}</td>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td>{{$temp->name }}</td>
+                        <td>{{ date("d/m/Y H:i",strtotime($temp->created_at)) }}</td>
 
-                        <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
+                        <td>{{ date("d/m/Y H:i",strtotime($temp->created_at)) }}</td>
 
-                        <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
-
-                        <td class="actions"><a href="{{ route("edit-rawmaterial",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-rawmaterial",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a></td>
+                        <td class="actions">
+                        <a href="{{ route('edit_arno',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
+                        <a href="{{ route('delete_arno',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" class="remove" data-href=""><i data-feather="trash"></i></a></td>
                     </tr>
-                        @php($i++)
-                        @endforeach
+                         @endforeach
                     @endif
 
 

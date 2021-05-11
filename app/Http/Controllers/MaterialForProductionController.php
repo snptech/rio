@@ -10,17 +10,33 @@ class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
     {
-        $rawmaterial = Rawmeterial::pluck("material_name","id");
-        $data["rawmaterial"] = $rawmaterial;
-        $data['supplier_master']=Supplier::all();
+
+        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','suppliers.name as supplier_name')
+        ->leftJoin("suppliers", "suppliers.id", "=", "issue_material_production.dispensed_by")
+        ->get();
         return view('issue_material_for_production',$data);
+    }
+    public function view_issue_material($id)
+    {
+
+        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','suppliers.name as supplier_name')
+        ->leftJoin("suppliers", "suppliers.id", "=", "issue_material_production.dispensed_by")
+        ->where("issue_material_production.id", $id)->get();
+
+        return view('view_issue_material',$data);
+    }
+    public function issue_material_for_production_add()
+    {
+        $data['supplier_master']=Supplier::all();
+        return view('issue_material_for_production_add',$data);
     }
     public function issue_material_insert(Request $request)
     {
 
         $data = [
-         'requisition_no'=> $request['requisition_no'],
+        'requisition_no'=> $request['requisition_no'],
         'material'=> $request['material'],
+        'batch_quantity'=> $request['batch_quantity'],
         'opening_bal'=> $request['opening_bal'],
         'batch_no'=> $request['batch_no'],
         'viscosity'=> $request['viscosity'],

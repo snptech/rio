@@ -13,14 +13,15 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form id="add_dispatch_finished_goods_vali" name="dispatch" method="post" action="{{ route('inwardpackingrawmaterial-save') }}">
+            <form id="add_dispatch_finished_goods_vali" name="dispatch" method="post" action="{{ route('dispatch_finished_good_insert') }}">
                 @csrf
             <div class="form-row">
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="no">No.</label>
 
-						  <input type="text" class="form-control" name="dispath_no" id="dispath_no" placeholder="no"value="{{ $nextnum }}" readonly>
+						  <input type="text" class="form-control" name="dispath_no" id="dispath_no" placeholder="no">
+
                           @if ($errors->has('dispath_no'))
                           <span class="text-danger">{{ $errors->first('dispath_no') }}</span>
                           @endif
@@ -29,8 +30,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="from">From</label>
-                          {{ Form::select("dispatch_form",$department,old("dispatch_form"),array("class"=>"form-control select","id"=>"dispatch_form","placeholder"=>"From")) }}
-
+						  <input type="text" class="form-control" name="dispatch_form" id="dispatch_form" placeholder="from"value="Dispatch" >
                           @if ($errors->has('dispatch_form'))
                           <span class="text-danger">{{ $errors->first('dispatch_form') }}</span>
                           @endif
@@ -39,8 +39,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="to">To</label>
-                          {{ Form::select("dispatch_to",$department,old("dispatch_to"),array("class"=>"form-control select","id"=>"dispatch_to","placeholder"=>"To")) }}
-
+						  <input type="text" class="form-control" name="dispatch_to" id="dispatch_to" placeholder="to"value="Store" >
                           @if ($errors->has('dispatch_to'))
                           <span class="text-danger">{{ $errors->first('dispatch_to') }}</span>
                           @endif
@@ -58,8 +57,16 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="modeDispatch">Mode of Dispatch</label>
-                          {{ Form::select("mode_of_dispatch",$mode,old("mode_of_dispatch"),array("class"=>"form-control select","id"=>"mode_of_dispatch","placeholder"=>"Mode of Dispatch")) }}
+                          <!-- {{ Form::select("mode_of_dispatch",$mode,old("mode_of_dispatch"),array("class"=>"form-control select","id"=>"mode_of_dispatch","placeholder"=>"Mode of Dispatch")) }} -->
 
+                          <select class="form-control select" name="mode_of_dispatch" id="mode_of_dispatch">
+                                <option value=""> Select</option>
+                                @if(count($mode))
+                                @foreach($mode as $temp)
+                                <option value="{{$temp->id}}">{{$temp->mode}}</option>
+                                @endforeach
+                                @endif
+                            </select>
                           @if ($errors->has('mode_of_dispatch'))
                             <span class="text-danger">{{ $errors->first('mode_of_dispatch') }}</span>
                           @endif
@@ -104,7 +111,16 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="grade">Grade</label>
-                          {{ Form::select("grade",$grade,old("grade"),array("class"=>"form-control select","id"=>"mode_of_dispatch","placeholder"=>"Choose Grade")) }}
+                          <!-- {{ Form::select("grade",$grade,old("grade"),array("class"=>"form-control select","id"=>"mode_of_dispatch","placeholder"=>"Choose Grade")) }} -->
+
+                          <select class="form-control select" name="grade" id="grade">
+                                <option value=""> Select</option>
+                                @if(count($supplier_master))
+                                @foreach($supplier_master as $temp)
+                                <option value="{{$temp->id}}">{{$temp->name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
 
                           @if ($errors->has('grade'))
                           <span class="text-danger">{{ $errors->first('grade') }}</span>
@@ -192,8 +208,14 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="SupplierName">Dispatch by</label>
-                          <input type="text" class="form-control" name="dispatch_by" id="dispatch_by" placeholder="Dispatch by" value="{{ \Auth::user()->name }}">
-
+                          <select class="form-control select" name="dispatch_by" id="dispatch_by">
+                                <option value=""> Select</option>
+                                @if(count($supplier_master))
+                                @foreach($supplier_master as $temp)
+                                <option value="{{$temp->id}}">{{$temp->name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
 						</div>
 					</div>
 					<div class="col-12">
@@ -231,12 +253,12 @@
             invoice_no:"required",
             batch_no:"required",
             grade:"required",
-            //viscosity:"required",
+            viscosity:"required",
             mfg_date:"required",
             expiry_ratest_date:"required",
-            /*total_no_of_50kg_drums:"required",
+            total_no_of_50kg_drums:"required",
             total_no_of_30kg_drums:"required",
-            total_no_of_5kg_drums:"required",*/
+            total_no_of_5kg_drums:"required",
             total_no_qty:"required",
             seal_no:"required",
             dispatch_date:"required",

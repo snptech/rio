@@ -6,9 +6,9 @@
             <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
                 <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Issue Material For Production </h4>
             </div>
-            <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
+            <!-- <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
                 <a href="{{ route('issue_material_for_production_add') }}" class="btn btn-md btn-primary">Add New +</a>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="card main-card">
@@ -17,6 +17,7 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Requisition No</th>
                             <th>Material</th>
                             <th>Opening Bal</th>
@@ -24,7 +25,6 @@
                             <th>Viscosity</th>
                             <th>Issual Date</th>
                             <th>Issued Quantity</th>
-                            <th>Batch Quantity</th>
                             <th>Finished Batch No</th>
                             <th>Excess</th>
                             <th>Wastage</th>
@@ -32,39 +32,30 @@
                             <th>Closing Bbalance Qty</th>
                             <th>Dispensed By</th>
                             <th>Remark</th>
-                            <th>Action</th>
+
 
                         </tr>
                     </thead>
                     <tbody>
-                        @if(count($issue_material))
                         @foreach($issue_material as $temp)
                         <tr>
-                            <td> {{$temp->requisition_no}}</td>
-                            <td> {{$temp->material}}</td>
-                            <td> {{$temp->opening_bal}}</td>
-                            <td> {{$temp->batch_no}}</td>
-                            <td> {{$temp->viscosity}}</td>
-                            <td> {{$temp->issual_date}}</td>
-                            <td> {{$temp->issued_quantity}}</td>
-                            <td> {{$temp->batch_quantity}}</td>
-                            <td> {{$temp->finished_batch_no}}</td>
-                            <td> {{$temp->excess}}</td>
-                            <td> {{$temp->wastage}}</td>
-                            <td> {{$temp->returned_from_day_store}}</td>
-                            <td> {{$temp->closing_balance_qty}}</td>
-                            <td> {{$temp->supplier_name}}</td>
-                            <td> {{$temp->remark}}</td>
-                            <td>
-                            <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>
-
-                            </td>
-
-                         </tr>
-
-
+                            <td>{{$loop->index+1}}</td>
+                            <td>{{$temp->requisition_no}}</td>
+                            <td>{{$temp->material}}</td>
+                            <td>{{$temp->opening_bal}}</td>
+                            <td>{{$temp->batch_no}}</td>
+                            <td>{{$temp->viscosity}}</td>
+                            <td>{{$temp->issual_date}}</td>
+                            <td>{{$temp->issued_quantity}}</td>
+                            <td>{{$temp->finished_batch_no}}</td>
+                            <td>{{$temp->excess}}</td>
+                            <td>{{$temp->wastage}}</td>
+                            <td>{{$temp->returned_from_day_store}}</td>
+                            <td>{{$temp->closing_balance_qty}}</td>
+                            <td>{{$temp->supplier_name}}</td>
+                            <td>{{$temp->remark}}</td>
+                        </tr>
                         @endforeach
-                        @endif
                     </tbody>
                 </table>
             </div>

@@ -12,6 +12,7 @@ class Issuematerialproduction extends Model
     protected $fillable = [
         'id',
         'requisition_no',
+        'batch_quantity',
         'material',
         'opening_bal',
         'batch_no',

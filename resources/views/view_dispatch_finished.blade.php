@@ -5,54 +5,59 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Goods Receipt Note</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="truck"></i>Finished Goods Dispatch</h4>
                 </div>
-                <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
-                    <a href="{{ route('inward-rawmaterials_add') }}" class="btn btn-md btn-primary">Add New +</a>
-                </div>
+
             </div>
         </div>
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <div class="tbl-sticky">
+
+            <div class="table-responsive">
+
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th>Inward no</th>
-                            <th>Received from</th>
-                            <th>Received To</th>
-                            <th>Date Of Receipt</th>
-                            <th>Material</th>
-                            <th>Manufacturer</th>
-                            <th>Supplier</th>
-                            <th>Supplier Address</th>
-                            <th>Supplier Gst</th>
-                            <th>Invoice No</th>
-                            <th>Remark</th>
-                            <th>Action</th>
+                            <th rowspan="2">Date</th>
+                            <th rowspan="2">Party Name</th>
+                            <th rowspan="2">Invoice No.</th>
+                            <th rowspan="2">Batch No.</th>
+                            <th rowspan="2">Grade</th>
+                            <th rowspan="2">Viscosity</th>
+                            <th colspan="3">Total Drums</th>
+                            <th rowspan="2">Total Quantity (Kg)</th>
+                            <th rowspan="2">Seal No.</th>
+                            <th rowspan="2">Remark</th>
+                            <th rowspan="2">Dispatch By</th>
+
+                        </tr>
+                        <tr>
+                            <th>50Kg</th>
+                            <th>30Kg</th>
+                            <th>5Kg</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if(count($inward_material))
-                        @foreach($inward_material as $temp)
+                        @foreach($finished_good as $temp)
+
                         <tr>
-                        <td>{{$temp->inward_no}}</td>
-                        <td>{{$temp->received_from}}</td>
-                        <td>{{$temp->received_to}}</td>
-                        <td>{{$temp->date_of_receipt}}</td>
-                        <td>{{$temp->material}}</td>
-                        <td>{{$temp->manufacturer}}</td>
-                        <td>{{$temp->supplier}}</td>
-                        <td>{{$temp->supplier_address}}</td>
-                        <td>{{$temp->supplier_gst}}</td>
-                        <td>{{$temp->invoice_no}}</td>
-                        <td>{{$temp->remark}}</td>
-                        <td>Action</td>
+                            <td>{{ date("d/m/Y ",strtotime($temp->created_at)) }}</td>
+                            <td>{{$temp->party_name}}</td>
+                            <td>{{$temp->invoice_no}}</td>
+                            <td>{{$temp->batch_no}}</td>
+                            <td>{{$temp->grades_name}}</td>
+                            <td>{{$temp->viscosity}}</td>
+                            <td>{{$temp->total_no_of_50kg_drums}}</td>
+                            <td>{{$temp->total_no_of_30kg_drums}}</td>
+                            <td>{{$temp->total_no_of_5kg_drums}}</td>
+                            <td>{{$temp->total_no_qty}}</td>
+                            <td>{{$temp->seal_no}}</td>
+                            <td>{{$temp->remark}}</td>
+                            <td>{{$temp->suppliers_name}}</td>
+
                         </tr>
                         @endforeach
-                        @endif
-
                     </tbody>
                 </table>
             </div>
@@ -78,12 +83,9 @@
             </div>
         </div>
     </div>
-
-</div>
-
-@endsection
-@push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    @endsection
+    @push("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
 
-@endpush
+    @endpush

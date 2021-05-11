@@ -22,6 +22,13 @@ class InwardMaterialController extends Controller
     }
     public function index()
     {
+
+
+        $data['inward_material']=InwardMaterial::all();
+        return view("inwardrawmaterial",$data);
+    }
+    public function create()
+    {
         $rawmaterial = Rawmeterial::pluck("material_name","id");
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
@@ -30,7 +37,7 @@ class InwardMaterialController extends Controller
         $nextid =1;
         if($maxid->nextid)
             $nextid = $maxid->nextid+1;
-        return view("inwardrawmaterial")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"nextid"=>$nextid,"department"=>$department]);
+        return view("inwardrawmaterial_add")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"nextid"=>$nextid,"department"=>$department]);
     }
     public function store(Request $request)
     {

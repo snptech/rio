@@ -9,7 +9,8 @@ class QualityControlController extends Controller
 {
     public function quality_control()
     {
-        return view('quality_control');
+        $data['quality_control']=Qualitycontroll::all();
+        return view('quality_control',$data);
     }
 
     public function quality_control_insert(Request $request)

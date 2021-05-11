@@ -21,6 +21,7 @@ class InwardPackingMaterialController extends Controller
 
     }
     public function index(){
+        
         $rawmaterial = Rawmeterial::pluck("material_name","id");
 
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
@@ -40,7 +41,8 @@ class InwardPackingMaterialController extends Controller
 
         $listquery = "";
 
-        $listquery = InwardPackingMaterial::select("goods_receipt_notes.*","suppliers.name","manufacturers.manufacturer","users.name as uname")
+        $listquery = InwardPackingMaterial::select("goods_receipt_notes.*",
+        "suppliers.name","manufacturers.manufacturer","users.name as uname")
                      ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
                      ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
                      ->leftJoin("users","users.id","goods_receipt_notes.created_by");
