@@ -8,23 +8,13 @@
     </div>
     @endif
 </div>
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 grid-margin">
-            <div class="row page-heading">
-                <div class="col-12 col-xl-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="check-square"></i>Quality Control Approval/Rejection (Annexure -VI)</h4>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="card main-card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                        <th>Date</th>
                             <th>Quality<br />(Kg)</th>
                             <th>Name of <br />Manufacturer</th>
                             <th>Name of Supplier</th>
@@ -32,13 +22,20 @@
                             <th>Batch No.</th>
                             <th>GRN</th>
                             <th>AR No.</th>
+                            <th>Quantity Approved</th>
+                            <th>Quantity Rejected</th>
+                            <th>Date of Approval</th>
+                            <th>Status</th>
                             <th>Remark</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @if(count($quality_control))
+                    @foreach($quality_control as $temp)
                         <tr>
-                            <td>16/03/2021</td>
+                        <td>{{ date('d / m /Y',strtotime($temp->created_at))}}</td>
+
                             <td>100</td>
                             <td>Manufacturer name here</td>
                             <td>Supplier name goes here</td>
@@ -46,9 +43,20 @@
                             <td>ABC1234567</td>
                             <td>ABC123456</td>
                             <td>123456</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</small></td>
+                            <td>{{$temp->quantity_approved}}</td>
+                            <td>{{$temp->quantity_rejected}}</td>
+                            <td>{{$temp->date_of_approval}}</td>
+                            @if($temp->quantity_status=='Approved')
+                            <td><span class="badges text-success">Approved</span></td>
+                            @else($temp->quantity_status=='Rejected')
+                            <td><span class="badges text-danger">Rejected</span></td>
+                            @endif
+                            <td><small>{{$temp->remark}}</small></td>
                             <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
                         </tr>
+                        @endforeach
+                    @endif
+
                     </tbody>
                 </table>
             </div>

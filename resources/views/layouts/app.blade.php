@@ -66,6 +66,10 @@
     <script src="{{ asset('assets/mdbootstrap4/popper.min.js') }}"></script>
     <script src="{{ asset('assets/mdbootstrap4/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/feather.min.js')  }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="//unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+    @stack('custom-scripts')
     <script>
         feather.replace()
     </script>

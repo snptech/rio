@@ -29,7 +29,7 @@
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
             <img src="{{ asset('assets/img/user_img.png') }}" alt="profile"/>
             <span class="username">
-              <h6>RIO Care</h6>
+              <h6>{{ Auth::user()->name }}</h6>
             </span>
             <i class="align-self-center ml-1" data-feather="chevron-down"></i>
           </a>

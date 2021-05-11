@@ -80,7 +80,21 @@ $router->group(['middleware' => ['auth']], function ($router) {
     Route::get("edit_arno/{id}",[App\Http\Controllers\ARnoController::class,"edit_arno"])->name("edit_arno")->middleware("adminmaster");
     Route::get("delete_arno/{id}",[App\Http\Controllers\ARnoController::class,"delete_arno"])->name("delete_arno")->middleware("adminmaster");
     Route::post("ar_no_update/{id}",[App\Http\Controllers\ARnoController::class,"ar_no_update"])->name("ar_no_update")->middleware("adminmaster");
+    // Product Master
+    Route::get("product",[App\Http\Controllers\ProductController::class,"product"])->name("product")->middleware("adminmaster");
+    Route::get("new_product",[App\Http\Controllers\ProductController::class,"new_product"])->name("new_product")->middleware("adminmaster");
+    Route::post("product_insert",[App\Http\Controllers\ProductController::class,"product_insert"])->name("product_insert")->middleware("adminmaster");
+    Route::get("edit_product/{id}",[App\Http\Controllers\ProductController::class,"edit_product"])->name("edit_product")->middleware("adminmaster");
+    Route::get("delete_product/{id}",[App\Http\Controllers\ProductController::class,"delete_product"])->name("delete_product")->middleware("adminmaster");
+    Route::post("product_update/{id}",[App\Http\Controllers\ProductController::class,"product_update"])->name("product_update")->middleware("adminmaster");
 
+    //party_master
+    Route::get("party_master",[App\Http\Controllers\PartyController::class,"party_master"])->name("party_master")->middleware("adminmaster");
+    Route::get("new_party_master",[App\Http\Controllers\PartyController::class,"new_party_master"])->name("new_party_master")->middleware("adminmaster");
+    Route::post("party_master_insert",[App\Http\Controllers\PartyController::class,"party_master_insert"])->name("party_master_insert")->middleware("adminmaster");
+    Route::get("edit_party_master/{id}",[App\Http\Controllers\PartyController::class,"edit_party_master"])->name("edit_party_master")->middleware("adminmaster");
+    Route::post("update_party_master/{id}",[App\Http\Controllers\PartyController::class,"update_party_master"])->name("update_party_master")->middleware("adminmaster");
+    Route::get("delete_party_master/{id}",[App\Http\Controllers\PartyController::class,"delete_party_master"])->name("delete_party_master")->middleware("adminmaster");
 
     // Controller managment
      Route::get("controller",[App\Http\Controllers\MaincontrollerController::class,"index"])->name("controller")->middleware("adminmaster");
@@ -121,6 +135,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("inward-rawmaterials_add",[App\Http\Controllers\InwardMaterialController::class,"create"])->name("inward-rawmaterials_add");
         Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
+
         Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
         Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
@@ -171,9 +186,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
 
-        // Issue Material For Production
-        Route::get('issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
-        Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
+        // // Issue Material For Production
+        // Route::get('issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+        // Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
 
 
         //comming Soon

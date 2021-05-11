@@ -24,6 +24,7 @@
                             <th>Viscosity</th>
                             <th>Issual Date</th>
                             <th>Issued Quantity</th>
+                            <th>Batch Quantity</th>
                             <th>Finished Batch No</th>
                             <th>Excess</th>
                             <th>Wastage</th>
@@ -46,12 +47,13 @@
                             <td> {{$temp->viscosity}}</td>
                             <td> {{$temp->issual_date}}</td>
                             <td> {{$temp->issued_quantity}}</td>
+                            <td> {{$temp->batch_quantity}}</td>
                             <td> {{$temp->finished_batch_no}}</td>
                             <td> {{$temp->excess}}</td>
                             <td> {{$temp->wastage}}</td>
                             <td> {{$temp->returned_from_day_store}}</td>
                             <td> {{$temp->closing_balance_qty}}</td>
-                            <td> {{$temp->dispensed_by}}</td>
+                            <td> {{$temp->supplier_name}}</td>
                             <td> {{$temp->remark}}</td>
                             <td>
                             <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>

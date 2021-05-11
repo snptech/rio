@@ -22,7 +22,7 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <form  id="vali_issue_material" method="post" action="issue_material_insert">
+            <form  id="vali_issue_material" method="post" action="{{url('issue_material_insert')}}">
             {{csrf_field()}}
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -41,13 +41,19 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="OpeningBalance">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock" readonly="readonly">
+                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock" >
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="OpeningBalance"> Batch No</label>
+                            <input type="text" class="form-control calculate" name="batch_no" id="batch_no" placeholder="Balance Stock" >
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="RawBatchNo">Raw Material Batch No.</label>
-                            <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch No.">
+                            <input type="text" class="form-control" name="batch_no"  id="batch_no" placeholder="Batch No.">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -65,9 +71,16 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="IssuedQuantity">Issued Quantity</label>
-                            <input type="text" class="form-control" name="issued_quantity" id="issued_quantity" placeholder="Quantity">
+                            <input type="number" class="form-control calculate" value="0" onkeyup="sub()" name="issued_quantity" id="issued_quantity" placeholder="Quantity">
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="IssuedQuantity">Batch Quantity</label>
+                            <input type="number" class="form-control calculate" value="0" onkeyup="sub()" name="batch_quantity" id="batch_quantity" placeholder="Quantity">
+                        </div>
+                    </div>
+
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="finishedBatchNo">For finished Product Batch No.</label>
@@ -95,7 +108,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="ClosingBalance">Closing balance Qty.</label>
-                            <input type="text" class="form-control" name="closing_balance_qty" id="closing_balance_qty" placeholder="Closing Balance">
+                            <input readonly type="text" class="form-control" name="closing_balance_qty" id="closing_balance_qty" placeholder="Closing Balance" value="0">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -130,9 +143,6 @@
 </div>
 @endsection
 @push('custom-scripts')
-<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script src="//unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
  $(document).ready(function() {
         $("#vali_issue_material").validate({
@@ -141,6 +151,7 @@
                 material:"required",
                 opening_bal:"required",
                 batch_no:"required",
+                batch_quantity:"required",
                 viscosity:"required",
                 issual_date:"required",
                 issued_quantity:"required",
@@ -158,6 +169,7 @@
                 opening_bal: "Please  Enter The Opening Balance",
                 batch_no: "Please  Enter The Batch No ",
                 viscosity: "Please  Enter The Viscosity Name",
+                batch_quantity: "Please  Enter The Batch Qty",
                 issual_date: "Please  Enter The Issual Date ",
                 issued_quantity: "Please  Enter The Issued Quantity ",
                 finished_batch_no: "Please  Enter The Finished Batch No ",
@@ -174,6 +186,7 @@
             $('#material').val('');
             $('#opening_bal').val('');
             $('#batch_no').val('');
+            $('#batch_quantity').val('');
             $('#viscosity').val('');
             $('#issual_date').val('');
             $('#issued_quantity').val('');
@@ -186,6 +199,17 @@
             $('#remark').val('');
         });
 
+
     });
+    function sub() {
+        var issued_quantity = $('#issued_quantity').val();
+        var batch_quantity = $('#batch_quantity').val();
+        if(batch_quantity > 0){
+            var result = parseInt(batch_quantity) - parseInt(issued_quantity);
+            if (!isNaN(result)) {
+                $('#closing_balance_qty').val(result);
+            }
+        }
+    }
 </script>
 @endpush

@@ -74,22 +74,22 @@ class RawmaterialController extends Controller
         $data["expiry_date"] = $request->expierydate?strtotime($request->expierydate):'';
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
-        
+
 
         /*if($request->expierydat)
-        {    
+        {
             $expdate = explode("/",$request->expierydate);
             $data["expiry_date"] = $request->expierydate?strtotime($expdate[2]."-".$expdate[0]."-".$expdate[1]):"";
         }
         if($request->rioexpierydate){
             $rio_expiry_date = explode("/",$request->rioexpierydate);
             $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($rio_expiry_date[2]."-".$rio_expiry_date[0]."-".$rio_expiry_date[1]):"";
-            
+
         }
         if($request->manufacturingdate){
             $manufacturingdate = explode("/",$request->manufacturingdate);
             $data["man_date"] = $request->manufacturingdate?strtotime($manufacturingdate[2]."-".$manufacturingdate[0]."-".$manufacturingdate[1]):"";
-            
+
         }*/
 
 
@@ -172,19 +172,19 @@ class RawmaterialController extends Controller
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
         /*if($request->expierydat)
-        {    
+        {
             $expdate = explode("/",$request->expierydate);
             $data["expiry_date"] = $request->expierydate?strtotime($expdate[2]."-".$expdate[0]."-".$expdate[1]):"";
         }
         if($request->rioexpierydate){
             $rio_expiry_date = explode("/",$request->rioexpierydate);
             $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($rio_expiry_date[2]."-".$rio_expiry_date[0]."-".$rio_expiry_date[1]):"";
-            
+
         }
         if($request->manufacturingdate){
             $manufacturingdate = explode("/",$request->manufacturingdate);
             $data["man_date"] = $request->manufacturingdate?strtotime($manufacturingdate[2]."-".$manufacturingdate[0]."-".$manufacturingdate[1]):"";
-            
+
         }*/
         $rawmaterial = Rawmeterial::find($id);
         $result = $rawmaterial->update($data);

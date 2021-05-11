@@ -2,7 +2,18 @@
 @section("title","Inword Packing Material")
 @section('content')
 <div class="content-wrapper">
-  
+<div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row page-heading">
+                <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
+                  <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Goods Receipt Note (Packing Material)</h4>
+                </div>
+                <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
+                  <a href="{{route('inwardpackingrawmaterial-new')}}" class="btn btn-md btn-primary">Add New +</a>
+                </div>
+              </div>
+            </div>
+
     <div class="card main-card">
         <div class="card-body">
             @if (Session::has('error'))
@@ -80,7 +91,7 @@
 
 @endsection
 @push("models")
-  <div class="modal fade show" id="viewsupplier" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+  <div class="modal fade show" id="viewsuissue_material_for_production_addpplier" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">

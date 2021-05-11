@@ -90,7 +90,7 @@
                         @endif
 						</div>
 					</div>
-					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+					<!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="supplierAddress">Address of Supplier</label>
 						  <input type="text" class="form-control" id="supplierAddress" name="supplierAddress" placeholder="Address of Supplier">
@@ -98,8 +98,8 @@
                           <span class="text-danger">{{ $errors->first('supplierAddress') }}</span>
                         @endif
 						</div>
-					</div>
-					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+					</div> -->
+					<!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="supplierGST">Supplier GST Number</label>
 						  <input type="text" class="form-control" id="supplierGST" name="supplierGST" placeholder="Supplier GST">
@@ -107,7 +107,7 @@
                           <span class="text-danger">{{ $errors->first('supplierGST') }}</span>
                         @endif
 						</div>
-					</div>
+					</div> -->
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="invoiceNo">Invoice No.</label>

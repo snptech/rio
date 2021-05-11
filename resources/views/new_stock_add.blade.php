@@ -77,31 +77,31 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="200KgDrums">Total No. of 200Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
+                            <input type="text" class="form-control" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="50KgDrums">Total No. of 50Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_50kg_drums" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
+                            <input type="text" class="form-control" name="total_no_of_50kg_drums" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="30KgDrums">Total No. of 30Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_30kg_drums" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
+                            <input type="text" class="form-control" name="total_no_of_30kg_drums" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="5KgDrums">Total No. of 5Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
+                            <input type="text" class="form-control" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="FiberboardDrums">Total No. of Fiber board Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Fiber board Drums">
+                            <input type="text" class="form-control" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Fiber board Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -113,7 +113,10 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">AR No</label>
-                            <select class="form-control select" name="ar_no" id="ar_no">
+                            <textarea class="form-control" name="ar_no" id="ar_no" placeholder="AR.No"></textarea>
+
+
+                            <!-- <select class="form-control select" name="ar_no" id="ar_no">
                                 <option value=""> Select</option>
                                 @if(count($arno_master))
                                 @foreach($arno_master as $temp)
@@ -121,7 +124,8 @@
                                 @endforeach
                                 @endif
 
-                            </select>
+
+                            </select> -->
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">

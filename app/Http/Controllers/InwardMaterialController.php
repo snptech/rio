@@ -23,6 +23,7 @@ class InwardMaterialController extends Controller
     public function index()
     {
 
+
         $data['inward_material']=InwardMaterial::all();
         return view("inwardrawmaterial",$data);
     }

@@ -52,7 +52,7 @@
                             <td>{{$temp->wastage}}</td>
                             <td>{{$temp->returned_from_day_store}}</td>
                             <td>{{$temp->closing_balance_qty}}</td>
-                            <td>{{$temp->dispensed_by}}</td>
+                            <td>{{$temp->supplier_name}}</td>
                             <td>{{$temp->remark}}</td>
                         </tr>
                         @endforeach
