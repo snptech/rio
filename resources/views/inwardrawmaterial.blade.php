@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                         @if(count($inward_material))
-                        @foreach($inward_material as $temp)3
+                        @foreach($inward_material as $temp)
                         <tr>
                         <td>{{$loop->index+1}}</td>
                         <td>{{$temp->inward_no}}</td>
