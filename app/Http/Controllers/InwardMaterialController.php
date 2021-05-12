@@ -24,7 +24,8 @@ class InwardMaterialController extends Controller
     {
 
 
-        $data['inward_material']=InwardMaterial::all();
+        $data['inward_material']=InwardMaterial::select("inward_raw_materials.*","department.department as fromdepartment","suppliers.name","manufacturers.manufacturer as man_name","depto.department as todepartment","raw_materials.material_name")->join("department","department.id","inward_raw_materials.received_from")->join("department as depto","depto.id","inward_raw_materials.received_to")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials.material")->get();
+
         return view("inwardrawmaterial",$data);
     }
     public function create()
@@ -56,7 +57,7 @@ class InwardMaterialController extends Controller
          "invoiceNo"=>"required",
          "receiptNo"=>"required",
          "materialnames.*"=>"required",
-         /*"batch.*"=>"required",*/
+         "batch.*"=>"required",
          "Containers.*"=>"required",
          "Quantity.*"=>"required",
          "mfgDate.*"=>"required",

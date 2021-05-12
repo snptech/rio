@@ -160,9 +160,12 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
         // issue material for production
         Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
-        Route::get('/view_issue_material/{id}', [App\Http\Controllers\MaterialForProductionController::class, 'view_issue_material'])->name("view_issue_material");
+        Route::post('view_issue_material', [App\Http\Controllers\MaterialForProductionController::class, 'view_issue_material'])->name("view_issue_material");
         Route::get('/issue_material_for_production_add', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production_add'])->name("issue_material_for_production_add");
         Route::post('issue_material_insert', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_insert']);
+        Route::post("getmatarialqtyandbatch",[App\Http\Controllers\MaterialForProductionController::class, 'getmatarialqtyandbatch'])->name("getmatarialqtyandbatch");
+        Route::post("getmatarialqtyofbatch",[App\Http\Controllers\MaterialForProductionController::class, 'getmatarialqtyofbatch'])->name("getmatarialqtyofbatch");
+
          // quality control
          Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);

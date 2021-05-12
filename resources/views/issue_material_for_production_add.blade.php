@@ -34,7 +34,10 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="MaterialName">Raw Material Name</label>
-                            <input type="text" class="form-control" name="material" id="material" placeholder=" Raw Material Name">
+                            {{ Form::select("material",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"materialname","placeholder"=>"Choose Material")) }}
+                            @if ($errors->has('material'))
+                            <span class="text-danger">{{ $errors->first('material') }}</span>
+                          @endif
 
                         </div>
                     </div>
@@ -44,16 +47,12 @@
                             <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock" >
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="OpeningBalance"> Batch No</label>
-                            <input type="text" class="form-control calculate" name="batch_no" id="batch_no" placeholder="Balance Stock" >
-                        </div>
-                    </div>
+
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="RawBatchNo">Raw Material Batch No.</label>
-                            <input type="text" class="form-control" name="batch_no"  id="batch_no" placeholder="Batch No.">
+                            {{ Form::select("batch_no",array(),old("batch_no"),array("class"=>"form-control select","id"=>"batch_no","placeholder"=>"Choose Batch No")) }}
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -65,7 +64,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="IssualDate">Issual Date</label>
-                            <input type="date" class="form-control calendar" name="issual_date" id="issual_date" placeholder="Viscosity">
+                            <input type="date" class="form-control calendar" name="issual_date" id="issual_date" placeholder="Viscosity" value="{{ date("Y-m-d") }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -114,14 +113,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Dispensed by</label>
-                            <select class="form-control select" name="dispensed_by" id="dispensed_by">
-                                <option value="">Select</option>
-                                @if(count($supplier_master))
-                                @foreach ($supplier_master as $temp)
-                                <option value="{{$temp->id}}">{{$temp->name}}</option>
-                                @endforeach
-                                @endif
-                          </select>
+                            <input readonly type="text" class="form-control" name="dispensed_by" id="dispensed_by" placeholder="Dispensed by" value="{{ \Auth::user()->name }}">
                         </div>
                     </div>
                     <div class="col-12">
@@ -145,6 +137,39 @@
 @push('custom-scripts')
 <script>
  $(document).ready(function() {
+     $("#materialname").change(function(){
+         $.ajax({
+             url:'{{ route('getmatarialqtyandbatch') }}',
+             method:'POST',
+             data:{
+                 "id":$(this).val(),
+                 "_token":'{{ csrf_token() }}'
+             }
+         }).success(function(data){
+            $("#opening_bal").val(data.material.material_stock);
+            $.each(data.batch, function (key, val) {
+                var option ="<option value='"+key+"'>"+val+"</option>";
+
+                $("#batch_no").append(option);
+        });
+         })
+     })
+     $("#batch_no").change(function(){
+         $.ajax({
+             url:'{{ route('getmatarialqtyofbatch') }}',
+             method:'POST',
+             data:{
+                 "id":$(this).val(),
+                 "rawmaterial":$("#materialname").val(),
+                 "_token":'{{ csrf_token() }}'
+             }
+         }).success(function(data){
+            $("#issued_quantity").val(data.qty);
+            $("#batch_quantity").val(data.qty);
+
+
+         })
+     })
         $("#vali_issue_material").validate({
             rules: {
                 requisition_no:"required",
@@ -152,13 +177,13 @@
                 opening_bal:"required",
                 batch_no:"required",
                 batch_quantity:"required",
-                viscosity:"required",
+
                 issual_date:"required",
                 issued_quantity:"required",
-                excess: "required",
+               /* excess: "required",
                 finished_batch_no:"required",
                 wastage: "required",
-                returned_from_day_store:"required",
+                returned_from_day_store:"required",*/
                 closing_balance_qty:"required",
                 dispensed_by:"required",
                 remark:"required",

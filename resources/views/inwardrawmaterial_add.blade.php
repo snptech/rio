@@ -254,7 +254,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#suppliername").change(function(){
+           /* $("#suppliername").change(function(){
                 $.ajax({
                     url:'{{ route("inwardrawmaterial-supplier") }}',
                     data:{
@@ -267,7 +267,7 @@
                     $("#supplierAddress").val(data.address);
                     $("#supplierGST").val(data.gst);
                 })
-            })
+            })*/
       $("#inwardrawmaterialForm").validate({
         rules: {
             rno : {
@@ -307,9 +307,9 @@
           "materialnames[]":{
               required:true
           },
-          /*"batch[]":{
+          "batch[]":{
               required:true
-          },*/
+          },
           "Containers[]":{
               required:true
           },

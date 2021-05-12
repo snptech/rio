@@ -24,7 +24,7 @@
                             <th>Viscosity</th>
                             <th>Issual Date</th>
                             <th>Issued Quantity</th>
-                            <th>Batch Quantity</th>
+
                             <th>Finished Batch No</th>
                             <th>Excess</th>
                             <th>Wastage</th>
@@ -41,22 +41,21 @@
                         @foreach($issue_material as $temp)
                         <tr>
                             <td> {{$temp->requisition_no}}</td>
-                            <td> {{$temp->material}}</td>
+                            <td> {{$temp->material_name}}</td>
                             <td> {{$temp->opening_bal}}</td>
-                            <td> {{$temp->batch_no}}</td>
+                            <td> {{$temp->rbatch}}</td>
                             <td> {{$temp->viscosity}}</td>
                             <td> {{$temp->issual_date}}</td>
                             <td> {{$temp->issued_quantity}}</td>
-                            <td> {{$temp->batch_quantity}}</td>
                             <td> {{$temp->finished_batch_no}}</td>
                             <td> {{$temp->excess}}</td>
                             <td> {{$temp->wastage}}</td>
                             <td> {{$temp->returned_from_day_store}}</td>
                             <td> {{$temp->closing_balance_qty}}</td>
-                            <td> {{$temp->supplier_name}}</td>
+                            <td> {{$temp->name}}</td>
                             <td> {{$temp->remark}}</td>
                             <td>
-                            <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>
+                           <!-- <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>--><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a>
 
                             </td>
 
@@ -75,6 +74,21 @@
 </div>
 
 @endsection
+@push("models")
+<div class="modal fade show" id="viewsupplier" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="checkQuntityLabel">Supplier Details</h5>
+      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+    </div>
+    <div class="modal-body">
+
+    </div>
+  </div>
+</div>
+</div>
+@endpush
 @push("scripts")
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -87,9 +101,28 @@
     <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{{ asset('assets/js/custom.js')  }}"></script>
-<script>
-     $('.datatable').DataTable({
-     });
+  <!-- End custom js for this page-->
+  <script>
+      feather.replace()
+    $(document).ready(function() {
+        $('.datatable').DataTable();
+    });
+
+    function viewsupp(id)
+    {
+       $.ajax({
+         url:'{{route("view_issue_material")}}',
+         data:{
+        "_token": "{{ csrf_token() }}",
+        "id": id
+        },
+        datatype:'json',
+         method:"POST"
+       }).done(function( html ) {
+
+          $(".modal-body").html(html.html);
+      });
+    }
 
   </script>
 @endpush

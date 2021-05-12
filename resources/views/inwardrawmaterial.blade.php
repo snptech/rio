@@ -18,9 +18,9 @@
         <div class="card-body">
             <div class="tbl-sticky">
             <table class="table table-hover table-bordered datatable">
-                          <thead>
+                       <thead>
                         <tr>
-                        <th>#</th>
+                            <th>#</th>
                             <th>Inward No</th>
                             <th>Received From</th>
                             <th>Received To</th>
@@ -28,31 +28,30 @@
                             <th>Material</th>
                             <th>Manufacturer</th>
                             <th>Supplier</th>
-                            <th>Supplier Address</th>
-                            <th>Supplier Gst</th>
                             <th>Invoice No</th>
                             <th>Remark</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if(count($inward_material))
+                        @if(isset($inward_material))
+                        @php $i=1; @endphp
                         @foreach($inward_material as $temp)
                         <tr>
-                        <td>{{$loop->index+1}}</td>
+                        <td>{{ $i }}</td>
                         <td>{{$temp->inward_no}}</td>
-                        <td>{{$temp->received_from}}</td>
-                        <td>{{$temp->received_to}}</td>
+                        <td>{{$temp->fromdepartment}}</td>
+                        <td>{{$temp->todepartment}}</td>
                         <td>{{$temp->date_of_receipt}}</td>
-                        <td>{{$temp->material}}</td>
-                        <td>{{$temp->manufacturer}}</td>
-                        <td>{{$temp->supplier}}</td>
-                        <td>{{$temp->supplier_address}}</td>
-                        <td>{{$temp->supplier_gst}}</td>
+                        <td>{{$temp->material_name}}</td>
+                        <td>{{$temp->man_name}}</td>
+                        <td>{{$temp->name}}</td>
+
                         <td>{{$temp->invoice_no}}</td>
                         <td>{{$temp->remark}}</td>
-                        <td>Action</td>
+                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a></td>
                         </tr>
+                        @php $i++; @endphp
                         @endforeach
                         @endif
 
@@ -81,11 +80,11 @@
   <script src="{{ asset('assets/js/custom.js')  }}"></script>
   <!-- End custom js for this page-->
   <script>
-     $('.datatable').DataTable({
-     });
+      feather.replace()
+    $(document).ready(function() {
+        $('.datatable').DataTable();
+    });
+    function remove(url) {
 
-  </script>
-  @endpush
-
-
+@endpush
 
