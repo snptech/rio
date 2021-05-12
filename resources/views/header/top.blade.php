@@ -1,6 +1,6 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex align-items-center">
-      <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('assets/img/rio_care_logo.png') }}" class="mr-2" alt="logo"/><span class="sys-logo align-self-center">Inventory and Stock Management</span></a>
+      <a class="navbar-brand brand-logo" href="{{ route("home") }}"><img src="{{ asset('assets/img/rio_care_logo.png') }}" class="mr-2" alt="logo"/><span class="sys-logo align-self-center">Inventory and Stock Management</span></a>
       <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('assets/img/rio_care_small_logo.png') }}" alt="logo"/></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">

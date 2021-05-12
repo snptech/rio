@@ -44,7 +44,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="OpeningBalance">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" placeholder="Balance Stock" >
+                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" onkeyup="sub()"  placeholder="Balance Stock" >
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="IssuedQuantity">Batch Quantity</label>
-                            <input type="number" class="form-control calculate" value="0" onkeyup="sub()" name="batch_quantity" id="batch_quantity" placeholder="Quantity">
+                            <input type="number" class="form-control calculate" value="0" onkeyup="" name="batch_quantity" id="batch_quantity" placeholder="Quantity">
                         </div>
                     </div>
 
@@ -147,6 +147,7 @@
              }
          }).success(function(data){
             $("#opening_bal").val(data.material.material_stock);
+            $("#closing_balance_qty").val(data.material.material_stock);
             $.each(data.batch, function (key, val) {
                 var option ="<option value='"+key+"'>"+val+"</option>";
 
@@ -166,6 +167,8 @@
          }).success(function(data){
             $("#issued_quantity").val(data.qty);
             $("#batch_quantity").val(data.qty);
+            var batch_quantity = $('#opening_bal').val();
+            $("#closing_balance_qty").val(batch_quantity-data.qty);
 
 
          })
@@ -228,7 +231,7 @@
     });
     function sub() {
         var issued_quantity = $('#issued_quantity').val();
-        var batch_quantity = $('#batch_quantity').val();
+        var batch_quantity = $('#opening_bal').val();
         if(batch_quantity > 0){
             var result = parseInt(batch_quantity) - parseInt(issued_quantity);
             if (!isNaN(result)) {

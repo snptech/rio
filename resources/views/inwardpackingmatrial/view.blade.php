@@ -6,15 +6,19 @@
                      <table class="table table-hover table-bordered">
                          <tr>
                              <th>Packing Material From</th>
-                             <td>{{ $matarial->goods_going_from }}</td>
+                             <td>{{ $matarial->goods_going_from_name }}</td>
                          </tr>
                          <tr>
                             <th>Packing Material To</th>
-                            <td>{{ $matarial->goods_going_to }}</td>
+                            <td>{{ $matarial->goods_going_to_name }}</td>
                         </tr>
                         <tr>
                             <th>Date of Receipt</th>
                             <td>{{ $matarial->date_of_receipt }}</td>
+                        </tr>
+                        <tr>
+                            <th>Name of Material</th>
+                            <td>{{ $matarial->material_name }}</td>
                         </tr>
                         <tr>
                             <th>Name of Manufacturer</th>
@@ -33,31 +37,15 @@
                             <th>Goods Receipt No.</th>
                             <td>{{ $matarial->goods_receipt_no }}</td>
                         </tr>
-
-                        @if(isset($matarial->items))
                         <tr>
-                            <th colspan="2">Details of Material Received </th>
-
+                        <th> Total Quantity Received (Nos.)</th>
+                         <td>{{ $matarial->total_qty }}</td>
                         </tr>
-
-
-
                         <tr>
-                            <td colspan="2">
-                                <table width="100%">
-                                    @foreach ($matarial->items as $val)
-                                        @php $matrialname = \App\Models\Rawmeterial::find($val->material); @endphp
-                                    <tr>
-                                        <td><strong> Material Name</strong> <br>{{ $matrialname->material_name }}  </td>
-                                        <td><strong> Total Quantity Received (Nos.)</strong> <br>{{ $val->total_qty }}</td>
-                                        <td><strong> AR No. / Date</strong> <br>{{ $val->ar_no_date }}</td>
-                                    </tr>
-                                    @endforeach
-                                </table>
-                            </td>
-                        </tr>
+                         <th>AR No. / Date</th>
+                         <td>{{ $matarial->ar_no_date }}</td>
 
-                        @endif
+
                         <tr>
                             <th>Remark</th>
                             <td>{{ $matarial->remark }}</td>

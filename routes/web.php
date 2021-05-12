@@ -135,6 +135,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("inward-rawmaterials_add",[App\Http\Controllers\InwardMaterialController::class,"create"])->name("inward-rawmaterials_add");
         Route::post("inwardrawmaterial/save",[App\Http\Controllers\InwardMaterialController::class,"store"])->name("inwardrawmaterial-store");
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
+        Route::post("show-material",[App\Http\Controllers\InwardMaterialController::class,"showmaterail"])->name("show-material");
 
         Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");

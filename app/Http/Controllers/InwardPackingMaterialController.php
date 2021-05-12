@@ -21,7 +21,7 @@ class InwardPackingMaterialController extends Controller
 
     }
     public function index(){
-        
+
         $rawmaterial = Rawmeterial::pluck("material_name","id");
 
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
@@ -30,7 +30,7 @@ class InwardPackingMaterialController extends Controller
     }
     public function add()
     {
-        $rawmaterial = Rawmeterial::pluck("material_name","id");
+        $rawmaterial = Rawmeterial::where("material_type","P")->pluck("material_name","id");
         $department = Department::pluck("department","id");
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
@@ -41,11 +41,15 @@ class InwardPackingMaterialController extends Controller
 
         $listquery = "";
 
-        $listquery = InwardPackingMaterial::select("goods_receipt_notes.*",
-        "suppliers.name","manufacturers.manufacturer","users.name as uname")
+        $listquery = InwardPackingMaterialItems::select("goods_receipt_notes.*","goods_receipt_note_items.*",
+        "suppliers.name","manufacturers.manufacturer","users.name as uname","department.department as goods_going_from_name","detpto.department as goods_going_to_name","raw_materials.material_name","goods_receipt_note_items.id as itemid","goods_receipt_notes.id as id")
+                    ->join("goods_receipt_notes","goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
                      ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
                      ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
-                     ->leftJoin("users","users.id","goods_receipt_notes.created_by");
+                     ->join("raw_materials","raw_materials.id","goods_receipt_note_items.material")
+                     ->leftJoin("users","users.id","goods_receipt_notes.created_by")
+                     ->join("department", "department.id", "=", "goods_receipt_notes.goods_going_from")
+                     ->join("department as detpto", "detpto.id", "=", "goods_receipt_notes.goods_going_to");
 
         $totalData = $listquery->count();
 
@@ -127,15 +131,17 @@ class InwardPackingMaterialController extends Controller
 
 
                 $nestedData['id'] = $i;
-                $nestedData["from"] = $post->goods_going_from;
-                $nestedData["to"] = $post->goods_going_to;
+                $nestedData["from"] = $post->goods_going_from_name;
+                $nestedData["to"] = $post->goods_going_to_name;
                 $nestedData['date_of_receipt'] = $post->date_of_receipt?date("d/m/Y",$post->date_of_receipt):"";
+                $nestedData['material_name'] = $post->material_name;
                 $nestedData['manufacturer'] = $post->manufacturer;
                 $nestedData['supplier'] = $post->name;
                 $nestedData['invoice_no'] = $post->invoice_no;
+                $nestedData['qty'] = $post->total_qty;
                 $nestedData['goods_receipt_no'] = $post->goods_receipt_no;
                 $nestedData["submited_by"] = $post->uname;
-                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewrawmatrial('.$post->id.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove(\''.$delete.'\')"><i data-feather="trash"></i></a></div>';
+                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewrawmatrial('.$post->itemid.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a></div>';
 
                 $datas[] = $nestedData;
 
@@ -215,6 +221,11 @@ class InwardPackingMaterialController extends Controller
                     $datas["total_qty"] = $request->total_qty[$i];
                     $datas["ar_no_date"] = $request->ar_no_date[$i];
                     $result = InwardPackingMaterialItems::create($datas);
+
+                    $stock = Rawmeterial::find($value);
+                    $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
+
+                    $stock->update($datas);
                     $i++;
                 }
 
@@ -233,7 +244,7 @@ class InwardPackingMaterialController extends Controller
     {
         if($id)
         {
-            $rawmaterial = Rawmeterial::pluck("material_name","id");
+            $rawmaterial = Rawmeterial::where("material_type","P")->pluck("material_name","id");
             $department = Department::pluck("department","id");
             $supplier  = Supplier::where("publish",1)->pluck("name","id");
             $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
@@ -339,10 +350,16 @@ class InwardPackingMaterialController extends Controller
     {
         if($request->id)
         {
-            $InwardPackingMaterial =  InwardPackingMaterial::select("goods_receipt_notes.*","suppliers.name","manufacturers.manufacturer","users.name as uname")
-            ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
-            ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
-            ->leftJoin("users","users.id","goods_receipt_notes.created_by")->where("goods_receipt_notes.id",$request->id)->first();
+            $InwardPackingMaterial =  InwardPackingMaterialItems::select("goods_receipt_notes.*","goods_receipt_note_items.*",
+            "suppliers.name","manufacturers.manufacturer","users.name as uname","department.department as goods_going_from_name","detpto.department as goods_going_to_name","raw_materials.material_name","goods_receipt_note_items.id as itemid","goods_receipt_notes.id as id")
+                        ->join("goods_receipt_notes","goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
+                         ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
+                         ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
+                         ->join("raw_materials","raw_materials.id","goods_receipt_note_items.material")
+                         ->leftJoin("users","users.id","goods_receipt_notes.created_by")
+                         ->join("department", "department.id", "=", "goods_receipt_notes.goods_going_from")
+                         ->join("department as detpto", "detpto.id", "=", "goods_receipt_notes.goods_going_to")
+                         ->where("goods_receipt_note_items.id",$request->id)->first();
 
              $view = view('inwardpackingmatrial.view', ['matarial'=> $InwardPackingMaterial])->render();
              return response()->json(['html'=>$view]);

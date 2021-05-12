@@ -72,11 +72,14 @@
                             <th>From</th>
                             <th>To</th>
                             <th>Date of Receipt</th>
+                            <th>Packing Material Name</th>
                             <th>Name of Manufacturer</th>
                             <th>Name of Supplier</th>
                             <th>Invoice No./ Challan</th>
-                            <th>Goods Receipt No.</th>
-                            <th>Submited by</th>
+
+                            <th>Quantity</th>
+                            <th>GRN</th>
+                            <th>Checked by</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -91,7 +94,7 @@
 
 @endsection
 @push("models")
-  <div class="modal fade show" id="viewsuissue_material_for_production_addpplier" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+  <div class="modal fade show" id="viewsupplier" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -153,6 +156,7 @@
             }
 
         },
+
         columns: [
             {
                 "data": "id"
@@ -171,6 +175,10 @@
                 "orderable": true
             },
             {
+                "data": "material_name",
+                "orderable": false
+            },
+            {
                 "data": "manufacturer",
                 "orderable": false
             },
@@ -182,6 +190,11 @@
                 "data": "invoice_no",
                 "orderable": true
             },
+            {
+                "data": "qty",
+                "orderable": true
+            },
+
             {
                 "data": "goods_receipt_no",
                 "orderable": true

@@ -20,17 +20,24 @@
             <table class="table table-hover table-bordered datatable">
                        <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Inward No</th>
-                            <th>Received From</th>
-                            <th>Received To</th>
-                            <th>Date Of Receipt</th>
-                            <th>Material</th>
-                            <th>Manufacturer</th>
-                            <th>Supplier</th>
-                            <th>Invoice No</th>
-                            <th>Remark</th>
-                            <th>Action</th>
+                            <th rowspan="2">Inward No</th>
+                            <th rowspan="2">Date of Receipt</th>
+                            <th rowspan="2">Opening Balance</th>
+                            <th rowspan="2">Name of Manufacturer</th>
+                            <th rowspan="2">Name of Supplier</th>
+                            <th rowspan="2">Raw Material Name</th>
+                            <th rowspan="2">Invoice Number</th>
+                            <th rowspan="2">GRN</th>
+                            <th rowspan="2">Total Quantity (Kg.)</th>
+                            <th rowspan="2">Pack Size</th>
+                            <th rowspan="2">Batch No.</th>
+                            <th colspan="2">Manufacturer’s</th>
+                            <th rowspan="2">RioCars’s Expiry / Retest Date</th>
+                            <th rowspan="2">Action</th>
+                        </tr>
+                        <tr>
+                            <th>Mfg. Date</th>
+                            <th>Expiry / Retest Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,18 +45,22 @@
                         @php $i=1; @endphp
                         @foreach($inward_material as $temp)
                         <tr>
-                        <td>{{ $i }}</td>
+
                         <td>{{$temp->inward_no}}</td>
-                        <td>{{$temp->fromdepartment}}</td>
-                        <td>{{$temp->todepartment}}</td>
-                        <td>{{$temp->date_of_receipt}}</td>
-                        <td>{{$temp->material_name}}</td>
+                        <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
+                        <td>{{$temp->material_stock}}</td>
                         <td>{{$temp->man_name}}</td>
                         <td>{{$temp->name}}</td>
-
+                        <td>{{$temp->material_name}}</td>
                         <td>{{$temp->invoice_no}}</td>
-                        <td>{{$temp->remark}}</td>
-                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a></td>
+                        <td>{{$temp->goods_receipt_no}}</td>
+                        <td>{{$temp->qty_received_kg}}</td>
+                        <td>{{$temp->mesurment}}</td>
+                        <td>{{$temp->batch_no}}</td>
+                        <td>{{$temp->mfg_date!=""?date("d/m/Y",strtotime($temp->mfg_date)):""}}</td>
+                        <td>{{$temp->mfg_expiry_date!=""?date("d/m/Y",strtotime($temp->mfg_expiry_date)):""}}</td>
+                        <td>{{$temp->rio_care_expiry_date!=""?date("d/m/Y",strtotime($temp->rio_care_expiry_date)):""}}</td>
+                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->itemid}})"><i data-feather="eye"></i></a></td>
                         </tr>
                         @php $i++; @endphp
                         @endforeach
@@ -66,6 +77,20 @@
 
 
 @endsection
+@push("models")
+  <div class="modal fade show" id="viewsupplier" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkQuntityLabel">Inward Material Details</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
 @push("scripts")
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -84,7 +109,22 @@
     $(document).ready(function() {
         $('.datatable').DataTable();
     });
-    function remove(url) {
+    function viewsupp(id)
+    {
+       $.ajax({
+         url:'{{route("show-material")}}',
+         data:{
+        "_token": "{{ csrf_token() }}",
+        "id": id
+        },
+        datatype:'json',
+         method:"POST"
+       }).done(function( html ) {
+
+          $(".modal-body").html(html.html);
+      });
+    }
+</script>
 
 @endpush
 

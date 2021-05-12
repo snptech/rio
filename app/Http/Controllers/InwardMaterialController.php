@@ -24,7 +24,7 @@ class InwardMaterialController extends Controller
     {
 
 
-        $data['inward_material']=InwardMaterial::select("inward_raw_materials.*","department.department as fromdepartment","suppliers.name","manufacturers.manufacturer as man_name","depto.department as todepartment","raw_materials.material_name")->join("department","department.id","inward_raw_materials.received_from")->join("department as depto","depto.id","inward_raw_materials.received_to")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials.material")->get();
+        $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid")->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")->join("mesurments","mesurments.id","raw_materials.material_mesurment")->get();
 
         return view("inwardrawmaterial",$data);
     }
@@ -132,9 +132,9 @@ class InwardMaterialController extends Controller
                     $itemdata["batch_no"] = $request->batch[$i];
                     $itemdata["total_no_of_containers_or_bags"] = $request->Containers[$i];
                     $itemdata["qty_received_kg"] = $request->Quantity[$i];
-                    $itemdata["mfg_date"] = $request->mfgDate[$i]?strtotime($request->mfgDate[$i]):"";
-                    $itemdata["mfg_expiry_date"] = $request->ExpiryDate[$i]?strtotime($request->ExpiryDate[$i]):"";
-                    $itemdata["rio_care_expiry_date"] = $request->RIOExpiryDate[$i]?strtotime($request->RIOExpiryDate[$i]):"";
+                    $itemdata["mfg_date"] = $request->mfgDate[$i]!=""?strtotime($request->mfgDate[$i]):"";
+                    $itemdata["mfg_expiry_date"] = $request->ExpiryDate[$i]!=""?strtotime($request->ExpiryDate[$i]):"";
+                    $itemdata["rio_care_expiry_date"] = $request->RIOExpiryDate[$i]!=""?strtotime($request->RIOExpiryDate[$i]):"";
                     $itemdata["ar_no_date"] = $request->ARNo[$i]?($request->ARNo[$i]):"";
 
                     $resultsItem = Rawmaterialitems::create($itemdata);
@@ -163,6 +163,21 @@ class InwardMaterialController extends Controller
             {
                 return response()->json(['address' => $supplier->address, 'gst' =>$supplier->gst_no]);
             }
+        }
+    }
+    public function showmaterail(Request $request)
+    {
+        if($request->id)
+        {
+            $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid","users.name as uname")->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")->join("mesurments","mesurments.id","raw_materials.material_mesurment")->join("users","users.id","inward_raw_materials.created_by")->where("inward_raw_materials_items.id",$request->id)->first();
+
+            $view = view('viewinwardrawmaterial',$data)->render();
+             return response()->json(['html'=>$view]);
+
+        }
+        else
+        {
+            throw(404);
         }
     }
 }

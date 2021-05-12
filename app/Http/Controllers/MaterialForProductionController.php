@@ -17,6 +17,7 @@ class MaterialForProductionController extends Controller
         ->join("raw_materials", "raw_materials.id", "=", "issue_material_production.material")
         ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "=", "issue_material_production.batch_no")
         ->join("users", "users.id", "=", "issue_material_production.dispensed_by")
+
         ->get();
 
         return view('issue_material_for_production',$data);
@@ -48,6 +49,7 @@ class MaterialForProductionController extends Controller
         'issual_date'=> $request['issual_date'],
         'issued_quantity'=> $request['issued_quantity'],
         'finished_batch_no'=> $request['finished_batch_no'],
+        'batch_quantity'=> $request['batch_quantity'],
         'excess'=> $request['excess'],
         'wastage'=> $request['wastage'],
         'returned_from_day_store'=> $request['returned_from_day_store'],
