@@ -52,9 +52,9 @@
                                     <td>{{ date('d / m /Y',strtotime($temp->created_at))}}</td>
 
                                     <td>{{$temp->qty_received_kg}}</td>
-                                    <td>{{$temp->name_manufacturer}}</td>
-                                    <td>{{$temp->name_supplier}}</td>
-                                    <td>{{$temp->raw_material_name}}</td>
+                                    <td>{{$temp->manufacturer}}</td>
+                                    <td>{{$temp->name}}</td>
+                                    <td>{{$temp->material_name}}</td>
                                     <td>{{$temp->batch_no}}</td>
                                     <td>{{$temp->goods_receipt_no}}</td>
                                     <td>{{$temp->ar_no_date}}</td>
@@ -63,11 +63,19 @@
                                     <td>{{$temp->date_of_approval}}</td>
                                     @if($temp->quantity_status=='Approved')
                                     <td><span class="badges text-success">Approved</span></td>
-                                    @else($temp->quantity_status=='Rejected')
+                                    @elseif($temp->quantity_status=='Rejected')
                                     <td><span class="badges text-danger">Rejected</span></td>
+                                    @else
+                                    <td>&nbsp;</td>
                                     @endif
                                     <td><small>{{$temp->remark}}</small></td>
-                                    <td><a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->quality_id}}')"class="btn btn-primary btn-sm">Check</a></td>
+                                    <td>
+                                        @if(!$temp->quality_id)
+                                        <a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
+                                        @else
+                                            Checked
+                                        @endif
+                                    </td>
 
                                     </tr>
                                 @endforeach
@@ -84,13 +92,7 @@
     <div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="checkQuntityLabel">{{$temp->name_material}} - {{$temp->batch_no}}.</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
-                </div>
-                <div class="modal-body">
 
-                </div>
             </div>
         </div>
     </div>
@@ -137,7 +139,7 @@
         function qualitycontrol(quality_id)
     {
        $.ajax({
-         url:'qty_control',
+         url:'{{ route('qty_control') }}',
          data:{
         "_token": "{{ csrf_token() }}",
         "quality_id": quality_id
@@ -146,8 +148,28 @@
          method:"POST"
        }).done(function( html ) {
 
-          $(".modal-body").html(html.html);
+          $(".modal-content").html(html.html);
       });
     }
+    </script>
+    <script>
+
+        $(document).ready(function() {
+
+            $("#checkQuantity").validate({
+                rules: {
+                    quantity_approved: "required",
+                    quantity_status: "required",
+                    date_of_approval: "required",
+
+                },
+                messages: {
+                    quantity_approved: "Please  Enter quantity approved",
+                    quantity_status: "Please select check status",
+                    date_of_approval: "Please  Enter date of approval",
+
+                },
+            });
+        });
     </script>
     @endpush
