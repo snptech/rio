@@ -230,13 +230,13 @@ class InwardPackingMaterialController extends Controller
                 }
 
 
-                    return redirect("inwardpackingrawmaterial/list")->with('message', "Inward packing rawmaterial created successfully");
+                    return redirect(route("inwardpackingrawmaterial-list"))->with('message', "Inward packing rawmaterial created successfully");
 
 
             }
         }
         else
-            return redirect("inwardpackingrawmaterial/list")->with('error', "Something went wrong");
+            return redirect(route("inwardpackingrawmaterial-list"))->with('error', "Something went wrong");
 
 
     }
