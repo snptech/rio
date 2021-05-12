@@ -1,4 +1,5 @@
 @extends("layouts.app")
+@section("title","Goods Receipt Note")
 @section('content')
 <div class="content-wrapper">
     <div class="row">
@@ -15,10 +16,11 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <div class="">
-            <table class="table table-hover table-bordered">
-                       <thead>
+            <div class="tbl-sticky">
+            <table class="table table-hover table-bordered datatable">
+                          <thead>
                         <tr>
+                        <th>#</th>
                             <th>Inward No</th>
                             <th>Received From</th>
                             <th>Received To</th>
@@ -35,8 +37,9 @@
                     </thead>
                     <tbody>
                         @if(count($inward_material))
-                        @foreach($inward_material as $temp)
+                        @foreach($inward_material as $temp)3
                         <tr>
+                        <td>{{$loop->index+1}}</td>
                         <td>{{$temp->inward_no}}</td>
                         <td>{{$temp->received_from}}</td>
                         <td>{{$temp->received_to}}</td>
@@ -56,30 +59,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
 </div>
+
 
 @endsection
 @push("scripts")
@@ -96,153 +81,11 @@
   <script src="{{ asset('assets/js/custom.js')  }}"></script>
   <!-- End custom js for this page-->
   <script>
-      feather.replace()
-    $(document).ready(function() {
-        var table = $('.datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        responsive: true,
-        drawCallback: function( settings ) {
-            feather.replace();
-        },
-        ajax: {
-            "url": "{{route('inwardpackingrawmaterial-listAjax')}}",
-            "type": "POST",
-            "dataType": "json",
-            'data': function(data){
-                // Read values
-                var rcdate = $('#ReceiptDate').val();
-                var ReceiptNo = $('#ReceiptNo').val();
-                var manufacturer = $('#manufacturer').val();
-                var supplier = $('#supplier').val();
-                var invoiceNo = $('#invoiceNo').val();
+     $('.datatable').DataTable({
+     });
 
-
-                // Append to data
-                data.rcdate = rcdate;
-                data.ReceiptNo = ReceiptNo;
-                data.manufacturer = manufacturer;
-                data.supplier = supplier;
-                data.invoiceNo = invoiceNo;
-                data._token = '{{csrf_token()}}';
-
-                feather.replace()
-            }
-
-        },
-        columns: [
-            {
-                "data": "id"
-            },
-
-            {
-                "data": "from",
-                "orderable": true
-            },
-            {
-                "data": "to",
-                "orderable": true
-            },
-            {
-                "data": "date_of_receipt",
-                "orderable": true
-            },
-            {
-                "data": "manufacturer",
-                "orderable": false
-            },
-            {
-                "data": "supplier",
-                "orderable": false
-            },
-            {
-                "data": "invoice_no",
-                "orderable": true
-            },
-            {
-                "data": "goods_receipt_no",
-                "orderable": true
-            },
-            {
-                "data": "submited_by",
-                "orderable": false
-            },
-            {
-                "data": "action",
-                "orderable": false
-            }
-        ]
-        });
-        $('#ReceiptDate').change(function(){
-        table.draw();
-        });
-
-        $('#ReceiptNo').keyup(function(){
-        table.draw();
-        });
-
-        $('#manufacturer').change(function(){
-        table.draw();
-        });
-        $('#supplier').change(function(){
-        table.draw();
-        });
-        $('#invoiceNo').keyup(function(){
-        table.draw();
-        });
-    } );
-    function remove(url) {
-
-        const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-        }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = url;
-            swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your record has been deleted.',
-            'success'
-            )
-        } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-        ) {
-            swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-            )
-        }
-        })
-    }
-    function viewrawmatrial(id)
-    {
-       $.ajax({
-         url:'{{route("inwardpackingrawmaterial-view")}}',
-         data:{
-        "_token": "{{ csrf_token() }}",
-        "id": id
-        },
-        datatype:'json',
-         method:"POST"
-       }).done(function( html ) {
-
-          $(".modal-body").html(html.html);
-      });
-    }
   </script>
   @endpush
+
+
+

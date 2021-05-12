@@ -14,7 +14,7 @@
     <div class="card main-card">
         <div class="card-body">
             <div class="tbl-sticky">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered datatable">
                     <thead>
                         <tr>
                             <th>Requisition No</th>
@@ -68,26 +68,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -95,7 +76,20 @@
 
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script src="{{ asset('assets/mdbootstrap4/mdb.min.js')  }}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+    <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{ asset('assets/js/custom.js')  }}"></script>
+<script>
+     $('.datatable').DataTable({
+     });
+
+  </script>
 @endpush
