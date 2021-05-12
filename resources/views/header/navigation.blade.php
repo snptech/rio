@@ -89,7 +89,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('supplier') }}">Supplier</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('modedispatch') }}">Mode of Dispatch</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('manufacturer') }}">Manufacturers</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('rawmaterial') }}">Raw Matrials</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('rawmaterial') }}">Matrials Master</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('controller') }}">Controllers</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('action') }}">Actions</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('ar_no') }}">AR .NO</a></li>

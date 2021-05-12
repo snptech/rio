@@ -83,7 +83,166 @@
 
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script src="{{ asset('assets/mdbootstrap4/mdb.min.js')  }}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{ asset('assets/js/custom.js')  }}"></script>
+  <!-- End custom js for this page-->
+  <script>
+      feather.replace()
+    $(document).ready(function() {
+        var table = $('.datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        drawCallback: function( settings ) {
+            feather.replace();
+        },
+        ajax: {
+            "url": "{{route('inwardpackingrawmaterial-listAjax')}}",
+            "type": "POST",
+            "dataType": "json",
+            'data': function(data){
+                // Read values
+                var rcdate = $('#ReceiptDate').val();
+                var ReceiptNo = $('#ReceiptNo').val();
+                var manufacturer = $('#manufacturer').val();
+                var supplier = $('#supplier').val();
+                var invoiceNo = $('#invoiceNo').val();
 
 
-@endpush
+                // Append to data
+                data.rcdate = rcdate;
+                data.ReceiptNo = ReceiptNo;
+                data.manufacturer = manufacturer;
+                data.supplier = supplier;
+                data.invoiceNo = invoiceNo;
+                data._token = '{{csrf_token()}}';
+
+                feather.replace()
+            }
+
+        },
+        columns: [
+            {
+                "data": "id"
+            },
+
+            {
+                "data": "from",
+                "orderable": true
+            },
+            {
+                "data": "to",
+                "orderable": true
+            },
+            {
+                "data": "date_of_receipt",
+                "orderable": true
+            },
+            {
+                "data": "manufacturer",
+                "orderable": false
+            },
+            {
+                "data": "supplier",
+                "orderable": false
+            },
+            {
+                "data": "invoice_no",
+                "orderable": true
+            },
+            {
+                "data": "goods_receipt_no",
+                "orderable": true
+            },
+            {
+                "data": "submited_by",
+                "orderable": false
+            },
+            {
+                "data": "action",
+                "orderable": false
+            }
+        ]
+        });
+        $('#ReceiptDate').change(function(){
+        table.draw();
+        });
+
+        $('#ReceiptNo').keyup(function(){
+        table.draw();
+        });
+
+        $('#manufacturer').change(function(){
+        table.draw();
+        });
+        $('#supplier').change(function(){
+        table.draw();
+        });
+        $('#invoiceNo').keyup(function(){
+        table.draw();
+        });
+    } );
+    function remove(url) {
+
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url;
+            swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your record has been deleted.',
+            'success'
+            )
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+            )
+        }
+        })
+    }
+    function viewrawmatrial(id)
+    {
+       $.ajax({
+         url:'{{route("inwardpackingrawmaterial-view")}}',
+         data:{
+        "_token": "{{ csrf_token() }}",
+        "id": id
+        },
+        datatype:'json',
+         method:"POST"
+       }).done(function( html ) {
+
+          $(".modal-body").html(html.html);
+      });
+    }
+  </script>
+  @endpush

@@ -292,12 +292,12 @@
           suppliername:{
               required:true
           },
-          supplierAddress:{
+          /*supplierAddress:{
               required:true
           },
           supplierGST:{
               required:true
-          },
+          },*/
           invoiceNo:{
               required:true
           },
@@ -307,9 +307,9 @@
           "materialnames[]":{
               required:true
           },
-          "batch[]":{
+          /*"batch[]":{
               required:true
-          },
+          },*/
           "Containers[]":{
               required:true
           },
@@ -325,10 +325,10 @@
           "ExpiryDate[]":{
               required:true
           },
-          "RIOExpiryDate[]":{
+          /*"RIOExpiryDate[]":{
               required:true
           },
-          /*"ARNo[]":{
+          "ARNo[]":{
               required:true
           },*/
           createdby:{
