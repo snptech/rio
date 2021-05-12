@@ -49,7 +49,7 @@
 
                         <td>{{$temp->invoice_no}}</td>
                         <td>{{$temp->remark}}</td>
-                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a><!--<a href="{{ route("edit-supplier",["id"=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a>--></td>
+                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a></td>
                         </tr>
                         @php $i++; @endphp
                         @endforeach
@@ -86,5 +86,5 @@
     });
     function remove(url) {
 
-
+@endpush
 

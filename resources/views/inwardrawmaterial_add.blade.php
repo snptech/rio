@@ -307,9 +307,9 @@
           "materialnames[]":{
               required:true
           },
-          /*"batch[]":{
+          "batch[]":{
               required:true
-          },*/
+          },
           "Containers[]":{
               required:true
           },
