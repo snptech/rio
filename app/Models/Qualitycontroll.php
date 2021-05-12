@@ -12,6 +12,11 @@ class Qualitycontroll extends Model
     protected $fillable = [
         'id',
         'quantity_approved',
+        'inward_material_id',
+        'inward_material_item_id',
+        'raw_material_id',
+        'total_qty',
+        'ar_no',
         'quantity_rejected',
         'quantity_status',
         'date_of_approval',

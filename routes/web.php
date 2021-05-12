@@ -170,6 +170,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
          // quality control
          Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
+         Route::post('/qty_control', [App\Http\Controllers\QualityControlController::class, 'qty_control']);
 
 
          //dispath finshed googds

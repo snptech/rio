@@ -67,8 +67,9 @@
                                     <td><span class="badges text-danger">Rejected</span></td>
                                     @endif
                                     <td><small>{{$temp->remark}}</small></td>
-                                    <td><a href="#checkQuntity" data-toggle="modal" data-target="#checkQuntity" class="btn btn-primary btn-sm">Check</a></td>
-                                </tr>
+                                    <td><a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->quality_id}}')"class="btn btn-primary btn-sm">Check</a></td>
+
+                                    </tr>
                                 @endforeach
                                 @endif
 
@@ -84,59 +85,16 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="checkQuntityLabel">Material Name - Batch no.</h5>
+                    <h5 class="modal-title" id="checkQuntityLabel">{{$temp->name_material}} - {{$temp->batch_no}}.</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="checkQuantity" action="quality_control_insert">
-                        {{csrf_field()}}
-                        <div class="form-row">
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="QuantityApproved">Quantity Approved</label>
-                                    <input type="text" class="form-control" name="quantity_approved" id="quantity_approved" placeholder="Quantity Approved">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="QuantityRejected">Quantity Rejected</label>
-                                    <input type="text" class="form-control" name="quantity_rejected" id="quantity_rejected" placeholder="Quantity Rejected">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="Status">Status</label>
-                                    <select class="form-control select" name="quantity_status" id="quantity_status">
-                                        <option>Select</option>
-                                        <option value="Approved">Approved</option>
-                                        <option Rejected="Rejected">Rejected</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="ApprovalDate">Date of Approval</label>
-                                    <input type="date" class="form-control calendar" name="date_of_approval" id="date_of_approval" placeholder="DD-MM-YYYY">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="Remark">Remark</label>
-                                    <textarea class="form-control" id="remark" name="remark" placeholder="remark"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-md m-0 submit_data">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
             </div>
         </div>
     </div>
-    </div>>
+    </div>
     @endsection
     @push("scripts")
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
@@ -175,5 +133,21 @@
                 },
             });
         });
+
+        function qualitycontrol(quality_id)
+    {
+       $.ajax({
+         url:'qty_control',
+         data:{
+        "_token": "{{ csrf_token() }}",
+        "quality_id": quality_id
+        },
+        datatype:'json',
+         method:"POST"
+       }).done(function( html ) {
+
+          $(".modal-body").html(html.html);
+      });
+    }
     </script>
     @endpush
