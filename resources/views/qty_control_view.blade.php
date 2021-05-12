@@ -76,7 +76,7 @@
                   <input type="hidden" name="inward_id" value="{{ $qty_control_view->inward_id }}" />
                   <input type="hidden" name="inward_item_id" value="{{ $qty_control_view->itemid }}" />
                   <input type="hidden" name="batch_no" value="{{ $qty_control_view->batch_no }}" />
-                  <input type="hidden" name="arno" value="{{ $qty_control_view->ar_no_date }}" />
+
                   <input type="hidden" name="rawmaterial_id" value="{{ $qty_control_view->r_m_id }}" />
                   <input type="hidden" name="total_qty" value="{{ $qty_control_view->qty_received_kg }}" />
                   <button type="submit" class="btn btn-primary btn-md m-0 submit_data">Submit</button>

@@ -7,7 +7,7 @@ use App\Models\Qualitycontroll;
 use App\Models\Rawmeterial;
 use App\Models\InwardMaterial;
 use App\Models\Rawmaterialitems;
-
+use Auth;
 
 class QualityControlController extends Controller
 {
@@ -54,7 +54,9 @@ class QualityControlController extends Controller
             'inward_material_item_id' => $request['inward_item_id'],
             'total_qty' => $request['total_qty'],
             'raw_material_id' => $request['rawmaterial_id'],
-            'ar_no' => $request['arno'],
+            'ar_no' => $request['ar_number'],
+            'checked_by' => Auth::user()->id,
+        ];
         ];
         $result =Qualitycontroll::create($data);
 
