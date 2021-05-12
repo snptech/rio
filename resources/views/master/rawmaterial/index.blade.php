@@ -5,7 +5,7 @@
     <div class="col-md-12 grid-margin">
       <div class="row page-heading">
         <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-          <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Raw Material</h4>
+          <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Material</h4>
         </div>
         <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
           <a href="{{ route("new-rawmaterial") }}" class="btn btn-md btn-primary">Add New +</a>
@@ -30,6 +30,7 @@
                         <th>#</th>
                         <th>Material Name</th>
                         <th>Material Mesurment</th>
+                        <th>Material Type</th>
                         <th>Material Stock</th>
                         <th>Material Minimum Stock</th>
                         <th>Exp. Date</th>
@@ -47,6 +48,14 @@
                         <td>{{ $i }}</td>
                         <td>{{ $val->material_name	 }}</td>
                         <td>{{ $val->mesurment }}</td>
+                        <td> @if($val->material_type == "P")
+                                Packing Material
+                            @elseif($val->material_type == "F")
+                                Finished Goods
+                            @elseif($val->material_type == "R")
+                                Raw Material
+                            @endif
+                        </td>
                         <td>{{ $val->material_stock	}}</td>
                         <td>{{ $val->material_preorder_stock }}</td>
                         <td>{{ $val->expiry_date?date("d/m/Y",$val->expiry_date):""}}</td>

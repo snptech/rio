@@ -29,7 +29,7 @@ class InwardMaterialController extends Controller
     }
     public function create()
     {
-        $rawmaterial = Rawmeterial::pluck("material_name","id");
+        $rawmaterial = Rawmeterial::where("material_type","R")->pluck("material_name","id");
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
         $maxid = InwardMaterial::select(DB::Raw("max(id) as nextid"))->first();
@@ -51,17 +51,17 @@ class InwardMaterialController extends Controller
          "materialname"=>"required",
          "manufacturername"=>"required",
          "suppliername"=>"required",
-         "supplierAddress"=>"required",
-         "supplierGST"=>"required",
+         /*"supplierAddress"=>"required",
+         "supplierGST"=>"required",*/
          "invoiceNo"=>"required",
          "receiptNo"=>"required",
          "materialnames.*"=>"required",
-         "batch.*"=>"required",
+         /*"batch.*"=>"required",*/
          "Containers.*"=>"required",
          "Quantity.*"=>"required",
          "mfgDate.*"=>"required",
          "ExpiryDate.*"=>"required",
-         "RIOExpiryDate.*"=>"required",
+         /*"RIOExpiryDate.*"=>"required",*/
 
          "createdby"=>"required",
          "cdate"=>"required",

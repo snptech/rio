@@ -651,7 +651,7 @@ min-width: 28px;}
 .non-qualified{background-image:url("../img/non-qualified.png");background-position:center;background-repeat:no-repeat;}
 .card-icon h2{font-size:1.875rem;color:#252930;font-weight:900;}.card-icon p{font-size:1rem;color:#9a9ea4;font-weight:500;}
 .qualifiedLeadNav{border:0px;}.qualifiedLeadNav li{border-left:1px solid #caced2;padding:.725rem 1rem;width:20%;}.qualifiedLeadNav li:first-child{border:0px;padding-left:0px;}.qualifiedLeadNav li a{color:#9a9ea4;font-size:.725rem;font-weight:400;}.qualifiedLeadNav li a h3{color:#252930;font-size:1.875rem;font-weight:900;margin:.725rem 0;}.condition{margin-left:8px;font-size:.725rem;align-self:center;vertical-align:middle;display:inline-block;line-height:24px;}.qualifiedLeadNav li a:hover{text-decoration:none;color:#000;}.qualifiedLeadNav li a.active h3{color:#ff0000;}
-.tbl-sticky{overflow:auto;max-height:68vh;}.tbl-sticky>table {text-align: left;position: relative;border-collapse: collapse;}.tbl-sticky>table>thead>tr>th {color: #000;background:#fff;position: sticky;top: 0;z-index: 2;text-transform:uppercase;text-align:center;}
+.tbl-sticky .row .col-sm-12{overflow:auto;max-height:68vh;}.tbl-sticky>table {text-align: left;position: relative;border-collapse: collapse;}.tbl-sticky>table>thead>tr>th {color: #000;background:#fff;position: sticky;top: 0;z-index: 2;text-transform:uppercase;text-align:center;}
 @media all and (max-width:992px){.tbl-sticky{max-width:100%;overflow:auto;}}
 .qualifiedLeadsWrap .tab-content{background:#f8f8f8;padding:15px;border-radius:4px;}
 .report-table.table th,.report-table.table td{font-size:1rem;padding: 13px 10px;}
@@ -1083,6 +1083,7 @@ table.table td {
 .orders .card-body{background:#f4f6fa;}.orders .form-row a{display:flex;margin-top:-1.6rem;margin-bottom:-1.6rem;background:#fff;align-items: center;font-size:.8rem;text-align:center;justify-content:center;}.orders .form-row a svg{margin-right:5px;}
 .card-heading{padding:1rem 1.725rem 0;font-weight:600;font-size:1.125rem;}.low-stock .table td,.low-stock .table th{border:0px;background:transparent;color:#fff;}.low-stock .table th{color:#bed3ff;}.low-stock .table td:last-child,.low-stock .table th:last-child{text-align:right;}.low-stock .table{margin:0px;}
 .filter .btn{padding: .7rem 2.14rem;margin:0;border-radius:4px;}
+.swal2-icon.swal2-warning{font-size:10px !important;}
 @media (min-width: 992px){
 	.sidebar-icon-only .sidebar .nav .nav-item{flex: 0 0 100%;}
 .sidebar-icon-only .sidebar .nav .nav-item:hover .collapse, .sidebar-icon-only .sidebar .nav .nav-item:hover .collapsing {

@@ -5,7 +5,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-xl-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="layers"></i>Edit Raw Material</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="layers"></i>Edit Material</h4>
 
                 </div>
             </div>
@@ -19,8 +19,8 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="rno">Raw Material Name</label>
-                            <input type="text" class="form-control" name="rawmeterial" id="rawmeterial" placeholder="Raw Material" value="{{ old("rawmeterial")?old("rawmeterial"):$rawmaterial->material_name }}">
+                            <label for="rno">Material Name</label>
+                            <input type="text" class="form-control" name="rawmeterial" id="rawmeterial" placeholder="Material Name" value="{{ old("rawmeterial")?old("rawmeterial"):$rawmaterial->material_name }}">
                             @if ($errors->has('rawmeterial'))
                                     <span class="text-danger">{{ $errors->first('rawmeterial') }}</span>
                             @endif
@@ -29,8 +29,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="controller_id">Raw Material Mesurment</label>
-                            {{ Form::select("mesurment",$mesurments,old("mesurment")?old("mesurment"):$rawmaterial->material_mesurment,array("id"=>"mesurment","class"=>"form-control","placeholder"=>"Raw Material Mesurment")) }}
+                            <label for="controller_id">Material Mesurment</label>
+                            {{ Form::select("mesurment",$mesurments,old("mesurment")?old("mesurment"):$rawmaterial->material_mesurment,array("id"=>"mesurment","class"=>"form-control","placeholder"=>"Material Mesurment")) }}
                             @if ($errors->has('mesurment'))
                                     <span class="text-danger">{{ $errors->first('mesurment') }}</span>
                             @endif
@@ -39,8 +39,18 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="controller_id">Raw Material Opening Stock</label>
-                            <input type="number" class="form-control" name="stock" id="stock" placeholder="Raw Material Opening Stock" value="{{ old("stock")?old("stock"):$rawmaterial->material_stock }}">
+                            <label for="controller_id">Material Type</label>
+                            {{ Form::select("type",$type,old("type")?old("type"):$rawmaterial->material_type,array("id"=>"type","class"=>"form-control","placeholder"=>"Material Type")) }}
+                            @if ($errors->has('mesurment'))
+                                    <span class="text-danger">{{ $errors->first('mesurment') }}</span>
+                            @endif
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="controller_id">Material Opening Stock</label>
+                            <input type="number" class="form-control" name="stock" id="stock" placeholder="Material Opening Stock" value="{{ old("stock")?old("stock"):$rawmaterial->material_stock }}">
 
                             @if ($errors->has('stock'))
                                     <span class="text-danger">{{ $errors->first('stock') }}</span>
@@ -50,8 +60,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="controller_id">Raw Material Preorder Stock</label>
-                            <input type="number" class="form-control" name="prestock" id="prestock" placeholder="Raw Material Preorder Stock" value="{{ old("prestock")? old("prestock"):$rawmaterial->material_preorder_stock }}">
+                            <label for="controller_id">Material Preorder Stock</label>
+                            <input type="number" class="form-control" name="prestock" id="prestock" placeholder="Material Preorder Stock" value="{{ old("prestock")? old("prestock"):$rawmaterial->material_preorder_stock }}">
 
                             @if ($errors->has('prestock'))
                                     <span class="text-danger">{{ $errors->first('prestock') }}</span>
@@ -61,8 +71,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="controller_id">Raw Material Expiery Date</label>
-                            <input type="date" class="form-control calendar"  name="expierydate" id="expierydate" placeholder="Raw Material Expiery Date" value="{{ old("expierydate")?old("expierydate"):($rawmaterial->expiry_date?date("Y-m-d",$rawmaterial->expiry_date):'')}}">
+                            <label for="controller_id">Material Expiery Date</label>
+                            <input type="date" class="form-control calendar"  name="expierydate" id="expierydate" placeholder="Material Expiery Date" value="{{ old("expierydate")?old("expierydate"):($rawmaterial->expiry_date?date("Y-m-d",$rawmaterial->expiry_date):'')}}">
 
                             @if ($errors->has('expierydate'))
                                     <span class="text-danger">{{ $errors->first('expierydate') }}</span>
@@ -84,7 +94,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Manufacturing Date</label>
-                            <input type="date" class="form-control calendar" name="manufacturingdate" id="manufacturingdate" placeholder="Rio Expiery Date" value="{{ old("manufacturingdate")?old("manufacturingdate"):($rawmaterial->man_date?date("Y-m-d",$rawmaterial->man_date):'') }}">
+                            <input type="date" class="form-control calendar" name="manufacturingdate" id="manufacturingdate" placeholder="Manufacturing Date" value="{{ old("manufacturingdate")?old("manufacturingdate"):($rawmaterial->man_date?date("Y-m-d",$rawmaterial->man_date):'') }}">
 
                             @if ($errors->has('Manufacturing Date'))
                                     <span class="text-danger">{{ $errors->first('manufacturingdate') }}</span>
@@ -128,12 +138,16 @@
       stock : {
         required: true,
         number:true
+      },
+      type:{
+          required: true
       }
+
     },
     messages : {
         rawmeterial: {
-        required: "Field Raw Meterial is required.",
-        minlength: "Raw Meterial should be at least 3 characters"
+        required: "Field Meterial is required.",
+        minlength: "Meterial should be at least 3 characters"
       },
       mesurment: {
         required: "Please select stock mesurment",
@@ -142,11 +156,14 @@
       stock: {
         required: "Please enter opening stock",
 
+      },
+      type: {
+          required: "Please select material type"
       }
     }
   });
 
-   }); 
+   });
 
     </script>
 

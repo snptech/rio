@@ -36,7 +36,8 @@ class RawmaterialController extends Controller
     public function create()
     {
         $mesurments = DB::table('mesurments')->pluck("mesurment","id");
-        return view("master.rawmaterial.create")->with(["mesurments"=>$mesurments]);
+        $type = array("P"=>"Packing Material","F"=>"Finished Goods","R"=>"Raw Material");
+        return view("master.rawmaterial.create")->with(["mesurments"=>$mesurments,"type"=>$type]);
     }
 
     /**
@@ -50,13 +51,15 @@ class RawmaterialController extends Controller
         //
         $arrRules = ["rawmeterial"=>"required|unique:raw_materials,material_name",
                      "mesurment"=>"required",
-                     "stock"=>"required"];
+                     "stock"=>"required",
+                     "type"=>"required"];
 
 
         $arrMessages = [
         "rawmaterial"=>"This :attribute field is required.",
          "mesurment"=>"This :attribute field is required.",
         "stock"=>"This :attribute field is required.",
+        "type"=>"This :attribute field is required"
         ];
 
         $attributes = array();
@@ -73,6 +76,7 @@ class RawmaterialController extends Controller
         $data["material_preorder_stock"] = $request->prestock?$request->prestock:0;
         $data["expiry_date"] = $request->expierydate?strtotime($request->expierydate):'';
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
+        $data["material_type"] = $request->type?$request->type:"";
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
 
 
@@ -129,7 +133,8 @@ class RawmaterialController extends Controller
         {
             $rawmaterial = Rawmeterial::where("id",$id)->first();
             $mesurments = DB::table('mesurments')->pluck("mesurment","id");
-            return view("master.rawmaterial.edit")->with(["rawmaterial"=>$rawmaterial,"mesurments"=>$mesurments]);
+            $type = array("P"=>"Packing Material","F"=>"Finished Goods","R"=>"Raw Material");
+            return view("master.rawmaterial.edit")->with(["rawmaterial"=>$rawmaterial,"mesurments"=>$mesurments,"type"=>$type]);
         }
         else
             redirect(404);
@@ -147,13 +152,15 @@ class RawmaterialController extends Controller
         //
         $arrRules = ["rawmeterial"=>"required|unique:raw_materials,material_name,".$id,
         "mesurment"=>"required",
-        "stock"=>"required"];
+        "stock"=>"required",
+        "type"=>"required"];
 
 
         $arrMessages = [
         "rawmaterial"=>"This :attribute field is required.",
         "mesurment"=>"This :attribute field is required.",
         "stock"=>"This :attribute field is required.",
+        "type"=>"This :attribute field is required"
         ];
 
         $attributes = array();
@@ -170,6 +177,7 @@ class RawmaterialController extends Controller
         $data["material_preorder_stock"] = $request->prestock?$request->prestock:0;
         $data["expiry_date"] = $request->expierydate?strtotime($request->expierydate):'';
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
+        $data["material_type"] = $request->type?$request->type:"";
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
         /*if($request->expierydat)
         {
