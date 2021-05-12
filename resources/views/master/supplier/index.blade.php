@@ -57,7 +57,8 @@
 
                         <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
 
-                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$val->id}})"><i data-feather="eye"></i></a><a href="{{ route("edit-supplier",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-supplier",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a></td>
+                        <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$val->id}})">
+                        <i data-feather="eye"></i></a><a href="{{ route("edit-supplier",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-supplier",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a></td>
                     </tr>
                         @php($i++)
                         @endforeach
