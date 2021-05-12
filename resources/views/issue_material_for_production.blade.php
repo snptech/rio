@@ -94,4 +94,5 @@
         $('.datatable').DataTable();
     });
 
+  </script>
 @endpush

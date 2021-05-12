@@ -1,4 +1,5 @@
 @extends("layouts.app")
+@section("title","Goods Receipt Note")
 @section('content')
 <div class="content-wrapper">
     <div class="row">
@@ -17,9 +18,15 @@
         <div class="card-body">
             <div class="tbl-sticky">
             <table class="table table-hover table-bordered datatable">
+<<<<<<< HEAD
                        <thead>
                         <tr>
                             <th>#</th>
+=======
+                          <thead>
+                        <tr>
+                        <th>#</th>
+>>>>>>> 051fb6f83de1b2208b880a4587e81b48ebe9fb91
                             <th>Inward No</th>
                             <th>Received From</th>
                             <th>Received To</th>
@@ -63,6 +70,7 @@
 
 </div>
 
+
 @endsection
 @push("scripts")
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
@@ -84,56 +92,5 @@
     });
     function remove(url) {
 
-        const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-        })
 
-        swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-        }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = url;
-            swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your record has been deleted.',
-            'success'
-            )
-        } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-        ) {
-            swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-            )
-        }
-        })
-    }
-    function viewrawmatrial(id)
-    {
-       $.ajax({
-         url:'{{route("inwardpackingrawmaterial-view")}}',
-         data:{
-        "_token": "{{ csrf_token() }}",
-        "id": id
-        },
-        datatype:'json',
-         method:"POST"
-       }).done(function( html ) {
 
-          $(".modal-body").html(html.html);
-      });
-    }
-  </script>
-  @endpush
