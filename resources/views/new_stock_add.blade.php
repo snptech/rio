@@ -33,7 +33,9 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="productName">Product Name</label>
-                            <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Product Name">
+                            product
+                            {{ Form::select("product_name",$product,old("product_name"),array("class"=>"form-control select","id"=>"product_name","placeholder"=>"Choose Product Name")) }}
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -137,18 +139,9 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Received by</label>
-                            <select class="form-control select" name="received_by" id="received_by">
-                                <option value=""> Select</option>
-                                <option value="{{ \Auth::user()->id }}">{{ \Auth::user()->name }}</option>
-                              </select>
-                            <!-- <select class="form-control select" name="received_by" id="received_by">
-                                <option value=""> Select</option>
-                                @if(count($supplier_master))
-                                @foreach($supplier_master as $temp)
-                                <option value="{{$temp->id}}">{{$temp->name}}</option>
-                                @endforeach
-                                @endif
-                            </select> -->
+
+                                <input type="text" class="form-control" name="received_by" id="received_by" readonly value="{{ \Auth::user()->name }}" />
+
                         </div>
                     </div>
                     <div class="col-12">
