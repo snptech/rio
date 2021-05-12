@@ -139,12 +139,16 @@
                             <label for="SupplierName">Received by</label>
                             <select class="form-control select" name="received_by" id="received_by">
                                 <option value=""> Select</option>
+                                <option value="{{ \Auth::user()->id }}">{{ \Auth::user()->name }}</option>
+                              </select>
+                            <!-- <select class="form-control select" name="received_by" id="received_by">
+                                <option value=""> Select</option>
                                 @if(count($supplier_master))
                                 @foreach($supplier_master as $temp)
                                 <option value="{{$temp->id}}">{{$temp->name}}</option>
                                 @endforeach
                                 @endif
-                            </select>
+                            </select> -->
                         </div>
                     </div>
                     <div class="col-12">

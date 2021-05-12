@@ -15,12 +15,12 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <div class="tbl-sticky">
-                <table class="table table-hover table-bordered">
-                    <thead>
+            <div class="">
+            <table class="table table-hover table-bordered">
+                       <thead>
                         <tr>
-                            <th>Inward no</th>
-                            <th>Received from</th>
+                            <th>Inward No</th>
+                            <th>Received From</th>
                             <th>Received To</th>
                             <th>Date Of Receipt</th>
                             <th>Material</th>

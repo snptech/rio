@@ -14,7 +14,7 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
-                        <th>Date</th>
+                            <th>Date</th>
                             <th>Quality<br />(Kg)</th>
                             <th>Name of <br />Manufacturer</th>
                             <th>Name of Supplier</th>
@@ -36,13 +36,13 @@
                         <tr>
                         <td>{{ date('d / m /Y',strtotime($temp->created_at))}}</td>
 
-                            <td>100</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>Raw Material 1</td>
-                            <td>ABC1234567</td>
-                            <td>ABC123456</td>
-                            <td>123456</td>
+                            <td>{{$temp->qty_received_kg}}</td>
+                            <td>{{$temp->name_manufacturer}}</td>
+                            <td>{{$temp->name_supplier}}</td>
+                            <td>{{$temp->raw_material_name}}</td>
+                            <td>{{$temp->batch_no}}</td>
+                            <td>{{$temp->goods_receipt_no}}</td>
+                            <td>{{$temp->ar_no_date}}</td>
                             <td>{{$temp->quantity_approved}}</td>
                             <td>{{$temp->quantity_rejected}}</td>
                             <td>{{$temp->date_of_approval}}</td>

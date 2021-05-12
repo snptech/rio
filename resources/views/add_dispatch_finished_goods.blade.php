@@ -208,14 +208,15 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="SupplierName">Dispatch by</label>
-                          <select class="form-control select" name="dispatch_by" id="dispatch_by">
-                                <option value=""> Select</option>
+
+                          <input class="form-control select" name="dispatch_by" id="dispatch_by"  value="{{ \Auth::user()->name }}" readonly >
+                                <!-- <option value=""> Select</option>
                                 @if(count($supplier_master))
                                 @foreach($supplier_master as $temp)
                                 <option value="{{$temp->id}}">{{$temp->name}}</option>
                                 @endforeach
                                 @endif
-                            </select>
+                            </select> -->
 						</div>
 					</div>
 					<div class="col-12">
