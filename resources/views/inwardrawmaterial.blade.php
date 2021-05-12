@@ -18,15 +18,9 @@
         <div class="card-body">
             <div class="tbl-sticky">
             <table class="table table-hover table-bordered datatable">
-<<<<<<< HEAD
                        <thead>
                         <tr>
                             <th>#</th>
-=======
-                          <thead>
-                        <tr>
-                        <th>#</th>
->>>>>>> 051fb6f83de1b2208b880a4587e81b48ebe9fb91
                             <th>Inward No</th>
                             <th>Received From</th>
                             <th>Received To</th>
