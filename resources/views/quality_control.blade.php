@@ -7,7 +7,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Quality Control</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Quality Control Approval/Rejection (Annexure -VI)</h4>
                 </div>
 
             </div>
@@ -152,24 +152,5 @@
       });
     }
     </script>
-    <script>
 
-        $(document).ready(function() {
-
-            $("#checkQuantity").validate({
-                rules: {
-                    quantity_approved: "required",
-                    quantity_status: "required",
-                    date_of_approval: "required",
-
-                },
-                messages: {
-                    quantity_approved: "Please  Enter quantity approved",
-                    quantity_status: "Please select check status",
-                    date_of_approval: "Please  Enter date of approval",
-
-                },
-            });
-        });
-    </script>
     @endpush

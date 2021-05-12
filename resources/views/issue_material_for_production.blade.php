@@ -4,7 +4,7 @@
     <div class="col-md-12 grid-margin">
         <div class="row page-heading">
             <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Issue Material For Production </h4>
+                <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Issed by Stores for Production (Annexure - III) </h4>
             </div>
             <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
                 <a href="{{ route('issue_material_for_production_add') }}" class="btn btn-md btn-primary">Add New +</a>

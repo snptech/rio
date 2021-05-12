@@ -5,7 +5,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Inward Finished Goods - New Stock</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Finished Goods Inward (Annexure - I) - New Stock</h4>
                 </div>
                 <div class="col-12 col-lg-2 ml-auto align-self-center align-items-end text-right">
                     <a href="{{ route('new_stock_add') }}" class="btn btn-md btn-primary">Add New +</a>
@@ -75,7 +75,7 @@
                        </tbody>
                 </table>
             </div>
-           
+
         </div>
     </div>
 

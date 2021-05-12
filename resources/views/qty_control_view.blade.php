@@ -34,6 +34,37 @@
                   <input type="date" class="form-control calendar" name="date_of_approval" id="date_of_approval" placeholder="DD-MM-YYYY" value="{{ date("Y-m-d") }}">
               </div>
           </div>
+          <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <label for="QuantityRejected">Ar Number</label>
+                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date">
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <label for="QuantityRejected">Ar Number</label>
+                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date">
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <label for="QuantityRejected">Check By</label>
+                <input type="text" class="form-control" name="checkby" id="checkby" placeholder="Check By" value="{{ Auth::user()->name }}">
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="form-group">
+              <label for="dateTime">Date and Time</label>
+              <div class="form-row">
+                <div class="col-6"><input type="date" name="cdate" class="form-control calendar" id="date" placeholder="Date" value={{ date("Y-m-d") }}></div>
+                <div class="col-6"><input type="time"  name="ctime" class="form-control calendar" id="Time" placeholder="Time" value="{{ date("H:i") }}"></div>
+                @if ($errors->has('cdate'))
+                <span class="text-danger">{{ $errors->first('cdate') }}</span>
+              @endif
+              </div>
+            </div>
+        </div>
           <div class="col-12">
               <div class="form-group">
                   <label for="Remark">Remark</label>
@@ -54,6 +85,27 @@
       </div>
   </form>
 </div>
+<script>
 
+    $(document).ready(function() {
+
+        $("#checkQuantity").validate({
+            rules: {
+                quantity_approved: "required",
+                quantity_status: "required",
+                date_of_approval: "required",
+                ar_number:"required"
+
+            },
+            messages: {
+                quantity_approved: "Please  Enter quantity approved",
+                quantity_status: "Please select check status",
+                date_of_approval: "Please  Enter date of approval",
+                ar_number:"Please Enter ar number/date"
+
+            },
+        });
+    });
+</script>
 
 
