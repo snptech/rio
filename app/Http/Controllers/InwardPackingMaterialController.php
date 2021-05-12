@@ -223,7 +223,7 @@ class InwardPackingMaterialController extends Controller
                     $result = InwardPackingMaterialItems::create($datas);
 
                     $stock = Rawmeterial::find($value);
-                    $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
+                    $datas["material_stock"] = ($stock->material_stock+$request->total_qty[$i]);
 
                     $stock->update($datas);
                     $i++;
