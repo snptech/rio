@@ -13,8 +13,10 @@ class MaterialForProductionController extends Controller
     public function issue_material_for_production()
     {
 
-        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','suppliers.name as supplier_name')
-        ->leftJoin("suppliers", "suppliers.id", "=", "issue_material_production.dispensed_by")
+        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','raw_materials.material_name',"inward_raw_materials_items.batch_no as rbatch","users.name")
+        ->join("raw_materials", "raw_materials.id", "=", "issue_material_production.material")
+        ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "=", "issue_material_production.batch_no")
+        ->join("users", "users.id", "=", "issue_material_production.dispensed_by")
         ->get();
 
         return view('issue_material_for_production',$data);
@@ -22,8 +24,8 @@ class MaterialForProductionController extends Controller
     public function view_issue_material($id)
     {
 
-        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','suppliers.name as supplier_name')
-        ->leftJoin("suppliers", "suppliers.id", "=", "issue_material_production.dispensed_by")
+        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','raw_materials.material_name')
+        ->join("raw_materials", "raw_materials.id", "=", "issue_material_production.material")
         ->where("issue_material_production.id", $id)->get();
 
         return view('view_issue_material',$data);
