@@ -40,7 +40,7 @@
                             <td>{{$temp->requisition_no}}</td>
                             <td>{{$temp->opening_balance}}</td>
                             <td>{{$temp->issual_date}}</td>
-                            <td>{{$temp->product_name}}</td>
+                            <td>{{$temp->material_name}}</td>
                             <td>{{$temp->batch_no}}</td>
                             <td>{{$temp->quantity}}</td>
                             <td>{{$temp->for_fg_batch_no}}</td>

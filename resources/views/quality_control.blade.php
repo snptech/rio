@@ -156,7 +156,7 @@
         function qualitycontrol(quality_id)
     {
        $.ajax({
-         url:'{{ route('qty_control') }}',
+         url:'{{ route("qty_control") }}',
          data:{
         "_token": "{{ csrf_token() }}",
         "quality_id": quality_id
