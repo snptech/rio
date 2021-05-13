@@ -6,7 +6,8 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-xl-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Edit Goods Receipt Note (Packing Material)</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Edit Goods Receipt Note (Annexure - IV)
+                        (Packing Material)</h4>
                 </div>
             </div>
         </div>

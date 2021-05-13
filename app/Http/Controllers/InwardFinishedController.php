@@ -7,7 +7,8 @@ use App\Models\Inwardfinishedgoods;
 use App\Models\Grade;
 use App\Models\Arnomaster;
 use App\Models\Supplier;
-
+use App\Models\Rawmeterial;
+use Auth;
 class InwardFinishedController extends Controller
 {
 
@@ -36,6 +37,7 @@ class InwardFinishedController extends Controller
        }
     public function new_stock_add()
     {
+        $data["product"] = Rawmeterial::where("material_type","F")->pluck("material_name","id");
         $data['grade_master']=Grade::all();
         $data['supplier_master']=Supplier::all();
         $data['arno_master']=Arnomaster::all();
@@ -60,7 +62,7 @@ class InwardFinishedController extends Controller
             'total_quantity' => $request['total_quantity'],
             'ar_no' => $request['ar_no'],
             'approval_data' => $request['approval_data'],
-            'received_by' => $request['received_by'],
+            'received_by' => Auth::users()->id,
             'remark' => $request['remark'],
 
         ];

@@ -137,8 +137,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post("inwardrawmaterial/getsupllier",[App\Http\Controllers\InwardMaterialController::class,"getsupllier"])->name("inwardrawmaterial-supplier");
         Route::post("show-material",[App\Http\Controllers\InwardMaterialController::class,"showmaterail"])->name("show-material");
 
-        Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
         Route::get("inwardpackingrawmaterial/list",[App\Http\Controllers\InwardPackingMaterialController::class,"index"])->name("inwardpackingrawmaterial-list");
+        Route::post("inwardpackingrawmaterial/listAjax",[App\Http\Controllers\InwardPackingMaterialController::class,"listAjax"])->name("inwardpackingrawmaterial-listAjax");
+
         Route::get("inwardpackingrawmaterial/new",[App\Http\Controllers\InwardPackingMaterialController::class,"add"])->name("inwardpackingrawmaterial-new");
         Route::post("inwardpackingrawmaterial/save",[App\Http\Controllers\InwardPackingMaterialController::class,"store"])->name("inwardpackingrawmaterial-save");
         Route::post("inwardpackingrawmaterial/view",[App\Http\Controllers\InwardPackingMaterialController::class,"view"])->name("inwardpackingrawmaterial-view");
@@ -169,6 +170,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
          // quality control
          Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
+
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
          Route::post('/qty_control', [App\Http\Controllers\QualityControlController::class, 'qty_control']);
          Route::post('/view_quality', [App\Http\Controllers\QualityControlController::class, 'view_quality'])->name('view_quality');

@@ -223,20 +223,20 @@ class InwardPackingMaterialController extends Controller
                     $result = InwardPackingMaterialItems::create($datas);
 
                     $stock = Rawmeterial::find($value);
-                    $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
+                    $datas["material_stock"] = ($stock->material_stock+$request->total_qty[$i]);
 
                     $stock->update($datas);
                     $i++;
                 }
 
 
-                    return redirect("inwardpackingrawmaterial/list")->with('message', "Inward packing rawmaterial created successfully");
+                    return redirect(route("inwardpackingrawmaterial-list"))->with('message', "Inward packing rawmaterial created successfully");
 
 
             }
         }
         else
-            return redirect("inwardpackingrawmaterial/list")->with('error', "Something went wrong");
+            return redirect(route("inwardpackingrawmaterial-list"))->with('error', "Something went wrong");
 
 
     }

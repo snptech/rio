@@ -7,7 +7,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Quality Control</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Quality Control Approval/Rejection (Annexure -VI)</h4>
                 </div>
 
             </div>
@@ -52,9 +52,9 @@
                                     <td>{{ date('d / m /Y',strtotime($temp->created_at))}}</td>
 
                                     <td>{{$temp->qty_received_kg}}</td>
-                                    <td>{{$temp->name_manufacturer}}</td>
-                                    <td>{{$temp->name_supplier}}</td>
-                                    <td>{{$temp->raw_material_name}}</td>
+                                    <td>{{$temp->manufacturer}}</td>
+                                    <td>{{$temp->name}}</td>
+                                    <td>{{$temp->material_name}}</td>
                                     <td>{{$temp->batch_no}}</td>
                                     <td>{{$temp->goods_receipt_no}}</td>
                                     <td>{{$temp->ar_no_date}}</td>
@@ -63,13 +63,20 @@
                                     <td>{{$temp->date_of_approval}}</td>
                                     @if($temp->quantity_status=='Approved')
                                     <td><span class="badges text-success">Approved</span></td>
-                                    @else($temp->quantity_status=='Rejected')
+                                    @elseif($temp->quantity_status=='Rejected')
                                     <td><span class="badges text-danger">Rejected</span></td>
+                                    @else
+                                    <td>&nbsp;</td>
                                     @endif
                                     <td><small>{{$temp->remark}}</small></td>
                                     <td>
-                                    <a href="#" class="btn action-btn" data-toggle="modal" data-target="#qualitycontrol" title="View" onclick="viewquality({{$temp->id}})"><i data-feather="eye"></i></a>
-                                    <a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->quality_id}}')"class="btn btn-primary btn-sm">Check</a></td>
+                                        @if(!$temp->quality_id)
+                                        <a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
+                                        @else
+                                            Checked
+                                        @endif
+                                    </td>
+
 
                                     </tr>
                                 @endforeach
@@ -86,13 +93,7 @@
     <div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="checkQuntityLabel">{{$temp->name_material}} - {{$temp->batch_no}}.</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
-                </div>
-                <div class="modal-body">
 
-                </div>
             </div>
         </div>
     </div>
@@ -155,7 +156,7 @@
         function qualitycontrol(quality_id)
     {
        $.ajax({
-         url:'qty_control',
+         url:'{{ route('qty_control') }}',
          data:{
         "_token": "{{ csrf_token() }}",
         "quality_id": quality_id
@@ -164,7 +165,7 @@
          method:"POST"
        }).done(function( html ) {
 
-          $(".modal-body").html(html.html);
+          $(".modal-content").html(html.html);
       });
     }
     function viewquality(quality_id)
@@ -183,4 +184,5 @@
       });
     }
     </script>
+
     @endpush
