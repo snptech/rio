@@ -18,12 +18,22 @@ class InwardFinishedController extends Controller
 
         return view('new_stock',$data);
     }
-    public function view_new_stock($id)
+    public function viewstock(Request $request)
     {
 
-        $data['inward_goods']=Inwardfinishedgoods::where("id", $id)->get();
-        return view('view_new_stock',$data);
-    }
+        if($request->id)
+        {
+            $inward_goods = Inwardfinishedgoods::where("id",$request->id)->first();
+             $view = view('view_new_stock', ['inward_goods'=> $inward_goods])->render();
+             return response()->json(['html'=>$view]);
+
+        }
+        else
+        {
+            redirect(404);
+        }
+
+       }
     public function new_stock_add()
     {
         $data['grade_master']=Grade::all();

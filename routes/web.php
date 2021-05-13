@@ -155,7 +155,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         // Inward Finished Goods - New Stock
 
         Route::get('new_stock', [App\Http\Controllers\InwardFinishedController::class, 'new_stock'])->name("new_stock");
-        Route::get('view_new_stock/{id}', [App\Http\Controllers\InwardFinishedController::class, 'view_new_stock'])->name("view_new_stock");
+        Route::post('viewstock', [App\Http\Controllers\InwardFinishedController::class, 'viewstock'])->name("viewstock");
         Route::get('new_stock_add', [App\Http\Controllers\InwardFinishedController::class, 'new_stock_add'])->name("new_stock_add");
         Route::post('inward_finished_insert', [App\Http\Controllers\InwardFinishedController::class, 'inward_finished_insert']);
 
@@ -171,6 +171,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
          Route::post('/qty_control', [App\Http\Controllers\QualityControlController::class, 'qty_control']);
+         Route::post('/view_quality', [App\Http\Controllers\QualityControlController::class, 'view_quality'])->name('view_quality');
 
 
          //dispath finshed googds
@@ -181,6 +182,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/delete_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'delete_dispatch_finished'])->name("delete_dispatch_finished");
         Route::get('/view_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'view_dispatch_finished'])->name("view_dispatch_finished");
         Route::post('/update_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'update_dispatch_finished'])->name("update_dispatch_finished");
+        Route::post('/dispacth_view', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispacth_view'])->name("dispacth_view");
 
 
         // Reports//
@@ -192,12 +194,17 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
 
         // // Issue Material For Production
-        // Route::get('issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
-        // Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
+        Route::get('issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+        Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
 
 
         //comming Soon
         Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
+       //Issual By Stores For Production
+        Route::get("issual_by_stores_for_production", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issual_by_stores_for_production'])->name("issual_by_stores_for_production");
+        Route::get("issual_by_stores_for_production_add", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issual_by_stores_for_production_add'])->name("issual_by_stores_for_production_add");
+        Route::post("issue_by_stores_insert", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issue_by_stores_insert'])->name("issue_by_stores_insert");
+        Route::post("view_store", [App\Http\Controllers\IssualByStoresForProductionController::class, 'view_store'])->name("view_store");
 
 
 });

@@ -45,6 +45,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{{ route('issual_by_stores_for_production') }}">
+          <i class="menu-icon" data-feather="check-square"></i>
+          <span class="menu-title">Issual By Stores For Production</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <i class="menu-icon" data-feather="pie-chart"></i>
           <span class="menu-title">Reports</span>

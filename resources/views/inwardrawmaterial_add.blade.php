@@ -283,9 +283,9 @@
           {
             required:true
           },
-          materialname:{
-            required:true
-          },
+        //   materialname:{
+        //     required:true
+        //   },
           manufacturername:{
             required:true
           },
@@ -304,9 +304,9 @@
           receiptNo:{
               required:true
           },
-          "materialnames[]":{
-              required:true
-          },
+        //   "materialnames[]":{
+        //       required:true
+        //   },
           "batch[]":{
               required:true
           },

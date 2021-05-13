@@ -63,4 +63,19 @@ class QualityControlController extends Controller
          return response()->json(['html'=>$view]);
 
     }
+    public function view_quality(Request $request)
+    {
+        //
+        if($request->id)
+        {
+            $view_quality = Qualitycontroll::where("id",$request->id)->first();
+             $view = view('view_quality_control', ['view_quality'=> $view_quality])->render();
+             return response()->json(['html'=>$view]);
+
+        }
+        else
+        {
+            redirect(404);
+        }
+    }
 }

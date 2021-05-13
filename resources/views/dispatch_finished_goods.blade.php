@@ -100,7 +100,7 @@
                             <td>{{$temp->remark}}</td>
                             <td>{{$temp->suppliers_name}}</td>
                             <td class="actions">
-                                <a href="{{ route('view_dispatch_finished',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>
+                            <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsdispth" title="View" onclick="dispth_finishe_view({{$temp->id}})"><i data-feather="eye"></i></a>
                                 <a href="{{ route('edit_dispatch_finished',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="Edit"><i data-feather="edit-3"></i></a>
                                 <a href="{{ route('delete_dispatch_finished',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="Delete"><i data-feather="trash"></i></a>
                             </td>
@@ -115,6 +115,22 @@
         </div>
     </div>
     @endsection
+    @push("models")
+  <div class="modal fade show" id="viewsdispth" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkQuntityLabel">Finished Goods Dispatch</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+@endpush
+
     @push("scripts")
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -127,6 +143,8 @@
     <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{{ asset('assets/js/custom.js')  }}"></script>
+  <!-- End custom js for this page-->
+
     <script>
         $(document).ready(function() {
             $('.datatable').DataTable({
@@ -194,6 +212,21 @@
                 $('#remark').val('');
             });
         });
+        function dispth_finishe_view(id)
+    {
+       $.ajax({
+         url:'{{route("dispacth_view")}}',
+         data:{
+        "_token": "{{ csrf_token() }}",
+        "id": id
+        },
+        datatype:'json',
+         method:"POST"
+       }).done(function( html ) {
+
+          $(".modal-body").html(html.html);
+      });
+    }
     </script>
 
 

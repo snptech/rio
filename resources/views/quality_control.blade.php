@@ -67,7 +67,9 @@
                                     <td><span class="badges text-danger">Rejected</span></td>
                                     @endif
                                     <td><small>{{$temp->remark}}</small></td>
-                                    <td><a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->quality_id}}')"class="btn btn-primary btn-sm">Check</a></td>
+                                    <td>
+                                    <a href="#" class="btn action-btn" data-toggle="modal" data-target="#qualitycontrol" title="View" onclick="viewquality({{$temp->id}})"><i data-feather="eye"></i></a>
+                                    <a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->quality_id}}')"class="btn btn-primary btn-sm">Check</a></td>
 
                                     </tr>
                                 @endforeach
@@ -96,6 +98,22 @@
     </div>
     </div>
     @endsection
+
+    @push("models")
+  <div class="modal fade show" id="qualitycontrol" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkQuntityLabel">Supplier Details</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+@endpush
     @push("scripts")
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -138,6 +156,21 @@
     {
        $.ajax({
          url:'qty_control',
+         data:{
+        "_token": "{{ csrf_token() }}",
+        "quality_id": quality_id
+        },
+        datatype:'json',
+         method:"POST"
+       }).done(function( html ) {
+
+          $(".modal-body").html(html.html);
+      });
+    }
+    function viewquality(quality_id)
+    {
+       $.ajax({
+         url:'view_quality',
          data:{
         "_token": "{{ csrf_token() }}",
         "quality_id": quality_id

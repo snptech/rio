@@ -24,12 +24,14 @@ class InwardMaterialController extends Controller
     {
 
 
-        $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid")->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")->join("mesurments","mesurments.id","raw_materials.material_mesurment")->get();
+        $data['inward_material']=Rawmaterialitems::select(
+            "inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid")->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")->join("mesurments","mesurments.id","raw_materials.material_mesurment")->get();
 
         return view("inwardrawmaterial",$data);
     }
     public function create()
     {
+
         $rawmaterial = Rawmeterial::where("material_type","R")->pluck("material_name","id");
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
@@ -169,7 +171,14 @@ class InwardMaterialController extends Controller
     {
         if($request->id)
         {
-            $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid","users.name as uname")->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")->join("suppliers","suppliers.id","inward_raw_materials.supplier")->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")->join("mesurments","mesurments.id","raw_materials.material_mesurment")->join("users","users.id","inward_raw_materials.created_by")->where("inward_raw_materials_items.id",$request->id)->first();
+            $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid","users.name as uname")
+            ->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")
+            ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
+            ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
+            ->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")
+            ->join("mesurments","mesurments.id","raw_materials.material_mesurment")
+            ->join("users","users.id","inward_raw_materials.created_by")
+            ->where("inward_raw_materials_items.id",$request->id)->first();
 
             $view = view('viewinwardrawmaterial',$data)->render();
              return response()->json(['html'=>$view]);

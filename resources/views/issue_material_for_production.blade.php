@@ -55,7 +55,8 @@
                             <td> {{$temp->name}}</td>
                             <td> {{$temp->remark}}</td>
                             <td>
-                           <!-- <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>--><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a>
+                           <!-- <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>-->
+                           <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->id}})"><i data-feather="eye"></i></a>
 
                             </td>
 

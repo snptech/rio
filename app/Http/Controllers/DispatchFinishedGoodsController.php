@@ -18,9 +18,9 @@ class DispatchFinishedGoodsController extends Controller
             'suppliers.name as suppliers_name',
             'mode_of_dispatch.mode as mode_name'
         )
-            ->leftJoin("suppliers", "suppliers.id", "=", "finished_goods_dispatch.dispatch_by")
-            ->leftJoin("grades", "grades.id", "=", "finished_goods_dispatch.grade")
-            ->leftJoin("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
+            ->Join("suppliers", "suppliers.id", "=", "finished_goods_dispatch.dispatch_by")
+            ->Join("grades", "grades.id", "=", "finished_goods_dispatch.grade")
+            ->Join("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
             ->get();
 
         return view('dispatch_finished_goods', $data);
@@ -145,5 +145,31 @@ class DispatchFinishedGoodsController extends Controller
 
             return redirect("dispatch_finished_goods")->with('danger', "Data deleted successfully");
         }
+    }
+    public function dispacth_view(Request $request)
+    {
+
+        if($request->id)
+        {
+            $dispacth_view = FinishedGoodsDispatch::select(
+                'finished_goods_dispatch.*',
+                'grades.grade as grades_name',
+                'suppliers.name as suppliers_name',
+                'mode_of_dispatch.mode as mode_name'
+            )
+                ->Join("suppliers", "suppliers.id", "=", "finished_goods_dispatch.dispatch_by")
+                ->Join("grades", "grades.id", "=", "finished_goods_dispatch.grade")
+                ->Join("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
+
+            ->where("finished_goods_dispatch.id",$request->id)->first();
+             $view = view('dispacth_view', ['dispacth_view'=> $dispacth_view])->render();
+             return response()->json(['html'=>$view]);
+            }
+            else
+            {
+                redirect(404);
+            }
+
+
     }
 }
