@@ -19,6 +19,6 @@ class Rawmeterial extends Model
             "rio_expiry_date",
              "man_date",
              "material_type",
-             "qty"
+
     ];
 }

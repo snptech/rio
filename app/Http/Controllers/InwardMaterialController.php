@@ -118,6 +118,7 @@ class InwardMaterialController extends Controller
         $data["goods_receipt_no"] = $request->receiptNo;
         $data["created_by"] = Auth::user()->id;
         $data["remark"] = $request->remark;
+        $data["viscosity"] =$request->viscosity;
 
         $result = InwardMaterial::create($data);
 
@@ -129,6 +130,7 @@ class InwardMaterialController extends Controller
                 $i=0;
                 foreach($request->materialnames as $value)
                 {
+                    $stock = Rawmeterial::find($value);
                     $itemdata["inward_raw_material_id"] = $result->id;
                     $itemdata["material"] = $value;
                     $itemdata["batch_no"] = $request->batch[$i];
@@ -139,9 +141,11 @@ class InwardMaterialController extends Controller
                     $itemdata["rio_care_expiry_date"] = $request->RIOExpiryDate[$i]!=""?strtotime($request->RIOExpiryDate[$i]):"";
                     $itemdata["ar_no_date"] = $request->ARNo[$i]?($request->ARNo[$i]):"";
 
+                    $itemdata["opening_stock"] = $stock->material_stock;
+
                     $resultsItem = Rawmaterialitems::create($itemdata);
                     $datas = array();
-                    $stock = Rawmeterial::find($value);
+
                     $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
 
                     $stock->update($datas);
@@ -171,7 +175,7 @@ class InwardMaterialController extends Controller
     {
         if($request->id)
         {
-            $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid","users.name as uname")
+            $data['inward_material']=Rawmaterialitems::select("inward_raw_materials.*","inward_raw_materials_items.*","suppliers.name","manufacturers.manufacturer as man_name","raw_materials.material_name","raw_materials.material_stock","mesurments.mesurment","inward_raw_materials_items.id as itemid","users.name as uname","inward_raw_materials_items.opening_stock")
             ->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")
             ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
             ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")

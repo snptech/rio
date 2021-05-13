@@ -118,7 +118,7 @@
                 for_fg_batch_no: "required",
                 returned_from_day_store: "required",
                 dispensed_by: "required",
-                remark: "required",
+                /*remark: "required",*/
             },
             messages: {
                 requisition_no: "Please  Enter The Requisition No",

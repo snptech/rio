@@ -22,6 +22,7 @@ class InwardMaterial extends Model
         "supplier_gst", "invoice_no",
         "goods_receipt_no",
         "created_by",
-        "remark"
+        "remark",
+        "viscosity"
     ];
 }

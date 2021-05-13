@@ -18,9 +18,7 @@ class IssualByStoresForProductionController extends Controller
     public function issual_by_stores_for_production_add()
     {
 
-        $rawmaterial =Rawmeterial::where('material_type','=','F')->where('qty','>',0)
-                            ->pluck("material_name","id");
-                            // Evdach ahe ka ? ho check karun bagh ma ok
+        $rawmaterial =Rawmeterial::where('material_type','F')->where("material_stock",">",0)->pluck("material_name","id");
         return view('issual_by_stores_for_production_add')->with(["rawmaterial"=>$rawmaterial]);
     }
     public function issue_by_stores_insert(Request $request)

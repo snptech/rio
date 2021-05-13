@@ -7,7 +7,11 @@ use App\Models\Supplier;
 use App\Models\Grade;
 use App\Models\FinishedGoodsDispatch;
 use App\Models\Modedispatch;
-
+use App\Models\Rawmeterial;
+use App\Models\Department;
+use App\Models\PartyMaster;
+use DB;
+use Auth;
 class DispatchFinishedGoodsController extends Controller
 {
     public function dispatch_finished_goods()
@@ -30,8 +34,16 @@ class DispatchFinishedGoodsController extends Controller
     {
         $data['supplier_master'] = Supplier::all();
         $data['mode'] = Modedispatch::all();
+        $data["product"] = Rawmeterial::where("material_type","F")->where("material_preorder_stock",">",0)->pluck("material_name","id");
+        $data["department"] = Department::pluck("department","id");
+        $data["partyname"] = PartyMaster::pluck("company_name","id");
         $data['grade'] = Grade::all();
+        $maxid = FinishedGoodsDispatch::select(DB::Raw("max(dispath_no) as nextid"))->first();
 
+        $nextid =1;
+        if($maxid->nextid)
+            $nextid = $maxid->nextid+1;
+        $data["nextid"] = $nextid;
         return view('add_dispatch_finished_goods', $data);
     }
     public function dispatch_finished_good_insert(Request $request)

@@ -24,6 +24,17 @@
             <form id="inward_finished_vali" method="post" action="inward_finished_insert">
                 {{csrf_field()}}
                 <div class="form-row">
+
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                              <label for="rno">No.</label>
+                              <input type="text" class="form-control" name="rno" id="rno" placeholder="{{ $nextid }}" value="{{ $nextid }}" readonly>
+                              @if ($errors->has('rno'))
+                                        <span class="text-danger">{{ $errors->first('rno') }}</span>
+                                @endif
+                            </div>
+                        </div>
+
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="date">Date</label>
@@ -79,31 +90,31 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="200KgDrums">Total No. of 200Kg Drums</label>
-                            <input type="text" class="form-control" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
+                            <input type="text" class="form-control qty-group" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="50KgDrums">Total No. of 50Kg Drums</label>
-                            <input type="text" class="form-control" name="total_no_of_50kg_drums" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
+                            <input type="text" class="form-control qty-group" name="total_no_of_50kg_drums" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="30KgDrums">Total No. of 30Kg Drums</label>
-                            <input type="text" class="form-control" name="total_no_of_30kg_drums" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
+                            <input type="text" class="form-control qty-group" name="total_no_of_30kg_drums" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="5KgDrums">Total No. of 5Kg Drums</label>
-                            <input type="text" class="form-control" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
+                            <input type="text" class="form-control qty-group" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="FiberboardDrums">Total No. of Fiber board Drums</label>
-                            <input type="text" class="form-control" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Fiber board Drums">
+                            <input type="text" class="form-control qty-group" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Fiber board Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -115,7 +126,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">AR No</label>
-                            <textarea class="form-control" name="ar_no" id="ar_no" placeholder="AR.No"></textarea>
+                            <input type="text" class="form-control" name="ar_no" id="ar_no" placeholder="AR.No" />
 
 
                             <!-- <select class="form-control select" name="ar_no" id="ar_no">
@@ -167,6 +178,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
 
     $(document).ready(function() {
@@ -178,19 +190,29 @@
                 batch_no: "required",
                 grade: "required",
                 grade: "required",
-                viscosity: "required",
+                /*viscosity: "required",*/
                 mfg_date: "required",
                 expiry_ratest_date: "required",
-                total_no_of_200kg_drums: "required",
-                total_no_of_50kg_drums: "required",
-                total_no_of_30kg_drums: "required",
-                total_no_of_5kg_drums: "required",
-                total_no_of_fiber_board_drums: "required",
+                total_no_of_200kg_drums: {
+                require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_50kg_drums: {
+                require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_30kg_drums: {
+                require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_5kg_drums: {
+                require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_fiber_board_drums: {
+                require_from_group: [1, ".qty-group"]
+                },
                 total_quantity: "required",
-                ar_no: "required",
+               /* ar_no: "required",*/
                 approval_data: "required",
                 received_by: "required",
-                remark: "required",
+                /*remark: "required",*/
             },
             messages: {
                 inward_date: "Please  Enter The Name Inward No",

@@ -20,31 +20,35 @@
 						<div class="form-group">
 						  <label for="no">No.</label>
 
-						  <input type="text" class="form-control" name="dispath_no" id="dispath_no" placeholder="no">
+						  <input type="text" class="form-control" name="dispath_no" id="dispath_no" placeholder="no" value="{{ $nextid }}" readonly>
 
                           @if ($errors->has('dispath_no'))
                           <span class="text-danger">{{ $errors->first('dispath_no') }}</span>
                           @endif
 						</div>
 					</div>
-					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
-						<div class="form-group">
-						  <label for="from">From</label>
-						  <input type="text" class="form-control" name="dispatch_form" id="dispatch_form" placeholder="from"value="Dispatch" >
-                          @if ($errors->has('dispatch_form'))
-                          <span class="text-danger">{{ $errors->first('dispatch_form') }}</span>
-                          @endif
-						</div>
-					</div>
-					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
-						<div class="form-group">
-						  <label for="to">To</label>
-						  <input type="text" class="form-control" name="dispatch_to" id="dispatch_to" placeholder="to"value="Store" >
-                          @if ($errors->has('dispatch_to'))
-                          <span class="text-danger">{{ $errors->first('dispatch_to') }}</span>
-                          @endif
-						</div>
-					</div>
+                    <div class="form-row">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                              <label for="from">From</label>
+                              {{ Form::select("dispatch_form",$department,old("dispatch_form"),array("class"=>"form-control select","id"=>"dispatch_form","placeholder"=>"Dispatch From")) }}
+
+                              @if ($errors->has('dispatch_form'))
+                                        <span class="text-danger">{{ $errors->first('dispatch_form') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                              <label for="to">TO</label>
+                              {{ Form::select("dispatch_to",$department,old("dispatch_to"),array("class"=>"form-control select","id"=>"dispatch_to","placeholder"=>"Dispatch To")) }}
+
+                              @if ($errors->has('dispatch_to'))
+                                <span class="text-danger">{{ $errors->first('dispatch_to') }}</span>
+                              @endif
+                            </div>
+                        </div>
+
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="date">Date</label>
@@ -75,7 +79,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="PartyName">Party Name</label>
-						  <input type="text" class="form-control" name="party_name" id="party_name" placeholder="Party Name">
+                          {{ Form::select("party_name",$partyname,old("party_name"),array("class"=>"form-control select","id"=>"party_name","placeholder"=>"Choose Party Name")) }}
+
                           @if ($errors->has('party_name'))
                           <span class="text-danger">{{ $errors->first('party_name') }}</span>
                         @endif
@@ -84,7 +89,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="productName">Product Name</label>
-						  <input type="text" class="form-control" name="product" id="product" placeholder="Product Name">
+                          {{ Form::select("product",$product,old("product"),array("class"=>"form-control select","id"=>"product","placeholder"=>"Choose Party Name")) }}
+
                           @if ($errors->has('product'))
                           <span class="text-danger">{{ $errors->first('product') }}</span>
                         @endif
@@ -115,9 +121,9 @@
 
                           <select class="form-control select" name="grade" id="grade">
                                 <option value=""> Select</option>
-                                @if(count($supplier_master))
-                                @foreach($supplier_master as $temp)
-                                <option value="{{$temp->id}}">{{$temp->name}}</option>
+                                @if(count($grade))
+                                @foreach($grade as $temp)
+                                <option value="{{$temp->id}}">{{$temp->grade}}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -151,6 +157,15 @@
                         @endif
 						</div>
 					</div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+						<div class="form-group">
+						  <label for="50KgDrums">Total No. of 200Kg Drums</label>
+						  <input type="number" class="form-control" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
+                          @if ($errors->has('total_no_of_200kg_drums'))
+                          <span class="text-danger">{{ $errors->first('total_no_of_200kg_drums') }}</span>
+                        @endif
+						</div>
+					</div>
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="50KgDrums">Total No. of 50Kg Drums</label>
@@ -173,8 +188,17 @@
 						<div class="form-group">
 						  <label for="5KgDrums">Total No. of 5Kg Drums</label>
 						  <input type="number" class="form-control" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
-                          @if ($errors->has('total_no_of_30kg_drums'))
+                          @if ($errors->has('total_no_of_5kg_drums'))
                           <span class="text-danger">{{ $errors->first('total_no_of_5kg_drums') }}</span>
+                        @endif
+						</div>
+					</div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+						<div class="form-group">
+						  <label for="5KgDrums">Total No. of Fiber Board Drums</label>
+						  <input type="number" class="form-control" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Total No. of Fiber Board Drums">
+                          @if ($errors->has('total_no_of_fiber_board_drums'))
+                          <span class="text-danger">{{ $errors->first('total_no_of_fiber_board_drums') }}</span>
                         @endif
 						</div>
 					</div>
@@ -254,12 +278,25 @@
             invoice_no:"required",
             batch_no:"required",
             grade:"required",
-            viscosity:"required",
+            /*viscosity:"required",*/
             mfg_date:"required",
             expiry_ratest_date:"required",
-            total_no_of_50kg_drums:"required",
-            total_no_of_30kg_drums:"required",
-            total_no_of_5kg_drums:"required",
+            total_no_of_200kg_drums: {
+                require_from_group: [1, ".qty-group"]
+            },
+            total_no_of_50kg_drums: {
+                require_from_group: [1, ".qty-group"]
+            },
+            total_no_of_30kg_drums: {
+                require_from_group: [1, ".qty-group"]
+            },
+            total_no_of_5kg_drums: {
+                require_from_group: [1, ".qty-group"]
+            },
+            total_no_of_fiber_board_drums: {
+                require_from_group: [1, ".qty-group"]
+            },
+
             total_no_qty:"required",
             seal_no:"required",
             dispatch_date:"required",
