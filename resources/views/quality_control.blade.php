@@ -73,7 +73,7 @@
                                         @if(!$temp->quality_id)
                                         <a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
                                         @else
-                                            Checked
+                                        <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewquality({{$temp->itemid}})"><i data-feather="eye"></i></a>
                                         @endif
                                     </td>
 
@@ -105,7 +105,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="checkQuntityLabel">Supplier Details</h5>
+        <h5 class="modal-title" id="checkQuntityLabel">Quality Check Details</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
       </div>
       <div class="modal-body">
@@ -135,54 +135,25 @@
         });
         $(document).ready(function() {
             $('.datatable').DataTable({});
-            $("#checkQuantity").validate({
-                rules: {
-                    quantity_approved: "required",
-                    quantity_rejected: "required",
-                    quantity_status: "required",
-                    date_of_approval: "required",
-                    remark: "required",
-                },
-                messages: {
-                    quantity_approved: "Please  Enter The Quantity Approved Name ",
-                    quantity_rejected: "Please  Enter The Quantity Rejected Name ",
-                    quantity_status: "Please  Enter The Quantity Status Name ",
-                    date_of_approval: "Please  Enter The Date Of Approval Name ",
-                    remark: "Please  Enter The Remark Name ",
-                },
-            });
+
         });
 
-        function qualitycontrol(quality_id)
-    {
-       $.ajax({
-         url:'{{ route("qty_control") }}',
-         data:{
-        "_token": "{{ csrf_token() }}",
-        "quality_id": quality_id
-        },
-        datatype:'json',
-         method:"POST"
-       }).done(function( html ) {
 
-          $(".modal-content").html(html.html);
-      });
-    }
-    function viewquality(quality_id)
-    {
-       $.ajax({
-         url:'view_quality',
-         data:{
-        "_token": "{{ csrf_token() }}",
-        "quality_id": quality_id
-        },
-        datatype:'json',
-         method:"POST"
-       }).done(function( html ) {
+      function viewquality(quality_id)
+        {
+        $.ajax({
+            url:'{{ route('view_quality') }}',
+            data:{
+            "_token": "{{ csrf_token() }}",
+            "quality_id": quality_id
+            },
+            datatype:'json',
+            method:"POST"
+        }).done(function( html ) {
 
-          $(".modal-body").html(html.html);
-      });
-    }
+            $(".modal-body").html(html.html);
+        });
+        }
     </script>
 
     @endpush

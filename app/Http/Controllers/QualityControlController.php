@@ -38,7 +38,7 @@ class QualityControlController extends Controller
         ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
         ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
         ->orderBy('inward_raw_materials.created_at', 'desc')
-        ->where("inward_raw_materials_items.id")
+
        ->get();
         return view('quality_control',$data);
     }
@@ -97,9 +97,9 @@ class QualityControlController extends Controller
     public function view_quality(Request $request)
     {
         //
-        if($request->id)
+        if($request->quality_id)
         {
-            $view_quality = Qualitycontroll::
+            $view_quality =
             Rawmaterialitems::select(
                 'quality_controll_check.*','quality_controll_check.id as quality_id',
                 'inward_raw_materials_items.material as raw_material_name',
@@ -125,7 +125,7 @@ class QualityControlController extends Controller
             ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
             ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
             ->where("inward_raw_materials_items.id",$request->quality_id)
-             ->orderBy('inward_raw_materials.created_at', 'desc')
+
             ->first();
              $view = view('view_quality_control', ['view_quality'=> $view_quality])->render();
              return response()->json(['html'=>$view]);
