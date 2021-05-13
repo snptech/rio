@@ -254,7 +254,7 @@ class InwardPackingMaterialController extends Controller
             return view("inwardpackingmatrial.edit_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"packingrawmaterial"=>$packingrawmaterial,"department"=>$department]);
         }
         else
-            throw(404);
+            redirect(404);
     }
     public function update(Request $request,$id)
     {
@@ -342,7 +342,7 @@ class InwardPackingMaterialController extends Controller
                 return redirect("inwardpackingrawmaterial/list")->with('error', "Something went wrong");
         }
         else
-            throw(404);
+            redirect(404);
 
 
     }
@@ -388,7 +388,7 @@ class InwardPackingMaterialController extends Controller
             }
         }
         else{
-            throw(404);
+            redirect(404);
         }
     }
 
