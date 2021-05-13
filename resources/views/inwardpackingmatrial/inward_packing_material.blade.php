@@ -76,7 +76,6 @@
                             <th>Name of Manufacturer</th>
                             <th>Name of Supplier</th>
                             <th>Invoice No./ Challan</th>
-
                             <th>Quantity</th>
                             <th>GRN</th>
                             <th>Checked by</th>

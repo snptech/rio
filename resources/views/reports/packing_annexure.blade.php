@@ -12,196 +12,51 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <div class="filter">
-                <h3>Filter</h3>
-                <form id="filter_vali">
-                    <div class="form-row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="date" class="form-control" name="ReceiptDate" id="ReceiptDate" placeholder="Date of Receipt">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="ReceiptNo" id="ReceiptNo" placeholder="Receipt No.">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="MaterialName" id="MaterialName" placeholder="Material Name">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="Manufacturer" id="Manufacturer" placeholder="Name of Manufacturer">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="Supplier" id="Supplier" placeholder="Name of Supplier">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" placeholder="invoice No.">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <button type="search" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
             <div class="tbl-sticky">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered datatable" id="example">
                     <thead>
                         <tr>
+                        <th>#</th>
+                            <th>From</th>
+                            <th>To</th>
                             <th>Date of Receipt</th>
                             <th>Packing Material Name</th>
                             <th>Name of Manufacturer</th>
                             <th>Name of Supplier</th>
                             <th>Invoice No./ Challan</th>
-                            <th>Pack Size</th>
+
                             <th>Quantity</th>
                             <th>GRN</th>
                             <th>Checked by</th>
                         </tr>
+
                     </thead>
                     <tbody>
+                        @if(isset($listquery))
+                        @php $i=1; @endphp
+                        @foreach($listquery as $temp)
                         <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Material 1</td>
-                            <td>Manufacturer name here</td>
-                            <td>Supplier name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>5</td>
-                            <td>500</td>
-                            <td>ABC2021</td>
-                            <td>Employee Name</td>
-                        </tr>
+
+                            <td>{{$temp->id}}</td>
+                            <td>{{$temp->goods_going_from_name}}</td>
+                            <td>{{$temp->goods_going_to_name}}</td>
+                            <td>{{$temp->date_of_receipt}}</td>
+                            <td>{{$temp->material_name}}</td>
+                            <td>{{$temp->manufacturer}}</td>
+                            <td>{{$temp->name}}</td>
+                            <td>{{$temp->invoice_no}}</td>
+                            <td>{{$temp->total_qty}}</td>
+                            <td>{{$temp->goods_receipt_no}}</td>
+                            <td>{{$temp->uname}}</td>
+                         </tr>
+                        @php $i++; @endphp
+                        @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -209,32 +64,37 @@
 
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+
+
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+<script src="{{ asset('assets/mdbootstrap4/mdb.min.js')  }}"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{{ asset('assets/js/custom.js')  }}"></script>
+<!-- End custom js for this page-->
 
 <script>
     $(document).ready(function() {
-        $("#filter_vali").validate({
-            rules: {
-
-                ReceiptDate: "required",
-                ReceiptNo: "required",
-                MaterialName: "required",
-                Manufacturer: "required",
-                Supplier: "required",
-                invoiceNo: "required",
-            },
-            messages: {
-                inward_date: "Please  Enter The Inward Date  ",
-                ReceiptDate: "Please  Enter The Receipt Date  ",
-                ReceiptNo: "Please  Enter The Receipt No  ",
-                MaterialName: "Please  Enter The Material Name ",
-                Manufacturer: "Please  Enter The Manufacturer Name",
-                Supplier: "Please  Enter The Supplier Name",
-                invoiceNo: "Please  Enter The Invoice No  ",
-            },
-
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
         });
-
     });
 </script>
 @endpush

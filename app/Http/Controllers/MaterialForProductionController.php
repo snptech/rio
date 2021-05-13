@@ -22,14 +22,26 @@ class MaterialForProductionController extends Controller
 
         return view('issue_material_for_production',$data);
     }
-    public function view_issue_material($id)
+    public function view_issue_material(Request $request)
     {
+        if($request->id)
+        {
 
-        $data['issue_material']=Issuematerialproduction::select('issue_material_production.*','raw_materials.material_name')
+        $issue_material=Issuematerialproduction::select('issue_material_production.*','raw_materials.material_name',"inward_raw_materials_items.batch_no as rbatch","users.name")
         ->join("raw_materials", "raw_materials.id", "=", "issue_material_production.material")
-        ->where("issue_material_production.id", $id)->get();
+        ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "=", "issue_material_production.batch_no")
+        ->join("users", "users.id", "=", "issue_material_production.dispensed_by")
+        ->where("issue_material_production.id", $request->id)->first();
+        $view = view('view_issue_material', ['issue_material'=> $issue_material])->render();
+        return response()->json(['html'=>$view]);
 
-        return view('view_issue_material',$data);
+
+
+    }
+    else
+    {
+        redirect(404);
+    }
     }
     public function issue_material_for_production_add()
     {

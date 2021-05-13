@@ -12,235 +12,61 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
+            <div class="tbl-sticky">
+                <table class="table table-hover table-bordered datatable" id="example">
                     <thead>
                         <tr>
-                            <th rowspan="2">Date</th>
-                            <th rowspan="2">Product Name</th>
-                            <th rowspan="2">Batch No</th>
-                            <th rowspan="2">Grade</th>
+                            <th rowspan="2">Inward No</th>
+                            <th rowspan="2">Date of Receipt</th>
+                            <th rowspan="2">Opening Balance</th>
+                            <th rowspan="2">Name of Manufacturer</th>
+                            <th rowspan="2">Name of Supplier</th>
+                            <th rowspan="2">Raw Material Name</th>
+                            <th rowspan="2">Invoice Number</th>
+                            <th rowspan="2">GRN</th>
                             <th rowspan="2">Viscosity</th>
-                            <th rowspan="2">Mfg. Date</th>
-                            <th rowspan="2">Expiry Retest Date</th>
-                            <th colspan="5">Total No. of Drumbs</th>
+
                             <th rowspan="2">Total Quantity (Kg.)</th>
-                            <th rowspan="2">AR No.</th>
-                            <th rowspan="2">Approval Date</th>
-                            <th rowspan="2">Received by</th>
+                            <th rowspan="2">Pack Size</th>
+                            <th rowspan="2">Batch No.</th>
+                            <th colspan="2">Manufacturer’s</th>
+                            <th rowspan="2">RioCars’s Expiry / Retest Date</th>
                         </tr>
                         <tr>
-                            <th>200 Kg</th>
-                            <th>50 Kg</th>
-                            <th>30 Kg</th>
-                            <th>5 Kg</th>
-                            <th>Fiber board</th>
+                            <th>Mfg. Date</th>
+                            <th>Expiry / Retest Date</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if(isset($inward_material))
+                        @php $i=1; @endphp
+                        @foreach($inward_material as $temp)
                         <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
+
+                            <td>{{$temp->inward_no}}</td>
+                            <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
+                            <td>{{$temp->opening_stock}}</td>
+                            <td>{{$temp->man_name}}</td>
+                            <td>{{$temp->name}}</td>
+                            <td>{{$temp->material_name}}</td>
+                            <td>{{$temp->invoice_no}}</td>
+                            <td>{{$temp->goods_receipt_no}}</td>
+                            <td>{{$temp->viscosity}}</td>
+                            <td>{{$temp->qty_received_kg}}</td>
+                            <td>{{$temp->mesurment}}</td>
+                            <td>{{$temp->batch_no}}</td>
+                            <td>{{$temp->mfg_date!=""?date("d/m/Y",($temp->mfg_date)):""}}</td>
+                            <td>{{$temp->mfg_expiry_date!=""?date("d/m/Y",($temp->mfg_expiry_date)):""}}</td>
+                            <td>{{$temp->rio_care_expiry_date!=""?date("d/m/Y",($temp->rio_care_expiry_date)):""}}</td>
                         </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
-                        <tr>
-                            <td>16/03/2021</td>
-                            <td>Product name</td>
-                            <td>ABC12345</td>
-                            <td>A</td>
-                            <td>Viscosity</td>
-                            <td>June 2020</td>
-                            <td>June 2022</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>15</td>
-                            <td>105</td>
-                            <td>ACB2021</td>
-                            <td>19/03/2021</td>
-                            <td>Employee Name</td>
-                        </tr>
+                        @php $i++; @endphp
+                        @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -248,7 +74,37 @@
 
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 
 
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+<script src="{{ asset('assets/mdbootstrap4/mdb.min.js')  }}"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{{ asset('assets/js/custom.js')  }}"></script>
+<!-- End custom js for this page-->
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
 @endpush

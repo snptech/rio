@@ -61,7 +61,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('annexure_i') }}">Finished Goods Inward (Annexure - I)</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('annexure_ii') }}">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iii') }}">Issed by Stores for Production (Annexure - III)</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iv') }}">Goods Receipt Note (Annexure - IV)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iv') }}">Finished Goods Inward (Annexure - I) - New Stock</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('packing_annexure') }}">Packing Material Inward (Annexure - IV)</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vi') }}">Quality Control Approval/Rejection (Annexure -VI)</a></li>
           </ul>

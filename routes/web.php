@@ -195,11 +195,6 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
 
-        // // Issue Material For Production
-        Route::get('issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
-        Route::post("get-material", [App\Http\Controllers\MaterialForProductionController::class, 'getmatarial'])->name("get-material");
-
-
         //comming Soon
         Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
        //Issual By Stores For Production

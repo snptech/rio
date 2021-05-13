@@ -13,8 +13,8 @@
     <div class="card main-card">
         <div class="card-body">
             <div class="tbl-sticky">
-                <table class="table table-hover table-bordered">
-                    <thead>
+                <table class="table table-hover table-bordered datatable" id="example">
+                <thead>
                         <tr>
                             <th>Requisition No.</th>
                             <th>Opening Balance</th>
@@ -26,152 +26,33 @@
                             <th>Returned<br />from<br />Day<br />Store</th>
                             <th>Dispensed by</th>
                             <th>Remark</th>
+
+
                         </tr>
                     </thead>
                     <tbody>
+                        @if(count($issue_stores))
+                        @foreach($issue_stores as $temp)
                         <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
-                        <tr>
-                            <td>1234567</td>
-                            <td>500</td>
-                            <td>16/03/2021</td>
-                            <td>Product name goes here</td>
-                            <td>ABC1234567</td>
-                            <td>100</td>
-                            <td>ABC500</td>
-                            <td>25</td>
-                            <td>Employee name</td>
-                            <td><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</small></td>
-                        </tr>
+                            <td>{{$temp->requisition_no}}</td>
+                            <td>{{$temp->opening_balance}}</td>
+                            <td>{{$temp->issual_date}}</td>
+                            <td>{{$temp->material_name}}</td>
+                            <td>{{$temp->batch_no}}</td>
+                            <td>{{$temp->quantity}}</td>
+                            <td>{{$temp->for_fg_batch_no}}</td>
+                            <td>{{$temp->returned_from_day_store}}</td>
+                            <td>{{$temp->dispensed_by}}</td>
+                            <td>{{$temp->remark}}</td>
+
+                       </tr>
+                       @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -179,7 +60,37 @@
 
 @endsection
 @push("scripts")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 
 
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+<script src="{{ asset('assets/mdbootstrap4/mdb.min.js')  }}"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{{ asset('assets/js/custom.js')  }}"></script>
+<!-- End custom js for this page-->
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
 @endpush
