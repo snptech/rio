@@ -185,6 +185,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/view_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'view_dispatch_finished'])->name("view_dispatch_finished");
         Route::post('/update_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'update_dispatch_finished'])->name("update_dispatch_finished");
         Route::post('/dispacth_view', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispacth_view'])->name("dispacth_view");
+        Route::post("getproductbatch", [App\Http\Controllers\DispatchFinishedGoodsController::class, 'getproductbatch'])->name("getproductbatch");
+        Route::post("getproductqtyofbatch", [App\Http\Controllers\DispatchFinishedGoodsController::class, 'getproductqtyofbatch'])->name("getproductqtyofbatch");
+
 
 
         // Reports//

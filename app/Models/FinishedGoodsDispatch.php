@@ -25,6 +25,7 @@ class FinishedGoodsDispatch extends Model
         'viscosity',
         'mfg_date',
         'expiry_ratest_date',
+        'total_no_of_200kg_drums',
         'total_no_of_50kg_drums',
         'total_no_of_30kg_drums',
         'total_no_of_5kg_drums',
@@ -35,5 +36,6 @@ class FinishedGoodsDispatch extends Model
         'dispatch_by',
         'created_at',
         'updated_at',
+        'total_no_of_fiber_board_drums'
     ];
 }

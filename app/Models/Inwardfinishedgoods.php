@@ -31,5 +31,11 @@ class Inwardfinishedgoods extends Model
         "remark" ,
         "created_at",
         "updated_at",
+        'total_no_of_200kg_drums_bal',
+        'total_no_of_50kg_drums_bal',
+        'total_no_of_30kg_drums_bal',
+        'total_no_of_5kg_drums_bal',
+        'total_no_of_fiber_board_drums_bal',
+        'total_quantity_bal',
     ];
 }
