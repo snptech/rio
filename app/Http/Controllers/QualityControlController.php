@@ -56,7 +56,7 @@ class QualityControlController extends Controller
             'raw_material_id' => $request['rawmaterial_id'],
             'ar_no' => $request['ar_number'],
             'checked_by' => Auth::user()->id,
-        ];
+
         ];
         $result =Qualitycontroll::create($data);
 

@@ -47,7 +47,7 @@
                     @foreach($inward_goods as $temp)
                     <tr>
                             <td>{{$temp->inward_date}}</td>
-                            <td>{{$temp->product_name}}</td>
+                            <td>{{$temp->material_name}}</td>
                             <td>{{$temp->batch_no}}</td>
                             <td>{{$temp->grade}}</td>
                             <td>{{$temp->viscosity}}</td>
@@ -61,7 +61,7 @@
                             <td>{{$temp->total_quantity}}</td>
                             <td>{{$temp->ar_no}}</td>
                             <td>{{$temp->approval_data}}</td>
-                            <td>{{$temp->received_by}}</td>
+                            <td>{{$temp->name}}</td>
                             <td>
                             <a class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewnewstock" title="View" onclick="viewstock({{$temp->id}})"><i data-feather="eye"></i></a>
 

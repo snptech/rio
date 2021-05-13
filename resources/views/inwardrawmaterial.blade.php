@@ -29,6 +29,8 @@
                             <th rowspan="2">Raw Material Name</th>
                             <th rowspan="2">Invoice Number</th>
                             <th rowspan="2">GRN</th>
+                            <th rowspan="2">Viscosity</th>
+
                             <th rowspan="2">Total Quantity (Kg.)</th>
                             <th rowspan="2">Pack Size</th>
                             <th rowspan="2">Batch No.</th>
@@ -49,18 +51,19 @@
 
                         <td>{{$temp->inward_no}}</td>
                         <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
-                        <td>{{$temp->material_stock}}</td>
+                        <td>{{$temp->opening_stock}}</td>
                         <td>{{$temp->man_name}}</td>
                         <td>{{$temp->name}}</td>
                         <td>{{$temp->material_name}}</td>
                         <td>{{$temp->invoice_no}}</td>
                         <td>{{$temp->goods_receipt_no}}</td>
+                        <td>{{$temp->viscosity}}</td>
                         <td>{{$temp->qty_received_kg}}</td>
                         <td>{{$temp->mesurment}}</td>
                         <td>{{$temp->batch_no}}</td>
-                        <td>{{$temp->mfg_date!=""?date("d/m/Y",strtotime($temp->mfg_date)):""}}</td>
-                        <td>{{$temp->mfg_expiry_date!=""?date("d/m/Y",strtotime($temp->mfg_expiry_date)):""}}</td>
-                        <td>{{$temp->rio_care_expiry_date!=""?date("d/m/Y",strtotime($temp->rio_care_expiry_date)):""}}</td>
+                        <td>{{$temp->mfg_date!=""?date("d/m/Y",($temp->mfg_date)):""}}</td>
+                        <td>{{$temp->mfg_expiry_date!=""?date("d/m/Y",($temp->mfg_expiry_date)):""}}</td>
+                        <td>{{$temp->rio_care_expiry_date!=""?date("d/m/Y",($temp->rio_care_expiry_date)):""}}</td>
                         <td class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewsupp({{$temp->itemid}})"><i data-feather="eye"></i></a></td>
                         </tr>
                         @php $i++; @endphp

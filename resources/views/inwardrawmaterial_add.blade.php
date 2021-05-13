@@ -78,7 +78,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="manufacturername">Name of Manufacturer</label>
-                          {{ Form::select("manufacturername",$manufacturer,old("manufacturername"),array("class"=>"form-control select","id"=>"manufacturername","placeholder"=>"Choose Manufactur")) }}
+                          {{ Form::select("manufacturername",$manufacturer,old("manufacturername"),array("class"=>"form-control select","id"=>"manufacturername","placeholder"=>"Choose Manufacturer")) }}
 
 						</div>
 					</div>
@@ -109,6 +109,12 @@
                         @endif
 						</div>
 					</div> -->
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="Viscosity">Viscosity <span class="text-danger">(Only for certain Products)</span></label>
+                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" value="{{ old("viscosity") }}">
+                        </div>
+                    </div>
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="invoiceNo">Invoice No.</label>

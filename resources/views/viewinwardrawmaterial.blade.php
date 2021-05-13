@@ -14,7 +14,7 @@
                         </tr>
                         <tr>
                             <th>OPENING BALANCE	</th>
-                            <td>{{$inward_material->material_stock}}</td>
+                            <td>{{$inward_material->opening_stock}}</td>
                         </tr>
                         <tr>
                             <th>NAME OF MANUFACTURER	</th>
@@ -36,6 +36,10 @@
                         <tr>
                             <th>GRN</th>
                             <td>{{ $inward_material->goods_receipt_no }}</td>
+                        </tr>
+                        <tr>
+                            <th>Viscosity</th>
+                            <td>{{ $inward_material->viscosity }}</td>
                         </tr>
                         <tr>
                             <th>TOTAL QUANTITY (KG.)</th>

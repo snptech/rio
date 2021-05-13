@@ -44,7 +44,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="OpeningBalance">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" onkeyup="sub()"  placeholder="Balance Stock" >
+                            <input type="text" class="form-control" name="opening_bal" id="opening_bal" onkeyup="sub()"  placeholder="Balance Stock" readonly>
                         </div>
                     </div>
 
@@ -73,12 +73,12 @@
                             <input type="number" class="form-control calculate" value="0" onkeyup="sub()" name="issued_quantity" id="issued_quantity" placeholder="Quantity">
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="IssuedQuantity">Batch Quantity</label>
                             <input type="number" class="form-control calculate" value="0" onkeyup="" name="batch_quantity" id="batch_quantity" placeholder="Quantity">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
@@ -179,7 +179,7 @@
                 material:"required",
                 opening_bal:"required",
                 batch_no:"required",
-                batch_quantity:"required",
+                /*batch_quantity:"required",*/
 
                 issual_date:"required",
                 issued_quantity:"required",
@@ -189,7 +189,7 @@
                 returned_from_day_store:"required",*/
                 closing_balance_qty:"required",
                 dispensed_by:"required",
-                remark:"required",
+               /* remark:"required",*/
             },
             messages: {
                 requisition_no: "Please  Enter The Requisition No",

@@ -33,11 +33,11 @@
                         <th>Material Type</th>
                         <th>Material Stock</th>
                         <th>Material Minimum Stock</th>
-                        <th>Exp. Date</th>
-                        <th>Rio Exp. Date</th>
+                        <!--<th>Exp. Date</th>
+                        <th>Rio Exp. Date</th> -->
                         <th>Created At</th>
                         <th>Updated At</th>
-                        <th>Action</th>
+                        <!--<th>Action</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -58,14 +58,14 @@
                         </td>
                         <td>{{ $val->material_stock	}}</td>
                         <td>{{ $val->material_preorder_stock }}</td>
-                        <td>{{ $val->expiry_date?date("d/m/Y",$val->expiry_date):""}}</td>
-                        <td>{{ $val->rio_expiry_date?date("d/m/Y",$val->rio_expiry_date):""}}</td>
+                       {{--   <td>{{ $val->expiry_date?date("d/m/Y",$val->expiry_date):""}}</td>
+                        <td>{{ $val->rio_expiry_date?date("d/m/Y",$val->rio_expiry_date):""}}</td> --}}
 
                         <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
 
                         <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
 
-                        <td class="actions"><a href="{{ route("edit-rawmaterial",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-rawmaterial",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a></td>
+                         {{--  <td class="actions"><a href="{{ route("edit-rawmaterial",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-rawmaterial",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a></td>--}}
                     </tr>
                         @php($i++)
                         @endforeach
