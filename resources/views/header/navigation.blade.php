@@ -64,6 +64,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iv') }}">Finished Goods Inward (Annexure - I) - New Stock</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('packing_annexure') }}">Packing Material Inward (Annexure - IV)</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vi') }}">Quality Control Approval/Rejection (Annexure -VI)</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}">Finished Goods Dispatch (Annexure -VII)</a></li>
           </ul>
         </div>
       </li>

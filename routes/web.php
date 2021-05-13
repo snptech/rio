@@ -197,6 +197,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_iv', [App\Http\Controllers\ReportsController::class, 'annexure_iv'])->name("annexure_iv");
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
+        Route::get('/annexure_vii', [App\Http\Controllers\ReportsController::class, 'annexure_vii'])->name("annexure_vii");
 
         //comming Soon
         Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");

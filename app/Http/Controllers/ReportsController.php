@@ -13,6 +13,7 @@ use App\Models\Department;
 use App\Models\Issuematerialproduction;
 use App\Models\IssualStoresForProduction;
 use App\Models\Inwardfinishedgoods;
+use App\Models\FinishedGoodsDispatch;
 use DB;
 use Auth;
 
@@ -117,6 +118,27 @@ class ReportsController extends Controller
         ->orderBy('inward_raw_materials.created_at', 'desc')
        ->get();
         return view('reports.annexure_vi',$data);
+    }
+    public function annexure_vii()
+    {
+        $data['finished_good'] = FinishedGoodsDispatch::select(
+            'finished_goods_dispatch.*',
+            'grades.grade as grades_name',
+            'mode_of_dispatch.mode as mode_name',
+            "raw_materials.material_name",
+            "party_master.company_name",
+            "inward_finished_goods.batch_no",
+            "users.name"
+        )
+            ->Join("party_master", "party_master.id", "=", "finished_goods_dispatch.party_name")
+            ->Join("grades", "grades.id", "=", "finished_goods_dispatch.grade")
+            ->Join("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
+            ->Join("raw_materials", "raw_materials.id", "=", "finished_goods_dispatch.product")
+            ->Join("inward_finished_goods", "inward_finished_goods.id", "=", "finished_goods_dispatch.batch_no")
+            ->Join("users","users.id", "=", "finished_goods_dispatch.dispatch_by")
+            ->get();
+
+        return view('reports.annexure_vii',$data);
     }
 
 }

@@ -20,7 +20,6 @@ class DispatchFinishedGoodsController extends Controller
         $data['finished_good'] = FinishedGoodsDispatch::select(
             'finished_goods_dispatch.*',
             'grades.grade as grades_name',
-
             'mode_of_dispatch.mode as mode_name',
             "raw_materials.material_name",
             "party_master.company_name",
@@ -32,7 +31,7 @@ class DispatchFinishedGoodsController extends Controller
             ->Join("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
             ->Join("raw_materials", "raw_materials.id", "=", "finished_goods_dispatch.product")
             ->Join("inward_finished_goods", "inward_finished_goods.id", "=", "finished_goods_dispatch.batch_no")
-            ->Join("users", "users.id", "=", "finished_goods_dispatch.dispatch_by")
+            ->Join("users","users.id", "=", "finished_goods_dispatch.dispatch_by")
             ->get();
 
         return view('dispatch_finished_goods', $data);

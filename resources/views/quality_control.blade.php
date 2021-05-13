@@ -71,9 +71,9 @@
                                     <td><small>{{$temp->remark}}</small></td>
                                     <td>
                                         @if(!$temp->quality_id)
-                                        <a href="#checkQuntity" data-toggle="modal" title="View" data-target="#checkQuntity" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
+                                        <a href="#" data-toggle="modal" title="View" data-target="#" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
                                         @else
-                                        <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewquality({{$temp->itemid}})"><i data-feather="eye"></i></a>
+                                        <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewquality" title="View" onclick="viewquality({{$temp->itemid}})"><i data-feather="eye"></i></a>
                                         @endif
                                     </td>
 
@@ -100,19 +100,20 @@
     </div>
     @endsection
 
-    @push("models")
-  <div class="modal fade show" id="qualitycontrol" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="checkQuntityLabel">Quality Check Details</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
-      </div>
-      <div class="modal-body">
 
-      </div>
+@push("models")
+<div class="modal fade show" id="viewquality" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="checkQuntityLabel">Quality Control  Details</h5>
+      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+    </div>
+    <div class="modal-body">
+
     </div>
   </div>
+</div>
 </div>
 @endpush
     @push("scripts")
@@ -138,11 +139,26 @@
 
         });
 
+        function qualitycontrol(quality_id)
+        {
+        $.ajax({
+            url:'{{ route("qty_control") }}',
+            data:{
+            "_token": "{{ csrf_token() }}",
+            "quality_id": quality_id
+            },
+            datatype:'json',
+            method:"POST"
+        }).done(function( html ) {
+
+            $(".modal-content").html(html.html);
+        });
+        }
 
       function viewquality(quality_id)
         {
         $.ajax({
-            url:'{{ route('view_quality') }}',
+            url:'{{ route("view_quality") }}',
             data:{
             "_token": "{{ csrf_token() }}",
             "quality_id": quality_id

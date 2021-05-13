@@ -88,7 +88,7 @@ class QualityControlController extends Controller
         ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
         ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
         ->where("inward_raw_materials_items.id",$request->quality_id)->first();
-         $view = view('qty_control_view', ['qty_control_view'=> $qty_control_view])->render();
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view])->render();
 
          return response()->json(['html'=>$view]);
 
@@ -122,9 +122,10 @@ class QualityControlController extends Controller
             ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
             ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
             ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
-            ->where("inward_raw_materials_items.id",$request->quality_id)
-            $view=view('view_quality_control', ['view_quality'=> $view_quality])->render();
+            ->where("inward_raw_materials_items.id",$request->quality_id)->first();
+            $view = view('view_quality_control', ['view_quality'=> $view_quality])->render();
             return response()->json(['html'=>$view]);
+
 
 
         }
