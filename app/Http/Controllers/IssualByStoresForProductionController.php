@@ -10,14 +10,17 @@ class IssualByStoresForProductionController extends Controller
 {
     public function issual_by_stores_for_production()
     {
-        $data['issue_stores']=IssualStoresForProduction::all();
+        $data['issue_stores']=IssualStoresForProduction::select('issual_by_stores_for_production.*','raw_materials.material_name')
+        ->join('raw_materials','raw_materials.id','issual_by_stores_for_production.id')
+        ->get();
         return view('issual_by_stores_for_production',$data);
     }
     public function issual_by_stores_for_production_add()
     {
 
-        $rawmaterial =Rawmeterial::where('material_type','F'and 6 > 0)->get();
-
+        $rawmaterial =Rawmeterial::where('material_type','=','F')->where('qty','>',0)
+                            ->pluck("material_name","id");
+                            // Evdach ahe ka ? ho check karun bagh ma ok
         return view('issual_by_stores_for_production_add')->with(["rawmaterial"=>$rawmaterial]);
     }
     public function issue_by_stores_insert(Request $request)
@@ -47,7 +50,9 @@ class IssualByStoresForProductionController extends Controller
         //
         if($request->id)
         {
-            $IssualStores = IssualStoresForProduction::where("id",$request->id)->first();
+            $IssualStores = IssualStoresForProduction::select('issual_by_stores_for_production.*','raw_materials.material_name')
+            ->join('raw_materials','raw_materials.id','issual_by_stores_for_production.id')
+            ->where("issual_by_stores_for_production.id",$request->id)->first();
              $view = view('view_issual_stores', ['IssualStores'=> $IssualStores])->render();
              return response()->json(['html'=>$view]);
 

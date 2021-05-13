@@ -18,7 +18,7 @@
                         </tr>
                         <tr>
                             <th>Product Name</th>
-                            <td>{{ $IssualStores->product_name }}</td>
+                            <td>{{ $IssualStores->material_name }}</td>
                         </tr>
                         <tr>
                             <th>Batch No</th>

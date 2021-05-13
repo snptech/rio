@@ -10,6 +10,15 @@ class Rawmeterial extends Model
     use HasFactory;
     protected $table = 'raw_materials';
     protected $fillable = [
-        "id", "material_name", "material_mesurment", "material_stock", "material_preorder_stock", "expiry_date", "rio_expiry_date", "man_date","material_type"
+        "id",
+         "material_name",
+         "material_mesurment",
+          "material_stock",
+           "material_preorder_stock",
+            "expiry_date",
+            "rio_expiry_date",
+             "man_date",
+             "material_type",
+             "qty"
     ];
 }

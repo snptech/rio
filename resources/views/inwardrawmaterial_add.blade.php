@@ -284,30 +284,30 @@
           {
             required:true
           },
-        //   materialname:{
-        //     required:true
-        //   },
+          materialname:{
+            required:true
+          },
           manufacturername:{
             required:true
           },
           suppliername:{
               required:true
           },
-          /*supplierAddress:{
+          supplierAddress:{
               required:true
           },
           supplierGST:{
               required:true
-          },*/
+          },
           invoiceNo:{
               required:true
           },
           receiptNo:{
               required:true
           },
-        //   "materialnames[]":{
-        //       required:true
-        //   },
+          "materialnames[]":{
+              required:true
+          },
           "batch[]":{
               required:true
           },
