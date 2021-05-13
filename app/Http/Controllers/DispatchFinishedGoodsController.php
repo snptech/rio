@@ -10,6 +10,7 @@ use App\Models\Modedispatch;
 use App\Models\Rawmeterial;
 use App\Models\Department;
 use App\Models\PartyMaster;
+use App\Models\Inwardfinishedgoods;
 use DB;
 use Auth;
 class DispatchFinishedGoodsController extends Controller
@@ -19,12 +20,19 @@ class DispatchFinishedGoodsController extends Controller
         $data['finished_good'] = FinishedGoodsDispatch::select(
             'finished_goods_dispatch.*',
             'grades.grade as grades_name',
-            'suppliers.name as suppliers_name',
-            'mode_of_dispatch.mode as mode_name'
+
+            'mode_of_dispatch.mode as mode_name',
+            "raw_materials.material_name",
+            "party_master.company_name",
+            "inward_finished_goods.batch_no",
+            "users.name"
         )
-            ->Join("suppliers", "suppliers.id", "=", "finished_goods_dispatch.dispatch_by")
+            ->Join("party_master", "party_master.id", "=", "finished_goods_dispatch.party_name")
             ->Join("grades", "grades.id", "=", "finished_goods_dispatch.grade")
             ->Join("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
+            ->Join("raw_materials", "raw_materials.id", "=", "finished_goods_dispatch.product")
+            ->Join("inward_finished_goods", "inward_finished_goods.id", "=", "finished_goods_dispatch.batch_no")
+            ->Join("users", "users.id", "=", "finished_goods_dispatch.dispatch_by")
             ->get();
 
         return view('dispatch_finished_goods', $data);
@@ -63,13 +71,15 @@ class DispatchFinishedGoodsController extends Controller
             'viscosity' => $request['viscosity'],
             'mfg_date' => $request['mfg_date'],
             'expiry_ratest_date' => $request['expiry_ratest_date'],
+            'total_no_of_200kg_drums' => $request['total_no_of_200kg_drums'],
             'total_no_of_50kg_drums' => $request['total_no_of_50kg_drums'],
             'total_no_of_30kg_drums' => $request['total_no_of_30kg_drums'],
             'total_no_of_5kg_drums' => $request['total_no_of_5kg_drums'],
+            'total_no_of_fiber_board_drums' => $request['total_no_of_fiber_board_drums'],
             'total_no_qty' => $request['total_no_qty'],
             'seal_no' => $request['seal_no'],
             'dispatch_date' => $request['dispatch_date'],
-            'dispatch_by' => $request['dispatch_by'],
+            'dispatch_by' => Auth::user()->id,
             'remark' => $request['remark'],
 
         ];
@@ -124,25 +134,18 @@ class DispatchFinishedGoodsController extends Controller
             'viscosity' => $request['viscosity'],
             'mfg_date' => $request['mfg_date'],
             'expiry_ratest_date' => $request['expiry_ratest_date'],
+            'total_no_of_200kg_drums' => $request['total_no_of_200kg_drums'],
             'total_no_of_50kg_drums' => $request['total_no_of_50kg_drums'],
             'total_no_of_30kg_drums' => $request['total_no_of_30kg_drums'],
             'total_no_of_5kg_drums' => $request['total_no_of_5kg_drums'],
+            'total_no_of_fiber_board_drums' => $request['total_no_of_fiber_board_drums'],
             'total_no_qty' => $request['total_no_qty'],
             'seal_no' => $request['seal_no'],
             'dispatch_date' => $request['dispatch_date'],
-            'dispatch_by' => $request['dispatch_by'],
+            'dispatch_by' => Auth::user()->id,
             'remark' => $request['remark'],
         ];
-        $finished = FinishedGoodsDispatch::select(
-            'finished_goods_dispatch.*',
-            'grades.grade as grades_name',
-            'suppliers.name as suppliers_name',
-            'mode_of_dispatch.mode as mode_name',
-        )
-            ->leftJoin("suppliers", "suppliers.id", "=", "finished_goods_dispatch.dispatch_by")
-            ->leftJoin("grades", "grades.id", "=", "finished_goods_dispatch.grade")
-            ->leftJoin("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
-            ->first($id);
+        $finished = FinishedGoodsDispatch::find($id);
 
         $result = $finished->update($data);
         if ($result) {
@@ -166,12 +169,19 @@ class DispatchFinishedGoodsController extends Controller
             $dispacth_view = FinishedGoodsDispatch::select(
                 'finished_goods_dispatch.*',
                 'grades.grade as grades_name',
-                'suppliers.name as suppliers_name',
-                'mode_of_dispatch.mode as mode_name'
+
+                'mode_of_dispatch.mode as mode_name',
+                "raw_materials.material_name",
+                "party_master.company_name",
+                "inward_finished_goods.batch_no",
+                "users.name"
             )
-                ->Join("suppliers", "suppliers.id", "=", "finished_goods_dispatch.dispatch_by")
+                ->Join("party_master", "party_master.id", "=", "finished_goods_dispatch.party_name")
                 ->Join("grades", "grades.id", "=", "finished_goods_dispatch.grade")
                 ->Join("mode_of_dispatch", "mode_of_dispatch.id", "=", "finished_goods_dispatch.mode_of_dispatch")
+                ->Join("raw_materials", "raw_materials.id", "=", "finished_goods_dispatch.product")
+                ->Join("inward_finished_goods", "inward_finished_goods.id", "=", "finished_goods_dispatch.batch_no")
+                ->Join("users", "users.id", "=", "finished_goods_dispatch.dispatch_by")
 
             ->where("finished_goods_dispatch.id",$request->id)->first();
              $view = view('dispacth_view', ['dispacth_view'=> $dispacth_view])->render();
@@ -183,5 +193,59 @@ class DispatchFinishedGoodsController extends Controller
             }
 
 
+    }
+    public function getproductbatch(Request $request)
+    {
+        if($request->id)
+        {
+
+            $batch = Inwardfinishedgoods::where("product_name",$request->id)->where("total_quantity_bal",">",0)->pluck("batch_no","id");
+
+
+            $data["batch"] = $batch;
+            return response()->json($data);
+        }
+        else{
+            redirect(404);
+        }
+    }
+    public function getproductqtyofbatch(Request $request)
+    {
+        if($request->id && $request->rawmaterial)
+        {
+
+            $batch = Inwardfinishedgoods::where("product_name",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(total_quantity_bal)"),">",0)->first();
+            if(isset($batch))
+            {
+                $data["total_no_of_200kg_drums"] = ($batch->total_no_of_200kg_drums_bal>0?$batch->total_no_of_200kg_drums_bal:0);
+                $data["total_no_of_50kg_drums"] = ($batch->total_no_of_50kg_drums_bal>0?$batch->total_no_of_50kg_drums_bal:0);
+                $data["total_no_of_30kg_drums"] = ($batch->total_no_of_30kg_drums_bal>0?$batch->total_no_of_30kg_drums_bal:0);
+                $data["total_no_of_5kg_drums"] = ($batch->total_no_of_5kg_drums_bal>0?$batch->total_no_of_5kg_drums_bal:0);
+                $data["total_no_of_fiber_board_drums"] = ($batch->total_no_of_fiber_board_drums_bal>0?$batch->total_no_of_fiber_board_drums_bal:0);
+                $data["total_quantity"] = ($batch->total_quantity_bal>0?$batch->total_quantity_bal:0);
+                $data["mfg_date"] = ($batch->mfg_date);
+                $data["expiry_ratest_date"] = ($batch->expiry_ratest_date);
+                $data["grade"] = ($batch->grade);
+                $data["viscosity"] = ($batch->viscosity);
+            }
+            else
+           {
+               $data["total_no_of_200kg_drums"] = 0;
+               $data["total_no_of_50kg_drums"] = 0;
+               $data["total_no_of_30kg_drums"] = 0;
+               $data["total_no_of_5kg_drums"] = 0;
+               $data["total_no_of_fiber_board_drums"] =0;
+               $data["total_quantity"] = 0;
+               $data["mfg_date"] = "";
+                $data["expiry_ratest_date"] = "";
+                $data["grade"] = "";
+                $data["viscosity"] ="";
+            }
+
+            return response()->json($data);
+        }
+        else{
+            redirect(404);
+        }
     }
 }

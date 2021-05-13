@@ -190,7 +190,7 @@ class InwardMaterialController extends Controller
         }
         else
         {
-            throw(404);
+            redirect(404);
         }
     }
 }

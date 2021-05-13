@@ -25,7 +25,7 @@ class InwardFinishedController extends Controller
 
         if($request->id)
         {
-             $inward_goods = Inwardfinishedgoods::where("id",$request->id)->first();
+             $inward_goods = Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","grades.grade","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")->join("grades","grades.id","inward_finished_goods.grade")->join("users","users.id","inward_finished_goods.received_by")->where("id",$request->id)->first();
              $view = view('view_new_stock', ['inward_goods'=> $inward_goods])->render();
              return response()->json(['html'=>$view]);
 
@@ -68,6 +68,12 @@ class InwardFinishedController extends Controller
             'total_no_of_5kg_drums' => $request['total_no_of_5kg_drums'],
             'total_no_of_fiber_board_drums' => $request['total_no_of_fiber_board_drums'],
             'total_quantity' => $request['total_quantity'],
+            'total_no_of_200kg_drums_bal' => $request['total_no_of_200kg_drums'],
+            'total_no_of_50kg_drums_bal' => $request['total_no_of_50kg_drums'],
+            'total_no_of_30kg_drums_bal' => $request['total_no_of_30kg_drums'],
+            'total_no_of_5kg_drums_bal' => $request['total_no_of_5kg_drums'],
+            'total_no_of_fiber_board_drums_bal' => $request['total_no_of_fiber_board_drums'],
+            'total_quantity_bal' => $request['total_quantity'],
             'ar_no' => $request['ar_no'],
             'approval_data' => $request['approval_data'],
             'received_by' => Auth::user()->id,

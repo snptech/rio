@@ -64,11 +64,12 @@
                         <tr>
                             <th rowspan="2">Date</th>
                             <th rowspan="2">Party Name</th>
+                            <th rowspan="2">Product Name</th>
                             <th rowspan="2">Invoice No.</th>
                             <th rowspan="2">Batch No.</th>
                             <th rowspan="2">Grade</th>
                             <th rowspan="2">Viscosity</th>
-                            <th colspan="3">Total Drums</th>
+                            <th colspan="5">Total Drums</th>
                             <th rowspan="2">Total Quantity (Kg)</th>
                             <th rowspan="2">Seal No.</th>
                             <th rowspan="2">Remark</th>
@@ -76,9 +77,11 @@
                             <th rowspan="2">Action</th>
                         </tr>
                         <tr>
+                            <th>200Kg</th>
                             <th>50Kg</th>
                             <th>30Kg</th>
                             <th>5Kg</th>
+                            <th>Fiber Board Drums</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,22 +90,25 @@
 
                         <tr>
                             <td>{{ date("d/m/Y ",strtotime($temp->created_at)) }}</td>
-                            <td>{{$temp->party_name}}</td>
+                            <td>{{$temp->company_name}}</td>
+                            <td>{{$temp->material_name}}</td>
                             <td>{{$temp->invoice_no}}</td>
                             <td>{{$temp->batch_no}}</td>
                             <td>{{$temp->grades_name}}</td>
                             <td>{{$temp->viscosity}}</td>
+                            <td>{{$temp->total_no_of_200kg_drums}}</td>
                             <td>{{$temp->total_no_of_50kg_drums}}</td>
                             <td>{{$temp->total_no_of_30kg_drums}}</td>
                             <td>{{$temp->total_no_of_5kg_drums}}</td>
+                            <td>{{$temp->total_no_of_fiber_board_drums}}</td>
                             <td>{{$temp->total_no_qty}}</td>
                             <td>{{$temp->seal_no}}</td>
                             <td>{{$temp->remark}}</td>
-                            <td>{{$temp->suppliers_name}}</td>
+                            <td>{{$temp->name}}</td>
                             <td class="actions">
-                            <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsdispth" title="View" onclick="dispth_finishe_view({{$temp->id}})"><i data-feather="eye"></i></a>
+                            <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsdispth" title="View" onclick="dispth_finishe_view({{$temp->id}})"><i data-feather="eye"></i></a> {{--
                                 <a href="{{ route('edit_dispatch_finished',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="Edit"><i data-feather="edit-3"></i></a>
-                                <a href="{{ route('delete_dispatch_finished',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="Delete"><i data-feather="trash"></i></a>
+                                <a href="{{ route('delete_dispatch_finished',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="Delete"><i data-feather="trash"></i></a> --}}
                             </td>
                         </tr>
                         @endforeach
@@ -150,67 +156,7 @@
             $('.datatable').DataTable({
      });
 
-            $("#inward_finished_vali").validate({
-                rules: {
-                    inward_date: "required",
-                    product_name: "required",
-                    batch_no: "required",
-                    grade: "required",
-                    grade: "required",
-                    viscosity: "required",
-                    mfg_date: "required",
-                    expiry_ratest_date: "required",
-                    total_no_of_200kg_drums: "required",
-                    total_no_of_50kg_drums: "required",
-                    total_no_of_30kg_drums: "required",
-                    total_no_of_5kg_drums: "required",
-                    total_no_of_fiber_board_drums: "required",
-                    total_quantity: "required",
-                    ar_no: "required",
-                    approval_data: "required",
-                    received_by: "required",
-                    remark: "required",
-                },
-                messages: {
-                    inward_date: "Please  Enter The Name Inward No",
-                    product_name: "Please  Enter The Product Name",
-                    batch_no: "Please  Enter The Name Batch No",
-                    grade: "Please  Enter The Name Ggrad",
-                    viscosity: "Please  Enter The Name Viscosit",
-                    mfg_date: "Please  Enter The Name Mfg Date",
-                    expiry_ratest_date: "Please  Enter The Name Expiry Ratest Date",
-                    total_no_of_200kg_drums: "Please  Enter The Name Total No Of 200kg Drum",
-                    total_no_of_50kg_drums: "Please  Enter The Name total_no_of_50kg Drum",
-                    total_no_of_30kg_drums: "Please  Enter The Name total_no_of_30kg Drum",
-                    total_no_of_5kg_drums: "Please  Enter The Name total_no_of_5kg Drum",
-                    total_no_of_fiber_board_drums: "Please  Enter The Name Total No Of Fiber Board Drum",
-                    total_quantity: "Please  Enter The Name Total Quantit",
-                    ar_no: "Please  Enter The Name Ar No",
-                    approval_data: "Please  Enter The Name Approval Date",
-                    received_by: "Please  Enter The Name Received By",
-                    remark: "Please  Enter The Name Remark",
-                },
-            });
-            $('.clear_submit').click(function() {
-                $('#inward_date').val('');
-                $('#product_name').val('');
-                $('#batch_no').val('');
-                $('#grade').val('');
-                $('#grade').val('');
-                $('#viscosity').val('');
-                $('#mfg_date').val('');
-                $('#expiry_ratest_date ').val('');
-                $('#total_no_of_200kg_drums').val('');
-                $('#total_no_of_50kg_drums').val('');
-                $('#total_no_of_30kg_drums').val('');
-                $('#total_no_of_5kg_drums').val('');
-                $('#total_no_of_fiber_board_drums').val('');
-                $('#total_quantity').val('');
-                $('#ar_no').val('');
-                $('#approval_data').val('');
-                $('#received_by').val('');
-                $('#remark').val('');
-            });
+
         });
         function dispth_finishe_view(id)
     {

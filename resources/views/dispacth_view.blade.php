@@ -10,7 +10,11 @@
             </tr>
             <tr>
                 <th >Party Name</th>
-                <td>{{$dispacth_view->party_name}}</td>
+                <td>{{$dispacth_view->company_name}}</td>
+            </tr>
+            <tr>
+                <th >Product Name</th>
+                <td>{{$dispacth_view->material_name}}</td>
             </tr>
             <tr>
                 <th >Invoice No.</th>
@@ -29,9 +33,12 @@
                 <td>{{ $dispacth_view->viscosity }}</td>
             </tr>
             <tr>
-                <th >Total Drums</th>
+                <th colspan="2">Total Drums</th>
             </tr>
-
+            <tr>
+                <th>200Kg</th>
+                <td>{{$dispacth_view->total_no_of_200kg_drums}}</td>
+            </tr>
             <tr>
                 <th>50Kg</th>
                 <td>{{$dispacth_view->total_no_of_50kg_drums}}</td>
@@ -44,7 +51,10 @@
                 <th>5Kg</th>
                 <td>{{$dispacth_view->total_no_of_5kg_drums}}</td>
             </tr>
-
+            <tr>
+                <th>Total No. of Fiber Board Drums</th>
+                <td>{{$dispacth_view->total_no_of_fiber_board_drums}}</td>
+            </tr>
 
 
             <tr>
@@ -62,7 +72,7 @@
             </tr>
             <tr>
                 <th>Dispatch By</th>
-                <td>{{$dispacth_view->suppliers_name}}</td>
+                <td>{{$dispacth_view->name}}</td>
             </tr>
 
         </table>

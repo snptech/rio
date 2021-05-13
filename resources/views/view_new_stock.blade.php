@@ -75,7 +75,7 @@
             </tr>
             <tr>
                 <th>Received by</th>
-                <td>{{$inward_goods->received_by}}</td>
+                <td>{{$inward_goods->name}}</td>
             </tr>
 
         </table>

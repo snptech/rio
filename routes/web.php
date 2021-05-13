@@ -171,7 +171,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
          // quality control
          Route::get('/quality_control', [App\Http\Controllers\QualityControlController::class, 'quality_control'])->name("quality_control");
 
-         Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert']);
+         Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert'])->name("quality_control_insert");
          Route::post('/qty_control', [App\Http\Controllers\QualityControlController::class, 'qty_control'])->name('qty_control');
          Route::post('/view_quality', [App\Http\Controllers\QualityControlController::class, 'view_quality'])->name('view_quality');
 
@@ -185,6 +185,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/view_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'view_dispatch_finished'])->name("view_dispatch_finished");
         Route::post('/update_dispatch_finished/{id}', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'update_dispatch_finished'])->name("update_dispatch_finished");
         Route::post('/dispacth_view', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispacth_view'])->name("dispacth_view");
+        Route::post("getproductbatch", [App\Http\Controllers\DispatchFinishedGoodsController::class, 'getproductbatch'])->name("getproductbatch");
+        Route::post("getproductqtyofbatch", [App\Http\Controllers\DispatchFinishedGoodsController::class, 'getproductqtyofbatch'])->name("getproductqtyofbatch");
+
 
 
         // Reports//

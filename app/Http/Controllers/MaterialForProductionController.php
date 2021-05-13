@@ -100,7 +100,7 @@ class MaterialForProductionController extends Controller
             return response()->json($data);
         }
         else{
-            throw(404);
+            redirect(404);
         }
     }
     public function getmatarialqtyofbatch(Request $request)
@@ -117,7 +117,7 @@ class MaterialForProductionController extends Controller
             return response()->json($data);
         }
         else{
-            throw(404);
+            redirect(404);
         }
     }
 }
