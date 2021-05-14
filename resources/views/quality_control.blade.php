@@ -71,7 +71,7 @@
                                     <td><small>{{$temp->remark}}</small></td>
                                     <td>
                                         @if(!$temp->quality_id)
-                                        <a href="#" data-toggle="modal" title="View" data-target="#" id="qty_control" data-id="{{ $temp->quality_id }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
+                                        <a href="#" data-toggle="modal" title="View" data-target="#checkquality" id="qty_control" data-id="{{ $temp->itemid }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
                                         @else
                                         <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewquality" title="View" onclick="viewquality({{$temp->itemid}})"><i data-feather="eye"></i></a>
                                         @endif
@@ -109,12 +109,19 @@
       <h5 class="modal-title" id="checkQuntityLabel">Quality Control  Details</h5>
       <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body viewquality">
 
     </div>
   </div>
 </div>
 </div>
+<div class="modal fade show" id="checkquality" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content checkquality">
+
+      </div>
+    </div>
+    </div>
 @endpush
     @push("scripts")
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
@@ -151,7 +158,7 @@
             method:"POST"
         }).done(function( html ) {
 
-            $(".modal-content").html(html.html);
+            $(".checkquality").html(html.html);
         });
         }
 
@@ -167,7 +174,7 @@
             method:"POST"
         }).done(function( html ) {
 
-            $(".modal-body").html(html.html);
+            $(".viewquality").html(html.html);
         });
         }
     </script>
