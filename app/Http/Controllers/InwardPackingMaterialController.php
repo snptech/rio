@@ -333,7 +333,7 @@ class InwardPackingMaterialController extends Controller
                     }
 
 
-                        return redirect("inwardpackingrawmaterial/list")->with('message', "Inward packing rawmaterial updated successfully");
+                        return redirect("inwardpackingrawmaterial/list")->with('update', "Inward packing rawmaterial updated successfully");
 
 
                 }

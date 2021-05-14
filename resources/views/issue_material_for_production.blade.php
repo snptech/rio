@@ -14,6 +14,24 @@
     <div class="card main-card">
         <div class="card-body">
             <div class="tbl-sticky">
+            @if ($message = Session::get('message'))
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+                @if ($message = Session::get('danger'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+                @if ($message = Session::get('update'))
+                <div class="alert alert-info alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
                 <table class="table table-hover table-bordered datatable">
                     <thead>
                         <tr>
