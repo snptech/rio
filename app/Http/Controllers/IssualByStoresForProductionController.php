@@ -25,6 +25,33 @@ class IssualByStoresForProductionController extends Controller
     }
     public function issue_by_stores_insert(Request $request)
     {
+        $arrRules = [
+               "requisition_no"=>"required",
+                "opening_balance"=>"required",
+                "issual_date"=>"required",
+                "product_name"=>"required",
+                "batch_no"=>"required",
+                "quantity"=>"required",
+                "for_fg_batch_no"=>"required",
+                "returned_from_day_store"=>"required",
+                "dispensed_by"=>"required",
+                // "remark"=>"required",
+
+           ];
+           $arrMessages = [
+            "requisition_no"=>"This :attribute field is required.",
+            "opening_balance"=>"This :attribute field is required.",
+            "batch_no"=>"This :attribute field is required.",
+            "issual_date"=>"This :attribute field is required.",
+            "product_name"=>"This :attribute field is required.",
+            "quantity"=>"This :attribute field is required.",
+            "for_fg_batch_no"=>"This.Please  This :attribute field is required.",
+            "returned_from_day_store"=>"This.Please  This :attribute field is required.",
+            "dispensed_by"=>"This.This :attribute field is required.",
+            "remark"=>"This :attribute field is required.",
+            ];
+           $validateData = $request->validate($arrRules, $arrMessages);
+
 
          $data = [
             "requisition_no"=>$request['requisition_no'],

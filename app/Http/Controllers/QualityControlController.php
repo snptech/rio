@@ -7,7 +7,7 @@ use App\Models\Qualitycontroll;
 use App\Models\Rawmeterial;
 use App\Models\InwardMaterial;
 use App\Models\Rawmaterialitems;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class QualityControlController extends Controller
 {
@@ -44,6 +44,31 @@ class QualityControlController extends Controller
 
     public function quality_control_insert(Request $request)
     {
+        $arrRules = [
+            "quantity_approved"=>"required",
+            "quantity_rejected"=>"required",
+            "quantity_status"=>"required",
+            "date_of_approval"=>"required",
+            "inward_material_id"=>"required",
+            "inward_material_item_id"=>"required",
+            "total_qty"=>"required",
+            "raw_material_id"=>"required",
+            "ar_no"=>"required",
+
+           ];
+           $arrMessages = [
+            "dispath_noThis :attribute field is required.",
+            "quantity_approved"=>"This :attribute field is required.",
+            "quantity_rejected"=>"This :attribute field is required.",
+            "quantity_status"=>"This :attribute field is required.",
+            "date_of_approval"=>"This.This :attribute field is required.",
+            "inward_material_id"=>"This :attribute field is required.",
+            "inward_material_item_id"=>"This.This :attribute field is required.",
+            "total_qty"=>"This :attribute field is required.",
+            "raw_material_id"=>"This :attribute field is required.",
+            "ar_no"=>"This :attribute field is required.",
+            ];
+           $validateData = $request->validate($arrRules, $arrMessages);
 
         $data = [
             'quantity_approved' => $request['quantity_approved'],

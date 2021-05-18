@@ -6,8 +6,8 @@ use App\Models\Supplier;
 use App\Models\Rawmeterial;
 use App\Models\Rawmaterialitems;
 use App\Models\Issuematerialproduction;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
@@ -51,6 +51,47 @@ class MaterialForProductionController extends Controller
     }
     public function issue_material_insert(Request $request)
     {
+
+        $arrRules = [
+       "requisition_no"=>"required",
+        "material"=>"required",
+        "opening_bal"=>"required",
+        "batch_no"=>"required",
+        "viscosity"=>"required",
+        "batch_quantity"=>"required",
+        "issual_date"=>"required",
+        "issued_quantity"=>"required",
+        "excess"=> "required",
+        "finished_batch_no"=>"required",
+        "wastage"=> "required",
+        "returned_from_day_store"=>"required",
+        "closing_balance_qty"=>"required",
+        "dispensed_by"=>"required",
+        "remark"=>"required",
+   ];
+
+
+        $arrMessages = [
+            "requisition_no"=>"This :attribute field is required.",
+            "material"=>"This :attribute field is required..",
+            "opening_bal"=>"This :attribute field is required.",
+            "batch_no"=>"This :attribute field is required..",
+            "viscosity"=>"This :attribute field is required.",
+            "batch_quantity"=>"This :attribute field is required.",
+            "issual_date"=>"This :attribute field is required.",
+            "issued_quantity"=>"This :attribute field is required.",
+            "finished_batch_no"=>"This :attribute field is required.",
+            "excess"=>"This :attribute field is required.",
+            "wastage"=>"This :attribute field is required.",
+            "returned_from_day_store"=>" This :attribute field is required.",
+            "closing_balance_qty"=>"This :attribute field is required.",
+            "dispensed_by"=>"This :attribute field is required.",
+            "remark"=>"This :attribute field is required.",
+     ];
+
+
+        $validateData = $request->validate($arrRules, $arrMessages);
+
 
         $data = [
         'requisition_no'=> $request['requisition_no'],

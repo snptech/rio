@@ -179,9 +179,8 @@
                 material:"required",
                 opening_bal:"required",
                 batch_no:"required",
+                viscosity:"required",
                 /*batch_quantity:"required",*/
-
-                issual_date:"required",
                 issued_quantity:"required",
                /* excess: "required",
                 finished_batch_no:"required",

@@ -52,7 +52,7 @@ class DesignationController extends Controller
 
         $arrMessages = [
         "designation"=>"This :attribute field is required.",
-        "publish"=>"This :attribute field is required.",
+        "publish"=>"This:attribute field is required.",
         ];
 
         $attributes = array();
