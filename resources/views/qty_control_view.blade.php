@@ -43,8 +43,8 @@
 
         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
-                <label for="QuantityRejected">Ar Number</label>
-                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date">
+                <label for="QuantityRejected">Attachment</label>
+                <input type="file" class="form-control" name="files" id="files" placeholder="Attachment">
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
