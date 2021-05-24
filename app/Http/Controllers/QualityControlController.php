@@ -53,7 +53,7 @@ class QualityControlController extends Controller
             "inward_material_item_id"=>"required",
             "total_qty"=>"required",
             "raw_material_id"=>"required",
-            "ar_no"=>"required",
+            "ar_number"=>"required",
 
            ];
            $arrMessages = [
@@ -66,7 +66,7 @@ class QualityControlController extends Controller
             "inward_material_item_id"=>"This.This :attribute field is required.",
             "total_qty"=>"This :attribute field is required.",
             "raw_material_id"=>"This :attribute field is required.",
-            "ar_no"=>"This :attribute field is required.",
+            "ar_number"=>"This :attribute field is required.",
             ];
            $validateData = $request->validate($arrRules, $arrMessages);
 
