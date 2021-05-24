@@ -88,6 +88,13 @@ class QualityControlController extends Controller
 
          if($result)
          {
+            $rowmeterial = Rawmaterialitems::find($request['inward_item_id']);
+            if($rowmeterial)
+            {
+                $datas = array();
+                $datas["ar_no_date"] = $request['ar_number'];
+                $rowmeterial->update($datas);
+            }
             return redirect("quality_control")->with('success', "Item checked successfully.");
          }
     }
