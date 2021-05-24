@@ -68,7 +68,7 @@ class QualityControlController extends Controller
             "raw_material_id"=>"This :attribute field is required.",
             "ar_number"=>"This :attribute field is required.",
             ];
-           $validateData = $request->validate($arrRules, $arrMessages);
+          // $validateData = $request->validate($arrRules, $arrMessages);
 
         $data = [
             'quantity_approved' => $request['quantity_approved'],
