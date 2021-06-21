@@ -27,6 +27,22 @@
         </a>
       </li>
       <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-manufacture" aria-expanded="false" aria-controls="ui-manufacture"><i class="menu-icon" data-feather="tool"></i>
+      <span class="menu-title">Manufacture Process</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
+      <div class="collapse" id="ui-manufacture"><ul class="nav flex-column sub-menu">
+      <li class="nav-item">
+      <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Add Batch Manufacture</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('list-of-equipment')}}">List of Equipment</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('line-clearance')}}">Line Clearance Record</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('add-lots')}}">Add Lots</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('packing-detail')}}">Packing</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('generate-label')}}">Generate Label</a></li>
+      </ul>
+      </div>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link" href="{{ route('new_stock') }}">
           <i class="menu-icon" data-feather="shopping-cart"></i>
           <span class="menu-title">Inward Finished Goods -<br />New Stock</span>

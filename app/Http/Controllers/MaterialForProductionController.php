@@ -58,20 +58,18 @@ class MaterialForProductionController extends Controller
         "opening_bal"=>"required",
         "batch_no"=>"required",
         "viscosity"=>"required",
-        "batch_quantity"=>"required",
+        // "batch_quantity"=>"required",
         "issual_date"=>"required",
-        "issued_quantity"=>"required",
-        "excess"=> "required",
-        "finished_batch_no"=>"required",
-        "wastage"=> "required",
-        "returned_from_day_store"=>"required",
+        // "issued_quantity"=>"required",
+        // "excess"=> "required",
+        // "finished_batch_no"=>"required",
+        // "wastage"=> "required",
+        // "returned_from_day_store"=>"required",
         "closing_balance_qty"=>"required",
         "dispensed_by"=>"required",
-        "remark"=>"required",
-   ];
-
-
-        $arrMessages = [
+        // "remark"=>"required",
+         ];
+   $arrMessages = [
             "requisition_no"=>"This :attribute field is required.",
             "material"=>"This :attribute field is required..",
             "opening_bal"=>"This :attribute field is required.",
@@ -88,9 +86,7 @@ class MaterialForProductionController extends Controller
             "dispensed_by"=>"This :attribute field is required.",
             "remark"=>"This :attribute field is required.",
      ];
-
-
-        $validateData = $request->validate($arrRules, $arrMessages);
+      $validateData = $request->validate($arrRules,$arrMessages);
 
 
         $data = [

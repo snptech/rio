@@ -156,7 +156,7 @@ class InwardMaterialController extends Controller
             return redirect("inward-rawmaterials")->with('message', "Material Inward successfully");
         }
         else
-            return redirect("inward-rawmaterials")->with('error', "Something went wrong");
+            return redirect("inward-rawmaterialsSomething went wrong")->with('error', "");
 
 
     }

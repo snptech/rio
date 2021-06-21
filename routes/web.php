@@ -198,10 +198,37 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
         Route::get('/annexure_vii', [App\Http\Controllers\ReportsController::class, 'annexure_vii'])->name("annexure_vii");
+        //Manufacture Process
+        Route::get('/add-batch-manufacture', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacture'])->name("add-batch-manufacture");
+        Route::get('/add-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record'])->name("add-manufacturing-record");
+        Route::post('/add_manufacturing_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_insert'])->name("add_manufacturing_insert");
+        Route::get('/add_manufacturing_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_edit']);
+        //bill-of-raw-materia
+        Route::get('/bill-of-raw-material', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material'])->name("bill-of-raw-material");
+        Route::get('/add-batch-manufacturing-record-bill-of-raw-material', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_bill'])->name("add-batch-manufacturing-record-bill-of-raw-material");
+        Route::post('/add_batch_manufacturing_recorde_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_recorde_insert'])->name("add_batch_manufacturing_recorde_insert");
+        Route::get('/bill_of_raw_material_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_delete'])->name("bill_of_raw_material_delete");
+        // packing-detail
+        Route::get('/packing-detail', [App\Http\Controllers\ManufactureProcessController::class,'packing_detail'])->name("packing-detail");
+        Route::get('/add-manufacturing-record-Packing', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record_Packing'])->name("add-manufacturing-record-Packing");
+        Route::post('/add_manufacturing_packing_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_packing_insert'])->name("add_manufacturing_packing_insert");
+        // list-of-equipment
+       Route::get('/list-of-equipment', [App\Http\Controllers\ManufactureProcessController::class,'list_of_equipment'])->name("list-of-equipment");
+       Route::get('/add-batch-manufacturing-record-list-of-equipment', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_list_of_equipment'])->name("add-batch-manufacturing-record-list-of-equipment");
+       Route::post('/add_batch_equipment_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_equipment_insert'])->name("add_batch_equipment_insert");
+       // line-clearance
+       Route::get('/line-clearance', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance'])->name("line-clearance");
+       Route::get('/add-batch-manufacturing-line-clearance-record', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_record'])->name("add-batch-manufacturing-line-clearance-record");
+       Route::post('/add_line_clearance_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_insert'])->name("add_line_clearance_insert");
+       Route::post('/line_clearance_view', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance_view'])->name("line_clearance_view");
 
+       //generate-label
+       Route::get('/generate-label', [App\Http\Controllers\ManufactureProcessController::class,'generate_label'])->name("generate-label");
+       //add-lots
+       Route::get('/add-lots', [App\Http\Controllers\ManufactureProcessController::class,'add_lots'])->name("add-lots");
         //comming Soon
         Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
-       //Issual By Stores For Production
+        //Issual By Stores For Production
         Route::get("issual_by_stores_for_production", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issual_by_stores_for_production'])->name("issual_by_stores_for_production");
         Route::get("issual_by_stores_for_production_add", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issual_by_stores_for_production_add'])->name("issual_by_stores_for_production_add");
         Route::post("issue_by_stores_insert", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issue_by_stores_insert'])->name("issue_by_stores_insert");
@@ -209,3 +236,4 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
 
 });
+
