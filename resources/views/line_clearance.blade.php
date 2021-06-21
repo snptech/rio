@@ -133,36 +133,41 @@ $('.view').on('click',function(){
       url: 'line_clearance_view',
       data:  {'_method':'post', _token: CSRF_TOKEN,id:id},
       success: function (data) {
-        $('#viewDetail').modal('show');
-        var str = '';
+     $('#viewDetail').modal('show');
+       var str = '';
         str += '<div class="form-row form-detail">';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
         str += '<label>PRODUCT NAME</label>';
-        str += '<h4>'+data.res.proName+'</h4>';
+        str += '<h4>'+data.res_data.proName+'</h4>';
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
         str += '<label>BMR NO.</label>';
-        str += ' <h4>'+data.res.bmrNo+'</h4>';
+        str += ' <h4>'+data.res_data.bmrNo+'</h4>';
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
         str += '<label>BATCH NO.</label>';
-        str += '<h4>'+data.res.batchNo+'</h4>';
+        str += '<h4>'+data.res_data.batchNo+'</h4>';
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
         str += '<label>REF MFR NO.</label>';
-        str += '<h4>'+data.res.refMfrNo+'</h4>';
+        str += '<h4>'+data.res_data.refMfrNo+'</h4>';
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
         str += '<label>DATE</label>';
-        str += '<h4>'+data.res.Date+'</h4>';
+        str += '<h4>'+data.res_data.Date+'</h4>';
         str += '</div></div>';
+
         str += '<table class="table table-hover table-bordered"><thead><tr><th>Sr.No.</th><th>Particulars</th><th>Observation</th><th>Time (Hrs)</th></tr></thead>';
-        str+='<tbody><tr><td>'+data.res.id+'</td><td>'+data.res.EquipmentName+'</td><td>'+data.res.Observation+'</td><td>'+data.res.time+'</td></tr>';
+
+        str+='<tbody>';
+          $.each( data.res, function( key, value ) {
+        str +='<tr><td>'+value.id+'</td><td>'+value.EquipmentName+'</td><td>'+value.Observation+'</td><td>'+value.time+'</td></tr>';
+        });
         str+='</tbody></table></div>';
         $('.data_push').html(str);
       }

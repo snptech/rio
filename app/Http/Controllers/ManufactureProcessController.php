@@ -443,10 +443,18 @@ class ManufactureProcessController extends Controller
             'line_clearance_record.*'
             )
             ->join('line_clearance_record','line_clearance_record.line_clearance_id','=','batch_manufacturing_records_line_clearance_record.id')
-            ->where('batch_manufacturing_records_line_clearance_record.id',$request->id)
+            ->where('line_clearance_record.line_clearance_id',$request->id)
             ->get();
+            $res_data=BatchManufacturingRecordsLine::select(
+                'batch_manufacturing_records_line_clearance_record.*',
+                'line_clearance_record.*'
+                )
+                ->join('line_clearance_record','line_clearance_record.line_clearance_id','=','batch_manufacturing_records_line_clearance_record.id')
+                ->where('line_clearance_record.line_clearance_id',$request->id)
+                ->first();
         }
-            return (['status'=>true,'res'=>$res]);
+
+            return (['status'=>true,'res'=>$res,'res_data'=>$res_data]);
 
  }
 
@@ -454,6 +462,12 @@ class ManufactureProcessController extends Controller
 
     {
         return view('generate_label');
+
+    }
+    public function add_manufacturing_record_label()
+
+    {
+        return view('add_manufacturing_record_label');
 
     }
     public function add_lots()

@@ -221,11 +221,11 @@ $router->group(['middleware' => ['auth']], function ($router) {
        Route::get('/add-batch-manufacturing-line-clearance-record', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_record'])->name("add-batch-manufacturing-line-clearance-record");
        Route::post('/add_line_clearance_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_insert'])->name("add_line_clearance_insert");
        Route::post('/line_clearance_view', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance_view'])->name("line_clearance_view");
-
-       //generate-label
+      //generate-label
        Route::get('/generate-label', [App\Http\Controllers\ManufactureProcessController::class,'generate_label'])->name("generate-label");
-       //add-lots
-       Route::get('/add-lots', [App\Http\Controllers\ManufactureProcessController::class,'add_lots'])->name("add-lots");
+       Route::get('/add-manufacturing-record-label', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record_label'])->name("add-manufacturing-record-label");
+        //add-lots
+        Route::get('/add-lots', [App\Http\Controllers\ManufactureProcessController::class,'add_lots'])->name("add-lots");
         //comming Soon
         Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
         //Issual By Stores For Production

@@ -98,7 +98,7 @@
                             <td><span class="badge badge-success">Approved</span></td>
                             <td class="actions">
                             <a href="#" class="btn action-btn" data-tooltip="tooltip" title="View"><i data-feather="eye"></i></a>
-                            <a href="{{url('add_manufacturing_edit')}},{{'$temp->id'}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
+                            <a href="{{url('add_manufacturing_edit',['$temp->id'])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
                             <a href="#" class="btn action-btn" data-tooltip="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
                         </tr>
                         @endforeach

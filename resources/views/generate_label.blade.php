@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","life Of Equipment")
+@section("title","Generate")
 @section('content')
 
 <div class="content-wrapper">
@@ -61,7 +61,9 @@
                             <td>RCIPL/BMR/Flx-2300/09</td>
                             <td>RCIPL/MFR/01/017</td>
                             <td>13/06/2021</td>
-                            <td class="actions"><a href="#" class="btn action-btn" data-tooltip="tooltip" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a><a href="add-manufacturing-record-label.html" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="file"></i></a></td>
+                            <td class="actions">
+                            <a href="#" class="btn action-btn" data-tooltip="tooltip" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
+                            <a href="{{route('add-manufacturing-record-label')}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="file"></i></a></td>
                         </tr>
                </tbody>
                 </table>
