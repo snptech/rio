@@ -15,6 +15,7 @@ class BillOfRawMaterialsDetails extends Model
         'batchNo',
         'Quantity',
         'arNo',
+        'date',
         'bill_of_raw_material_id',
         'created_at',
         'updated_at',

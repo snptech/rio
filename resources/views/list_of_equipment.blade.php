@@ -24,6 +24,10 @@
                     <div id="" class="alert alert-success col-md-12">{!! Session::get('message') !!}
                     </div>
                 @endif
+                @if (Session::has('danger'))
+                    <div id="" class="alert alert-danger col-md-12">{!! Session::get('message') !!}
+                    </div>
+                @endif
 
 			<div class="card-body">
 				<div class="filter">
@@ -58,8 +62,8 @@
 								<th>Batch No.</th>
 								<th>BMR No.</th>
 								<th>Ref MFR No.</th>
-								<th>Equipment Name</th>
-								<th>Equipment Code</th>
+								<!-- <th>Equipment Name</th>
+								<th>Equipment Code</th> -->
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -72,9 +76,12 @@
 								<td>{{$temp->bmrNo}}</td>
 								<td>{{$temp->batchNo}}</td>
 								<td>{{$temp->refMfrNo}}</td>
-								<td>{{$temp->EquipmentName}}</td>
-								<td>{{$temp->EquipmentCode}}</td>
-								<td class="actions"><a href="#" class="btn action-btn" data-tooltip="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-tooltip="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
+								<!-- <td>{{$temp->EquipmentName}}</td>
+								<td>{{$temp->EquipmentCode}}</td> -->
+								<td class="actions">
+                                <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
+                               <a href="{{url('list_of_equipment_edit',[$temp->id])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
+                                <a href="{{url('list_of_equipment_delete',$temp->id)}}" class="btn action-btn" data-tooltip="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
 							</tr>
 
                         @endforeach
@@ -91,8 +98,21 @@
 
 		</div>
 	</div>
+    <div class="modal fade" id="viewDetail" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkQuntityLabel">View Batch Manufacturing Records - List of Equipment</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body data_push">
 
-<div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+           </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
@@ -146,40 +166,57 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 @endsection
 @push("scripts")
-<script>
-    feather.replace()
-	/*$(document).ready(function() {
-		var c = 1;
-      $(".add-more").click(function(){
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
-      $("body").on("click",".remove",function(){
-          $(this).parents(".add-more-new").remove();
-      });
-    });*/
-	$(document).ready(function() {
-		var max_fields      = 15; //maximum input boxes allowed
-		var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-		var add_button      = $(".add_field_button"); //Add button ID
 
-		var x = 1; //initlal text box count
-		$(add_button).click(function(e){ //on add input button click
-			e.preventDefault();
-			if(x < max_fields){ //max input box allowed
-				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">'+x+'</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="packingMaterialName['+x+']">Packing Material Name</label><select class="form-control select" id="packingMaterialName['+x+']"><option>Select Material Name</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity['+x+']">Total Quantity Received (Nos.)</label><input type="text" class="form-control" id="Quantity['+x+']" placeholder="Quantity"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo['+x+']">AR No. / Date</label><input type="text" class="form-control" id="ARNo['+x+']" placeholder="AR No. / Date"></div></div></div>'); //add input box
-			}
-			feather.replace()
-		});
+ <script>
+$(document).ready(function() {
 
-		$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-			e.preventDefault(); $(this).parents('div.row').remove(); x--;
-		})
-	});
-  </script>
+$('.view').on('click',function(){
+        var id =$(this).attr('data-id')
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+       $.ajax({
+      type: "post",
+      url: 'list_of_equipment_view',
+      data:  {'_method':'post', _token: CSRF_TOKEN,id:id},
+      success: function (data) {
+     $('#viewDetail').modal('show');
+       var str = '';
+        str += '<div class="form-row form-detail">';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>PRODUCT NAME</label>';
+        str += '<h4>'+data.res_data.proName+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>BMR NO.</label>';
+        str += ' <h4>'+data.res_data.bmrNo+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>BATCH NO.</label>';
+        str += '<h4>'+data.res_data.batchNo+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>REF MFR NO.</label>';
+        str += '<h4>'+data.res_data.refMfrNo+'</h4>';
+        str += '</div></div>';
+        str += '<h4>List of Equipment in Manufacturing Process </h4>';
+        str += '<table class="table table-hover table-bordered"><thead><tr><th>Sr.No.</th><th>Equipment Name</th><th>Equipment Code</th></tr></thead>';
+
+        str+='<tbody>';
+          $.each( data.res, function( key, value ) {
+        str +='<tr><td>'+value.id+'</td><td>'+value.EquipmentName+'</td><td>'+value.EquipmentCode+'</td></tr>';
+        });
+        str+='</tbody></table></div>';
+        $('.data_push').html(str);
+      }
+    });
+});
+});
+ </script>
 
 @endpush

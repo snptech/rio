@@ -66,12 +66,12 @@
                             <th>Batch No.</th>
                             <th>BMR No.</th>
                             <th>Ref MFR No.</th>
-                            <th>Raw Material Name</th>
+                            <!-- <th>Raw Material Name</th>
                             <th>Raw Material Batch No.</th>
                             <th>Quantity (Kg.)</th>
                             <th>AR No.</th>
                             <th>Date</th>
-                            <th>Weighed by</th>
+                            <th>Weighed by</th> -->
                             <th>Checked by</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -86,11 +86,11 @@
                             <td>{{$temp->batchNoI}}</td>
                             <td>{{$temp->bmrNo}}</td>
                             <td>{{$temp->refMfrNo}}</td>
-                            <td>{{$temp->rawMaterialName}}</td>
+                            <!-- <td>{{$temp->rawMaterialName}}</td>
                             <td>{{$temp->batchNo}}</td>
                             <td>{{$temp->Quantity}}</td>
                             <td>{{$temp->arNo}}</td>
-                            <td>{{$temp->date}}</td>
+                            <td>{{$temp->date}}</td> -->
                             <td>{{$temp->doneBy}}</td>
                             <td>{{$temp->checkedBy}}</td>
                             @if($temp->is_active==1)
@@ -100,8 +100,8 @@
                             @endif
 
                             <td class="actions">
-                                <a href="#" class="btn action-btn" data-tooltip="tooltip" title="View"><i data-feather="eye"></i></a>
-                                <a href="#" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
+                            <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
+                            <a href="{{url('bill_of_raw_material_edit',[$temp->id])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
                                 <a href="{{url('bill_of_raw_material_delete',$temp->id)}}" class="btn action-btn" data-tooltip="tooltip" title="Delete"><i data-feather="trash"></i></a>
                             </td>
                         </tr>
@@ -136,7 +136,7 @@
 
 </div>
 
-<div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+<!-- <div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -190,7 +190,77 @@
             </div>
         </div>
     </div>
+</div> -->
+<div class="modal fade" id="viewDetail" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkQuntityLabel">View  Bill of Raw Material detail and Weighing Record</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body data_push">
+
+           </div>
+        </div>
+    </div>
 </div>
 @endsection
 @push("scripts")
+<script>
+    $(document).ready(function() {
+
+    $('.view').on('click',function(){
+        var id =$(this).attr('data-id')
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+       $.ajax({
+      type: "post",
+      url: 'bill_of_raw_m_view',
+      data:  {'_method':'post', _token: CSRF_TOKEN,id:id},
+      success: function (data) {
+     $('#viewDetail').modal('show');
+       var str = '';
+        str += '<div class="form-row form-detail">';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>PRODUCT NAME</label>';
+        str += '<h4>'+data.res_data.proName+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>BMR NO.</label>';
+        str += ' <h4>'+data.res_data.bmrNo+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>BATCH NO.</label>';
+        str += '<h4>'+data.res_data.batchNoI+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>REF MFR NO.</label>';
+        str += '<h4>'+data.res_data.refMfrNo+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>Weighed by</label>';
+        str += '<h4>'+data.res_data.doneBy+'</h4>';
+        str += '</div></div>';
+        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+        str += '<div class="form-group">';
+        str += '<label>Checked by</label>';
+        str += '<h4>'+data.res_data.checkedBy+'</h4>';
+        str += '</div></div>';
+        str += '<table class="table table-hover table-bordered"><thead><tr><th>Sr.No.</th><th>Raw Material</th><th>Batch No.</th><th>Quantity (Kg.)</th><th>AR No.</th><th>Date</th></tr></thead>';
+        str+='<tbody>';
+          $.each( data.res, function( key, value ) {
+        str +='<tr><td>'+value.id+'</td><td>'+value.rawMaterialName+'</td><td>'+value.batchNo+'</td><td>'+value.Quantity+'</td><td>'+value.arNo+'</td><td>'+value.date+'</td></tr>';
+        });
+        str+='</tbody></table></div>';
+        $('.data_push').html(str);
+      }
+    });
+});
+});
+
+</script>
 @endpush

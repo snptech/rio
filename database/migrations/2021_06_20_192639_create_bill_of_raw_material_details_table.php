@@ -13,12 +13,14 @@ class CreateBillOfRawMaterialDetailsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('bill_of_raw_material_details');
         Schema::create('bill_of_raw_material_details', function (Blueprint $table) {
             $table->id();
             $table->string('rawMaterialName')->nullable();
             $table->string('Quantity')->nullable();
             $table->string('batchNo')->nullable();
             $table->string('arNo')->nullable();
+            $table->string('date')->nullable();
             $table->string('bill_of_raw_material_id')->nullable();
             $table->timestamps();
         });
