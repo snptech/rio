@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title","Add batch Manufacture")
+@section("title","New Batch")
 @section('content')
 <div class="content-wrapper">
     <div class="row">

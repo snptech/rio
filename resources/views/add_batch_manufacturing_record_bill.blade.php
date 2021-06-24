@@ -83,7 +83,7 @@
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="date" class="active">Date</label>
-                                    <input type="date" class="form-control calendar" name="date[]" id="date" placeholder="">
+                                    <input type="date" class="form-control calendar" name="date[]" id="date" value={{ date("Y-m-d") }}>
                                 </div>
                             </div>
                         </div>
@@ -107,6 +107,12 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-12 col-md-6">
+						<div class="form-group">
+						  <label for="Remark" class="active">Note / Remark</label>
+						  <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark"></textarea>
+						</div>
+					</div>
                 <div class="col-12">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button>
@@ -191,7 +197,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="rawMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" placeholder=""></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="rawMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
             }
             feather.replace()
         });

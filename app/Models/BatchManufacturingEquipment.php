@@ -16,6 +16,7 @@ class BatchManufacturingEquipment extends Model
         'bmrNo',
         'batchNo',
         'refMfrNo',
+        'Remark',
         'created_at',
         'updated_at',
     ];

@@ -204,8 +204,6 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/add-batch-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record'])->name("add-batch-manufacturing-record");
         Route::post('/add_manufacturing_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_insert'])->name("add_manufacturing_insert");
         Route::get('/add_manufacturing_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_edit'])->name("add_manufacturing_edit");
-        Route::post('/bill_of_raw_material_update', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_update'])->name("bill_of_raw_material_update");
-        Route::post('/add_manufacturing_update', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_update'])->name("add_manufacturing_update");
         Route::post('/add_btch_manufacture_view', [App\Http\Controllers\ManufactureProcessController::class,'add_btch_manufacture_view'])->name("add_btch_manufacture_view");
         Route::get('/add_btch_manufacture_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'add_btch_manufacture_delete'])->name("add_btch_manufacture_delete");
 
@@ -215,6 +213,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post('/add_batch_manufacturing_recorde_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_recorde_insert'])->name("add_batch_manufacturing_recorde_insert");
         Route::get('bill_of_raw_material_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_edit'])->name("bill_of_raw_material_edit");
         Route::get('/bill_of_raw_material_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_delete'])->name("bill_of_raw_material_delete");
+        Route::post('/bill_of_raw_material_update', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_update'])->name("bill_of_raw_material_update");
+        Route::post('/add_manufacturing_update', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_update'])->name("add_manufacturing_update");
         Route::post('/bill_of_raw_m_view', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_m_view'])->name("bill_of_raw_m_view");
         // packing-detail
         Route::get('/packing-detail', [App\Http\Controllers\ManufactureProcessController::class,'packing_detail'])->name("packing-detail");

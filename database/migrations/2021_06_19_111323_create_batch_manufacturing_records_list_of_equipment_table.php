@@ -21,6 +21,7 @@ class CreateBatchManufacturingRecordsListOfEquipmentTable extends Migration
             $table->string('bmrNo')->nullable();
             $table->string('batchNo')->nullable();
             $table->string('refMfrNo')->nullable();
+            $table->string('Remark')->nullable();
             $table->timestamps();
         });
     }

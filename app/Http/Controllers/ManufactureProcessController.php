@@ -85,7 +85,7 @@ class ManufactureProcessController extends Controller
             "approvalDate" => "This :attribute field is required.",
             "checkedBy" => "This :attribute field is required.",
         ];
-        //  $validated = $request->validate($arrRules, $arrMessages);
+         $validated = $request->validate($arrRules,$arrMessages);
         $data = [
             "proName" =>  $request['proName'],
             "bmrNo" =>  $request['bmrNo'],
@@ -104,6 +104,7 @@ class ManufactureProcessController extends Controller
             "approval" =>  $request['approval'],
             "approvalDate" =>  $request['approvalDate'],
             "checkedByI" =>  $request['checkedByI'],
+            "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
 
@@ -142,6 +143,7 @@ class ManufactureProcessController extends Controller
             "approval" =>  $request['approval'],
             "approvalDate" =>  $request['approvalDate'],
             "checkedByI" =>  $request['checkedByI'],
+            "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
 
@@ -207,6 +209,7 @@ class ManufactureProcessController extends Controller
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
         $arr['checkedBy'] = $request->checkedBy;
+        $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
         $BillOfRwaMaterial_id = BillOfRwaMaterial::Create($arr);
@@ -242,6 +245,7 @@ class ManufactureProcessController extends Controller
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
         $arr['checkedBy'] = $request->checkedBy;
+        $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
 
@@ -293,8 +297,12 @@ class ManufactureProcessController extends Controller
     public function bill_of_raw_material_delete($id)
     {
         $data = BillOfRwaMaterial::where('id', $id)->delete();
-        return redirect('bill-of-raw-material', compact('data', $data))->with('danger', "Data Deleted successfully");
+        if($data)
+        {
+          return redirect('bill-of-raw-material')->with('danger', "Data Deleted successfully");
+        }
     }
+
     public function packing_detail()
     {
         $data['packing_detail'] = BatchManufacturingPacking::get();
@@ -442,6 +450,7 @@ class ManufactureProcessController extends Controller
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;
         $arr['refMfrNo'] = $request->refMfrNo;
+        $arr['Remark'] = $request->Remark;
         $BatchManufacturing_id = BatchManufacturingEquipment::Create($arr);
         if ($BatchManufacturing_id->id) {
             foreach ($request->EquipmentName as $key => $value) {
@@ -470,8 +479,9 @@ class ManufactureProcessController extends Controller
     public function list_of_equipment_delete($id)
     {
             $data = BatchManufacturingEquipment::where('id', $id)->delete();
-            return redirect('list-of-equipment', compact('data', $data))->with('danger', "Data Deleted successfully");
-
+           if($data){
+            return redirect('list-of-equipment')->with('danger', "Data Deleted successfully");
+        }
     }
 
     public function list_of_equipment_update(Request $request)
@@ -482,6 +492,7 @@ class ManufactureProcessController extends Controller
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;
         $arr['refMfrNo'] = $request->refMfrNo;
+        $arr['Remark'] = $request->Remark;
         $BatchManufacturing_id = BatchManufacturingEquipment::where('id', $request->id)->update($arr);
 
         if ((isset($request->id)) && ($request->id > 0)) {
@@ -563,6 +574,7 @@ class ManufactureProcessController extends Controller
         $arr['batchNo'] = $request->batchNo;
         $arr['refMfrNo'] = $request->refMfrNo;
         $arr['Date'] = $request->Date;
+        $arr['Remark'] = $request->Remark;
         $BatchManufacturing_id = BatchManufacturingRecordsLine::Create($arr);
         if ($BatchManufacturing_id->id) {
             foreach ($request->EquipmentName as $key => $value) {

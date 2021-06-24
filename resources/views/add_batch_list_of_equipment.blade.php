@@ -41,6 +41,12 @@
 						  <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
 						</div>
 					</div>
+                    <div class="col-12 col-md-6">
+						<div class="form-group">
+						  <label for="Remark" class="active">Note / Remark</label>
+						  <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark"></textarea>
+						</div>
+					</div>
 					<div class="col-12 col-md-12 col-lg-12 col-xl-12">
 						<div class="form-group input_fields_wrap" id="MaterialReceived">
 							<label class="control-label d-flex">List of Equipment in Manufacturing Process

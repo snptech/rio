@@ -15,7 +15,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-xl-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="hard-drive"></i>Issed by Stores for Production (Annexure - III)</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="hard-drive"></i>Issued by Stores for Production (Annexure - III)</h4>
                 </div>
             </div>
         </div>
@@ -86,30 +86,10 @@
                             <input type="text" class="form-control" name="finished_batch_no" id="finished_batch_no" placeholder="Finished Product Batch No.">
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="Excess">Excess</label>
-                            <input type="text" class="form-control" id="excess" name="excess" placeholder="Excess">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="Wastage">Wastage</label>
-                            <input type="text" class="form-control" name="wastage" id="wastage" placeholder="Wastage">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="returnDayStore">Returned from Day Store</label>
-                            <input type="text" class="form-control" name="returned_from_day_store" id="returned_from_day_store" placeholder="Returned">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="ClosingBalance">Closing balance Qty.</label>
-                            <input readonly type="text" class="form-control" name="closing_balance_qty" id="closing_balance_qty" placeholder="Closing Balance" value="0">
-                        </div>
-                    </div>
+
+
+
+
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Dispensed by</label>

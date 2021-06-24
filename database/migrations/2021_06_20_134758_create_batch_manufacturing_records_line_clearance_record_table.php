@@ -13,6 +13,8 @@ class CreateBatchManufacturingRecordsLineClearanceRecordTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('batch_manufacturing_records_line_clearance_record');
+
         Schema::create('batch_manufacturing_records_line_clearance_record', function (Blueprint $table) {
             $table->id();
             $table->string('order_id')->nullable();
@@ -21,6 +23,7 @@ class CreateBatchManufacturingRecordsLineClearanceRecordTable extends Migration
             $table->string('batchNo')->nullable();
             $table->string('refMfrNo')->nullable();
             $table->string('Date')->nullable();
+            $table->string('Remark')->nullable();
             $table->timestamps();
         });
     }

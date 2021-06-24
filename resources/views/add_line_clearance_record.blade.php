@@ -44,9 +44,10 @@
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="Date">Date</label>
-                        <input type="date" class="form-control" name="Date" id="Date" placeholder="" value="">
+                        <input type="date" class="form-control" name="Date" id="Date" placeholder="" value={{ date("Y-m-d") }}>
                     </div>
                 </div>
+
                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="form-group input_fields_wrap" id="MaterialReceived">
                         <label class="control-label d-flex">Line Clearance Record
@@ -82,6 +83,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-12">
+						<div class="form-group">
+						  <label for="Remark" class="active">Note / Remark</label>
+						  <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark"></textarea>
+						</div>
+					</div>
                 <div class="col-12">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>

@@ -62,25 +62,25 @@
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="ProductionCommencedon" class="active">Production Commenced on</label>
-                        <input type="date" class="form-control" name="ProductionCommencedon" id="ProductionCommencedon" placeholder="">
+                        <input type="date" class="form-control" name="ProductionCommencedon" id="ProductionCommencedon" value={{ date("Y-m-d") }}>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="ProductionCompletedon" class="active">Production Completed on</label>
-                        <input type="date" class="form-control" name="ProductionCompletedon" id="ProductionCompletedon" placeholder="" value="">
+                        <input type="date" class="form-control" name="ProductionCompletedon" id="ProductionCompletedon" placeholder="" value={{ date("Y-m-d") }}>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="ManufacturingDate" class="active">Manufacturing Date</label>
-                        <input type="date" class="form-control" name="ManufacturingDate" id="ManufacturingDate" placeholder="">
+                        <input type="date" class="form-control" name="ManufacturingDate" id="ManufacturingDate" placeholder="" value={{ date("Y-m-d") }}>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="RetestDate" class="active">Retest Date</label>
-                        <input type="date" class="form-control" name="RetestDate" id="RetestDate" placeholder="" value="">
+                        <input type="date" class="form-control" name="RetestDate" id="RetestDate" placeholder=""  value={{ date("Y-m-d") }}>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
@@ -102,12 +102,12 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                <!-- <div class="col-12">
                     <div class="form-group">
                         <label for="Remark" class="active">This batch has / has not been produced according to instruction given in MFR No. RCIPL/MFR/01/01</label>
                     </div>
-                </div>
-                <div class="col-12">
+                </div> -->
+                <!-- <div class="col-12">
                     <div class="form-group">
                         <label for="ManufacturingDate" class="active">Deviation Sheet attached</label>
                         <div class="form-check form-check-inline">
@@ -119,8 +119,8 @@
                             <label class="form-check-label" for="inlineRadio2">No</label>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                </div> -->
+               <!--  <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="approval" class="active">This Batch is approved/not approved</label>
                         <select class="form-control select" name="approval" id="approval">
@@ -129,13 +129,13 @@
                             <option>Not Approved</option>
                         </select>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                </div> -->
+                <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="approvalDate" class="active">This Batch is approved/not approved on</label>
                         <input type="date" class="form-control" name="approvalDate" id="approvalDate" placeholder="" value="">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-12 col-md-6">
                     <div class="form-group">
@@ -146,6 +146,12 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-12 col-md-6">
+						<div class="form-group">
+						  <label for="Remark" class="active">Note / Remark</label>
+						  <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark"></textarea>
+						</div>
+					</div>
                 <div class="col-12">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>

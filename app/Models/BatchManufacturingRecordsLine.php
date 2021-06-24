@@ -17,6 +17,7 @@ class BatchManufacturingRecordsLine extends Model
         "batchNo",
         "refMfrNo",
         "Date",
+        "Remark",
         "created_at ",
         "updated_at",
     ];

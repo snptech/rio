@@ -23,6 +23,7 @@ class CreateBillOfRawMaterialTable extends Migration
             $table->string('refMfrNo')->nullable();
             $table->string('checkedBy')->nullable();
             $table->string('doneBy')->nullable();
+            $table->string('Remark')->nullable();
             $table->integer('is_active')->nullable();
             $table->integer('is_delete')->nullable();
            $table->timestamps();

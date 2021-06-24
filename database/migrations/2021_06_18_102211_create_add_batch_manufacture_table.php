@@ -33,6 +33,7 @@ class CreateAddBatchManufactureTable extends Migration
           $table->string('approval')->nullable();
           $table->string('approvalDate')->nullable();
           $table->string('checkedByI')->nullable();
+          $table->string('Remark')->nullable();
           $table->integer('is_delete')->nullable();
           $table->integer('is_active')->nullable();
           $table->timestamps();
