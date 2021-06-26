@@ -232,6 +232,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
        Route::get('/line-clearance', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance'])->name("line-clearance");
        Route::get('/add-batch-manufacturing-line-clearance-record', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_record'])->name("add-batch-manufacturing-line-clearance-record");
        Route::post('/add_line_clearance_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_insert'])->name("add_line_clearance_insert");
+       Route::get('/line_clearance_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance_edit'])->name("line_clearance_eit");
+       Route::post('/line_clearance_update', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance_update'])->name("line_clearance_update");
        Route::post('/line_clearance_view', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance_view'])->name("line_clearance_view");
       //generate-label
        Route::get('/generate-label', [App\Http\Controllers\ManufactureProcessController::class,'generate_label'])->name("generate-label");

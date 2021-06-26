@@ -250,7 +250,6 @@
         str += '<label>Checked by</label>';
         str += '<h4>'+data.res_data.checkedBy+'</h4>';
         str += '</div></div>';
-        srt += 
         str += '<table class="table table-hover table-bordered"><thead><tr><th>Sr.No.</th><th>Raw Material</th><th>Batch No.</th><th>Quantity (Kg.)</th><th>AR No.</th><th>Date</th></tr></thead>';
         str+='<tbody>';
           $.each( data.res, function( key, value ) {

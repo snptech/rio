@@ -85,7 +85,7 @@ class ManufactureProcessController extends Controller
             "approvalDate" => "This :attribute field is required.",
             "checkedBy" => "This :attribute field is required.",
         ];
-         $validated = $request->validate($arrRules,$arrMessages);
+        // $validated = $request->validate($arrRules,$arrMessages);
         $data = [
             "proName" =>  $request['proName'],
             "bmrNo" =>  $request['bmrNo'],
@@ -589,6 +589,49 @@ class ManufactureProcessController extends Controller
             return redirect('line-clearance')->with('error', " Something went wrong");
         }
     }
+    public function line_clearance_edit($id)
+    {
+
+         $res =LineClearance::where('line_clearance_id', '=', $id)
+            ->get();
+            $res_data = BatchManufacturingRecordsLine::where('id', '=', $id)
+            ->first();
+
+            return view('line_clearance_edit', compact('res', $res, 'res_data', $res_data));
+   }
+   public function line_clearance_update(Request $request)
+   {
+
+    $arr['proName'] = $request->proName;
+    $arr['bmrNo'] = $request->bmrNo;
+    $order_number = date('dyHs');
+    $arr['order_id'] = $order_number;
+    $arr['batchNo'] = $request->batchNo;
+    $arr['refMfrNo'] = $request->refMfrNo;
+    $arr['Date'] = $request->Date;
+    $arr['Remark'] = $request->Remark;
+    $BatchManufacturing_id = BatchManufacturingRecordsLine::where('id', $request->id)->update($arr);
+
+    if ((isset($request->id)) && ($request->id > 0)) {
+
+        if(count($request->EquipmentName))
+        {
+            LineClearance::where('line_clearance_id',$request->id)->delete();
+           foreach ($request->EquipmentName as $key => $value) {
+            $arr_data['EquipmentName'] = $value;
+            $arr_data['Observation'] = $request->Observation[$key];
+            $arr_data['time'] = $request->time[$key];
+            $arr_data['line_clearance_id'] = $request->id;
+                LineClearance::Create($arr_data);
+
+            }
+            return redirect('line-clearance')->with('message', "Data update successfully");
+        }
+        return redirect('line-clearance')->with('error', "Invalid Data");
+    } else {
+        return redirect('line-clearance')->with('error', "Something went wrong");
+    }
+   }
 
     public function line_clearance_view(Request $request)
     {
