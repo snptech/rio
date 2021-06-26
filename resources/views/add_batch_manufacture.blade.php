@@ -58,7 +58,7 @@
                     <strong>{{ $message }}</strong>
                 </div>
                 @endif
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered datatable" id="example">
                     <thead>
                         <tr>
                             <th>id</th>
@@ -104,11 +104,7 @@
                             <td><span class="badge badge-warning p-2">Not Approved</span></td>
                             @endif
 
-                            <td class="actions">
-                            <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
-                            <a href="{{url('add_manufacturing_edit',[$temp->id])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
-                            <a href="{{url('add_btch_manufacture_delete',$temp->id)}}" class="btn action-btn" data-tooltip="tooltip" title="Delete"><i data-feather="trash" ></i></a>
-                        </td>
+
                         </tr>
                         @endforeach
                         @endif
@@ -116,26 +112,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select> entries</label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                            <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                            <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                            <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
@@ -361,5 +338,15 @@ function() {
 });
 
    </script>
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
+   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
+   <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+   <script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    });
+</script>
 @endpush
