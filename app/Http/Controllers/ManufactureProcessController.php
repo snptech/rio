@@ -253,10 +253,9 @@ class ManufactureProcessController extends Controller
 
         if ((isset($request->id)) && ($request->id > 0)) {
 
-            if(count($request->rawMaterialName))
-            {
-                BillOfRawMaterialsDetails::where('bill_of_raw_material_id',$request->id)->delete();
-               foreach ($request->rawMaterialName as $key => $value) {
+            if (count($request->rawMaterialName)) {
+                BillOfRawMaterialsDetails::where('bill_of_raw_material_id', $request->id)->delete();
+                foreach ($request->rawMaterialName as $key => $value) {
                     $arr_data['rawMaterialName'] = $value;
                     $arr_data['batchNo'] = $request->batchNo[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
@@ -264,7 +263,6 @@ class ManufactureProcessController extends Controller
                     $arr_data['date'] = $request->date[$key];
                     $arr_data['bill_of_raw_material_id'] = $request->id;
                     BillOfRawMaterialsDetails::Create($arr_data);
-
                 }
 
                 return redirect('bill-of-raw-material')->with('success', "Data update successfully");
@@ -297,9 +295,8 @@ class ManufactureProcessController extends Controller
     public function bill_of_raw_material_delete($id)
     {
         $data = BillOfRwaMaterial::where('id', $id)->delete();
-        if($data)
-        {
-          return redirect('bill-of-raw-material')->with('danger', "Data Deleted successfully");
+        if ($data) {
+            return redirect('bill-of-raw-material')->with('danger', "Data Deleted successfully");
         }
     }
 
@@ -469,17 +466,17 @@ class ManufactureProcessController extends Controller
 
     public function list_of_equipment_edit($id)
     {
-        $res =ListOfEquipmentManufacturing::where('batch_manufacturing_id', '=', $id)
-        ->get();
+        $res = ListOfEquipmentManufacturing::where('batch_manufacturing_id', '=', $id)
+            ->get();
         $res_data = BatchManufacturingEquipment::where('id', '=', $id)
-        ->first();
+            ->first();
 
         return view('list_of_equipment_edit', compact('res', $res, 'res_data', $res_data));
     }
     public function list_of_equipment_delete($id)
     {
-            $data = BatchManufacturingEquipment::where('id', $id)->delete();
-           if($data){
+        $data = BatchManufacturingEquipment::where('id', $id)->delete();
+        if ($data) {
             return redirect('list-of-equipment')->with('danger', "Data Deleted successfully");
         }
     }
@@ -497,15 +494,13 @@ class ManufactureProcessController extends Controller
 
         if ((isset($request->id)) && ($request->id > 0)) {
 
-            if(count($request->EquipmentName))
-            {
-                ListOfEquipmentManufacturing::where('batch_manufacturing_id',$request->id)->delete();
-               foreach ($request->EquipmentName as $key => $value) {
+            if (count($request->EquipmentName)) {
+                ListOfEquipmentManufacturing::where('batch_manufacturing_id', $request->id)->delete();
+                foreach ($request->EquipmentName as $key => $value) {
                     $arr_data['EquipmentName'] = $value;
                     $arr_data['EquipmentCode'] = $request->EquipmentCode[$key];
                     $arr_data['batch_manufacturing_id'] = $request->id;
                     ListOfEquipmentManufacturing::Create($arr_data);
-
                 }
                 return redirect('list-of-equipment')->with('message', "Data update successfully");
             }
@@ -592,46 +587,44 @@ class ManufactureProcessController extends Controller
     public function line_clearance_edit($id)
     {
 
-         $res =LineClearance::where('line_clearance_id', '=', $id)
+        $res = LineClearance::where('line_clearance_id', '=', $id)
             ->get();
-            $res_data = BatchManufacturingRecordsLine::where('id', '=', $id)
+        $res_data = BatchManufacturingRecordsLine::where('id', '=', $id)
             ->first();
 
-            return view('line_clearance_edit', compact('res', $res, 'res_data', $res_data));
-   }
-   public function line_clearance_update(Request $request)
-   {
-
-    $arr['proName'] = $request->proName;
-    $arr['bmrNo'] = $request->bmrNo;
-    $order_number = date('dyHs');
-    $arr['order_id'] = $order_number;
-    $arr['batchNo'] = $request->batchNo;
-    $arr['refMfrNo'] = $request->refMfrNo;
-    $arr['Date'] = $request->Date;
-    $arr['Remark'] = $request->Remark;
-    $BatchManufacturing_id = BatchManufacturingRecordsLine::where('id', $request->id)->update($arr);
-
-    if ((isset($request->id)) && ($request->id > 0)) {
-
-        if(count($request->EquipmentName))
-        {
-            LineClearance::where('line_clearance_id',$request->id)->delete();
-           foreach ($request->EquipmentName as $key => $value) {
-            $arr_data['EquipmentName'] = $value;
-            $arr_data['Observation'] = $request->Observation[$key];
-            $arr_data['time'] = $request->time[$key];
-            $arr_data['line_clearance_id'] = $request->id;
-                LineClearance::Create($arr_data);
-
-            }
-            return redirect('line-clearance')->with('message', "Data update successfully");
-        }
-        return redirect('line-clearance')->with('error', "Invalid Data");
-    } else {
-        return redirect('line-clearance')->with('error', "Something went wrong");
+        return view('line_clearance_edit', compact('res', $res, 'res_data', $res_data));
     }
-   }
+    public function line_clearance_update(Request $request)
+    {
+
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $arr['Date'] = $request->Date;
+        $arr['Remark'] = $request->Remark;
+        $BatchManufacturing_id = BatchManufacturingRecordsLine::where('id', $request->id)->update($arr);
+
+        if ((isset($request->id)) && ($request->id > 0)) {
+
+            if (count($request->EquipmentName)) {
+                LineClearance::where('line_clearance_id', $request->id)->delete();
+                foreach ($request->EquipmentName as $key => $value) {
+                    $arr_data['EquipmentName'] = $value;
+                    $arr_data['Observation'] = $request->Observation[$key];
+                    $arr_data['time'] = $request->time[$key];
+                    $arr_data['line_clearance_id'] = $request->id;
+                    LineClearance::Create($arr_data);
+                }
+                return redirect('line-clearance')->with('message', "Data update successfully");
+            }
+            return redirect('line-clearance')->with('error', "Invalid Data");
+        } else {
+            return redirect('line-clearance')->with('error', "Something went wrong");
+        }
+    }
 
     public function line_clearance_view(Request $request)
     {
@@ -670,5 +663,35 @@ class ManufactureProcessController extends Controller
 
     {
         return view('add_lots');
+    }
+    public function add_batch_manufacturing_record_add_lot()
+
+    {
+        return view('add_batch_manufacturing_record_add_lot');
+    }
+    public function add_batch_manufacturing_record_add_lot2()
+
+    {
+        return view('add_batch_manufacturing_record_add_lot2');
+    }
+    public function add_batch_manufacturing_record_add_lot3()
+
+    {
+        return view('add_batch_manufacturing_record_add_lot3');
+    }
+    public function add_batch_manufacturing_record_add_lot4()
+
+    {
+        return view('add_batch_manufacturing_record_add_lot4');
+    }
+    public function add_batch_manufacturing_record_add_lot5()
+
+    {
+        return view('add_batch_manufacturing_record_add_lot5');
+    }
+    public function add_batch_manufacturing_record_process_chec_5()
+
+    {
+        return view('add_batch_manufacturing_record_process_chec_5');
     }
 }

@@ -240,7 +240,14 @@ $router->group(['middleware' => ['auth']], function ($router) {
        Route::get('/add-manufacturing-record-label', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record_label'])->name("add-manufacturing-record-label");
         //add-lots
         Route::get('/add-lots', [App\Http\Controllers\ManufactureProcessController::class,'add_lots'])->name("add-lots");
-        //comming Soon
+        Route::get('/add-batch-manufacturing-record-add-lot', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot'])->name("add-batch-manufacturing-record-add-lot");
+        Route::get('/add-batch-manufacturing-record-add-lot2', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot2'])->name("add-batch-manufacturing-record-add-lot2");
+        Route::get('/add-batch-manufacturing-record-add-lot3', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot3'])->name("add-batch-manufacturing-record-add-lot3");
+        Route::get('/add-batch-manufacturing-record-add-lot4', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot4'])->name("add-batch-manufacturing-record-add-lot4");
+        Route::get('/add-batch-manufacturing-record-add-lot5', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot5'])->name("add-batch-manufacturing-record-add-lot5");
+        Route::get('/add-batch-manufacturing-record-process-chec-5', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_process_chec_5'])->name("add-batch-manufacturing-record-process-chec-5");
+
+     //comming Soon
         Route::get("comming-soon", [App\Http\Controllers\HomeController::class, 'comingsoon'])->name("comingsoon");
         //Issual By Stores For Production
         Route::get("issual_by_stores_for_production", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issual_by_stores_for_production'])->name("issual_by_stores_for_production");
