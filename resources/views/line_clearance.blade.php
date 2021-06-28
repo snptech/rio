@@ -73,7 +73,7 @@
                             <td>{{$temp->Date}}</td>
                             <td class="actions">
                                 <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
-                                <a href="#" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
+                                <a href="{{url('line_clearance_edit',[$temp->id])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
                                 <a href="#" class="btn action-btn" data-tooltip="tooltip" title="Delete"><i data-feather="trash"></i></a></td>
                         </tr>
                         @endforeach

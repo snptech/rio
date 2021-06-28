@@ -63,14 +63,14 @@
                             <td>RFLX 20/668</td>
                             <td>RCIPL/BMR/Flx-2300/09</td>
                             <td>RCIPL/MFR/01/017</td>
-                            <td><a href="add-batch-manufacturing-record-add-lot.html" class="btn btn-sm btn-success">View</a></td>
-                            <td><a href="add-batch-manufacturing-record-add-lot2.html" class="btn btn-sm btn-success">View</a></td>
-                            <td><a href="add-batch-manufacturing-record-add-lot3.html" class="btn btn-sm btn-dark">Add</a></td>
-                            <td><a href="add-batch-manufacturing-record-add-lot4.html" class="btn btn-sm btn-dark">Add</a></td>
-                            <td><a href="add-batch-manufacturing-record-add-lot5.html" class="btn btn-sm btn-dark disabled">Add</a></td>
+                            <td><a href="{{url('add-batch-manufacturing-record-add-lot')}}" class="btn btn-sm btn-success">View</a></td>
+                            <td><a href="{{url('add-batch-manufacturing-record-add-lot2')}}" class="btn btn-sm btn-success">View</a></td>
+                            <td><a href="{{url('add-batch-manufacturing-record-add-lot3')}}" class="btn btn-sm btn-dark">Add</a></td>
+                            <td><a href="{{url('add-batch-manufacturing-record-add-lot4')}}" class="btn btn-sm btn-dark">Add</a></td>
+                            <td><a href="{{url('add-batch-manufacturing-record-add-lot5')}}" class="btn btn-sm btn-dark disabled">Add</a></td>
                             <td class="actions"><a href="#" class="btn action-btn" data-tooltip="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-tooltip="tooltip" title="Check Quantity"><i data-feather="check"></i></a></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>2</td>
                             <td>Simethicone (Filix-110)</td>
                             <td>RFLX 20/668</td>
@@ -186,7 +186,7 @@
                             <td><a href="add-batch-manufacturing-record-add-lot4.html" class="btn btn-sm btn-dark">Add</a></td>
                             <td><a href="add-batch-manufacturing-record-add-lot5.html" class="btn btn-sm btn-dark disabled">Add</a></td>
                             <td class="actions"><a href="#" class="btn action-btn" data-tooltip="tooltip" title="View"><i data-feather="eye"></i></a><a href="#" class="btn action-btn" data-tooltip="tooltip" title="Check Quantity"><i data-feather="check"></i></a></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -212,9 +212,7 @@
             </div>
         </div>
     </div>
-    <div class="copyright">
-        Copyright 2021. all rights are reserved.<b>Version 1.0</b>
-    </div>
+    
 </div>
 <div class="modal fade" id="viewDetail" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
     <div class="modal-dialog modal-lg">

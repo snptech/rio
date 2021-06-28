@@ -70,13 +70,13 @@
                             <th>Grade</th>
                             <th>Batch Size</th>
                             <th>Viscosity</th>
+
                             <th>Production Commenced on</th>
                             <th>Production Completed on</th>
                             <th>Manufacturing Date</th>
                             <th>Retest Date</th>
-                            <th>Deviation sheet attached</th>
                             <th>Status</th>
-                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -94,10 +94,9 @@
                             <td>{{$temp->Viscosity}}</td>
                             <td>{{$temp->ProductionCommencedon}}</td>
                             <td>{{$temp->ProductionCompletedon}}</td>
-                            <td>{{$temp->ManufacturingDate}}</td>
+                             <td>{{$temp->ManufacturingDate}}</td>
                             <td>{{$temp->RetestDate}}</td>
-                            <td>{{$temp->approvalDate}}</td>
-                            <td>{{$temp->inlineRadioOptions}}</td>
+                            <!-- <td>{{$temp->approvalDate}}</td> -->
                             @if($temp->approval=='Approved')
                              <td><span class="badge badge-success p-2">Approved</span></td>
                             @else
