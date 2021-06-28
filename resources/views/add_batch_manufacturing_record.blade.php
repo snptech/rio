@@ -230,10 +230,10 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="doneBy">Weighed by</label>
-                                        <select class="form-control select" name="doneBy" id="doneBy">
-                                            <option>Select</option>
+                                        <input type="text" class="form-control select" name="doneBy" value="{{ \Auth::user()->name }}" id="doneBy" readonly>
+                                            <!-- <option>Select</option>
                                             <option>Employee Name</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -468,7 +468,7 @@
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="Date">Date</label>
-                                    <input type="date" class="form-control" name="Process_date " id="Process_date " placeholder="" value={{ date("Y-m-d") }}>
+                                    <input type="date" class="form-control" name="Process_date" id="Process_date " placeholder="" value={{ date("Y-m-d") }}>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
