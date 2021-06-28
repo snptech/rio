@@ -90,7 +90,8 @@
                                         <input type="text" class="form-control" name="Viscosity" id="Viscosity" placeholder="" value="2000-2500 cSt">
                                     </div>
                                 </div>
-                                <br clear="all" />
+                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6"> &nbsp; </div>
+
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="ProductionCommencedon" class="active">Production Commenced on</label>
