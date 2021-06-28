@@ -107,19 +107,19 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="areaCleanliness">Done By</label>
-                                        <select class="form-control select" name="areaCleanliness" id="areaCleanliness">
-                                            <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select>
+                                        <input type="text" class="form-control" name="areaCleanliness" id="areaCleanliness" value="{{ \Auth::user()->name }}" readonly>
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="CareaCleanliness">Checked By</label>
-                                        <select class="form-control select" name="CareaCleanliness" id="CareaCleanliness">
+                                        <input type="text" class="form-control" name="CareaCleanliness" id="CareaCleanliness" value="{{ \Auth::user()->name }}" readonly>
+
+                                        <!-- <select class="form-control select" name="CareaCleanliness" id="CareaCleanliness">
                                             <option>Select</option>
                                             <option>Employee Name</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                             </div>
@@ -197,19 +197,23 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="checkedBy">Checked By</label>
-                                        <select class="form-control select" name="checkedBy" id="checkedBy">
+                                        <input type="text" class="form-control" name="checkedBy" id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
+
+                                        <!-- <select class="form-control select" name="checkedBy" id="checkedBy">
                                             <option>Select</option>
                                             <option>Manager Production</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="ApprovedBy">Approved By</label>
-                                        <select class="form-control select" name="ApprovedBy" id="ApprovedBy">
+                                        <input type="text" class="form-control" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
+
+                                        <!-- <select class="form-control select" name="ApprovedBy" id="ApprovedBy">
                                             <option>Select</option>
                                             <option>Sr. Officer - QC</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                             </div>

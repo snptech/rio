@@ -212,9 +212,7 @@
             </div>
         </div>
     </div>
-    <div class="copyright">
-        Copyright 2021. all rights are reserved.<b>Version 1.0</b>
-    </div>
+    
 </div>
 <div class="modal fade" id="viewDetail" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
     <div class="modal-dialog modal-lg">

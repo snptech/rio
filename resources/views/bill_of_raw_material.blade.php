@@ -70,8 +70,8 @@
                             <th>Raw Material Batch No.</th>
                             <th>Quantity (Kg.)</th>
                             <th>AR No.</th>
-                            <th>Date</th>
-                            <th>Weighed by</th> -->
+                            <th>Date</th>-->
+                            <th>Weighed by</th>
                             <th>Checked by</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -91,8 +91,8 @@
                             <td>{{$temp->Quantity}}</td>
                             <td>{{$temp->arNo}}</td>
                             <td>{{$temp->date}}</td> -->
-                            <td>{{$temp->doneBy}}</td>
-                            <td>{{$temp->checkedBy}}</td>
+                            <td>{{ Auth::user()->name }}</td>
+                            <td>{{ Auth::user()->name }}</td>
                             @if($temp->is_active==1)
                             <td><span class="badge badge-success p-2">Approved</span></td>
                             @else

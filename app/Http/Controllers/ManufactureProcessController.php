@@ -10,7 +10,9 @@ use App\Models\BatchManufacturingPacking;
 use App\Models\BatchManufacturingEquipment;
 use App\Models\ListOfEquipmentManufacturing;
 use App\Models\LineClearance;
+use Illuminate\Support\Facades\Auth;
 use App\Models\BatchManufacturingRecordsLine;
+
 
 
 
@@ -98,12 +100,12 @@ class ManufactureProcessController extends Controller
             "ProductionCompletedon" =>  $request['ProductionCompletedon'],
             "ManufacturingDate" =>  $request['ManufacturingDate'],
             "RetestDate" =>  $request['RetestDate'],
-            "doneBy" =>  $request['doneBy'],
-            "checkedBy" =>  $request['checkedBy'],
+            "doneBy" => Auth::user()->id,
+            "checkedBy" => Auth::user()->id,
             "inlineRadioOptions" =>  $request['inlineRadioOptions'],
             "approval" =>  $request['approval'],
             "approvalDate" =>  $request['approvalDate'],
-            "checkedByI" =>  $request['checkedByI'],
+            "checkedByI" => Auth::user()->id,
             "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
@@ -112,7 +114,7 @@ class ManufactureProcessController extends Controller
         $result = BatchManufacture::create($data);
 
         if ($result) {
-            return redirect("add-batch-manufacture")->with('success', "Data created successfully");
+            return redirect("add-batch-manufacturing-record")->with('success', "Data created successfully");
         }
     }
 
@@ -200,7 +202,9 @@ class ManufactureProcessController extends Controller
             "checkedBy" => "This :attribute field is required.",
 
         ];
-        $validated = $request->validate($arrRules, $arrMessages);
+
+        $validateData = $request->validate($arrRules, $arrMessages);
+
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNoI'] = $request->batchNoI;
@@ -208,7 +212,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
-        $arr['checkedBy'] = $request->checkedBy;
+        $arr['checkedBy'] = Auth::user()->id;
         $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
@@ -223,9 +227,9 @@ class ManufactureProcessController extends Controller
                 $arr_data['bill_of_raw_material_id'] = $BillOfRwaMaterial_id->id;
                 BillOfRawMaterialsDetails::Create($arr_data);
             }
-            return redirect('bill-of-raw-material')->with('success', "Data created successfully");
+            return redirect('add-batch-manufacturing-record')->with('success', "Data Bill Of Raw Materrila successfully");
         } else {
-            return redirect('bill-of-raw-material')->with('error', "Something went wrong");
+            return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
         }
     }
     public function bill_of_raw_material_edit($id)
@@ -244,7 +248,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
-        $arr['checkedBy'] = $request->checkedBy;
+        $arr['checkedBy'] = Auth::user()->id;
         $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
@@ -372,7 +376,7 @@ class ManufactureProcessController extends Controller
             "ApprovedBy" => "This :attribute field is required.",
             "Remark" => "This :attribute field is required.",
         ];
-        $validated = $request->validate($arrRules, $arrMessages);
+        // $validated = $request->validate($arrRules, $arrMessages);
         $data = [
             "proName" => $request['proName'],
             "bmrNo" => $request['bmrNo'],
@@ -387,8 +391,8 @@ class ManufactureProcessController extends Controller
             "20kgDrums" => $request['20kgDrums'],
             "startTime" => $request['startTime'],
             "EndstartTime" => $request['EndstartTime'],
-            "areaCleanliness" => $request['areaCleanliness'],
-            "CareaCleanliness" => $request['CareaCleanliness'],
+            "areaCleanliness" => Auth::user()->id,
+            "CareaCleanliness" => Auth::user()->id,
             "rmInput" => $request['rmInput'],
             "fgOutput" => $request['fgOutput'],
             "filledDrums" => $request['filledDrums'],
@@ -399,15 +403,16 @@ class ManufactureProcessController extends Controller
             "ValidationSample" => $request['ValidationSample'],
             "CustomerSample" => $request['CustomerSample'],
             "ActualYield" => $request['ActualYield'],
-            "checkedBy" => $request['checkedBy'],
-            "ApprovedBy" => $request['ApprovedBy'],
+            "checkedBy" => Auth::user()->id,
+            "ApprovedBy" => Auth::user()->id,
             "Remark" => $request['Remark'],
 
         ];
         $result = BatchManufacturingPacking::create($data);
 
         if ($result) {
-            return redirect("packing-detail")->with('success', "Data created successfully");
+
+            return redirect("add-batch-manufacturing-record")->with('success', "Data Batch Manufacturing Packing successfully");
         }
     }
 
@@ -458,9 +463,9 @@ class ManufactureProcessController extends Controller
             }
 
 
-            return redirect("list-of-equipment")->with('message', "Data created successfully");
+            return redirect("add-batch-manufacturing-record")->with('success', "Data List Of Equipment Successfully");
         } else {
-            return redirect("list-of-equipment")->with('error', " Something went wrong");
+            return redirect("add-batch-manufacturing-record")->with('error', " Something went wrong");
         }
     }
 
@@ -579,9 +584,9 @@ class ManufactureProcessController extends Controller
                 $arr_data['line_clearance_id'] = $BatchManufacturing_id->id;
                 LineClearance::Create($arr_data);
             }
-            return redirect('line-clearance')->with('message', "Data created successfully");
+            return redirect('add-batch-manufacturing-record')->with('success', "Data Line Clearance successfully");
         } else {
-            return redirect('line-clearance')->with('error', " Something went wrong");
+            return redirect('add-batch-manufacturing-record')->with('error', " Something went wrong");
         }
     }
     public function line_clearance_edit($id)

@@ -101,10 +101,11 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="checkedBy">Checked by</label>
-                        <select class="form-control select" name="checkedBy" id="checkedBy">
+                        <!-- <select class="form-control select" name="checkedBy" id="checkedBy">
                             <option>Select</option>
                             <option>Employee Name</option>
-                        </select>
+                        </select> -->
+                        <input type="text" class="form-control select" name="checkedBy" id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
