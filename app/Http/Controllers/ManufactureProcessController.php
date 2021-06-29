@@ -817,9 +817,10 @@ public function packing_material_requisition_slip_insert(Request $request)
     $arr['Date'] = $request->Date;
     $order_number = date('dyHs');
     $arr['order_id'] = $order_number;
-    $arr['checkedBy'] = $request->checkedBy;
-    $arr['ApprovedBy'] = $request->ApprovedBy;
+    $arr['checkedBy'] =  Auth::user()->id;
+    $arr['ApprovedBy'] =  Auth::user()->id;
     $arr['Remark'] = $request->Remark;
+
      $RequisitionSlip_id = RequisitionSlip::Create($arr);
 
     if ($RequisitionSlip_id->id) {

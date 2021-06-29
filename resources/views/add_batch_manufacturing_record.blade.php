@@ -890,19 +890,19 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="checkedBy">Checked By</label>
-                                        <select class="form-control select" name="checkedBy" id="checkedBy">
-                                            <option>Select</option>
+                                        <input type="text" class="form-control select" name="checkedBy" id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
+                                            <!-- <option>Select</option>
                                             <option>Officer Production</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ApprovedBy">Approved By</label>
-                                        <select class="form-control select" name="ApprovedBy" id="ApprovedBy">
-                                            <option>Select</option>
+                                        <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
+                                            <!-- <option>Select</option>
                                             <option>Manager Store</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="col-12">
