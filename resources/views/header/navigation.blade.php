@@ -26,6 +26,7 @@
           <span class="menu-title">Issue Material For Production</span>
         </a>
       </li>
+
       <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#ui-manufacture" aria-expanded="false" aria-controls="ui-manufacture"><i class="menu-icon" data-feather="tool"></i>
       <span class="menu-title">Manufacture Process</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
@@ -96,7 +97,7 @@
           <span class="menu-title">User Masters</span>
         </a>
       </li>
-      
+
 
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-master" aria-expanded="false" aria-controls="ui-master">

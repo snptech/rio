@@ -254,6 +254,10 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("issual_by_stores_for_production_add", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issual_by_stores_for_production_add'])->name("issual_by_stores_for_production_add");
         Route::post("issue_by_stores_insert", [App\Http\Controllers\IssualByStoresForProductionController::class, 'issue_by_stores_insert'])->name("issue_by_stores_insert");
         Route::post("view_store", [App\Http\Controllers\IssualByStoresForProductionController::class, 'view_store'])->name("view_store");
+     // packing material issual slip
+         Route::post('/packing_material_issuel_insert', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_issuel_insert'])->name("packing_material_issuel_insert");
+         Route::post('/packing_material_requisition_slip_insert', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_insert'])->name("packing_material_requisition_slip_insert");
+
 
 
 });
