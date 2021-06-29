@@ -66,7 +66,7 @@
                         @foreach($BatchManufacturing as $temp)
                         <tr>
                             <td>{{$loop->index+1}}</td>
-                            <td>{{$temp->proName}}</td>
+                            <td>{{$temp->material_name}}</td>
                             <td>{{$temp->bmrNo}}</td>
                             <td>{{$temp->batchNo}}</td>
                             <td>{{$temp->refMfrNo}}</td>

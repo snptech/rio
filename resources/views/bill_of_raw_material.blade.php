@@ -82,7 +82,7 @@
                         @foreach($bill_material as $temp)
                         <tr>
                             <td>{{$loop->index+1}}</td>
-                            <td>{{$temp->proName}}</td>
+                            <td>{{$temp->material_name}}</td>
                             <td>{{$temp->batchNoI}}</td>
                             <td>{{$temp->bmrNo}}</td>
                             <td>{{$temp->refMfrNo}}</td>

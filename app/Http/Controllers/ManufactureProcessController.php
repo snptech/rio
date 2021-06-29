@@ -10,6 +10,7 @@ use App\Models\BatchManufacturingPacking;
 use App\Models\BatchManufacturingEquipment;
 use App\Models\ListOfEquipmentManufacturing;
 use App\Models\LineClearance;
+use App\Models\Rawmeterial;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BatchManufacturingRecordsLine;
 
@@ -20,14 +21,18 @@ class ManufactureProcessController extends Controller
 {
     public function add_batch_manufacture()
     {
-        $data['manufacture'] = BatchManufacture::get();
+        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
+        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+       ->get();
 
         return view('add_batch_manufacture', $data);
     }
     public function add_batch_manufacturing_record()
     {
+        $data["product"] = Rawmeterial::where("material_preorder_stock",">",0)->pluck("material_name","id");
 
-        return view('add_batch_manufacturing_record');
+
+        return view('add_batch_manufacturing_record',$data );
     }
 
 
@@ -165,8 +170,11 @@ class ManufactureProcessController extends Controller
     }
     public function bill_of_raw_material()
     {
-        $data['bill_material'] = BillOfRwaMaterial::where('is_delete', 1)
-            ->get();
+        $data['bill_material'] = BillOfRwaMaterial::
+        select('bill_of_raw_material.*','raw_materials.material_name')
+        ->join('raw_materials', 'raw_materials.id', '=', 'bill_of_raw_material.id')
+       ->where('bill_of_raw_material.is_delete', 1)
+         ->get();
         return view('bill_of_raw_material', $data);
     }
     public function add_batch_manufacturing_record_bill()
@@ -306,7 +314,10 @@ class ManufactureProcessController extends Controller
 
     public function packing_detail()
     {
-        $data['packing_detail'] = BatchManufacturingPacking::get();
+        $data['packing_detail'] = BatchManufacturingPacking::
+        select('batch_manufacturing_records_packing.*','raw_materials.material_name')
+        ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_packing.id')
+       ->get();
         return view('packing_detail', $data);
     }
     public function add_manufacturing_record_Packing()
@@ -418,7 +429,10 @@ class ManufactureProcessController extends Controller
 
     public function list_of_equipment()
     {
-        $data['list_equipment'] = BatchManufacturingEquipment::get();
+        $data['list_equipment'] = BatchManufacturingEquipment::
+        select('batch_manufacturing_records_list_of_equipment.*','raw_materials.material_name')
+        ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_list_of_equipment.id')
+       ->get();
         return view('list_of_equipment', $data);
     }
     public function add_batch_list_of_equipment()
@@ -536,7 +550,9 @@ class ManufactureProcessController extends Controller
     }
     public function line_clearance()
     {
-        $data['BatchManufacturing'] = BatchManufacturingRecordsLine::get();
+        $data['BatchManufacturing'] = BatchManufacturingRecordsLine::select('batch_manufacturing_records_line_clearance_record.*','raw_materials.material_name')
+        ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_line_clearance_record.id')
+       ->get();
         return view('line_clearance', $data);
     }
     public function add_line_clearance_record()

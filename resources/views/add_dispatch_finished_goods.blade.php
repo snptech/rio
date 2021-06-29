@@ -89,7 +89,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="productName">Product Name</label>
-                          {{ Form::select("product",$product,old("product"),array("class"=>"form-control select","id"=>"product","placeholder"=>"Choose Party Name")) }}
+                          {{ Form::select("product",$product,old("product"),array("class"=>"form-control select","id"=>"product","placeholder"=>"Choose Product Name")) }}
 
                           @if ($errors->has('product'))
                           <span class="text-danger">{{ $errors->first('product') }}</span>

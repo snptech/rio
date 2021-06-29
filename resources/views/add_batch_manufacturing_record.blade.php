@@ -51,43 +51,48 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                   <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
+                                   {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+
+                                    @if ($errors->has('proName'))
+                                    <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No.">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No.">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="grade" class="active">Grade</label>
-                                        <input type="text" class="form-control" name="grade" id="grade" placeholder="">
+                                        <input type="text" class="form-control" name="grade" id="grade" placeholder="Grade">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="BatchSize" class="active">Batch Size</label>
-                                        <input type="text" class="form-control" name="BatchSize" id="BatchSize" placeholder="">
+                                        <input type="text" class="form-control" name="BatchSize" id="BatchSize" placeholder="batch size">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="Viscosity" class="active">Viscosity</label>
-                                        <input type="text" class="form-control" name="Viscosity" id="Viscosity" placeholder="" value="2000-2500 cSt">
+                                        <input type="text" class="form-control" name="Viscosity" id="Viscosity" placeholder="Viscosity">
                                     </div>
                                 </div>
                                  <div class="col-12 col-md-6 col-lg-6 col-xl-6"> &nbsp; </div>
@@ -160,25 +165,31 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                   -->
+                                   {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+
+                                    @if ($errors->has('proName'))
+                                    <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNoI">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No." value="RFLX 20/668">
+                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No.">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -259,32 +270,37 @@
                         </form>
                     </div>
                     <div id="listOfEquipment" class="tab-pane fade">
-                        <form id="add_batch_equipment_insert" method="post" action="{{ route('add_batch_equipment_insert') }}">
+                        <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_equipment_insert') }}">
                             @csrf
 
                             <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                   -->
+                                   {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                   @if ($errors->has('proName'))
+                                    <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -342,26 +358,30 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
+                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                   @if ($errors->has('proName'))
+                                    <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
 
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -419,25 +439,29 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="proName" class="active">Product Name</label>
-                                    <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                    <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
+                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                   @if ($errors->has('proName'))
+                                    <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No.">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." >
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control"  name="refMfrNo"id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                    <input type="text" class="form-control"  name="refMfrNo"id="refMfrNo" placeholder="Ref. MFR No." >
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -592,25 +616,31 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+
+                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
+
+                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                   @if ($errors->has('proName'))
+                                    <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No.">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1704,6 +1734,28 @@
                 Remark: "Please  Enter The Name Remark",
             },
         });
+        $("#add_batch_equipment_vali").validate({
+            rules: {
+                proName: "required",
+                bmrNo: "required",
+                batchNo: "required",
+                refMfrNo: "required",
+                EquipmentName: "required",
+                EquipmentCode: "required",
+
+
+            },
+            messages: {
+                proName: "Please  Enter The Name proName",
+                bmrNo: "Please  Enter The Name bmrNo",
+                batchNo: "Please  Enter The Name batchNo",
+                refMfrNo: "Please  Enter The Name refMfrNo",
+                EquipmentName: "Please  Enter The Name EquipmentName",
+                EquipmentCode: "Please  Enter The Name EquipmentCode",
+
+            },
+        });
+
   });
 </script>
 
