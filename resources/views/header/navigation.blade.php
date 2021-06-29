@@ -32,11 +32,11 @@
       <div class="collapse" id="ui-manufacture"><ul class="nav flex-column sub-menu">
       <li class="nav-item">
       <a class="nav-link" href="{{ route('add-batch-manufacture') }}">New Batch</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a></li>
+     {{--   <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a></li>
       <li class="nav-item"><a class="nav-link" href="{{route('list-of-equipment')}}">List of Equipment</a></li>
       <li class="nav-item"><a class="nav-link" href="{{route('line-clearance')}}">Line Clearance Record</a></li>
       <li class="nav-item"><a class="nav-link" href="{{route('add-lots')}}">Add Lots</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{route('packing-detail')}}">Packing</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('packing-detail')}}">Packing</a></li>--}}
       <li class="nav-item"><a class="nav-link" href="{{route('generate-label')}}">Generate Label</a></li>
       </ul>
       </div>
@@ -96,7 +96,7 @@
           <span class="menu-title">User Masters</span>
         </a>
       </li>
-      
+
 
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-master" aria-expanded="false" aria-controls="ui-master">
