@@ -133,10 +133,7 @@ class ManufactureProcessController extends Controller
 
     public function add_manufacturing_edit($id)
     {
-
         $product = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
-
-
         $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
         ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
         ->where('add_batch_manufacture.id', '=', $id)->first();
