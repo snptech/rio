@@ -739,7 +739,6 @@ class ManufactureProcessController extends Controller
         "checkedBy"=>"required",
     ];
     $arrMessages = [
-
         "from"=>"This :attribute field is required.",
         "to"=>"This :attribute field is required.",
         "batchNo"=>"This :attribute field is required.",
