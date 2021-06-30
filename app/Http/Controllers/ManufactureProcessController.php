@@ -33,7 +33,7 @@ class ManufactureProcessController extends Controller
     }
     public function add_batch_manufacturing_record()
     {
-        $data["product"] = Rawmeterial::where("material_preorder_stock",">",0)->pluck("material_name","id");
+        $data["product"] = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
 
 
         return view('add_batch_manufacturing_record',$data );

@@ -1213,7 +1213,7 @@
                 refMfrNo: "required",
                 grade: "required",
                 BatchSize: "required",
-                Viscosity: "required",
+                //Viscosity: "required",
                 ProductionCommencedon: "required",
                 ProductionCompletedon: "required",
                 ManufacturingDate: "required",
