@@ -38,6 +38,7 @@
 
                 <ul class="nav nav-tabs" role="tablist">
                     <li><a role="tab" data-toggle="tab" href="#batch" class="active">Batch</a></li>
+                    @if(isset($batch) && $batch)
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Raw Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
@@ -56,6 +57,7 @@
                     <li><a role="tab" data-toggle="tab" href="#lineClearance">Line Clearance</a></li>
                     <li><a role="tab" data-toggle="tab" href="#addLots">Add Lots</a></li>
                     <li><a data-toggle="tab" href="#Packing">Packing</a></li>
+                    @endif
                 </ul>
                 <div class="tab-content">
                     <div id="batch" class="tab-pane fade in active show">
@@ -1521,7 +1523,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name","onchange"=>"getmatarialqtyandbatch($(this).val(),'+x+')")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Batch Name</label>{{ Form::select("batchName[]",$batchName,old("batchName"),array("id"=>"batchName'+x+'","class"=>"form-control","placeholder"=>"Raw Material Batch Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity'+x+'" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name","onchange"=>"getmatarialqtyandbatch($(this).val(),x)")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Batch Name</label>{{ Form::select("batchName[]",$batchName,old("batchName"),array("id"=>"batchName'+x+'","class"=>"form-control","placeholder"=>"Raw Material Batch Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity'+x+'" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1810,7 +1812,7 @@
 
 }
 function getmatarialqtyandbatch(raw,index){
-    alert(raw)
+
          $.ajax({
              url:'{{ route('getmatarialqtyandbatch') }}',
              method:'POST',
@@ -1820,7 +1822,7 @@ function getmatarialqtyandbatch(raw,index){
              }
          }).success(function(data){
             $("#batchName"+index).empty()
-            .append('<option value="">Choose Batch</option>')
+            .append('<option value="">Choose Batch...</option>')
             $.each(data.batch, function (key, val) {
                 var option ="<option value='"+key+"'>"+val+"</option>";
 
