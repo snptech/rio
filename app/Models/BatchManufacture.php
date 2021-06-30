@@ -28,6 +28,7 @@ class BatchManufacture extends Model
         'approval',
         'approvalDate',
         'checkedByI',
+        'Remark',
         'is_active',
         'is_delete',
         'created_at',

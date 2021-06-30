@@ -76,6 +76,7 @@
                             <th>Manufacturing Date</th>
                             <th>Retest Date</th>
                             <th>Status</th>
+                            <th>Action</th>
 
                         </tr>
                     </thead>
@@ -100,8 +101,13 @@
                             @if($temp->approval=='Approved')
                              <td><span class="badge badge-success p-2">Approved</span></td>
                             @else
+
                             <td><span class="badge badge-warning p-2">Not Approved</span></td>
                             @endif
+                            <td class="actions">
+
+                            <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
+                                <a href="{{url('add_manufacturing_edit',[$temp->id])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
 
 
                         </tr>
@@ -218,7 +224,7 @@ $('.view').on('click',function(){
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
         str += '<label>Product Name</label>';
-        str += '<h4>'+data.res.proName+'</h4>';
+        str += '<h4>'+data.res.material_name+'</h4>';
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
@@ -284,8 +290,8 @@ $('.view').on('click',function(){
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
-        str += '<label>Deviation Sheet attached</label>';
-        str += '<h4>'+data.res.inlineRadioOptions+'</h4>';
+        str += '<label>Reviewed and Approved by</label>';
+        str += '<h4>'+data.res.checkedByI+'</h4>';
         str += '</div></div>';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
@@ -296,13 +302,8 @@ $('.view').on('click',function(){
         str += '<div class="form-row form-detail">';
         str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
         str += '<div class="form-group">';
-        str += '<label>This Batch is approved/not approved on</label>';
-        str += '<h4>'+data.res.approvalDate+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Reviewed and Approved by</label>';
-        str += ' <h4>'+data.res.checkedByI+'</h4>';
+        str += '<label>Note / Remark</label>';
+        str += '<h4>'+data.res.Remark+'</h4>';
         str += '</div></div>';
         str += '</div>';
         str+='</div>';
