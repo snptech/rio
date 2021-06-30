@@ -36,7 +36,6 @@
 
                 <ul class="nav nav-tabs" role="tablist">
                     <li><a role="tab" data-toggle="tab" href="#batch" class="active">Batch</a></li>
-                    @if(isset($batch) && $batch)
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Raw Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
@@ -48,7 +47,6 @@
                     <li><a role="tab" data-toggle="tab" href="#lineClearance">Line Clearance</a></li>
                     <li><a role="tab" data-toggle="tab" href="#addLots">Add Lots</a></li>
                     <li><a data-toggle="tab" href="#Packing">Packing</a></li>
-                    @endif
                 </ul>
                 <div class="tab-content">
                     <div id="batch" class="tab-pane fade in active show">
@@ -60,14 +58,12 @@
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
                                         <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
+                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
 
-                                        <select class="form-control" name="proName" id="proName">
-                                        <option> Choose Product Name</option>
-                                        @foreach ($product as $temp)
-                                        <option value="{{$temp->id}}">{{$temp->material_name}}</option>
+                                        @if ($errors->has('proName'))
+                                        <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                        @endif
 
-                                        @endforeach
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1457,18 +1453,6 @@
         });
 
     });
-    window.onload = function(){
-
-    var url = document.location.toString();
-    if (url.match('#')) {
-        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
-    }
-
-    //Change hash for page-reload
-    $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').on('shown', function (e) {
-        window.location.hash = e.target.hash;
-    });
-}
 </script>
 
 @endpush
