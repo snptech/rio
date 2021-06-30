@@ -24,7 +24,7 @@ class ManufactureProcessController extends Controller
     public function add_batch_manufacture()
     {
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
        ->get();
 
         return view('add_batch_manufacture', $data);
@@ -43,7 +43,7 @@ class ManufactureProcessController extends Controller
         if ($request->ajax()) {
 
             $res = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-            ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+            ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
                 ->where('add_batch_manufacture.id', $request->id)
                 ->first();
         }
@@ -130,7 +130,7 @@ class ManufactureProcessController extends Controller
          $product= Rawmeterial::where("material_stock",">",0)->where("material_type","F")->get();
 
         $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
         ->where('add_batch_manufacture.id', '=', $id)->first();
         return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing,'product', $product));
     }
