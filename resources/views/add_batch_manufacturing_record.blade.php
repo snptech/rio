@@ -1819,7 +1819,8 @@ function getmatarialqtyandbatch(raw,index){
                  "_token":'{{ csrf_token() }}'
              }
          }).success(function(data){
-
+            $("#batchName"+index).empty()
+            .append('<option value="">Choose Batch</option>')
             $.each(data.batch, function (key, val) {
                 var option ="<option value='"+key+"'>"+val+"</option>";
 
