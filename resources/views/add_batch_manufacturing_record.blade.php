@@ -60,11 +60,14 @@
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
                                         <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
 
-                                        @if ($errors->has('proName'))
-                                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                                        @endif
+                                        <select class="form-control" name="proName" id="proName">
+                                        <option> Choose Product Name</option>
+                                        @foreach ($product as $temp)
+                                        <option value="{{$temp->id}}">{{$temp->material_name}}</option>
+
+                                        @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -149,6 +152,16 @@
                                         <label for="checkedByI">Reviewed and Approved by</label>
                                         <input type="text" class="form-control select" name="checkedByI" id="checkedByI" value="{{ \Auth::user()->name }}" readonly>
 
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                      <label for="approval" class="active">This Batch is approved/not approved</label>
+                                        <select class="form-control select" name="approval"  id="approval">
+                                            <option>-- Select Option --</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Not Approved">Not Approved</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">

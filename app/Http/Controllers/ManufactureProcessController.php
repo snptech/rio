@@ -26,7 +26,7 @@ class ManufactureProcessController extends Controller
     public function add_batch_manufacture()
     {
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
        ->get();
 
         return view('add_batch_manufacture', $data);
@@ -48,9 +48,8 @@ class ManufactureProcessController extends Controller
     {
         if ($request->ajax()) {
 
-            $res = BatchManufacture::select(
-                'add_batch_manufacture.*',
-            )
+            $res = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
+            ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
                 ->where('add_batch_manufacture.id', $request->id)
                 ->first();
         }
@@ -135,9 +134,12 @@ class ManufactureProcessController extends Controller
     public function add_manufacturing_edit($id)
     {
 
+         $product= Rawmeterial::where("material_stock",">",0)->where("material_type","F")->get();
 
-        $edit_batchmanufacturing = BatchManufacture::where('id', '=', $id)->first();
-        return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing));
+        $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
+        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+        ->where('add_batch_manufacture.id', '=', $id)->first();
+        return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing,'product', $product));
     }
     public function add_manufacturing_update(Request $request)
     {
@@ -153,20 +155,21 @@ class ManufactureProcessController extends Controller
             "ProductionCompletedon" =>  $request['ProductionCompletedon'],
             "ManufacturingDate" =>  $request['ManufacturingDate'],
             "RetestDate" =>  $request['RetestDate'],
-            "doneBy" =>  $request['doneBy'],
-            "checkedBy" =>  $request['checkedBy'],
+            "doneBy" =>   Auth::user()->id,
+            "checkedBy" =>  Auth::user()->id,
             "inlineRadioOptions" =>  $request['inlineRadioOptions'],
             "approval" =>  $request['approval'],
             "approvalDate" =>  $request['approvalDate'],
-            "checkedByI" =>  $request['checkedByI'],
+            "checkedByI" => Auth::user()->id,
             "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
 
         ];
         $result = BatchManufacture::where('id', $request->id)->update($data);
+
         if ($result) {
-            return redirect("add-batch-manufacture")->with('success', "Data Update successfully");
+            return redirect("add-batch-manufacture")->with('success', " Batch  Data Update successfully");
         }
     }
 
@@ -744,7 +747,6 @@ class ManufactureProcessController extends Controller
         "checkedBy"=>"required",
     ];
     $arrMessages = [
-
         "from"=>"This :attribute field is required.",
         "to"=>"This :attribute field is required.",
         "batchNo"=>"This :attribute field is required.",

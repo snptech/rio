@@ -21,25 +21,32 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="proName" class="active">Product Name</label>
-                            <input type="text" class="form-control" name="proName" value="{{$edit_batchmanufacturing->proName}}" id="proName" placeholder="Product Name" >
+                            <select class="form-control" name="proName" id="proName">
+                            <option>{{$edit_batchmanufacturing->material_name}}</option>
+                            @foreach ($product as $temp)
+                            <option value="{{$temp->id}}">{{$temp->material_name}}</option>
+
+                            @endforeach
+                            </select>
                         </div>
                     </div>
+
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="bmrNo" class="active">BMR No.</label>
-                            <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" placeholder="BMR No." >
+                            <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" placeholder="BMR No.">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="batchNo">Batch No.</label>
-                            <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" placeholder="Batch No." >
+                            <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" placeholder="Batch No.">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="refMfrNo">Ref. MFR No.</label>
-                            <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No." >
+                            <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No.">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -60,55 +67,56 @@
                             <input type="text" class="form-control" name="Viscosity" value="{{$edit_batchmanufacturing->Viscosity}}" id="Viscosity" placeholder="" value="2000-2500 cSt">
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="ProductionCommencedon" class="active">Production Commenced on</label>
-                            <input type="date" class="form-control" name="ProductionCommencedon" value="{{$edit_batchmanufacturing->ProductionCommencedon}}" id="ProductionCommencedon" placeholder="">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="ProductionCommencedon" class="active">Production Commenced on</label>
+                                <input type="date" class="form-control" name="ProductionCommencedon" value="{{$edit_batchmanufacturing->ProductionCommencedon}}" id="ProductionCommencedon" placeholder="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="ProductionCompletedon" class="active">Production Completed on</label>
-                            <input type="date" class="form-control" name="ProductionCompletedon" value="{{$edit_batchmanufacturing->ProductionCompletedon}}" id="ProductionCompletedon" placeholder="" value="">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="ProductionCompletedon" class="active">Production Completed on</label>
+                                <input type="date" class="form-control" name="ProductionCompletedon" value="{{$edit_batchmanufacturing->ProductionCompletedon}}" id="ProductionCompletedon" placeholder="" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="ManufacturingDate" class="active">Manufacturing Date</label>
-                            <input type="date" class="form-control" name="ManufacturingDate" value="{{$edit_batchmanufacturing->ManufacturingDate}}" id="ManufacturingDate" placeholder="">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="ManufacturingDate" class="active">Manufacturing Date</label>
+                                <input type="date" class="form-control" name="ManufacturingDate" value="{{$edit_batchmanufacturing->ManufacturingDate}}" id="ManufacturingDate" placeholder="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="RetestDate" class="active">Retest Date</label>
-                            <input type="date" class="form-control" name="RetestDate" value="{{$edit_batchmanufacturing->RetestDate}}" id="RetestDate" placeholder="" value="">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="RetestDate" class="active">Retest Date</label>
+                                <input type="date" class="form-control" name="RetestDate" value="{{$edit_batchmanufacturing->RetestDate}}" id="RetestDate" placeholder="" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="doneBy">Prepared by</label>
-                            <select class="form-control select" name="doneBy" value="{{$edit_batchmanufacturing->doneBy}}" id="doneBy">
-                                <option>{{$edit_batchmanufacturing->doneBy}}</option>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="doneBy">Prepared by</label>
+                                <input type="text" class="form-control select" name="doneBy" value="{{Auth::user()->name }}" id="doneBy" readonly>
+                                <!-- <option>{{$edit_batchmanufacturing->doneBy}}</option>
                                 <option>Employee Name</option>
-                            </select>
+                            </select> -->
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="checkedBy">Checked by</label>
-                            <select class="form-control select" name="checkedBy" value="{{$edit_batchmanufacturing->checkedBy}}" id="checkedBy">
-                                <option>{{$edit_batchmanufacturing->checkedBy}}</option>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="checkedBy">Checked by</label>
+                                <input type="text" class="form-control select" name="checkedBy" value="{{Auth::user()->name }}" id="checkedBy" readonly>
+                                <!-- <option>{{$edit_batchmanufacturing->checkedBy}}</option>
                                 <option>Employee Name</option>
-                            </select>
+                            </select> -->
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12">
+                        <!-- <div class="col-12">
                         <div class="form-group">
                             <label for="Remark" class="active">This batch has / has not been produced according to instruction given in MFR No. RCIPL/MFR/01/01</label>
                         </div>
-                    </div>
-                    <div class="col-12">
+                    </div> -->
+                        <!-- <div class="col-12">
                         <div class="form-group">
                             <label for="ManufacturingDate" class="active">Deviation Sheet attached</label>
 
@@ -122,31 +130,39 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="approval" class="active">This Batch is approved/not approved</label>
-                            <select class="form-control select" name="approval" value="{{$edit_batchmanufacturing->approval}}" id="approval">
-                                <option>{{$edit_batchmanufacturing->approval}}</option>
-                                <option>Approved</option>
-                                <option>Not Approved</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    </div> -->
+
+                        <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="approvalDate" class="active">This Batch is approved/not approved on</label>
                             <input type="date" class="form-control" name="approvalDate" value="{{$edit_batchmanufacturing->approvalDate}}" id="approvalDate" >
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="checkedByI">Reviewed and Approved by</label>
-                            <select class="form-control select" name="checkedByI" value="{{$edit_batchmanufacturing->checkedByI}}" id="checkedByI">
-                                <option>{{$edit_batchmanufacturing->checkedByI}}</option>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="checkedByI">Reviewed and Approved by</label>
+                                <input type="text" class="form-control select" name="checkedByI" value="{{Auth::user()->name }}" id="checkedByI" readonly>
+                                <!-- <option>{{$edit_batchmanufacturing->checkedByI}}</option>
                                 <option>Employee Name</option>
-                            </select>
+                            </select> -->
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="approval" class="active">This Batch is approved/not approved</label>
+                                <select class="form-control select" name="approval" value="{{$edit_batchmanufacturing->approval}}" id="approval">
+                                    <option>{{$edit_batchmanufacturing->approval}}</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Not Approved">Not Approved</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Remark" class="active">Note / Remark</label>
+                                <textarea class="form-control" name="Remark" id="Remark" value="{{$edit_batchmanufacturing->Remark}}" placeholder="Note / Remark">{{$edit_batchmanufacturing->Remark}}</textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12">
