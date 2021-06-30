@@ -1488,5 +1488,4 @@
 
     });
 </script>
-
 @endpush

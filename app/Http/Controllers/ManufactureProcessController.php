@@ -25,14 +25,15 @@ class ManufactureProcessController extends Controller
 {
     public function add_batch_manufacture()
     {
-        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
-       ->get();
+        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name')
+            ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
+            ->get();
 
         return view('add_batch_manufacture', $data);
     }
-    public function add_batch_manufacturing_record(Request $request)    {
-        $data["product"] = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
+    public function add_batch_manufacturing_record(Request $request)
+    {
+        $data["product"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "F")->pluck("material_name", "id");
         $batch = "";
         if ($request->session()->has('batch')) {
             //
@@ -40,7 +41,7 @@ class ManufactureProcessController extends Controller
         }
         $data["batch"] = $batch;
 
-        return view('add_batch_manufacturing_record',$data );
+        return view('add_batch_manufacturing_record', $data);
     }
 
 
@@ -48,8 +49,8 @@ class ManufactureProcessController extends Controller
     {
         if ($request->ajax()) {
 
-            $res = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-            ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
+            $res = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name')
+                ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
                 ->where('add_batch_manufacture.id', $request->id)
                 ->first();
         }
@@ -133,11 +134,11 @@ class ManufactureProcessController extends Controller
 
     public function add_manufacturing_edit($id)
     {
-        $product = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
-        $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
-        ->where('add_batch_manufacture.id', '=', $id)->first();
-        return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing,'product', $product));
+        $product = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "F")->pluck("material_name", "id");
+        $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name')
+            ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
+            ->where('add_batch_manufacture.id', '=', $id)->first();
+        return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing, 'product', $product));
     }
     public function add_manufacturing_update(Request $request)
     {
@@ -180,11 +181,10 @@ class ManufactureProcessController extends Controller
     }
     public function bill_of_raw_material()
     {
-        $data['bill_material'] = BillOfRwaMaterial::
-        select('bill_of_raw_material.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'bill_of_raw_material.id')
-       ->where('bill_of_raw_material.is_delete', 1)
-         ->get();
+        $data['bill_material'] = BillOfRwaMaterial::select('bill_of_raw_material.*', 'raw_materials.material_name')
+            ->join('raw_materials', 'raw_materials.id', '=', 'bill_of_raw_material.id')
+            ->where('bill_of_raw_material.is_delete', 1)
+            ->get();
         return view('bill_of_raw_material', $data);
     }
     public function add_batch_manufacturing_record_bill()
@@ -324,10 +324,9 @@ class ManufactureProcessController extends Controller
 
     public function packing_detail()
     {
-        $data['packing_detail'] = BatchManufacturingPacking::
-        select('batch_manufacturing_records_packing.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_packing.id')
-       ->get();
+        $data['packing_detail'] = BatchManufacturingPacking::select('batch_manufacturing_records_packing.*', 'raw_materials.material_name')
+            ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_packing.id')
+            ->get();
         return view('packing_detail', $data);
     }
     public function add_manufacturing_record_Packing()
@@ -439,10 +438,9 @@ class ManufactureProcessController extends Controller
 
     public function list_of_equipment()
     {
-        $data['list_equipment'] = BatchManufacturingEquipment::
-        select('batch_manufacturing_records_list_of_equipment.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_list_of_equipment.id')
-       ->get();
+        $data['list_equipment'] = BatchManufacturingEquipment::select('batch_manufacturing_records_list_of_equipment.*', 'raw_materials.material_name')
+            ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_list_of_equipment.id')
+            ->get();
         return view('list_of_equipment', $data);
     }
     public function add_batch_list_of_equipment()
@@ -560,9 +558,9 @@ class ManufactureProcessController extends Controller
     }
     public function line_clearance()
     {
-        $data['BatchManufacturing'] = BatchManufacturingRecordsLine::select('batch_manufacturing_records_line_clearance_record.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_line_clearance_record.id')
-       ->get();
+        $data['BatchManufacturing'] = BatchManufacturingRecordsLine::select('batch_manufacturing_records_line_clearance_record.*', 'raw_materials.material_name')
+            ->join('raw_materials', 'raw_materials.id', '=', 'batch_manufacturing_records_line_clearance_record.id')
+            ->get();
         return view('line_clearance', $data);
     }
     public function add_line_clearance_record()
@@ -727,119 +725,118 @@ class ManufactureProcessController extends Controller
     }
     public function add_packing_material_issual_slip()
     {
-     return view ('add_packing_material_issual_slip');
+        return view('add_packing_material_issual_slip');
     }
     public function packing_material_issuel_insert(Request $request)
     {
-     $arrRules = [
-        "from"=>"required",
-        "to"=>"required",
-        "batchNo"=>"required",
-        "Date"=>"required",
-        "PackingMaterialName"=>"required",
-        "Capacity"=>"required",
-        "Quantity"=>"required",
-        "arNo"=>"required",
-        "ARDate"=>"required",
-        "doneBy"=>"required",
-        "checkedBy"=>"required",
-    ];
-    $arrMessages = [
-        "from"=>"This :attribute field is required.",
-        "to"=>"This :attribute field is required.",
-        "batchNo"=>"This :attribute field is required.",
-        "Date"=>"This :attribute field is required.",
-        "PackingMaterialName"=>"This :attribute field is required.",
-        "Capacity"=>"This :attribute field is required.",
-        "Quantity"=>"This :attribute field is required.",
-        "arNo"=>"This :attribute field is required.",
-        "ARDate"=>"This :attribute field is required.",
-        "doneBy"=>"This :attribute field is required.",
-        "checkedBy"=>"This :attribute field is required.",
-    ];
-    // $validated = $request->validate($arrRules, $arrMessages);
-    $arr['from'] = $request->from;
-    $order_number = date('dyHs');
-    $arr['order_id'] = $order_number;
-    $arr['to'] = $request->to;
-    $arr['batchNo'] = $request->batchNo;
-    $arr['Date'] = $request->Date;
-    $arr['doneBy'] = $request->doneBy;
-    $arr['checkedBy'] = $request->checkedBy;
-    $packingmaterial_id = PackingMaterialSlip::Create($arr);
-    if ($packingmaterial_id->id) {
-        foreach ($request->PackingMaterialName as $key => $value) {
-            $a_data['PackingMaterialName'] = $value;
-            $a_data['Capacity'] = $request->Capacity[$key];
-            $a_data['Quantity'] = $request->Quantity[$key];
-            $a_data['arNo'] = $request->arNo[$key];
-            $a_data['ARDate'] = $request->ARDate[$key];
-            $a_data['packingmaterial_id'] = $packingmaterial_id->id;
-            MaterialDetails::Create($a_data);
+        $arrRules = [
+            "from" => "required",
+            "to" => "required",
+            "batchNo" => "required",
+            "Date" => "required",
+            "PackingMaterialName" => "required",
+            "Capacity" => "required",
+            "Quantity" => "required",
+            "arNo" => "required",
+            "ARDate" => "required",
+            "doneBy" => "required",
+            "checkedBy" => "required",
+        ];
+        $arrMessages = [
+            "from" => "This :attribute field is required.",
+            "to" => "This :attribute field is required.",
+            "batchNo" => "This :attribute field is required.",
+            "Date" => "This :attribute field is required.",
+            "PackingMaterialName" => "This :attribute field is required.",
+            "Capacity" => "This :attribute field is required.",
+            "Quantity" => "This :attribute field is required.",
+            "arNo" => "This :attribute field is required.",
+            "ARDate" => "This :attribute field is required.",
+            "doneBy" => "This :attribute field is required.",
+            "checkedBy" => "This :attribute field is required.",
+        ];
+        // $validated = $request->validate($arrRules, $arrMessages);
+        $arr['from'] = $request->from;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['to'] = $request->to;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['Date'] = $request->Date;
+        $arr['doneBy'] = $request->doneBy;
+        $arr['checkedBy'] = $request->checkedBy;
+        $packingmaterial_id = PackingMaterialSlip::Create($arr);
+        if ($packingmaterial_id->id) {
+            foreach ($request->PackingMaterialName as $key => $value) {
+                $a_data['PackingMaterialName'] = $value;
+                $a_data['Capacity'] = $request->Capacity[$key];
+                $a_data['Quantity'] = $request->Quantity[$key];
+                $a_data['arNo'] = $request->arNo[$key];
+                $a_data['ARDate'] = $request->ARDate[$key];
+                $a_data['packingmaterial_id'] = $packingmaterial_id->id;
+                MaterialDetails::Create($a_data);
+            }
+            return redirect("add-batch-manufacturing-record")->with('success', "Packing Material Successfully");
+        } else {
+            return redirect("add-batch-manufacturing-record")->with('error', " Something went wrong");
         }
-        return redirect("add-batch-manufacturing-record")->with('success', "Packing Material Successfully");
-    } else {
-        return redirect("add-batch-manufacturing-record")->with('error', " Something went wrong");
     }
-}
-public function packing_material_requisition_slip_insert(Request $request)
-{
+    public function packing_material_requisition_slip_insert(Request $request)
+    {
 
-    $arrRules = [
-        "from"=>"required",
-        "from"=>"required",
-        "to"=>"required",
-        "batchNo"=>"required",
-        "Date"=>"required",
-        "checkedBy"=>"required",
-        "ApprovedBy"=>"required",
-        "Remark"=>"required",
-        "PackingMaterialName"=>"required",
-        "Capacity"=>"required",
-        "Quantity"=>"required",
-        "requisition_id"=>"required",
-    ];
-    $arrMessages = [
+        $arrRules = [
+            "from" => "required",
+            "from" => "required",
+            "to" => "required",
+            "batchNo" => "required",
+            "Date" => "required",
+            "checkedBy" => "required",
+            "ApprovedBy" => "required",
+            "Remark" => "required",
+            "PackingMaterialName" => "required",
+            "Capacity" => "required",
+            "Quantity" => "required",
+            "requisition_id" => "required",
+        ];
+        $arrMessages = [
 
-        "from"=>"This :attribute field is required.",
-        "from"=>"This :attribute field is required.",
-        "to"=>"This :attribute field is required.",
-        "batchNo"=>"This :attribute field is required.",
-        "Date"=>"This :attribute field is required.",
-        "checkedBy"=>"This :attribute field is required.",
-        "ApprovedBy"=>"This :attribute field is required.",
-        "Remark"=>"This :attribute field is required.",
-        "PackingMaterialName"=>"This :attribute field is required.",
-        "Capacity"=>"This :attribute field is required.",
-        "Quantity"=>"This :attribute field is required.",
-        "requisition_id"=>"This :attribute field is required.",
-    ];
-    //$validateData = $request->validate($arrRules, $arrMessages);
+            "from" => "This :attribute field is required.",
+            "from" => "This :attribute field is required.",
+            "to" => "This :attribute field is required.",
+            "batchNo" => "This :attribute field is required.",
+            "Date" => "This :attribute field is required.",
+            "checkedBy" => "This :attribute field is required.",
+            "ApprovedBy" => "This :attribute field is required.",
+            "Remark" => "This :attribute field is required.",
+            "PackingMaterialName" => "This :attribute field is required.",
+            "Capacity" => "This :attribute field is required.",
+            "Quantity" => "This :attribute field is required.",
+            "requisition_id" => "This :attribute field is required.",
+        ];
+        //$validateData = $request->validate($arrRules, $arrMessages);
 
-    $arr['from'] = $request->from;
-    $arr['to'] = $request->to;
-    $arr['batchNo'] = $request->batchNo;
-    $arr['Date'] = $request->Date;
-    $order_number = date('dyHs');
-    $arr['order_id'] = $order_number;
-    $arr['checkedBy'] =  Auth::user()->id;
-    $arr['ApprovedBy'] =  Auth::user()->id;
-    $arr['Remark'] = $request->Remark;
+        $arr['from'] = $request->from;
+        $arr['to'] = $request->to;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['Date'] = $request->Date;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['checkedBy'] =  Auth::user()->id;
+        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['Remark'] = $request->Remark;
 
-     $RequisitionSlip_id = RequisitionSlip::Create($arr);
+        $RequisitionSlip_id = RequisitionSlip::Create($arr);
 
-    if ($RequisitionSlip_id->id) {
-        foreach ($request->PackingMaterialName as $key => $value) {
-            $arr_data['PackingMaterialName'] = $value;
-            $arr_data['Capacity'] = $request->Capacity[$key];
-            $arr_data['Quantity'] = $request->Quantity[$key];
-            $arr_data['requisition_id'] = $RequisitionSlip_id->id;
-            DetailsRequisition::Create($arr_data);
+        if ($RequisitionSlip_id->id) {
+            foreach ($request->PackingMaterialName as $key => $value) {
+                $arr_data['PackingMaterialName'] = $value;
+                $arr_data['Capacity'] = $request->Capacity[$key];
+                $arr_data['Quantity'] = $request->Quantity[$key];
+                $arr_data['requisition_id'] = $RequisitionSlip_id->id;
+                DetailsRequisition::Create($arr_data);
+            }
+            return redirect('add-batch-manufacturing-record')->with('success', "Raw Materrila Of Requisition successfully");
+        } else {
+            return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
         }
-        return redirect('add-batch-manufacturing-record')->with('success', "Raw Materrila Of Requisition successfully");
-    } else {
-        return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
     }
-
-}
 }
