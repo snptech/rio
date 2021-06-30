@@ -23,12 +23,12 @@ use App\Models\Department;
 
 class ManufactureProcessController extends Controller
 {
-    public function add_batch_manufacture()
+    public function add_batch_manufacture(Request $request)
     {
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
         ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
        ->get();
-
+       $request->session()->put('batch', "");
         return view('add_batch_manufacture', $data);
     }
     public function add_batch_manufacturing_record(Request $request)    {
