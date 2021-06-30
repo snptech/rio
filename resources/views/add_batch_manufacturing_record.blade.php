@@ -1,6 +1,8 @@
 @extends("layouts.app")
 @section("title","Add batch Manufacture")
 @section('content')
+
+
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 grid-margin">
@@ -36,7 +38,6 @@
 
                 <ul class="nav nav-tabs" role="tablist">
                     <li><a role="tab" data-toggle="tab" href="#batch" class="active">Batch</a></li>
-                    @if(isset($batch) && $batch)
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Raw Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
@@ -55,7 +56,6 @@
                     <li><a role="tab" data-toggle="tab" href="#lineClearance">Line Clearance</a></li>
                     <li><a role="tab" data-toggle="tab" href="#addLots">Add Lots</a></li>
                     <li><a data-toggle="tab" href="#Packing">Packing</a></li>
-                    @endif
                 </ul>
                 <div class="tab-content">
                     <div id="batch" class="tab-pane fade in active show">
@@ -67,10 +67,7 @@
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
                                         <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-
-
-                                        {{ Form::select('proName',$product,old('proName'),array('placeholder'=>"Product Name" ,"id"=>"proName","class"=>"form-control")) }}
-
+                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
 
                                     </div>
                                 </div>
@@ -718,8 +715,13 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
+<<<<<<< HEAD
                                         <label for="batchNo">Batch No.</label>
                                         <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+=======
+                                        <label for="batchNoI">Batch No.</label>
+                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" value="{{$batch}}" readonly>
+>>>>>>> 4303c2b9ae638321449800710b9b47e78bac41b0
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -824,7 +826,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -905,7 +907,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -985,7 +987,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1164,7 +1166,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
