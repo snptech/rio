@@ -18,7 +18,7 @@ use App\Models\MaterialDetails;
 use App\Models\DetailsRequisition;
 use App\Models\RequisitionSlip;
 use session;
-
+use App\Models\Department;
 
 
 class ManufactureProcessController extends Controller
@@ -26,19 +26,33 @@ class ManufactureProcessController extends Controller
     public function add_batch_manufacture()
     {
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
        ->get();
 
         return view('add_batch_manufacture', $data);
     }
     public function add_batch_manufacturing_record(Request $request)    {
         $data["product"] = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
+
         $batch = "";
         if ($request->session()->has('batch')) {
             //
             $batch = $request->session()->get('batch');
         }
         $data["batch"] = $batch;
+
+        if(isset($batch) && $batch )
+        {
+           $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo",$batch)->first();
+           if(isset($batchdetails) && $batchdetails)
+           {
+               $data["batchdetails"] = $batchdetails;
+           }
+        }
+        $data["department"] = Department::pluck("department","id");
+
+        $data["rawmaterials"] = Rawmeterial::where("material_stock",">",0)->where("material_type","R")->pluck("material_name","id");
+        $data["batchName"] = array();
 
         return view('add_batch_manufacturing_record',$data );
     }
@@ -127,7 +141,7 @@ class ManufactureProcessController extends Controller
 
         if ($result) {
             $request->session()->put('batch', $request['batchNo']);
-            return redirect("add-batch-manufacturing-record#billOfRawMaterial")->with('success', "Data created successfully");
+            return redirect("add-batch-manufacturing-record#billOfRawMaterial")->with('success', "Batch created successfully");
         }
     }
 
@@ -137,7 +151,7 @@ class ManufactureProcessController extends Controller
          $product= Rawmeterial::where("material_stock",">",0)->where("material_type","F")->get();
 
         $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.id')
+        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
         ->where('add_batch_manufacture.id', '=', $id)->first();
         return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing,'product', $product));
     }

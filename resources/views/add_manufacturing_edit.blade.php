@@ -13,6 +13,7 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
+
             <form id="add_manufacturing" method="post" action="{{ route('add_manufacturing_update') }}">
                 <input type="hidden" value="{{$edit_batchmanufacturing->id}}" name="id">
                 @csrf
