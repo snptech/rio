@@ -17,7 +17,7 @@ use App\Models\PackingMaterialSlip;
 use App\Models\MaterialDetails;
 use App\Models\DetailsRequisition;
 use App\Models\RequisitionSlip;
-use session;
+use Session;
 
 
 
@@ -127,6 +127,7 @@ class ManufactureProcessController extends Controller
         $result = BatchManufacture::create($data);
 
         if ($result) {
+            // Session::put('batch',$request['batchNo']);
             $request->session()->put('batch', $request['batchNo']);
             return redirect("add-batch-manufacturing-record#billOfRawMaterial")->with('success', "Data created successfully");
         }

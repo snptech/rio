@@ -1,6 +1,8 @@
 @extends("layouts.app")
 @section("title","Add batch Manufacture")
 @section('content')
+
+
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 grid-margin">
@@ -200,7 +202,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNoI">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -311,7 +313,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -392,7 +394,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -472,7 +474,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -651,7 +653,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -857,7 +859,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." >
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -951,7 +953,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
