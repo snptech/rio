@@ -17,7 +17,9 @@ use App\Models\PackingMaterialSlip;
 use App\Models\MaterialDetails;
 use App\Models\DetailsRequisition;
 use App\Models\RequisitionSlip;
-use GrahamCampbell\ResultType\Result;
+use session;
+
+
 
 class ManufactureProcessController extends Controller
 {
@@ -29,10 +31,14 @@ class ManufactureProcessController extends Controller
 
         return view('add_batch_manufacture', $data);
     }
-    public function add_batch_manufacturing_record()
-    {
-        $data["product"] = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->get();
-
+    public function add_batch_manufacturing_record(Request $request)    {
+        $data["product"] = Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
+        $batch = "";
+        if ($request->session()->has('batch')) {
+            //
+            $batch = $request->session()->get('batch');
+        }
+        $data["batch"] = $batch;
 
         return view('add_batch_manufacturing_record',$data );
     }
@@ -54,23 +60,23 @@ class ManufactureProcessController extends Controller
     {
 
         $arrRules = [
-            "proName" => "required.",
-            "bmrNo" => "required.",
-            "batchNo" => "required.",
-            "refMfrNo" => "required.",
-            "grade" => "required.",
-            "BatchSize" => "required.",
-            "Viscosity" => "required.",
-            "ProductionCommencedon" => "required.",
-            "ProductionCompletedon" => "required.",
-            "ManufacturingDate" => "required.",
-            "RetestDate" => "required.",
-            "doneBy" => "required.",
-            "checkedBy" => "required.",
-            "inlineRadioOptions" => "required.",
-            "approval" => "required.",
-            "approvalDate" => "required.",
-            "checkedByI" => "checkedByI.",
+            "proName" => "required",
+            "bmrNo" => "required",
+            "batchNo" => "required|unique:add_batch_manufacture",
+            "refMfrNo" => "required",
+            "grade" => "required",
+            "BatchSize" => "required",
+            "Viscosity" => "required",
+            "ProductionCommencedon" => "required",
+            "ProductionCompletedon" => "required",
+            "ManufacturingDate" => "required",
+            "RetestDate" => "required",
+            "doneBy" => "required",
+            "checkedBy" => "required",
+            "inlineRadioOptions" => "required",
+            "approval" => "required",
+            "approvalDate" => "required",
+            "checkedByI" => "required",
 
         ];
         $arrMessages = [
@@ -109,7 +115,7 @@ class ManufactureProcessController extends Controller
             "doneBy" => Auth::user()->id,
             "checkedBy" => Auth::user()->id,
             "inlineRadioOptions" =>  $request['inlineRadioOptions'],
-            "approval" =>  $request['approval'],
+            "approval" =>  Auth::user()->id,
             "approvalDate" =>  $request['approvalDate'],
             "checkedByI" => Auth::user()->id,
             "Remark" =>  $request['Remark'],
@@ -120,7 +126,8 @@ class ManufactureProcessController extends Controller
         $result = BatchManufacture::create($data);
 
         if ($result) {
-            return redirect("add-batch-manufacturing-record")->with('success', "Batch  Data created successfully");
+            $request->session()->put('batch', $request['batchNo']);
+            return redirect("add-batch-manufacturing-record#billOfRawMaterial")->with('success', "Data created successfully");
         }
     }
 
