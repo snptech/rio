@@ -161,7 +161,14 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post('inward_finished_insert', [App\Http\Controllers\InwardFinishedController::class, 'inward_finished_insert']);
 
         // issue material for production
-        Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+        // This is old one
+        //Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production'])->name("issue_material_for_production");
+
+        //this is new one as per issual request
+        Route::get('/issue_material_for_production', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production_new'])->name("issue_material_for_production");
+        Route::get("/issue_material/{id}",[App\Http\Controllers\MaterialForProductionController::class, 'issue_material'])->name("issue_material");
+        Route::post("/packing_material_requisition_slip_approved/{id}",[App\Http\Controllers\MaterialForProductionController::class, 'packing_material_requisition_slip_approved'])->name("packing_material_requisition_slip_approved");
+
         Route::post('view_issue_material', [App\Http\Controllers\MaterialForProductionController::class, 'view_issue_material'])->name("view_issue_material");
         Route::get('/issue_material_for_production_add', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production_add'])->name("issue_material_for_production_add");
         Route::post('issue_material_insert', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_insert'])->name("issue_material_insert");

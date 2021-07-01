@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Supplier;
 use App\Models\Rawmeterial;
 use App\Models\Rawmaterialitems;
+use App\Models\RequisitionSlip;
+use App\Models\DetailsRequisition;
 use App\Models\Issuematerialproduction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,17 @@ class MaterialForProductionController extends Controller
         ->get();
 
         return view('issue_material_for_production',$data);
+    }
+    public function issue_material_for_production_new()
+    {
+
+        $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
+        ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
+        ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
+
+        ->get();
+
+        return view('issue_material_for_production_new',$data);
     }
     public function view_issue_material(Request $request)
     {
@@ -154,6 +167,28 @@ class MaterialForProductionController extends Controller
             return response()->json($data);
         }
         else{
+            redirect(404);
+        }
+    }
+    public function issue_material(Request $request)
+    {
+        if($request->id)
+        {
+            $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize","fromdep.department as fromdepartmet","todep.department as todepartmet")
+            ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
+            ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
+            ->join("department as fromdep", "fromdep.id", "=", "packing_material_requisition_slip.from")
+            ->join("department as todep", "todep.id", "=", "packing_material_requisition_slip.to")
+            ->where("packing_material_requisition_slip.id",$request->id)
+            ->first();
+
+
+            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$data["issue_material"]->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
+
+            return view('issue_material_for_production_approved',$data);
+        }
+        else
+        {
             redirect(404);
         }
     }

@@ -41,16 +41,18 @@
                     @if(isset($batch) && $batch)
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Raw Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
                             <li><a role="tab" data-toggle="tab" href="#requisition">Requisition</a></li>
                             <li><a role="tab" data-toggle="tab" href="#issualofrequisition">Issual of requisition</a></li>
+                            <li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
+
                         </ul>
                     </li>
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Packing Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a role="tab" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>
                             <li><a role="tab" data-toggle="tab" href="#requisitionpacking">Requisition</a></li>
                             <li><a role="tab" data-toggle="tab" href="#issualofrequisitionpacking">Issual of requisition</a></li>
+                            <li><a role="tab" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>
+
                         </ul>
                     </li>
                     <li><a role="tab" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
@@ -234,15 +236,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="batchNo" class="active">Batch No.</label>
-                                                    <select class="form-control select" name="batchNo[]" id="batchNo">
-                                                        <option>Select</option>
-                                                        <option>RFLX</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="Quantity" class="active">Quantity (Kg.)</label>
@@ -336,17 +330,11 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="PackingMaterialName" class="active">Raw Material Name</label>
-                                                    {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name","onchange"=>"getmatarialqtyandbatch($(this).val(),1)")) }}
+                                                    {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}
 
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="PackingMaterialName" class="active">Batch Name</label>
-                                                    {{ Form::select("batchName[]",$batchName,old("batchName"),array("id"=>"batchName1","class"=>"form-control","placeholder"=>"Raw Material Batch Name")) }}
 
-                                                </div>
-                                            </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="Quantity" class="active">Quantity (Kg.)</label>
@@ -383,6 +371,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old("batch_id") }}" />
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
                                     </div>
                                 </div>
@@ -391,7 +380,7 @@
                     </div>
 
                     <div id="issualofrequisition" class="tab-pane fade">
-                        <form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert') }}">
+                        <!--<form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert') }}">
                             @csrf
 
                             <div class="form-row">
@@ -487,7 +476,45 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
+                        @if(isset($requestion))
+                        <table class="table table-hover table-bordered datatable" id="examplereq">
+                            <thead>
+                                <tr>
+                                    <th>Requestion No</th>
+                                    <th>Batch No</th>
+                                    <th>Date</th>
+
+                                    <th>Requestion Raw Material Name</th>
+                                    <th>Requestion Raw Material Qty</th>
+                                    <th>Issued Raw Material Qty</th>
+                                    <th>Status</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if($requestion_details && $requestion)
+                                @foreach($requestion_details as $temp)
+                                <tr>
+                                    <td>{{$requestion->id}}</td>
+                                    <td>{{$requestion->batchNo}}</td>
+                                    <td>{{$requestion->created_at?date("d/m/Y",strtotime($requestion->created_at)):""}}</td>
+                                    <td>{{$temp->material_name}}</td>
+                                    <td>{{$temp->Quantity}}</td>
+                                    <td>{{$temp->approved_qty}}</td>
+                                    <td>{{($temp->status == 1?"Approved":($temp->status == 2?"Reject":""))}}</td>
+
+
+
+                                </tr>
+                                @endforeach
+                                @endif
+
+                            </tbody>
+                        </table>
+                        @endif
                     </div>
 
                     {{-- Packing materials --}}
@@ -717,13 +744,8 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-<<<<<<< HEAD
-                                        <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
-=======
                                         <label for="batchNoI">Batch No.</label>
                                         <input type="text" class="form-control" name="batchNoI" id="batchNoI" value="{{$batch}}" readonly>
->>>>>>> 4303c2b9ae638321449800710b9b47e78bac41b0
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1523,7 +1545,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name","onchange"=>"getmatarialqtyandbatch($(this).val(),x)")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Batch Name</label>{{ Form::select("batchName[]",$batchName,old("batchName"),array("id"=>"batchName'+x+'","class"=>"form-control","placeholder"=>"Raw Material Batch Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity'+x+'" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity'+x+'" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1756,12 +1778,13 @@
                 to: "required",
                 batchNo: "required",
                 Date: "required",
-                PackingMaterialName: "required",
-                Capacity: "required",
-                Quantity: "required",
+                "rawMaterialName[]": "required",
+
+                "Quantity[]": "required",
                 checkedBy: "required",
                 ApprovedBy: "required",
-                Remark: "required",
+                batch_id: "required",
+
              },
             messages: {
                 from: "Please  Enter The from Name",
@@ -1832,5 +1855,12 @@ function getmatarialqtyandbatch(raw,index){
      }
 
 </script>
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#examplereq').DataTable();
+        });
+    </script>
 @endpush

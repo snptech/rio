@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Rawmeterial;
 class DetailsRequisition extends Model
 {
     use HasFactory;
@@ -17,5 +17,12 @@ class DetailsRequisition extends Model
         "requisition_id",
         "created_at",
         "updated_at",
+        "type"
     ];
+
+    public function Requisition()
+    {
+        return $this->belongsTo(RequisitionSlip::class,"id");
+    }
+
 }

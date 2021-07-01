@@ -13,21 +13,10 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-<<<<<<< HEAD
 
             <form id="add_manufacturing" method="post" action="{{ route('add_manufacturing_update') }}">
                 <input type="hidden" value="{{$edit_batchmanufacturing->id}}" name="id">
                 @csrf
-=======
-            <div class="card-body">
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
->>>>>>> 4303c2b9ae638321449800710b9b47e78bac41b0
-
-                @endif
                 @if ($message = Session::get('danger'))
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -65,7 +54,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","value"=>"$edit_batchmanufacturing->proName")) }}
+                                        {{ Form::select("proName",$product,old("proName")?old("proName"):$edit_batchmanufacturing->proName,array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
 
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
@@ -157,29 +146,7 @@
                         <div class="form-group">
                             <label for="Remark" class="active">This batch has / has not been produced according to instruction given in MFR No. RCIPL/MFR/01/01</label>
                         </div>
-                    </div> -->
-                                    <!-- <div class="col-12">
-                        <div class="form-group">
-                            <label for="ManufacturingDate" class="active">Deviation Sheet attached</label>
 
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions"  {{($edit_batchmanufacturing->inlineRadioOptions == 'Yes')?'checked':''}}  value="{{$edit_batchmanufacturing->inlineRadioOptions}}" id="inlineRadio1">
-                                <label class="form-check-label" for="inlineRadio1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" {{($edit_batchmanufacturing->inlineRadioOptions == 'No')?'checked':''}}  value="{{$edit_batchmanufacturing->inlineRadioOptions}}" id="inlineRadio2">
-                                <label class="form-check-label" for="inlineRadio2">No</label>
-                            </div>
-
-                        </div>
-                    </div> -->
-
-                                    <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                            <label for="approvalDate" class="active">This Batch is approved/not approved on</label>
-                            <input type="date" class="form-control" name="approvalDate" value="{{$edit_batchmanufacturing->approvalDate}}" id="approvalDate" >
-                        </div>
-                    </div> -->
 
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
@@ -973,7 +940,7 @@
                     </div>
 
                     <div id="issualofrequisition" class="tab-pane fade">
-                        <form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert') }}">
+                        <!--<form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert') }}">
                             @csrf
 
                             <div class="form-row">
@@ -1069,7 +1036,48 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
+                        {{-- Display List of Requestion --}}
+                        @if(isset($requestion))
+                        <table class="table table-hover table-bordered datatable" id="example">
+                            <thead>
+                                <tr>
+                                    <th>Requestion No</th>
+                                    <th>Batch No</th>
+                                    <th>Date</th>
+                                    <th>BMR No.</th>
+                                    <th>Ref MFR No.</th>
+                                    <th>Raw Material Name</th>
+                                    <th>Raw Material Qty</th>
+                                    <th>Action</th>
+
+                                </tr>```
+                            </thead>
+                            <tbody>
+                                @if(count($requestion->DetailsRequisitions()))
+                                @foreach($requestion->DetailsRequisitions() as $temp)
+                                <tr>
+                                    <td>{{$requestion->id}}</td>
+                                    <td>{{$requestion->batchNo}}</td>
+                                    <td>{{$requestion->Date}}</td>
+                                    <td>{{$requestion->bmrNo}}</td>
+                                    <td>{{$requestion->refMfrNo}}</td>
+                                    <td>{{$temp->PackingMaterialName}}</td>
+                                    <td>{{$temp->Quantity}}</td>
+
+                                    <td class="actions">
+
+                                    <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
+                                       </a>
+
+
+                                </tr>
+                                @endforeach
+                                @endif
+
+                            </tbody>
+                        </table>
+                        @endif
                     </div>
                 </div>
             </div>

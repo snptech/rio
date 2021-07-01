@@ -15,11 +15,18 @@ class RequisitionSlip extends Model
         "from",
         "to",
         "batchNo",
+        "batch_id",
         "Date",
         "checkedBy",
         "ApprovedBy",
         "Remark",
         "created_at",
         "updated_at",
+        "type"
     ];
+
+    public function DetailsRequisitions()
+    {
+        return $this->hasMany(DetailsRequisition::class,"requisition_id");
+    }
 }
