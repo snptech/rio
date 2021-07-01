@@ -54,7 +54,7 @@ class ManufactureProcessController extends Controller
         $data["rawmaterials"] = Rawmeterial::where("material_stock",">",0)->where("material_type","R")->pluck("material_name","id");
         $data["batchName"] = array();
 
-        return view('add_batch_manufacturing_record',$data );
+        return view('add_batch_manufacturing_record#requisition',$data);
     }
 
 
@@ -142,7 +142,7 @@ class ManufactureProcessController extends Controller
         if ($result) {
             // Session::put('batch',$request['batchNo']);
             $request->session()->put('batch', $request['batchNo']);
-            return redirect("add-batch-manufacturing-record#billOfRawMaterial")->with('success', "Batch created successfully");
+            return redirect("add-batch-manufacturing-record#requisition")->with('success', "Batch created successfully");
         }
     }
 
