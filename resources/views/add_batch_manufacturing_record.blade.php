@@ -56,9 +56,11 @@
                         </ul>
                     </li>
                     <li><a role="tab" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
-                    <li><a role="tab" data-toggle="tab" href="#lineClearance">Line Clearance</a></li>
-                    <li><a role="tab" data-toggle="tab" href="#addLots">Add Lots</a></li>
+
+                    <li><a role="tab" data-toggle="tab" href="#addLots">Lots</a></li>
+                    <li><a role="tab" data-toggle="tab" href="#lineClearance">Homogenizing</a></li>
                     <li><a data-toggle="tab" href="#Packing">Packing</a></li>
+                    <li><a data-toggle="tab" href="#Packing">Generate Label</a></li>
                     @endif
                 </ul>
                 <div class="tab-content">
