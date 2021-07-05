@@ -17,7 +17,8 @@ class DetailsRequisition extends Model
         "requisition_id",
         "created_at",
         "updated_at",
-        "type"
+        "type",
+        "approved_qty"
     ];
 
     public function Requisition()

@@ -22,7 +22,8 @@ class RequisitionSlip extends Model
         "Remark",
         "created_at",
         "updated_at",
-        "type"
+        "type",
+        "status"
     ];
 
     public function DetailsRequisitions()

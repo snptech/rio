@@ -10,6 +10,10 @@ use App\Models\DetailsRequisition;
 use App\Models\Issuematerialproduction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Requisitionissuedmaterialdetails;
+use App\Models\Requisitionissuedmaterial;
+
+use App\Models\Requisition;
 class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
@@ -186,6 +190,129 @@ class MaterialForProductionController extends Controller
             $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$data["issue_material"]->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
 
             return view('issue_material_for_production_approved',$data);
+        }
+        else
+        {
+            redirect(404);
+        }
+    }
+    public function getmatarialqtyofbatchwitharno(Request $request)
+    {
+        if($request->id && $request->rawmaterial)
+        {
+            $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
+
+            if($items)
+            {
+                $data["qty"] = ($items->qty_received_kg-$items->used_qty);
+                $data["arno"] = ($items->ar_no_date);
+                return response()->json($data);
+
+            }
+        }
+        else
+        {
+            redirect(404);
+        }
+    }
+    public function packing_material_requisition_slip_approved(Request $request)
+    {
+        if($request->id)
+        {
+            $material_details = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$request->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
+
+
+
+            $arrRules = [
+                "from"=>"required",
+                 "to"=>"required",
+                 "batchNo"=>"required",
+                 "Date"=>"required",
+                 "checkedBy"=>"required",
+                 "ApprovedBy"=>"required",
+                 "batch_id"=>"required"];
+
+                 $arrMessages = [
+                    "from"=>"This :attribute field is required.",
+                    "to"=>"This :attribute field is required..",
+                    "batchNo"=>"This :attribute field is required.",
+                    "Date"=>"This :attribute field is required..",
+                    "checkedBy"=>"This :attribute field is required.",
+                    "ApprovedBy"=>"This :attribute field is required.",
+                    "batch_id"=>"This :attribute field is required."
+
+             ];
+            if(isset($material_details) && $material_details)
+            {
+                foreach($material_details as $material){
+                    $arrRules["material_name".$material->id] = "required";
+                    $arrRules["Quantity".$material->id] = "required";
+                    $arrRules["rBatch".$material->id] = "required";
+                    $arrRules["arno".$material->id] = "required";
+                    $arrRules["Quantity_app".$material->id] = "required";
+                    $arrRules["details_id".$material->id] = "required";
+
+                    $arrMessages["material_name".$material->id] = "This :attribute field is required.";
+                    $arrMessages["Quantity".$material->id] = "This :attribute field is required.";
+                    $arrMessages["rBatch".$material->id] = "This :attribute field is required.";
+                    $arrMessages["arno".$material->id] = "This :attribute field is required.";
+                    $arrMessages["Quantity_app".$material->id] = "This :attribute field is required.";
+                    $arrMessages["details_id".$material->id] = "This :attribute field is required.";
+
+                }
+            }
+               $validateData = $request->validate($arrRules,$arrMessages);
+
+               $data["from"] = $request->from;
+               $data["to"] = $request->to;
+               $data["batch_no"] = $request->batchNo;
+               $data["issed_date"] = $request->Date;
+               $data["requestion_id"] = $request->batch_id;
+               $data["checkedBy"] = Auth::user()->id;
+               $data["ApprovedBy"] = Auth::user()->id;
+               $data["batch_id"] = $request->batch_id;
+
+               $result = Requisitionissuedmaterial::create($data);
+               if($result)
+               {
+                   $requesetion = RequisitionSlip::find($request->batch_id);
+                   if(isset($requesetion) && $requesetion)
+                   {
+                       $requesetion->update(array("status"=>1));
+                   }
+                   foreach($material_details as $material)
+                   {
+                        $detailsdata["issual_material_id"] = $result->id;
+                        $matrail_id = "material_name_id".$material->id;
+                        $detailsdata["material_id"] = $request->$matrail_id;
+                        $rqty = "Quantity".$material->id;
+                        $detailsdata["requesist_qty"] = $request->$rqty;
+                        $batch = "rBatch".$material->id;
+                        $detailsdata["batch_id"] = $request->$batch;
+                        $arno = "arno".$material->id;
+                        $detailsdata["ar_no_date"] = $request->$arno;
+                        $appqty = "Quantity_app".$material->id;
+                        $detailsdata["approved_qty"] = $request->$appqty;
+                        $detailsdata["main_details_id"] = $request->batch_id;
+                        $res = Requisitionissuedmaterialdetails::create($detailsdata);
+
+                        $detailsid = "details_id".$material->id;
+                        $issualdata = array();
+                        $issualdata["approved_qty"] = $request->$appqty;
+                        $detailsred = DetailsRequisition::find($request->$detailsid);
+                        $detailsred->update($issualdata);
+
+                        $rawmeterial = Rawmaterialitems::find($request->$batch);
+
+                        $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty)));
+
+
+
+                   }
+                   return redirect("issue_material_for_production")->with('success_msg',"Data created successfully");
+               }
+
+
         }
         else
         {
