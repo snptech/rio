@@ -58,7 +58,7 @@
                     <li><a role="tab" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
 
                     <li><a role="tab" data-toggle="tab" href="#addLots">Lots</a></li>
-                    <li><a role="tab" data-toggle="tab" href="#lineClearance">Homogenizing</a></li>
+                    <li><a role="tab" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
                     <li><a data-toggle="tab" href="#Packing">Packing</a></li>
                     <li><a data-toggle="tab" href="#Packing">Generate Label</a></li>
                     @endif
@@ -908,85 +908,128 @@
                             </div>
                         </form>
                     </div>
-                    <div id="lineClearance" class="tab-pane fade">
+                    <div id="homogenizing" class="tab-pane fade">
                         <form id="add_manufacturing_line" method="post" action="{{ route('add_line_clearance_insert') }}">
                             @csrf
 
                             <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                        <label for="proName" class="active">Product Name</label>
-                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
-                                        @if ($errors->has('proName'))
-                                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-
-                                    <div class="form-group">
-                                        <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No.">
+                                      <label for="proName" class="active">Product Name</label>
+                                      <input type="text" class="form-control" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                        <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
+                                      <label for="bmrNo" class="active">BMR No.</label>
+                                      <input type="text" class="form-control" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                        <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No.">
+                                      <label for="batchNo">Batch No.</label>
+                                      <input type="text" class="form-control" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                        <label for="Date">Date</label>
-                                        <input type="date" class="form-control" name="Date" id="Date" placeholder="" value={{ date("Y-m-d") }}>
+                                      <label for="refMfrNo">Ref. MFR No.</label>
+                                      <input type="text" class="form-control" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group">
+                                      <label for="homoTank">Homogenizing tank No.</label>
+                                      <input type="text" class="form-control" id="homoTank" placeholder="" value="PR/BT/Come Tank number">
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group input_fields_wrap_3" id="MaterialReceived">
-                                        <label class="control-label d-flex">Line Clearance Record
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-dark add-more add_field_button_3 waves-effect waves-light" type="button">Add More +</button>
-                                            </div>
-                                        </label>
-                                        <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                            <!-- <span class="add-count">1</span> -->
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-group">
-                                                    <label for="EquipmentName" class="active">Particulars</label>
-                                                    <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
-                                                        <option>Select</option>
-                                                        <option>Area Cleanliness Checked</option>
-                                                        <option>Temperature(<sup>o</sup>C)</option>
-                                                        <option>Humidity (%RH)</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-group">
-                                                    <label for="Observation" class="active">Observation</label>
-                                                    <input type="text" class="form-control" name="Observation[]" id="Observation" placeholder="" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-group">
-                                                    <label for="time" class="active">Time (Hrs)</label>
-                                                    <input type="text" class="form-control" name="time[]" id="time" placeholder="" value="">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Process</th>
+                                                <th>Qty (Kg.)</th>
+                                                <th>Start Time (Hrs)</th>
+                                                <th>End Time (Hrs)</th>
+                                                <th>Done by</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="date" name="dateProcess[1]" id="dateProcess[1]" class="form-control"></td>
+                                                <td>Lot No.: 1</td>
+                                                <td><input type="text" name="qty[1]" id="qty[1]" class="form-control" value="500"></td>
+                                                <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control" value="11:30"></td>
+                                                <td><select class="form-control select" id="doneby[1]">
+                                                    <option>Select</option>
+                                                    <option>Employee Name</option>
+                                                  </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="dateProcess[2]" id="dateProcess[2]" class="form-control"></td>
+                                                <td>Lot No.: 2</td>
+                                                <td><input type="text" name="qty[2]" id="qty[2]" class="form-control" value="500"></td>
+                                                <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control" value="11:30"></td>
+                                                <td><select class="form-control select" id="doneby[2]">
+                                                    <option>Select</option>
+                                                    <option>Employee Name</option>
+                                                  </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="dateProcess[3]" id="dateProcess[3]" class="form-control"></td>
+                                                <td>Lot No.: 3</td>
+                                                <td><input type="text" name="qty[3]" id="qty[3]" class="form-control" value="500"></td>
+                                                <td><input type="text" name="stratTime[3]" id="stratTime[3]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[3]" id="endTime[3]" class="form-control" value="11:30"></td>
+                                                <td><select class="form-control select" id="doneby[3]">
+                                                    <option>Select</option>
+                                                    <option>Employee Name</option>
+                                                  </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="dateProcess[4]" id="dateProcess[4]" class="form-control"></td>
+                                                <td>Lot No.: 4</td>
+                                                <td><input type="text" name="qty[4]" id="qty[4]" class="form-control" value="500"></td>
+                                                <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control" value="11:30"></td>
+                                                <td><select class="form-control select" id="doneby[4]">
+                                                    <option>Select</option>
+                                                    <option>Employee Name</option>
+                                                  </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="dateProcess[5]" id="dateProcess[5]" class="form-control"></td>
+                                                <td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
+                                                <td><input type="text" name="qty[5]" id="qty[5]" class="form-control" value="2000"></td>
+                                                <td><input type="text" name="stratTime[5]" id="stratTime[5]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[5]" id="endTime[5]" class="form-control" value="09:30"></td>
+                                                <td><select class="form-control select" id="doneby[5]">
+                                                    <option>Select</option>
+                                                    <option>Employee Name</option>
+                                                  </select></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="d-block">In Process Check (After 4 Lot)</label>
+                                      Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30 RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group">
+                                      <label for="Observedvalue">Observed value (cSt)</label>
+                                      <input type="text" class="form-control" id="Observedvalue" placeholder="" value="">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
+                                      <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
                                     </div>
                                 </div>
                             </div>
