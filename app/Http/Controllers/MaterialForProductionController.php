@@ -319,4 +319,24 @@ class MaterialForProductionController extends Controller
             redirect(404);
         }
     }
+    public function issue_material_view(Request $request)
+    {
+        if($request->id)
+        {
+            $data['issue_material']=Requisitionissuedmaterial::select('issue_material_production_requestion.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
+            ->join("users", "users.id", "=", "issue_material_production_requestion.ApprovedBy")
+            ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "issue_material_production_requestion.batch_id")
+            ->where("issue_material_production_requestion.requestion_id",$request->id)
+            ->first();
+
+
+            $data["material_details"] = Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","issue_material_production_requestion_details.id as details_id")->where("issual_material_id",$data["issue_material"]->id)->join("raw_materials","raw_materials.id","issue_material_production_requestion_details.material_id")->get();
+
+            return view('issue_material_for_production_approved_view',$data);
+        }
+        else
+        {
+            redirect(404);
+        }
+    }
 }

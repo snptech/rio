@@ -504,7 +504,7 @@
                                     <td>{{$temp->material_name}}</td>
                                     <td>{{$temp->Quantity}}</td>
                                     <td>{{$temp->approved_qty}}</td>
-                                    <td>{{($temp->status == 1?"Approved":($temp->status == 2?"Reject":""))}}</td>
+                                    <td>{{($temp->approved_qty > 0?"Approved":"Pending")}}</td>
 
 
 
