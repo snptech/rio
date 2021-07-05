@@ -504,7 +504,7 @@
                                     <td>{{$temp->material_name}}</td>
                                     <td>{{$temp->Quantity}}</td>
                                     <td>{{$temp->approved_qty}}</td>
-                                    <td>{{($temp->approved_qty > 0?"Approved":"Pending")}}</td>
+                                    <td>{!! ($temp->approved_qty > 0?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
 
 
 
