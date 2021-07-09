@@ -180,6 +180,10 @@ class ManufactureProcessController extends Controller
             if (isset($batchdetails) && $batchdetails) {
                 $data["batchdetails"] = $batchdetails;
             }
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+            if (isset($lotsdetails) && $lotsdetails) {
+                $data["lotsdetails"] = $lotsdetails;
+            }
             $data["requestion_1"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
             if (isset($data["requestion_1"]))
                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_1"]->id)
@@ -189,6 +193,8 @@ class ManufactureProcessController extends Controller
         $data['department'] = Department::pluck("department", "id");
 
         $data['res_data'] = BillOfRwaMaterial::where('id', '=', $id)->first();
+
+
         $data['res'] = BillOfRawMaterialsDetails::where('bill_of_raw_material_id', '=', $id)->get();
         $data['res_3'] = MaterialDetails::where('packingmaterial_id', '=', $id)
             ->get();
@@ -212,6 +218,8 @@ class ManufactureProcessController extends Controller
             ->get();
         $data['Homogenizing'] = Homogenizing::where('id', '=', $id)
             ->first();
+
+
         $data['sequenceId'] = ($formSeqId) ? ($formSeqId) : 1;
         //$data['sequenceId'] = '#requisition';
         return view('add_manufacturing_edit', $data);

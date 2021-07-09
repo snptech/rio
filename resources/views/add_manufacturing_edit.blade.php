@@ -33,10 +33,11 @@
                     </ul>
                 </li>
                 <li><a role="tab" class="{{($sequenceId=='8')?'active':''}}" area-selected="{{($sequenceId=='8')?'true':'false'}}" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
-                <li><a role="tab" class="{{($sequenceId=='9')?'active':''}}" area-selected="{{($sequenceId=='9')?'true':'false'}}" data-toggle="tab" href="#addLots">Lots</a></li>
-                <li><a role="tab" class="{{($sequenceId=='10')?'active':''}}" area-selected="{{($sequenceId=='10')?'true':'false'}}" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
-                <li><a data-toggle="tab" class="{{($sequenceId=='11')?'active':''}}" area-selected="{{($sequenceId=='11')?'true':'false'}}" href="#Packing">Packing</a></li>
-                <li><a data-toggle="tab" class="{{($sequenceId=='12')?'active':''}}" area-selected="{{($sequenceId=='12')?'true':'false'}}" href="#Packing_1">Generate Label</a></li>
+                <li><a role="tab" class="{{($sequenceId=='9')?'active':''}}" area-selected="{{($sequenceId=='9')?'true':'false'}}" data-toggle="tab" href="#addLots_listing">Lots</a></li>
+                <li><a role="tab" class="{{($sequenceId=='9')?'active':''}}" area-selected="{{($sequenceId=='10')?'true':'false'}}" data-toggle="tab" href="#addLots" hidden="hidden">Lots</a></li>
+                <li><a role="tab" class="{{($sequenceId=='10')?'active':''}}" area-selected="{{($sequenceId=='11')?'true':'false'}}" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
+                <li><a data-toggle="tab" class="{{($sequenceId=='11')?'active':''}}" area-selected="{{($sequenceId=='12')?'true':'false'}}" href="#Packing">Packing</a></li>
+                <li><a data-toggle="tab" class="{{($sequenceId=='12')?'active':''}}" area-selected="{{($sequenceId=='13')?'true':'false'}}" href="#Packing_1">Generate Label</a></li>
             </ul>
             @if ($message = Session::get('danger'))
             <div class="alert alert-danger alert-block">
@@ -58,6 +59,7 @@
             @endif
 
             <div class="tab-content">
+            @if(isset($edit_batchmanufacturing))
                 <div id="batch" class="tab-pane fade {{($sequenceId=='1')?'in active show':''}}">
                     <form id="add_manufacturing" method="post" action="{{ route('add_manufacturing_update') }}">
                         <input type="hidden" value="1" name="sequenceId">
@@ -184,6 +186,8 @@
                         </div>
                     </form>
                 </div>
+                @endif
+                @if(isset($requestion))
                 <div id="requisition" class="tab-pane fade {{($sequenceId=='2')?'in active show':''}}">
                     <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_update') }}">
                         <input type="hidden" value="2" name="sequenceId">
@@ -278,6 +282,7 @@
                         </div>
                     </form>
                 </div>
+                @endif
                 <div id="issualofrequisition" class="tab-pane fade {{($sequenceId=='3')?'in active show':''}}">
                     @if(isset($requestion_1))
                     <table class="table table-hover table-bordered datatable" id="examplereq">
@@ -316,12 +321,13 @@
                     @endif
 
                 </div>
+                @if(isset($res_data))
                 <div id="billOfRawMaterial" class="tab-pane fade {{($sequenceId=='4')?'in active show':''}}">
+
                     <form id="add_batch_manufacturing_bill" method="post" action="{{ route('bill_of_raw_material_update') }}">
                         <input type="hidden" value="3" name="sequenceId">
-@php  $res_data = (isset($res_data)?$res_data:'')
-@endphp
-                        <input type="hidden" value="{{$res_data->id}}" name="id">
+
+                        <input type="hidden" value="{{(isset($res_data->id))?$res_data->id:0}}" name="id">
                         @csrf
 
                         <div class="form-row">
@@ -329,7 +335,7 @@
                                 <div class="form-group">
                                     <label for="PackingMaterialName" class="active">Product Name</label>
 
-                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","value"=>"$res_data->proName")) }}
+                                    {{ Form::select("proName",$product,old("proName"),array(    "class"=>"form-control select","id"=>"proName","value"=>"$res_data->proName")) }}
 
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
@@ -404,9 +410,7 @@
                                 <div class="form-group">
                                     <label for="doneBy">Weighed by</label>
                                     <input type="text" class="form-control select" name="doneBy" value="{{ \Auth::user()->name }}" id="doneBy" readonly>
-                                    <!-- <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select> -->
+
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -428,7 +432,11 @@
                             </div>
                         </div>
                     </form>
+
+
                 </div>
+                @endif
+                @if(isset($requestion))
                 <div id="requisitionpacking" class="tab-pane fade {{($sequenceId=='5')?'in active show':''}}">
                     <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_update_1') }}">
                         <input type="hidden" value="4" name="sequenceId">
@@ -505,18 +513,14 @@
                                 <div class="form-group">
                                     <label for="checkedBy">Checked By</label>
                                     <input type="text" class="form-control select" name="checkedBy" id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
-                                    <!-- <option>Select</option>
-                                            <option>Officer Production</option>
-                                        </select> -->
+
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="ApprovedBy">Approved By</label>
                                     <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
-                                    <!-- <option>Select</option>
-                                            <option>Manager Store</option>
-                                        </select> -->
+
                                 </div>
                             </div>
                             <div class="col-12">
@@ -533,7 +537,10 @@
                         </div>
                     </form>
                 </div>
+                @endif
+                @if(isset($res_data_3))
                 <div id="issualofrequisitionpacking" class="tab-pane fade {{($sequenceId=='6')?'in active show':''}}">
+
                     <form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert_update') }}">
                         <input type="hidden" value="5" name="sequenceId">
                         <input type="hidden" value="{{$res_data_3->id}}" name="id">
@@ -641,6 +648,8 @@
                         </div>
                     </form>
                 </div>
+                @endif
+                @if(isset($res_data))
                 <div id="billOfRawMaterialpacking" class="tab-pane fade {{($sequenceId=='7')?'in active show':''}}">
                     <form id="add_batch_manufacturing_bill" method="post" action="{{ route('bill_of_raw_material_packing_update') }}">
                         <input type="hidden" value="6" name="sequenceId">
@@ -734,9 +743,7 @@
                                 <div class="form-group">
                                     <label for="doneBy">Weighed by</label>
                                     <input type="text" class="form-control select" name="doneBy" value="{{ \Auth::user()->name }}" id="doneBy" readonly>
-                                    <!-- <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select> -->
+
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -759,6 +766,8 @@
                         </div>
                     </form>
                 </div>
+                @endif
+                @if(isset($res_data_1))
                 <div id="listOfEquipment" class="tab-pane fade {{($sequenceId=='8')?'in active show':''}}">
                     <form id="add_batch_equipment_vali" method="post" action="{{ route('list_of_equipment_update') }}">
                         <input type="hidden" value="7" name="sequenceId">
@@ -845,10 +854,54 @@
                         </div>
                     </form>
                 </div>
-                <div id="addLots" class="tab-pane fade {{($sequenceId=='9')?'in active show':''}}">
+                @endif
+                @if(isset($addlots))
+                <div id="addLots_listing" class="tab-pane fade {{($sequenceId=='9')?'in active show':''}}">
 
-                  <form method="post" action="{{ route('add_lots_update') }}">
-                    <div class="form-row">
+
+                <div class="form-group">
+                <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Open Lots</a>
+                     </div>
+                @if(isset($lotsdetails))
+                    <table class="table table-hover table-bordered datatable" id="examplereq">
+                        <thead>
+                            <tr>
+                                <th>Sr.No</th>
+                                <th>Product Name</th>
+                                <th>Bmr.No</th>
+                                <th>lot.No</th>
+                                <th>batch.No</th>
+                                <th>RefMfr.No</th>
+                                <th>Date</th>
+                                <th>Reactor No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($lotsdetails)
+                            @foreach($lotsdetails as $lots)
+                            <tr>
+                                <td>{{$loop->index +1}}</td>
+                                <td>{{$lots->material_name}}</td>
+                                <td>{{$lots->bmrNo}}</td>
+                                <td>{{$lots->lotNo}}</td>
+                                <td>{{$lots->batchNo}}</td>
+                                <td>{{$lots->refMfrNo}}</td>
+                                <td>{{$lots->Date?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
+                                <td>{{$lots->ReactorNo}}</td>
+                            </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                    @endif
+
+                </div>
+                @endif
+                @if(isset($addlots))
+                <div id="addLots" class="tab-pane fade {{($sequenceId=='10')?'in active show':''}}">
+
+                    <form method="post" action="{{ route('add_lots_update') }}">
+                        <div class="form-row">
                             <input type="hidden" value="8" name="sequenceId">
                             <input type="hidden" value="{{$addlots->id}}" name="id">
                             @csrf
@@ -959,7 +1012,7 @@
                                             <th>Process</th>
                                             <th>Qty. (Kg.)</th>
                                             <th>Temp (<sup>o</sup>C)</th>
-                                             <th>Start Time (Hrs)</th>
+                                            <th>Start Time (Hrs)</th>
                                             <th>End Time (Hrs)</th>
                                             <th>Done by</th>
                                         </tr>
@@ -1029,10 +1082,12 @@
                                 </div>
                             </div>
 
-                    </div>
+                        </div>
                     </form>
-                 </div>
-                <div id="homogenizing" class="tab-pane fade {{($sequenceId=='10')?'in active show':''}}">
+                </div>
+                @endif
+                @if(isset($Homogenizing))
+                <div id="homogenizing" class="tab-pane fade {{($sequenceId=='11')?'in active show':''}}">
                     <form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_update') }}">
                         <input type="hidden" value="8" name="sequenceId">
                         <input type="hidden" value="{{$Homogenizing->id}}" name="id">
@@ -1041,9 +1096,9 @@
                         <div class="form-row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
-                                <label for="proName" class="active">Product Name</label>
+                                    <label for="proName" class="active">Product Name</label>
 
-                                {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","value"=>"Homogenizing->proName")) }}
+                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","value"=>"Homogenizing->proName")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1053,25 +1108,25 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control"  name="bmrNo"id="bmrNo" value="{{$Homogenizing->bmrNo}}" >
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$Homogenizing->bmrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control"  name="batchNo"id="batchNo" value="{{$Homogenizing->batchNo}}" >
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$Homogenizing->batchNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control"  name="refMfrNo"id="refMfrNo" value="{{$Homogenizing->refMfrNo}}" >
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$Homogenizing->refMfrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="homoTank">Homogenizing tank No.</label>
-                                    <input type="text" class="form-control"  name="homoTank"id="homoTank" value="{{$Homogenizing->homoTank}}" >
+                                    <input type="text" class="form-control" name="homoTank" id="homoTank" value="{{$Homogenizing->homoTank}}">
                                 </div>
                             </div>
 
@@ -1088,12 +1143,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($HomogenizingList))
-                                    @foreach($HomogenizingList as $temp)
-                                    <tr>
+                                        @if(isset($HomogenizingList))
+                                        @foreach($HomogenizingList as $temp)
+                                        <tr>
                                             <td><input type="date" name="dateProcess[]" value="{{$temp->dateProcess}}" id="dateProcess[1]" class="form-control"></td>
                                             <td>{{$temp->Process}}</td>
-                                            <td><input type="text" name="qty[]" id="qty"  value="{{$temp->qty}}"class="form-control"></td>
+                                            <td><input type="text" name="qty[]" id="qty" value="{{$temp->qty}}" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control"></td>
                                             <td><select class="form-control select" id="doneby" name="doneby[]">
@@ -1102,10 +1157,10 @@
                                                 </select></td>
                                         </tr>
 
-                                    @endforeach
-                                    @endif
+                                        @endforeach
+                                        @endif
 
-                                  </tbody>
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="col-12">
@@ -1122,13 +1177,16 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
+                                    <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div id="Packing" class="tab-pane fade {{($sequenceId=='11')?'in active show':''}}">
+                @endif
+                @if(isset($packingmateria))
+
+                <div id="Packing" class="tab-pane fade {{($sequenceId=='12')?'in active show':''}}">
                     <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_update') }}">
                         <input type="hidden" value="9" name="sequenceId">
                         <input type="hidden" value="{{$packingmateria->id}}" name="id">
@@ -1337,13 +1395,16 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
+                                    <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
 
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
+                @endif
+                @if(isset($packingmateria))
+
                 <div id="Packing_1" class="tab-pane fade {{($sequenceId=='12')?'in active show':''}}">
                     <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_update') }}">
                         <input type="hidden" value="9" name="sequenceId">
@@ -1559,11 +1620,12 @@
                         </div>
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
-</div>
+
 
 @endsection
 @push("scripts")
