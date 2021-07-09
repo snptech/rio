@@ -1194,7 +1194,7 @@ class ManufactureProcessController extends Controller
 
     public function add_batch_lots(Request $request)
     {
-        
+
         $prvCount = AddLotsl::where('batchNo', $request->batchNo)->count('id');
         if ($prvCount > 5) {
             return ['message' => 'Already Have 5 Records'];
@@ -1307,7 +1307,7 @@ class ManufactureProcessController extends Controller
     public function add_lots_update(Request $request)
     {
 
-        dd($request->all());
+       ;
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;
