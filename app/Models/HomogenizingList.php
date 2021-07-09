@@ -5,23 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AddLotsl extends Model
+class HomogenizingList extends Model
 {
     use HasFactory;
-    protected $table = 'add_lotsl';
+    protected $table = 'homogenizing_list';
     protected $fillable = [
         'id',
-        'order_id',
-        'proName',
-        'bmrNo',
-        'batchNo',
-        'refMfrNo',
-        'Date',
-        'lotNo',
-        'ReactorNo',
-        'Process_date',
+        'dateProcess',
+        'qty',
+        'stratTime',
+        'endTime',
+        'doneby',
+        'homogenizing_id',
         'created_at',
         'updated_at',
     ];
-
 }

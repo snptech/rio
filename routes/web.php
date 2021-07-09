@@ -213,7 +213,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
       //  Route::get('/add-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record'])->name("add-manufacturing-record");
         Route::get('/add-batch-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record'])->name("add-batch-manufacturing-record");
         Route::post('/add_manufacturing_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_insert'])->name("add_manufacturing_insert");
-        Route::get('/add_manufacturing_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_edit'])->name("add_manufacturing_edit");
+        Route::get('/add_manufacturing_edit/{id}/{any?}', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_edit'])->name("add_manufacturing_edit");
         Route::post('/add_btch_manufacture_view', [App\Http\Controllers\ManufactureProcessController::class,'add_btch_manufacture_view'])->name("add_btch_manufacture_view");
         Route::get('/add_btch_manufacture_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'add_btch_manufacture_delete'])->name("add_btch_manufacture_delete");
 
@@ -230,6 +230,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/packing-detail', [App\Http\Controllers\ManufactureProcessController::class,'packing_detail'])->name("packing-detail");
         Route::get('/add-manufacturing-record-Packing', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record_Packing'])->name("add-manufacturing-record-Packing");
         Route::post('/add_manufacturing_packing_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_packing_insert'])->name("add_manufacturing_packing_insert");
+        Route::post('/add_manufacturing_packing_update', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_packing_update'])->name("add_manufacturing_packing_update");
+        Route::post('/add_manufacturing_packing_ganerate_update', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_packing_ganerate_update'])->name("add_manufacturing_packing_ganerate_update");
         // list-of-equipment
        Route::get('/list-of-equipment', [App\Http\Controllers\ManufactureProcessController::class,'list_of_equipment'])->name("list-of-equipment");
        Route::get('/add-batch-manufacturing-record-list-of-equipment', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_list_of_equipment'])->name("add-batch-manufacturing-record-list-of-equipment");
@@ -267,6 +269,16 @@ $router->group(['middleware' => ['auth']], function ($router) {
      // packing material issual slip
          Route::post('/packing_material_issuel_insert', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_issuel_insert'])->name("packing_material_issuel_insert");
          Route::post('/packing_material_requisition_slip_insert', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_insert'])->name("packing_material_requisition_slip_insert");
+         Route::post('/packing_material_requisition_slip_update', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_update'])->name("packing_material_requisition_slip_update");
+         Route::post('/bill_of_raw_material_packing_update', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_packing_update'])->name("bill_of_raw_material_packing_update");
+         Route::post('/packing_material_requisition_slip_update_1', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_update_1'])->name("packing_material_requisition_slip_update_1");
+         Route::post('/packing_material_issuel_insert_update', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_issuel_insert_update'])->name("packing_material_issuel_insert_update");
+         Route::post('/add_batch_equipment_update', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_issuel_insert_update'])->name("add_batch_equipment_update");
+         Route::post('/add_batch_lots', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_lots'])->name("add_batch_lots");
+         Route::post('/add_lots_update', [App\Http\Controllers\ManufactureProcessController::class,'add_lots_update'])->name("add_lots_update");
+         Route::post('/homogenizing_insert', [App\Http\Controllers\ManufactureProcessController::class,'homogenizing_insert'])->name("homogenizing_insert");
+         Route::post('/homogenizing_update', [App\Http\Controllers\ManufactureProcessController::class,'homogenizing_update'])->name("homogenizing_update");
+
 
 
 

@@ -17,22 +17,28 @@ use App\Models\PackingMaterialSlip;
 use App\Models\MaterialDetails;
 use App\Models\DetailsRequisition;
 use App\Models\RequisitionSlip;
+use App\Models\AddLotsl;
+use App\Models\Processlots;
+use App\Models\AddLotslRawMaterialDetails;
+use App\Models\HomogenizingList;
+use App\Models\Homogenizing;
 use session;
 use App\Models\Department;
-
+use Symfony\Component\VarDumper\VarDumper;
 
 class ManufactureProcessController extends Controller
 {
     public function add_batch_manufacture(Request $request)
     {
-        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
-       ->get();
-       $request->session()->put('batch', "");
+        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name')
+            ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
+            ->get();
+        $request->session()->put('batch', "");
         return view('add_batch_manufacture', $data);
     }
-    public function add_batch_manufacturing_record(Request $request)    {
-        $data["product"] = Rawmeterial::where("material_type","F")->pluck("material_name","id");
+    public function add_batch_manufacturing_record(Request $request)
+    {
+        $data["product"] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
 
         $batch = "";
         if ($request->session()->has('batch')) {
@@ -41,26 +47,22 @@ class ManufactureProcessController extends Controller
         }
         $data["batch"] = $batch;
 
-        if(isset($batch) && $batch)
-        {
-           $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo",$batch)->first();
-           if(isset($batchdetails) && $batchdetails)
-           {
-               $data["batchdetails"] = $batchdetails;
-           }
+        if (isset($batch) && $batch) {
+            $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo", $batch)->first();
+            if (isset($batchdetails) && $batchdetails) {
+                $data["batchdetails"] = $batchdetails;
+            }
 
-           $data["requestion"] = RequisitionSlip::where("batch_id",$batchdetails->id)->first();
-           if(isset($data["requestion"]))
-            $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name")->where("requisition_id",$data["requestion"]->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
-
-
+            $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
+            if (isset($data["requestion"]))
+                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
         }
-        $data["department"] = Department::pluck("department","id");
+        $data["department"] = Department::pluck("department", "id");
 
-        $data["rawmaterials"] = Rawmeterial::where("material_stock",">",0)->where("material_type","R")->pluck("material_name","id");
+        $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
         $data["batchName"] = array();
 
-        return view('add_batch_manufacturing_record',$data);
+        return view('add_batch_manufacturing_record', $data);
     }
 
 
@@ -152,47 +154,94 @@ class ManufactureProcessController extends Controller
         }
     }
 
-    public function add_manufacturing_edit($id)
+    public function add_manufacturing_edit(Request $request, $id, $formSeqId = '')
     {
+        $data['edit_batchmanufacturing'] = BatchManufacture::select('add_batch_manufacture.*')
+            ->where('add_batch_manufacture.id', '=', $id)->first();
+        $data['product'] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "F")->pluck("material_name", "id");
+        $data['requestion'] = RequisitionSlip::where("id", $id)->first();
+        $data['DetailsRequisition'] = DetailsRequisition::where("requisition_id", $id)->get();
 
-         $product= Rawmeterial::where("material_stock",">",0)->where("material_type","F")->pluck("material_name","id");
+        $batch = "";
+        if ($request->session()->has('batch')) {
+            $batch = $request->session()->get('batch');
+        }
+        $data["batch"] = $batch;
+        if (isset($batch) && $batch) {
+            $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo", $batch)->first();
+            if (isset($batchdetails) && $batchdetails) {
+                $data["batchdetails"] = $batchdetails;
+            }
+            $data["requestion_1"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
+            if (isset($data["requestion_1"]))
+                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_1"]->id)
+                    ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
+        }
 
-        $edit_batchmanufacturing = BatchManufacture::select('add_batch_manufacture.*','raw_materials.material_name')
-        ->join('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
-        ->where('add_batch_manufacture.id', '=', $id)->first();
-        $requestion = RequisitionSlip::where("batch_id",$id)->first();
+        $data['department'] = Department::pluck("department", "id");
 
-        return view('add_manufacturing_edit', compact('edit_batchmanufacturing', $edit_batchmanufacturing,'product', $product,$requestion));
+        $data['res_data'] = BillOfRwaMaterial::where('id', '=', $id)->first();
+        $data['res'] = BillOfRawMaterialsDetails::where('bill_of_raw_material_id', '=', $id)->get();
+        $data['res_3'] = MaterialDetails::where('packingmaterial_id', '=', $id)
+            ->get();
+        $data['res_data_3'] = PackingMaterialSlip::where('id', '=', $id)
+            ->first();
+        $data['res_1'] = ListOfEquipmentManufacturing::where('batch_manufacturing_id', '=', $id)
+            ->get();
+        $data['res_data_1'] = BatchManufacturingEquipment::where('id', '=', $id)
+            ->first();
+        $data['packingmateria'] = BatchManufacturingPacking::where('id', '=', $id)
+            ->first();
+        $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
+
+        $data['AddLotslRawMaterialDetails'] = AddLotslRawMaterialDetails::where('add_lots_id', '=', $id)
+            ->get();
+        $data['Processlots'] = Processlots::where('process_id', '=', $id)
+            ->get();
+        $data['addlots'] = AddLotsl::where('id', '=', $id)
+            ->first();
+        $data['HomogenizingList'] = HomogenizingList::where('homogenizing_id', '=', $id)
+            ->first();
+        $data['Homogenizing'] = Homogenizing::where('id', '=', $id)
+            ->first();
+        $data['sequenceId'] = ($formSeqId) ? ($formSeqId) : 1;
+        //$data['sequenceId'] = '#requisition';
+        return view('add_manufacturing_edit', $data);
     }
+
     public function add_manufacturing_update(Request $request)
     {
         $data = [
-            "proName" =>  $request['proName'],
-            "bmrNo" =>  $request['bmrNo'],
-            "batchNo" =>  $request['batchNo'],
-            "refMfrNo" =>  $request['refMfrNo'],
-            "grade" =>  $request['grade'],
-            "BatchSize" =>  $request['BatchSize'],
-            "Viscosity" =>  $request['Viscosity'],
-            "ProductionCommencedon" =>  $request['ProductionCommencedon'],
-            "ProductionCompletedon" =>  $request['ProductionCompletedon'],
-            "ManufacturingDate" =>  $request['ManufacturingDate'],
-            "RetestDate" =>  $request['RetestDate'],
+            "proName" =>  $request->proName,
+            "bmrNo" =>  $request->bmrNo,
+            "batchNo" =>  $request->batchNo,
+            "refMfrNo" =>  $request->refMfrNo,
+            "grade" =>  $request->grade,
+            "BatchSize" =>  $request->BatchSize,
+            "Viscosity" =>  $request->Viscosity,
+            "ProductionCommencedon" =>  $request->ProductionCommencedon,
+            "ProductionCompletedon" =>  $request->ProductionCompletedon,
+            "ManufacturingDate" =>  $request->ManufacturingDate,
+            "RetestDate" =>  $request->RetestDate,
             "doneBy" =>   Auth::user()->id,
             "checkedBy" =>  Auth::user()->id,
-            "inlineRadioOptions" =>  $request['inlineRadioOptions'],
-            "approval" =>  $request['approval'],
-            "approvalDate" =>  $request['approvalDate'],
+            "inlineRadioOptions" =>  $request->inlineRadioOptions,
+            "approval" =>  $request->approval,
+            "approvalDate" =>  $request->approvalDate,
             "checkedByI" => Auth::user()->id,
-            "Remark" =>  $request['Remark'],
+            "Remark" =>  $request->Remark,
             "is_active" => 1,
             "is_delete" => 1,
 
         ];
         $result = BatchManufacture::where('id', $request->id)->update($data);
-
+        $sequenceId = 1;
+        if (isset($request->sequenceId)) {
+            $sequenceId = (int)$request->sequenceId + 1;
+        }
         if ($result) {
-            return redirect("add-batch-manufacturing-record")->with('success', " Batch  Data Update successfully");
+            $request->session()->put('batch', $request['batchNo']);
+            return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
     }
 
@@ -308,15 +357,21 @@ class ManufactureProcessController extends Controller
                 BillOfRawMaterialsDetails::where('bill_of_raw_material_id', $request->id)->delete();
                 foreach ($request->rawMaterialName as $key => $value) {
                     $arr_data['rawMaterialName'] = $value;
-                    $arr_data['batchNo'] = $request->batchNo[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
                     $arr_data['arNo'] = $request->arNo[$key];
                     $arr_data['date'] = $request->date[$key];
                     $arr_data['bill_of_raw_material_id'] = $request->id;
-                    BillOfRawMaterialsDetails::Create($arr_data);
+                    $result = BillOfRawMaterialsDetails::Create($arr_data);
                 }
 
-                return redirect('bill-of-raw-material')->with('success', "Data update successfully");
+                $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 2;
+                }
+
+                if ($result) {
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
             }
             return redirect('bill-of-raw-material')->with('error', "Invalid Data");
         } else {
@@ -556,13 +611,16 @@ class ManufactureProcessController extends Controller
                     $arr_data['EquipmentName'] = $value;
                     $arr_data['EquipmentCode'] = $request->EquipmentCode[$key];
                     $arr_data['batch_manufacturing_id'] = $request->id;
-                    ListOfEquipmentManufacturing::Create($arr_data);
+                    $result = ListOfEquipmentManufacturing::Create($arr_data);
                 }
-                return redirect('list-of-equipment')->with('message', "Data update successfully");
+                $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 2;
+                }
+                if ($result) {
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
             }
-            return redirect('list-of-equipment')->with('error', "Invalid Data");
-        } else {
-            return redirect('list-of-equipment')->with('error', "Something went wrong");
         }
     }
 
@@ -826,12 +884,11 @@ class ManufactureProcessController extends Controller
             "ApprovedBy" => "required",
             "Remark" => "required",
             "rawMaterialName.*" => "required|array",
-            "Quantity.*"=> "required|array",
+            "Quantity.*" => "required|array",
             "batch_id" => "required",
         ];
         $arrMessages = [
 
-            "from" => "This :attribute field is required.",
             "from" => "This :attribute field is required.",
             "to" => "This :attribute field is required.",
             "batchNo" => "This :attribute field is required.",
@@ -856,13 +913,13 @@ class ManufactureProcessController extends Controller
         $arr['ApprovedBy'] =  Auth::user()->id;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->batch_id;
-        $arr['type'] ="R";
+        $arr['type'] = "R";
         $RequisitionSlip_id = RequisitionSlip::Create($arr);
 
         if ($RequisitionSlip_id->id) {
             foreach ($request->rawMaterialName as $key => $value) {
                 $arr_data['PackingMaterialName'] = $value;
-                if(isset($request->Capacity))
+                if (isset($request->Capacity))
                     $arr_data['Capacity'] = $request->Capacity[$key];
                 $arr_data['Quantity'] = $request->Quantity[$key];
                 $arr_data['requisition_id'] = $RequisitionSlip_id->id;
@@ -872,6 +929,498 @@ class ManufactureProcessController extends Controller
             return redirect('add-batch-manufacturing-record#issualofrequisitionpacking')->with('success', "Raw Materrila Of Requisition done successfully");
         } else {
             return redirect('add-batch-manufacturing-record#requisitionpacking')->with('error', "Something went wrong");
+        }
+    }
+    public function packing_material_requisition_slip_update(Request $request)
+    {
+
+        //$request->PackingMaterialName = (int)$request->PackingMaterialName;
+        $arr['from'] = $request->from;
+        $arr['to'] = $request->to;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['Date'] = $request->Date;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['checkedBy'] =  Auth::user()->id;
+        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['Remark'] = $request->Remark;
+        $arr['type'] = "R";
+
+        $RequisitionSlip_id = RequisitionSlip::where('id', $request->id)->update($arr);
+        if ((isset($request->id)) && ($request->id > 0)) {
+            if (count($request->PackingMaterialName)) {
+                DetailsRequisition::where('requisition_id', $request->id)->delete();
+                foreach ($request->PackingMaterialName as $key => $value) {
+                    $arr_data['PackingMaterialName'] = $value;
+                    $arr_data['Quantity'] = $request->Quantity[$key];
+                    $arr_data['requisition_id'] = $request->id;
+                    $arr_data['type'] = "R";
+                    $result = DetailsRequisition::Create($arr_data);
+                }
+
+                $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 1;
+                }
+                if ($result) {
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
+            }
+            return redirect('add_manufacturing_edit#issualofrequisition')->with('error', "Invalid Data");
+        } else {
+            return redirect('add_manufacturing_edit#issualofrequisition')->with('error', "Something went wrong");
+        }
+    }
+    public function bill_of_raw_material_packing_update(Request $request)
+    {
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $arr['batchNoI'] = $request->batchNoI;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['doneBy'] = $request->doneBy;
+        $arr['checkedBy'] = Auth::user()->id;
+        $arr['Remark'] = $request->Remark;
+        $arr['is_active'] = 1;
+        $arr['is_delete'] = 1;
+
+        $BillOfRwaMaterial_id = BillOfRwaMaterial::where('id', $request->id)->update($arr);
+
+        if ((isset($request->id)) && ($request->id > 0)) {
+
+            if (count($request->rawMaterialName)) {
+                BillOfRawMaterialsDetails::where('bill_of_raw_material_id', $request->id)->delete();
+                foreach ($request->rawMaterialName as $key => $value) {
+                    $arr_data['rawMaterialName'] = $value;
+                    $arr_data['batchNo'] = $request->batchNo[$key];
+                    $arr_data['Quantity'] = $request->Quantity[$key];
+                    $arr_data['arNo'] = $request->arNo[$key];
+                    $arr_data['date'] = $request->date[$key];
+                    $arr_data['bill_of_raw_material_id'] = $request->id;
+                    $result = BillOfRawMaterialsDetails::Create($arr_data);
+                }
+
+                $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 2;
+                }
+                if ($result) {
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
+            }
+        }
+    }
+    public function packing_material_requisition_slip_update_1(Request $request)
+    {
+
+        $arr['from'] = $request->from;
+        $arr['to'] = $request->to;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['Date'] = $request->Date;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['checkedBy'] =  Auth::user()->id;
+        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['Remark'] = $request->Remark;
+        $arr['type'] = "R";
+        $RequisitionSlip_id = RequisitionSlip::where('id', $request->id)->update($arr);
+        if ((isset($request->id)) && ($request->id > 0)) {
+            if (count($request->PackingMaterialName)) {
+                DetailsRequisition::where('requisition_id', $request->id)->delete();
+                foreach ($request->PackingMaterialName as $key => $value) {
+                    $arr_data['PackingMaterialName'] = $value;
+                    $arr_data['Capacity'] = $request->Capacity[$key];
+                    $arr_data['Quantity'] = $request->Quantity[$key];
+                    $arr_data['requisition_id'] = $request->id;
+                    $arr_data['type'] = "R";
+                    $result = DetailsRequisition::Create($arr_data);
+                }
+                $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 2;
+                }
+
+                if ($result) {
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
+            }
+        }
+    }
+    public function packing_material_issuel_insert_update(Request $request)
+    {
+
+        $arr['from'] = $request->from;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['to'] = $request->to;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['Date'] = $request->Date;
+        $arr['doneBy'] = $request->doneBy;
+        $arr['checkedBy'] = $request->checkedBy;
+        $PackingMaterialSlip = PackingMaterialSlip::where('id', $request->id)->update($arr);
+
+
+        if ((isset($request->id)) && ($request->id > 0)) {
+            if (count($request->PackingMaterialName)) {
+                MaterialDetails::where('packingmaterial_id', $request->id)->delete();
+                foreach ($request->PackingMaterialName as $key => $value) {
+                    $arr_data['PackingMaterialName'] = $value;
+                    $arr_data['Capacity'] = $request->Capacity[$key];
+                    $arr_data['Quantity'] = $request->Quantity[$key];
+                    $arr_data['arNo'] = $request->arNo[$key];
+                    $arr_data['ARDate'] = $request->ARDate[$key];
+                    $arr_data['packingmaterial_id'] = $request->id;
+                    $arr_data['type'] = "R";
+                    $result = MaterialDetails::Create($arr_data);
+                }
+
+
+                $sequenceId = 1;
+
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 2;
+                }
+                if ($result) {
+
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
+            }
+        }
+    }
+    public function add_manufacturing_packing_update(Request $request)
+    {
+
+        $data = [
+            "proName" => $request['proName'],
+            "bmrNo" => $request['bmrNo'],
+            "batchNo" => $request['batchNo'],
+            "refMfrNo" => $request['refMfrNo'],
+            "ManufacturerDate" => $request['ManufacturerDate'],
+            "Observation" => $request['Observation'],
+            "Temperature" => $request['Temperature'],
+            "Humidity" => $request['Humidity'],
+            "TemperatureP" => $request['TemperatureP'],
+            "50kgDrums" => $request['50kgDrums'],
+            "20kgDrums" => $request['20kgDrums'],
+            "startTime" => $request['startTime'],
+            "EndstartTime" => $request['EndstartTime'],
+            "areaCleanliness" => Auth::user()->id,
+            "CareaCleanliness" => Auth::user()->id,
+            "rmInput" => $request['rmInput'],
+            "fgOutput" => $request['fgOutput'],
+            "filledDrums" => $request['filledDrums'],
+            "excessFilledDrums" => $request['excessFilledDrums'],
+            "qcsampling" => $request['qcsampling'],
+            "StabilitySample" => $request['StabilitySample'],
+            "WorkingSlandered" => $request['WorkingSlandered'],
+            "ValidationSample" => $request['ValidationSample'],
+            "CustomerSample" => $request['CustomerSample'],
+            "ActualYield" => $request['ActualYield'],
+            "checkedBy" => Auth::user()->id,
+            "ApprovedBy" => Auth::user()->id,
+            "Remark" => $request['Remark'],
+
+        ];
+        $result = BatchManufacturingPacking::where('id', $request->id)->update($data);
+
+        $sequenceId = 1;
+        if (isset($request->sequenceId)) {
+            $sequenceId = (int)$request->sequenceId + 3;
+        }
+        if ($result) {
+            return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+        }
+    }
+    public function add_manufacturing_packing_ganerate_update(Request $request)
+    {
+
+        $data = [
+            "proName" => $request['proName'],
+            "bmrNo" => $request['bmrNo'],
+            "batchNo" => $request['batchNo'],
+            "refMfrNo" => $request['refMfrNo'],
+            "ManufacturerDate" => $request['ManufacturerDate'],
+            "Observation" => $request['Observation'],
+            "Temperature" => $request['Temperature'],
+            "Humidity" => $request['Humidity'],
+            "TemperatureP" => $request['TemperatureP'],
+            "50kgDrums" => $request['50kgDrums'],
+            "20kgDrums" => $request['20kgDrums'],
+            "startTime" => $request['startTime'],
+            "EndstartTime" => $request['EndstartTime'],
+            "areaCleanliness" => Auth::user()->id,
+            "CareaCleanliness" => Auth::user()->id,
+            "rmInput" => $request['rmInput'],
+            "fgOutput" => $request['fgOutput'],
+            "filledDrums" => $request['filledDrums'],
+            "excessFilledDrums" => $request['excessFilledDrums'],
+            "qcsampling" => $request['qcsampling'],
+            "StabilitySample" => $request['StabilitySample'],
+            "WorkingSlandered" => $request['WorkingSlandered'],
+            "ValidationSample" => $request['ValidationSample'],
+            "CustomerSample" => $request['CustomerSample'],
+            "ActualYield" => $request['ActualYield'],
+            "checkedBy" => Auth::user()->id,
+            "ApprovedBy" => Auth::user()->id,
+            "Remark" => $request['Remark'],
+
+        ];
+        $result = BatchManufacturingPacking::where('id', $request->id)->update($data);
+        if ($result) {
+            return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+        }
+    }
+
+    public function add_batch_lots(Request $request)
+    {
+        $prvCount = AddLotsl::where('batchNo', $request->batchNo)->count('id');
+        if ($prvCount > 5) {
+            return ['message' => 'Already Have 5 Records'];
+        }
+
+        $arrRules = [
+            "proName" => "required",
+            "bmrNo" => "required",
+            "batchNo" => "required",
+            "refMfrNo" => "required",
+            "Date" => "required",
+            "lotNo" => "required",
+            "ReactorNo" => "required",
+            "Process_date" => "required",
+            "qty" => "required",
+            "endTime" => "required",
+            "doneby" => "required",
+            "EquipmentName" => "required",
+            "rmbatchno" => "required",
+            "Quantity" => "required",
+            "add_lots_id" => "required",
+            " qty" => "required",
+            "temp" => "required",
+            "stratTime" => "required",
+            "endTime" => "required",
+            "doneby" => "required",
+            "process_id" => "required",
+
+
+        ];
+        $arrMessages = [
+            "proName" => "This :attribute field is required.",
+            "bmrNo" => "This :attribute field is required.",
+            "batchNo" => "This :attribute field is required.",
+            "refMfrNo" => "This :attribute field is required.",
+            "Date" => "This :attribute field is required.",
+            "lotNo" => "This :attribute field is required.",
+            "ReactorNo" => "This :attribute field is required.",
+            "Process_date" => "This :attribute field is required.",
+            "qty" => "This :attribute field is required.",
+            "endTime" => "This :attribute field is required.",
+            "doneby" => "This :attribute field is required.",
+            "EquipmentName" => "This :attribute field is required.",
+            "rmbatchno" => "This :attribute field is required.",
+            "Quantity" => "This :attribute field is required.",
+            "add_lots_id" => "This :attribute field is required.",
+            " qty" => "This :attribute field is required.",
+            "temp" => "This :attribute field is required.",
+            "stratTime" => "This :attribute field is required.",
+            "endTime" => "This :attribute field is required.",
+            "doneby" => "This :attribute field is required.",
+            "process_id" => "This :attribute field is required.",
+
+        ];
+
+        //$validateData = $request->validate($arrRules, $arrMessages);
+
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['Date'] = $request->Date;
+        $arr['lotNo'] = $request->lotNo;
+        $arr['ReactorNo'] = $request->ReactorNo;
+        $arr['Process_date'] = $request->Process_date;
+        $AddLotsl = AddLotsl::Create($arr);
+
+
+        if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
+            (int)$prvCount++;
+            if (count($request->EquipmentName)) {
+                foreach ($request->EquipmentName as $key => $value) {
+                    $arr_data['EquipmentName'] = $value;
+                    $arr_data['rmbatchno'] = $request->rmbatchno[$key];
+                    $arr_data['Quantity'] = $request->Quantity[$key];
+                    $arr_data['add_lots_id'] = $AddLotsl->id;
+                    AddLotslRawMaterialDetails::Create($arr_data);
+                }
+                if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
+                    foreach ($request->qty as $key => $value) {
+
+                        if (count($request->qty)) {
+
+                            foreach ($request->qty as $key => $value) {
+                                $arr_data['qty'] = $value;
+                                $arr_data['temp'] = $request->temp[$key];
+                                $arr_data['stratTime'] = $request->stratTime[$key];
+                                $arr_data['endTime'] = $request->endTime[$key];
+                                $arr_data['doneby'] = $request->doneby[$key];
+                                $arr_data['process_id'] = $AddLotsl->id;
+                                $result = Processlots::Create($arr_data);
+                            }
+                            if ($result) {
+                                if ($prvCount == 5) {
+                                    return redirect('add-batch-manufacturing-record')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                } else {
+                                    return redirect('add-batch-manufacturing-record#issualofrequisition')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public function add_lots_update(Request $request)
+    {
+
+
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['Date'] = $request->Date;
+        $arr['lotNo'] = $request->lotNo;
+        $arr['ReactorNo'] = $request->ReactorNo;
+        $arr['Process_date'] = $request->Process_date;
+
+        $AddLotsl = AddLotsl::where('id', $request->id)->update($arr);
+
+        if ((isset($request->id)) && ($request->id > 0)) {
+            if (count($request->EquipmentName)) {
+                AddLotslRawMaterialDetails::where('add_lots_id', $request->id)->delete();
+                foreach ($request->EquipmentName as $key => $value) {
+                    $arr_data['EquipmentName'] = $value;
+                    $arr_data['rmbatchno'] = $request->rmbatchno[$key];
+                    $arr_data['Quantity'] = $request->Quantity[$key];
+                    $arr_data['add_lots_id'] = $request->id;
+                    AddLotslRawMaterialDetails::Create($arr_data);
+                }
+                if ((isset($request->id)) && ($request->id > 0)) {
+                    foreach ($request->qty as $key => $value) {
+                        if (count($request->qty)) {
+                            Processlots::where('process_id', $request->id)->delete();
+                            foreach ($request->qty as $key => $value) {
+                                $arr_data['qty'] = $value;
+                                $arr_data['temp'] = $request->temp[$key];
+                                $arr_data['stratTime'] = $request->stratTime[$key];
+                                $arr_data['endTime'] = $request->endTime[$key];
+                                $arr_data['doneby'] = $request->doneby[$key];
+                                $arr_data['process_id'] = $request->id;
+                                $result = Processlots::Create($arr_data);
+                            }
+                            $sequenceId = 1;
+                            if (isset($request->sequenceId)) {
+                                $sequenceId = (int)$request->sequenceId + 4;
+                            }
+                            if ($result) {
+                                return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public function homogenizing_insert(Request $request)
+    {
+        $arrRules = [
+            "proName" => "required",
+            "bmrNo" => "required",
+            "batchNo" => "required",
+            "refMfrNo" => "required",
+            "Observedvalue" => "required",
+            "homoTank" => "required",
+            "dateProcess" => "required",
+            "qty" => "required",
+            "endTime" => "required",
+            "doneby" => "required",
+            "stratTime" => "required",
+        ];
+        $arrMessages = [
+
+            "proName" => "This :attribute field is required.",
+            "bmrNo" => "This :attribute field is required.",
+            "batchNo" => "This :attribute field is required.",
+            "refMfrNo" => "This :attribute field is required.",
+            "Observedvalue" => "This :attribute field is required.",
+            "homoTank" => "This :attribute field is required.",
+            "dateProcess" => "This :attribute field is required.",
+            "qty" => "This :attribute field is required.",
+            "endTime" => "This :attribute field is required.",
+            "doneby" => "This :attribute field is required.",
+            "stratTime" => "This :attribute field is required.",
+        ];
+        //$validateData = $request->validate($arrRules, $arrMessages);
+
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['homoTank'] = $request->homoTank;
+        $arr['Observedvalue'] = $request->Observedvalue;
+        $arr['homoTank'] = $request->homoTank;
+        $Homogenizing_id = Homogenizing::Create($arr);
+
+        if ($Homogenizing_id->id) {
+            foreach ($request->dateProcess as $key => $value) {
+                $arr_data['dateProcess'] = $value;
+                $arr_data['qty'] = $request->qty[$key];
+                $arr_data['stratTime'] = $request->stratTime[$key];
+                $arr_data['endTime'] = $request->endTime[$key];
+                $arr_data['doneby'] = $request->doneby[$key];
+                $arr_data['homogenizing_id'] = $Homogenizing_id->id;
+                HomogenizingList::Create($arr_data);
+            }
+            return redirect('add-batch-manufacturing-record#Packing')->with('success', "Raw Materrila Of Requisition done successfully");
+        } else {
+            return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
+        }
+    }
+    public function homogenizing_update(Request $request)
+    {
+
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['homoTank'] = $request->homoTank;
+        $arr['Observedvalue'] = $request->Observedvalue;
+        $arr['homoTank'] = $request->homoTank;
+        $Homogenizing_id = Homogenizing::where('id', $request->id)->update($arr);
+
+        if ((isset($request->id)) && ($request->id > 0)) {
+            if (count($request->dateProcess)) {
+                HomogenizingList::where('homogenizing_id', $request->id)->delete();
+              foreach ($request->dateProcess as $key => $value) {
+                    $arr_data['dateProcess'] = $value;
+                    $arr_data['qty'] = $request->qty[$key];
+                    $arr_data['stratTime'] = $request->stratTime[$key];
+                    $arr_data['endTime'] = $request->endTime[$key];
+                    $arr_data['doneby'] = $request->doneby[$key];
+                    $arr_data['homogenizing_id'] = $request->id;
+                    HomogenizingList::Create($arr_data);
+                }
+                return redirect('add-batch-manufacturing-record#Packing')->with('success', "Raw Materrila Of Requisition done successfully");
+            } else {
+                return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
+            }
         }
     }
 }
