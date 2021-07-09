@@ -34,10 +34,10 @@
                 </li>
                 <li><a role="tab" class="{{($sequenceId=='8')?'active':''}}" area-selected="{{($sequenceId=='8')?'true':'false'}}" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
                 <li><a role="tab" class="{{($sequenceId=='9')?'active':''}}" area-selected="{{($sequenceId=='9')?'true':'false'}}" data-toggle="tab" href="#addLots_listing">Lots</a></li>
-                <li><a role="tab" class="{{($sequenceId=='9')?'active':''}}" area-selected="{{($sequenceId=='10')?'true':'false'}}" data-toggle="tab" href="#addLots" hidden="hidden">Lots</a></li>
-                <li><a role="tab" class="{{($sequenceId=='10')?'active':''}}" area-selected="{{($sequenceId=='11')?'true':'false'}}" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
-                <li><a data-toggle="tab" class="{{($sequenceId=='11')?'active':''}}" area-selected="{{($sequenceId=='12')?'true':'false'}}" href="#Packing">Packing</a></li>
-                <li><a data-toggle="tab" class="{{($sequenceId=='12')?'active':''}}" area-selected="{{($sequenceId=='13')?'true':'false'}}" href="#Packing_1">Generate Label</a></li>
+                <li><a role="tab" class="{{($sequenceId=='10')?'active':''}}" area-selected="{{($sequenceId=='10')?'true':'false'}}" data-toggle="tab" href="#addLots" hidden="hidden">Lots</a></li>
+                <li><a role="tab" class="{{($sequenceId=='11')?'active':''}}" area-selected="{{($sequenceId=='11')?'true':'false'}}" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
+                <li><a data-toggle="tab" class="{{($sequenceId=='12')?'active':''}}" area-selected="{{($sequenceId=='12')?'true':'false'}}" href="#Packing">Packing</a></li>
+                <li><a data-toggle="tab" class="{{($sequenceId=='13')?'active':''}}" area-selected="{{($sequenceId=='13')?'true':'false'}}" href="#Packing_1">Generate Label</a></li>
             </ul>
             @if ($message = Session::get('danger'))
             <div class="alert alert-danger alert-block">
@@ -284,6 +284,8 @@
                 </div>
                 @endif
                 <div id="issualofrequisition" class="tab-pane fade {{($sequenceId=='3')?'in active show':''}}">
+                <input type="hidden" value="3" name="sequenceId">
+
                     @if(isset($requestion_1))
                     <table class="table table-hover table-bordered datatable" id="examplereq">
                         <thead>
@@ -325,7 +327,7 @@
                 <div id="billOfRawMaterial" class="tab-pane fade {{($sequenceId=='4')?'in active show':''}}">
 
                     <form id="add_batch_manufacturing_bill" method="post" action="{{ route('bill_of_raw_material_update') }}">
-                        <input type="hidden" value="3" name="sequenceId">
+                        <input type="hidden" value="4" name="sequenceId">
 
                         <input type="hidden" value="{{(isset($res_data->id))?$res_data->id:0}}" name="id">
                         @csrf
@@ -542,7 +544,7 @@
                 <div id="issualofrequisitionpacking" class="tab-pane fade {{($sequenceId=='6')?'in active show':''}}">
 
                     <form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert_update') }}">
-                        <input type="hidden" value="5" name="sequenceId">
+                        <input type="hidden" value="6" name="sequenceId">
                         <input type="hidden" value="{{$res_data_3->id}}" name="id">
                         @csrf
 
@@ -652,7 +654,7 @@
                 @if(isset($res_data))
                 <div id="billOfRawMaterialpacking" class="tab-pane fade {{($sequenceId=='7')?'in active show':''}}">
                     <form id="add_batch_manufacturing_bill" method="post" action="{{ route('bill_of_raw_material_packing_update') }}">
-                        <input type="hidden" value="6" name="sequenceId">
+                        <input type="hidden" value="7" name="sequenceId">
                         <input type="hidden" value="{{$res_data->id}}" name="id">
                         @csrf
 
@@ -770,7 +772,7 @@
                 @if(isset($res_data_1))
                 <div id="listOfEquipment" class="tab-pane fade {{($sequenceId=='8')?'in active show':''}}">
                     <form id="add_batch_equipment_vali" method="post" action="{{ route('list_of_equipment_update') }}">
-                        <input type="hidden" value="7" name="sequenceId">
+                        <input type="hidden" value="8" name="sequenceId">
                         <input type="hidden" value="{{$res_data_1->id}}" name="id">
                         @csrf
                         <div class="form-row">
@@ -857,10 +859,10 @@
                 @endif
                 @if(isset($addlots))
                 <div id="addLots_listing" class="tab-pane fade {{($sequenceId=='9')?'in active show':''}}">
+                    <div class="form-group">
+                    <input type="hidden" value="9" name="sequenceId">
 
-
-                <div class="form-group">
-                <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Open Lots</a>
+                      <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Open Lots</a>
                      </div>
                 @if(isset($lotsdetails))
                     <table class="table table-hover table-bordered datatable" id="examplereq">
@@ -902,7 +904,7 @@
 
                     <form method="post" action="{{ route('add_lots_update') }}">
                         <div class="form-row">
-                            <input type="hidden" value="8" name="sequenceId">
+                            <input type="hidden" value="10" name="sequenceId">
                             <input type="hidden" value="{{$addlots->id}}" name="id">
                             @csrf
 
@@ -1018,61 +1020,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Charge Polydimethylsiloxane in reactor.</td>
-                                            <td><input type="text" name="qty[1]" id="qty[1]" class="form-control"></td>
-                                            <td><input type="text" name="temp[1]" id="temp[1]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[1]">
+                                    @if(count($Processlots))
+                                    @foreach($Processlots as $key => $v)
+                                    <tr>
+                                            <td>{{($key==0)?"Charge Polydimethylsiloxane in reactor.":(($key==1)?"Start heating the reactor and start stirring":(($key==2)?"Once the temperature is between 100 - 120oC start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.":(($key==3)?"When temperature reaches 180 - 190 oC stop heating the reactor.":"Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number")))}}</td>
+                                            <td><input type="text" value="{{$v->qty}}"name="qty[]" id="qty" class="form-control"></td>
+                                            <td><input type="text" value="{{$v->temp}}"name="temp[]" id="temp" class="form-control"></td>
+                                            <td><input type="text" value="{{$v->stratTime}}"name="stratTime[]" id="stratTime" class="form-control"></td>
+                                            <td><input type="text" value="{{$v->endTime}}"name="endTime[]" id="endTime[1]" class="form-control"></td>
+                                            <td><select class="form-control select"  value="{{$v->doneby}}" name="doneby[]" id="doneby[]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
                                                 </select></td>
                                         </tr>
-                                        <tr>
-                                            <td>Start heating the reactor and start stirring</td>
-                                            <td><input type="text" name="qty[2]" id="qty[2]" class="form-control"></td>
-                                            <td><input type="text" name="temp[2]" id="temp[2]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[2]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
-                                            <td><input type="text" name="qty[3]" id="qty[3]" class="form-control"></td>
-                                            <td><input type="text" name="temp[3]" id="temp[3]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[3]" id="stratTime[3]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[3]" id="endTime[3]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[3]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
-                                            <td><input type="text" name="qty[4]" id="qty[4]" class="form-control"></td>
-                                            <td><input type="text" name="temp[4]" id="temp[4]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[4]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
-                                            <td><input type="text" name="qty[1]" id="qty[1]" class="form-control"></td>
-                                            <td><input type="text" name="temp[1]" id="temp[1]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[1]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
+                                    @endforeach
+                                    @endif
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -1089,7 +1053,7 @@
                 @if(isset($Homogenizing))
                 <div id="homogenizing" class="tab-pane fade {{($sequenceId=='11')?'in active show':''}}">
                     <form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_update') }}">
-                        <input type="hidden" value="8" name="sequenceId">
+                        <input type="hidden" value="11" name="sequenceId">
                         <input type="hidden" value="{{$Homogenizing->id}}" name="id">
                         @csrf
 
@@ -1144,10 +1108,10 @@
                                     </thead>
                                     <tbody>
                                         @if(isset($HomogenizingList))
-                                        @foreach($HomogenizingList as $temp)
+                                        @foreach($HomogenizingList as $key => $temp)
                                         <tr>
                                             <td><input type="date" name="dateProcess[]" value="{{$temp->dateProcess}}" id="dateProcess[1]" class="form-control"></td>
-                                            <td>{{$temp->Process}}</td>
+                                            <td>Lot No.: {{(($key+1) == 5)? 'Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.' : ($key+1)}}</td>
                                             <td><input type="text" name="qty[]" id="qty" value="{{$temp->qty}}" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control"></td>
@@ -1188,7 +1152,7 @@
 
                 <div id="Packing" class="tab-pane fade {{($sequenceId=='12')?'in active show':''}}">
                     <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_update') }}">
-                        <input type="hidden" value="9" name="sequenceId">
+                        <input type="hidden" value="12" name="sequenceId">
                         <input type="hidden" value="{{$packingmateria->id}}" name="id">
                         @csrf
 
@@ -1405,9 +1369,9 @@
                 @endif
                 @if(isset($packingmateria))
 
-                <div id="Packing_1" class="tab-pane fade {{($sequenceId=='12')?'in active show':''}}">
+                <div id="Packing_1" class="tab-pane fade {{($sequenceId=='13')?'in active show':''}}">
                     <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_update') }}">
-                        <input type="hidden" value="9" name="sequenceId">
+                        <input type="hidden" value="13" name="sequenceId">
                         <input type="hidden" value="{{$packingmateria->id}}" name="id">
                         @csrf
 

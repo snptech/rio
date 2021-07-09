@@ -42,7 +42,7 @@ class ManufactureProcessController extends Controller
 
         $batch = "";
         if ($request->session()->has('batch')) {
-            //
+
             $batch = $request->session()->get('batch');
         }
         $data["batch"] = $batch;
@@ -1146,7 +1146,7 @@ class ManufactureProcessController extends Controller
 
         $sequenceId = 1;
         if (isset($request->sequenceId)) {
-            $sequenceId = (int)$request->sequenceId + 3;
+            $sequenceId = (int)$request->sequenceId + 1;
         }
         if ($result) {
             return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
@@ -1329,12 +1329,15 @@ class ManufactureProcessController extends Controller
                     $arr_data['rmbatchno'] = $request->rmbatchno[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
                     $arr_data['add_lots_id'] = $request->id;
-                    AddLotslRawMaterialDetails::Create($arr_data);
+                  AddLotslRawMaterialDetails::Create($arr_data);
+
                 }
+
                 if ((isset($request->id)) && ($request->id > 0)) {
                     foreach ($request->qty as $key => $value) {
+                        Processlots::where('process_id', $request->id)->delete();
+
                         if (count($request->qty)) {
-                            Processlots::where('process_id', $request->id)->delete();
                             foreach ($request->qty as $key => $value) {
                                 $arr_data['qty'] = $value;
                                 $arr_data['temp'] = $request->temp[$key];
@@ -1344,9 +1347,10 @@ class ManufactureProcessController extends Controller
                                 $arr_data['process_id'] = $request->id;
                                 $result = Processlots::Create($arr_data);
                             }
+
                             $sequenceId = 1;
                             if (isset($request->sequenceId)) {
-                                $sequenceId = (int)$request->sequenceId + 4;
+                                $sequenceId = (int)$request->sequenceId + 1;
                             }
                             if ($result) {
                                 return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
@@ -1417,6 +1421,7 @@ class ManufactureProcessController extends Controller
     public function homogenizing_update(Request $request)
     {
 
+
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;
@@ -1439,13 +1444,15 @@ class ManufactureProcessController extends Controller
                     $arr_data['endTime'] = $request->endTime[$key];
                     $arr_data['doneby'] = $request->doneby[$key];
                     $arr_data['homogenizing_id'] = $request->id;
-                  $result=HomogenizingList::Create($arr_data);
+                    $result=HomogenizingList::Create($arr_data);
 
                 }
-                $sequenceId = 1;
+
+                 $sequenceId = 1;
                 if (isset($request->sequenceId)) {
-                    $sequenceId = (int)$request->sequenceId + 3;
+                    $sequenceId = (int)$request->sequenceId + 1;
                 }
+
                 if ($result) {
                     return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
