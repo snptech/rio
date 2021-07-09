@@ -98,7 +98,7 @@
                              <td>{{$temp->ManufacturingDate}}</td>
                             <td>{{$temp->RetestDate}}</td>
                             <!-- <td>{{$temp->approvalDate}}</td> -->
-                            @if($temp->approval=='Approved')
+                            @if($temp->approval=='1')
                              <td><span class="badge badge-success p-2">Approved</span></td>
                             @else
 

@@ -41,26 +41,36 @@
                     @if(isset($batch) && $batch)
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Raw Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a role="tab" data-toggle="tab" href="#requisition">Requisition</a></li>
+                          <li><a role="tab" data-toggle="tab" href="#requisition">Requisition</a></li>
+
+
                             <li><a role="tab" data-toggle="tab" href="#issualofrequisition">Issual of requisition</a></li>
                             <li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
 
                         </ul>
+
                     </li>
+
+
                     <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Packing Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a role="tab" data-toggle="tab" href="#requisitionpacking">Requisition</a></li>
                             <li><a role="tab" data-toggle="tab" href="#issualofrequisitionpacking">Issual of requisition</a></li>
+
                             <li><a role="tab" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>
 
                         </ul>
                     </li>
+
                     <li><a role="tab" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
 
                     <li><a role="tab" data-toggle="tab" href="#addLots">Lots</a></li>
+
                     <li><a role="tab" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
+
                     <li><a data-toggle="tab" href="#Packing">Packing</a></li>
-                    <li><a data-toggle="tab" href="#Packing">Generate Label</a></li>
+
+                    <li><a data-toggle="tab" href="#Packing_I">Generate Label</a></li>
                     @endif
                 </ul>
                 <div class="tab-content">
@@ -163,8 +173,8 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                      <label for="approval" class="active">This Batch is approved/not approved</label>
-                                        <select class="form-control select" name="approval"  id="approval">
+                                        <label for="approval" class="active">This Batch is approved/not approved</label>
+                                        <select class="form-control select" name="approval" id="approval">
                                             <option>-- Select Option --</option>
                                             <option value="Approved">Approved</option>
                                             <option value="Not Approved">Not Approved</option>
@@ -193,8 +203,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
-                                   -->
+
                                         {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) }}
 
                                         @if ($errors->has('proName'))
@@ -264,9 +273,7 @@
                                     <div class="form-group">
                                         <label for="doneBy">Weighed by</label>
                                         <input type="text" class="form-control select" name="doneBy" value="{{ \Auth::user()->name }}" id="doneBy" readonly>
-                                        <!-- <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select> -->
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -289,10 +296,10 @@
                             </div>
                         </form>
                     </div>
-                    <div id="requisition" class="tab-pane fade">
+                     <div id="requisition" class="tab-pane fade">
                         <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_insert') }}">
-                        @csrf
-                        <div class="form-row">
+                            @csrf
+                            <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="from" class="active">From</label>
@@ -321,7 +328,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group input_fields_wrap_6"  id="MaterialReceived">
+                                    <div class="form-group input_fields_wrap_6" id="MaterialReceived">
                                         <label class="control-label d-flex">Material Detail
                                             <div class="input-group-btn">
                                                 <button class="btn btn-dark add-more add_field_button_6 waves-effect waves-light" type="button">Add More +</button>
@@ -351,18 +358,14 @@
                                     <div class="form-group">
                                         <label for="checkedBy">Checked By</label>
                                         <input type="text" class="form-control select" name="checkedBy" id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
-                                            <!-- <option>Select</option>
-                                            <option>Officer Production</option>
-                                        </select> -->
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ApprovedBy">Approved By</label>
                                         <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
-                                            <!-- <option>Select</option>
-                                            <option>Manager Store</option>
-                                        </select> -->
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -383,101 +386,101 @@
 
                     <div id="issualofrequisition" class="tab-pane fade">
                         <!--<form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert') }}">
-                            @csrf
+                        @csrf
 
-                            <div class="form-row">
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-                                        <label for="from" class="active">From</label>
-                                        <input type="text" class="form-control" name="from" id="from" placeholder="From">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-                                        <label for="to" class="active">To</label>
-                                        <input type="text" class="form-control" name="to" id="to" placeholder="To">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-                                        <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-                                        <label for="Date" class="active">Date</label>
-                                        <input type="date" class="form-control calendar" name="Date" id="Date" value={{ date("Y-m-d") }}>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group input_fields_wrap_5" id="MaterialReceived">
-                                        <label class="control-label d-flex">Material Details
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-dark add-more add_field_button_5 waves-effect waves-light" type="button">Add More +</button>
-                                            </div>
-                                        </label>
-                                        <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                            <span class="add-count">1</span>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                    <input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName" placeholder="" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Capacity" class="active">Capacity (Kg.)</label>
-                                                    <input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Quantity" class="active">Quantity (No)</label>
-                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="arNo" class="active">AR No.</label>
-                                                    <input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="ARDate" class="active">Date</label>
-                                                    <input type="date" class="form-control" name="ARDate[]" id="ARDate" value={{ date("Y-m-d") }}>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="form-row">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                        <label for="from" class="active">From</label>
+                        <input type="text" class="form-control" name="from" id="from" placeholder="From">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                        <label for="to" class="active">To</label>
+                        <input type="text" class="form-control" name="to" id="to" placeholder="To">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                        <label for="batchNo">Batch No.</label>
+                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                        <label for="Date" class="active">Date</label>
+                        <input type="date" class="form-control calendar" name="Date" id="Date" value={{ date("Y-m-d") }}>
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="form-group input_fields_wrap_5" id="MaterialReceived">
+                        <label class="control-label d-flex">Material Details
+                        <div class="input-group-btn">
+                        <button class="btn btn-dark add-more add_field_button_5 waves-effect waves-light" type="button">Add More +</button>
+                        </div>
+                        </label>
+                        <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <span class="add-count">1</span>
+                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                        <label for="PackingMaterialName" class="active">Packing Material Name</label>
+                        <input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName" placeholder="" value="">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                        <label for="Capacity" class="active">Capacity (Kg.)</label>
+                        <input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder="">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                        <label for="Quantity" class="active">Quantity (No)</label>
+                        <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                        <label for="arNo" class="active">AR No.</label>
+                        <input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="">
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                        <label for="ARDate" class="active">Date</label>
+                        <input type="date" class="form-control" name="ARDate[]" id="ARDate" value={{ date("Y-m-d") }}>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
 
 
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="doneBy">Manager - Store</label>
-                                        <select class="form-control select" name="doneBy" id="doneBy">
-                                            <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="checkedBy">Officer - Production</label>
-                                        <select class="form-control select" name="checkedBy" id="checkedBy">
-                                            <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-12 col-md-6">
+                        <div class="form-group">
+                        <label for="doneBy">Manager - Store</label>
+                        <select class="form-control select" name="doneBy" id="doneBy">
+                        <option>Select</option>
+                        <option>Employee Name</option>
+                        </select>
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                        <div class="form-group">
+                        <label for="checkedBy">Officer - Production</label>
+                        <select class="form-control select" name="checkedBy" id="checkedBy">
+                        <option>Select</option>
+                        <option>Employee Name</option>
+                        </select>
+                        </div>
+                        </div>
+                        <div class="col-12">
+                        <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
+                        </div>
+                        </div>
+                        </div>
                         </form> -->
                         @if(isset($requestion))
                         <table class="table table-hover table-bordered datatable" id="examplereq">
@@ -518,8 +521,7 @@
                         </table>
                         @endif
                     </div>
-
-                    {{-- Packing materials --}}
+                  {{-- Packing materials --}}
                     <div id="billOfRawMaterialpacking" class="tab-pane fade">
                         <form id="add_batch_manufacturing_bill" method="post" action="{{ route('add_batch_manufacturing_recorde_insert') }}">
                             @csrf
@@ -528,8 +530,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
-                                   -->
+
                                         {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) }}
 
                                         @if ($errors->has('proName'))
@@ -607,9 +608,7 @@
                                     <div class="form-group">
                                         <label for="doneBy">Weighed by</label>
                                         <input type="text" class="form-control select" name="doneBy" value="{{ \Auth::user()->name }}" id="doneBy" readonly>
-                                        <!-- <option>Select</option>
-                                            <option>Employee Name</option>
-                                        </select> -->
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -634,8 +633,8 @@
                     </div>
                     <div id="requisitionpacking" class="tab-pane fade">
                         <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_insert') }}">
-                        @csrf
-                        <div class="form-row">
+                            @csrf
+                            <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="from" class="active">From</label>
@@ -664,7 +663,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group input_fields_wrap_6"  id="MaterialReceived">
+                                    <div class="form-group input_fields_wrap_6" id="MaterialReceived">
                                         <label class="control-label d-flex">Material Detail
                                             <div class="input-group-btn">
                                                 <button class="btn btn-dark add-more add_field_button_6 waves-effect waves-light" type="button">Add More +</button>
@@ -698,18 +697,14 @@
                                     <div class="form-group">
                                         <label for="checkedBy">Checked By</label>
                                         <input type="text" class="form-control select" name="checkedBy" id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
-                                            <!-- <option>Select</option>
-                                            <option>Officer Production</option>
-                                        </select> -->
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ApprovedBy">Approved By</label>
                                         <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
-                                            <!-- <option>Select</option>
-                                            <option>Manager Store</option>
-                                        </select> -->
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -726,8 +721,7 @@
                             </div>
                         </form>
                     </div>
-
-                    <div id="issualofrequisitionpacking" class="tab-pane fade">
+                     <div id="issualofrequisitionpacking" class="tab-pane fade">
                         <form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert') }}">
                             @csrf
 
@@ -835,8 +829,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
-                                   -->
+
                                         {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
@@ -909,38 +902,40 @@
                         </form>
                     </div>
                     <div id="homogenizing" class="tab-pane fade">
-                        <form id="add_manufacturing_line" method="post" action="{{ route('add_line_clearance_insert') }}">
+                        <form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_insert') }}">
                             @csrf
 
                             <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                      <label for="proName" class="active">Product Name</label>
-                                      <input type="text" class="form-control" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
+                                        <label for="proName" class="active">Product Name</label>
+                                        {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name" )) }}
+
+                                       </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label for="bmrNo" class="active">BMR No.</label>
+                                        <input type="text" class="form-control" id="bmrNo" name="bmrNo" value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                      <label for="bmrNo" class="active">BMR No.</label>
-                                      <input type="text" class="form-control" id="bmrNo" placeholder="BMR No." value="RCIPL/BMR/Flx-2300/09">
+                                        <label for="batchNo">Batch No.</label>
+                                        <input type="text" class="form-control" id="batchNo" name="batchNo" value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly
+>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                      <label for="batchNo">Batch No.</label>
-                                      <input type="text" class="form-control" id="batchNo" placeholder="Batch No." value="RFLX 20/668">
+                                        <label for="refMfrNo">Ref. MFR No.</label>
+                                        <input type="text" class="form-control" id="refMfrNo" name="refMfrNo" value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                      <label for="refMfrNo">Ref. MFR No.</label>
-                                      <input type="text" class="form-control" id="refMfrNo" placeholder="Ref. MFR No." value="RCIPL/MFR/01/01">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-                                      <label for="homoTank">Homogenizing tank No.</label>
-                                      <input type="text" class="form-control" id="homoTank" placeholder="" value="PR/BT/Come Tank number">
+                                        <label for="homoTank">Homogenizing tank No.</label>
+                                        <input type="text" class="form-control" id="homoTank" name="homoTank" placeholder="PR/BT/Come Tank number" value="">
                                     </div>
                                 </div>
 
@@ -963,10 +958,10 @@
                                                 <td><input type="text" name="qty[1]" id="qty[1]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" id="doneby[1]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                  </select></td>
+                                                <td><select class="form-control select" name="doneby[1]" id="doneby[1]">
+                                                        <option>Select</option>
+                                                        <option value="Employee Name">Employee Name</option>
+                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[2]" id="dateProcess[2]" class="form-control"></td>
@@ -974,10 +969,10 @@
                                                 <td><input type="text" name="qty[2]" id="qty[2]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" id="doneby[2]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                  </select></td>
+                                                <td><select class="form-control select" name="doneby[2]"id="doneby[2]">
+                                                        <option>Select</option>
+                                                        <option>Employee Name</option>
+                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[3]" id="dateProcess[3]" class="form-control"></td>
@@ -985,10 +980,10 @@
                                                 <td><input type="text" name="qty[3]" id="qty[3]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[3]" id="stratTime[3]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[3]" id="endTime[3]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" id="doneby[3]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                  </select></td>
+                                                <td><select class="form-control select" name="doneby[3]" id="doneby[3]">
+                                                        <option>Select</option>
+                                                        <option>Employee Name</option>
+                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[4]" id="dateProcess[4]" class="form-control"></td>
@@ -996,10 +991,10 @@
                                                 <td><input type="text" name="qty[4]" id="qty[4]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" id="doneby[4]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                  </select></td>
+                                                <td><select class="form-control select" name="doneby[4]" id="doneby[4]">
+                                                        <option>Select</option>
+                                                        <option>Employee Name</option>
+                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[5]" id="dateProcess[5]" class="form-control"></td>
@@ -1007,10 +1002,10 @@
                                                 <td><input type="text" name="qty[5]" id="qty[5]" class="form-control" value="2000"></td>
                                                 <td><input type="text" name="stratTime[5]" id="stratTime[5]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[5]" id="endTime[5]" class="form-control" value="09:30"></td>
-                                                <td><select class="form-control select" id="doneby[5]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                  </select></td>
+                                                <td><select class="form-control select" name="doneby[5]" id="doneby[5]">
+                                                        <option>Select</option>
+                                                        <option>Employee Name</option>
+                                                    </select></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1018,30 +1013,33 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="d-block">In Process Check (After 4 Lot)</label>
-                                      Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30 RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).
+                                        Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30 RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
-                                      <label for="Observedvalue">Observed value (cSt)</label>
-                                      <input type="text" class="form-control" id="Observedvalue" placeholder="" value="">
+                                        <label for="Observedvalue">Observed value (cSt)</label>
+                                        <input type="text" class="form-control" id="Observedvalue" name="Observedvalue" placeholder="" value="">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                      <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
+                                        <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div id="addLots" class="tab-pane fade">
-                        <div class="form-row">
+                       <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_lots') }}">
+                            @csrf
+                         <div class="form-row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="proName" class="active">Product Name</label>
                                     <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                    {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) }}
+
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1050,19 +1048,19 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No.">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No.">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1110,7 +1108,7 @@
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="EquipmentName" class="active">Raw Material</label>
-                                                <select class="form-control select" name="EquipmentName" id="EquipmentName">
+                                                <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
                                                     <option>Select</option>
                                                     <option>Raw Material Name</option>
                                                 </select>
@@ -1119,13 +1117,13 @@
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="rmbatchno" class="active">Batch No.</label>
-                                                <input type="text" class="form-control" name="rmbatchno" id="rmbatchno" placeholder="" value="">
+                                                <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno" placeholder="" value="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity" id="Quantity" placeholder="" value="">
+                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -1150,7 +1148,7 @@
                                             <td><input type="text" name="temp[1]" id="temp[1]" class="form-control"></td>
                                             <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control"></td>
                                             <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[1]">
+                                            <td><select class="form-control select"  name="doneby"id="doneby[1]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
                                                 </select></td>
@@ -1208,6 +1206,7 @@
                                 </div>
                             </div>
                         </div>
+                       </form>
                     </div>
                     <div id="Packing" class="tab-pane fade">
                         <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_insert') }}">
@@ -1422,8 +1421,7 @@
                             </div>
                         </form>
                     </div>
-
-                </div>
+                 </div>
             </div>
         </div>
     </div>
@@ -1517,14 +1515,14 @@
     });
     feather.replace()
     /*$(document).ready(function() {
-		var c = 1;
-      $(".add-more").click(function(){
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
-      $("body").on("click",".remove",function(){
-          $(this).parents(".add-more-new").remove();
-      });
+    var c = 1;
+    $(".add-more").click(function(){
+    var html = $(".copy").html();
+    $(".after-add-more").after(html);
+    });
+    $("body").on("click",".remove",function(){
+    $(this).parents(".add-more-new").remove();
+    });
     });*/
     $(document).ready(function() {
         var max_fields = 15; //maximum input boxes allowed
@@ -1536,7 +1534,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Raw Material</label><select class="form-control select" id="EquipmentName[' + x + ']"><option>Select</option><option>Raw Material Name</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno[' + x + ']" class="active">Batch No.</label><input type="text" class="form-control" id="rmbatchno[' + x + ']" placeholder="" value=""></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" id="Quantity[' + x + ']" placeholder="" value=""></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Raw Material</label><select class="form-control select"  name="EquipmentName[]"id="EquipmentName[' + x + ']"><option>Select</option><option>Raw Material Name</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno[' + x + ']" class="active">Batch No.</label><input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[' + x + ']" placeholder="" value=""></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder="" value=""></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1571,14 +1569,14 @@
     });
     feather.replace()
     /*$(document).ready(function() {
-		var c = 1;
-      $(".add-more").click(function(){
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
-      $("body").on("click",".remove",function(){
-          $(this).parents(".add-more-new").remove();
-      });
+    var c = 1;
+    $(".add-more").click(function(){
+    var html = $(".copy").html();
+    $(".after-add-more").after(html);
+    });
+    $("body").on("click",".remove",function(){
+    $(this).parents(".add-more-new").remove();
+    });
     });*/
     $(document).ready(function() {
         var max_fields = 15; //maximum input boxes allowed
@@ -1590,7 +1588,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity'+x+'" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity' + x + '" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1819,7 +1817,7 @@
         });
         $("#packing_material_requisition_slip").validate({
             rules: {
-                 from: "required",
+                from: "required",
                 to: "required",
                 batchNo: "required",
                 Date: "required",
@@ -1830,7 +1828,7 @@
                 ApprovedBy: "required",
                 batch_id: "required",
 
-             },
+            },
             messages: {
                 from: "Please  Enter The from Name",
                 to: "Please  Enter The to Name",
@@ -1847,65 +1845,65 @@
         });
 
     });
-    window.onload = function(){
+    window.onload = function() {
 
-    var url = document.location.toString();
-    if (url.match('#')) {
-        $('.nav-tabs li a').removeClass('active');
-        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show')
-        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').parent('li').addClass('active');
-        current_page_URL = url;
-        $( "a" ).each(function() {
-            if ($(this).attr("href") !== "#") {
-            var target_URL = $(this).prop("href");
-            if (target_URL == current_page_URL) {
-                $('.nav-tabs a').parents('li, ul').removeClass('active');
-                if(url.split('#')[1] == "billOfRawMaterial" || url.split('#')[1] == "requisition"  || url.split('#')[1] == "issualofrequisition")
-                    $(this).parent().parent("a").addClass('active');
-                else
-                    $(this).addClass('active');
-                return false;
-            }
-            }
+        var url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-tabs li a').removeClass('active');
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show')
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').parent('li').addClass('active');
+            current_page_URL = url;
+            $("a").each(function() {
+                if ($(this).attr("href") !== "#") {
+                    var target_URL = $(this).prop("href");
+                    if (target_URL == current_page_URL) {
+                        $('.nav-tabs a').parents('li, ul').removeClass('active');
+                        if (url.split('#')[1] == "billOfRawMaterial" || url.split('#')[1] == "requisition" || url.split('#')[1] == "issualofrequisition")
+                            $(this).parent().parent("a").addClass('active');
+                        else
+                            $(this).addClass('active');
+                        return false;
+                    }
+                }
+            });
+
+
+        }
+
+        //Change hash for page-reload
+        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').on('shown', function(e) {
+            window.location.hash = e.target.hash;
+
         });
-
 
     }
 
-    //Change hash for page-reload
-    $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').on('shown', function (e) {
-        window.location.hash = e.target.hash;
+    function getmatarialqtyandbatch(raw, index) {
 
-    });
+        $.ajax({
+            url: '{{ route("getmatarialqtyandbatch") }}',
+            method: 'POST',
+            data: {
+                "id": raw,
+                "_token": '{{ csrf_token() }}'
+            }
+        }).success(function(data) {
+            $("#batchName" + index).empty()
+                .append('<option value="">Choose Batch...</option>')
+            $.each(data.batch, function(key, val) {
+                var option = "<option value='" + key + "'>" + val + "</option>";
 
-}
-function getmatarialqtyandbatch(raw,index){
-
-         $.ajax({
-             url:'{{ route('getmatarialqtyandbatch') }}',
-             method:'POST',
-             data:{
-                 "id":raw,
-                 "_token":'{{ csrf_token() }}'
-             }
-         }).success(function(data){
-            $("#batchName"+index).empty()
-            .append('<option value="">Choose Batch...</option>')
-            $.each(data.batch, function (key, val) {
-                var option ="<option value='"+key+"'>"+val+"</option>";
-
-                $("#batchName"+index).append(option);
-        });
-         })
-     }
-
+                $("#batchName" + index).append(option);
+            });
+        })
+    }
 </script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#examplereq').DataTable();
-        });
-    </script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#examplereq').DataTable();
+    });
+</script>
 @endpush
