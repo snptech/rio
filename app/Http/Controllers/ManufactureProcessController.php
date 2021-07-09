@@ -184,6 +184,10 @@ class ManufactureProcessController extends Controller
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
             }
+             $processlots = Processlots::select('process_lots.*','add_lotsl.*')->where("lot_id",$id)->leftJoin('add_lotsl', 'add_lotsl.id','=','process_lots.lot_id')->get();
+            if (isset($processlots) && $processlots) {
+                $data["processlots"] = $processlots;
+            }
             $data["requestion_1"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
             if (isset($data["requestion_1"]))
                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_1"]->id)
@@ -1190,6 +1194,7 @@ class ManufactureProcessController extends Controller
 
     public function add_batch_lots(Request $request)
     {
+        
         $prvCount = AddLotsl::where('batchNo', $request->batchNo)->count('id');
         if ($prvCount > 5) {
             return ['message' => 'Already Have 5 Records'];
@@ -1281,14 +1286,16 @@ class ManufactureProcessController extends Controller
                                 $arr_data['stratTime'] = $request->stratTime[$key];
                                 $arr_data['endTime'] = $request->endTime[$key];
                                 $arr_data['doneby'] = $request->doneby[$key];
-                                $arr_data['process_id'] = $AddLotsl->id;
+                                $arr_data['lot_id'] = $AddLotsl->id;
+                                $arr_data['process_id'] = $key+1;
                                 $result = Processlots::Create($arr_data);
                             }
+                            // dd($arr_Data['process_id']);
                             if ($result) {
                                 if ($prvCount == 5) {
                                     return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
                                 } else {
-                                    return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                    return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
                                 }
                             }
                         }
@@ -1300,7 +1307,7 @@ class ManufactureProcessController extends Controller
     public function add_lots_update(Request $request)
     {
 
-
+        dd($request->all());
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;

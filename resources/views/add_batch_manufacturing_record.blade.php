@@ -23,6 +23,13 @@
                 </div>
 
                 @endif
+                @if ($message = Session::get('prvCount'))
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Current Lot Count: {{ $message }}</strong>
+                </div>
+
+                @endif
                 @if ($message = Session::get('danger'))
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -1201,10 +1208,10 @@
                                     <tbody>
                                         <tr>
                                             <td>Charge Polydimethylsiloxane in reactor.</td>
-                                            <td><input type="text" name="qty[1]" id="qty[1]" class="form-control"></td>
-                                            <td><input type="text" name="temp[1]" id="temp[1]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control"></td>
+                                            <td><input type="text" name="qty[]" id="qty[1]" class="form-control"></td>
+                                            <td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
+                                            <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control"></td>
+                                            <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control"></td>
                                             <td><select class="form-control select"  name="doneby"id="doneby[1]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
@@ -1212,10 +1219,10 @@
                                         </tr>
                                         <tr>
                                             <td>Start heating the reactor and start stirring</td>
-                                            <td><input type="text" name="qty[2]" id="qty[2]" class="form-control"></td>
-                                            <td><input type="text" name="temp[2]" id="temp[2]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control"></td>
+                                            <td><input type="text" name="qty[]" id="qty[2]" class="form-control"></td>
+                                            <td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
+                                            <td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control"></td>
+                                            <td><input type="text" name="endTime[]" id="endTime[2]" class="form-control"></td>
                                             <td><select class="form-control select" id="doneby[2]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
@@ -1223,10 +1230,10 @@
                                         </tr>
                                         <tr>
                                             <td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
-                                            <td><input type="text" name="qty[3]" id="qty[3]" class="form-control"></td>
-                                            <td><input type="text" name="temp[3]" id="temp[3]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[3]" id="stratTime[3]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[3]" id="endTime[3]" class="form-control"></td>
+                                            <td><input type="text" name="qty[]" id="qty[3]" class="form-control"></td>
+                                            <td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
+                                            <td><input type="text" name="stratTime[]" id="stratTime[3]" class="form-control"></td>
+                                            <td><input type="text" name="endTime[]" id="endTime[3]" class="form-control"></td>
                                             <td><select class="form-control select" id="doneby[3]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
@@ -1234,10 +1241,10 @@
                                         </tr>
                                         <tr>
                                             <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
-                                            <td><input type="text" name="qty[4]" id="qty[4]" class="form-control"></td>
-                                            <td><input type="text" name="temp[4]" id="temp[4]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control"></td>
+                                            <td><input type="text" name="qty[]" id="qty[4]" class="form-control"></td>
+                                            <td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
+                                            <td><input type="text" name="stratTime[]" id="stratTime[4]" class="form-control"></td>
+                                            <td><input type="text" name="endTime[]" id="endTime[4]" class="form-control"></td>
                                             <td><select class="form-control select" id="doneby[4]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
@@ -1245,11 +1252,11 @@
                                         </tr>
                                         <tr>
                                             <td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
-                                            <td><input type="text" name="qty[1]" id="qty[1]" class="form-control"></td>
-                                            <td><input type="text" name="temp[1]" id="temp[1]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[1]">
+                                            <td><input type="text" name="qty[]" id="qty[5]" class="form-control"></td>
+                                            <td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
+                                            <td><input type="text" name="stratTime[]" id="stratTime[5]" class="form-control"></td>
+                                            <td><input type="text" name="endTime[]" id="endTime[5]" class="form-control"></td>
+                                            <td><select class="form-control select" id="doneby[5]">
                                                     <option>Select</option>
                                                     <option>Employee Name</option>
                                                 </select></td>
