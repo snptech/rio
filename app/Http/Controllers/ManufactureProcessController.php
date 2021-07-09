@@ -53,6 +53,14 @@ class ManufactureProcessController extends Controller
                 $data["batchdetails"] = $batchdetails;
             }
 
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)
+             ->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')
+            ->get();
+            if (isset($lotsdetails) && $lotsdetails) {
+                $data["lotsdetails"] = $lotsdetails;
+            }
+
+
             $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
             if (isset($data["requestion"]))
                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
@@ -201,7 +209,7 @@ class ManufactureProcessController extends Controller
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
         $data['HomogenizingList'] = HomogenizingList::where('homogenizing_id', '=', $id)
-            ->first();
+            ->get();
         $data['Homogenizing'] = Homogenizing::where('id', '=', $id)
             ->first();
         $data['sequenceId'] = ($formSeqId) ? ($formSeqId) : 1;
@@ -296,9 +304,9 @@ class ManufactureProcessController extends Controller
             "checkedBy" => "This :attribute field is required.",
 
         ];
-        
+
         //$validateData = $request->validate($arrRules, $arrMessages);
-        
+
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNoI'] = $request->batchNoI;
@@ -1270,9 +1278,9 @@ class ManufactureProcessController extends Controller
                             }
                             if ($result) {
                                 if ($prvCount == 5) {
-                                    return redirect('add-batch-manufacturing-record')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                    return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
                                 } else {
-                                    return redirect('add-batch-manufacturing-record#issualofrequisition')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                    return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
                                 }
                             }
                         }
@@ -1405,6 +1413,7 @@ class ManufactureProcessController extends Controller
         $arr['homoTank'] = $request->homoTank;
         $Homogenizing_id = Homogenizing::where('id', $request->id)->update($arr);
 
+
         if ((isset($request->id)) && ($request->id > 0)) {
             if (count($request->dateProcess)) {
                 HomogenizingList::where('homogenizing_id', $request->id)->delete();
@@ -1415,11 +1424,16 @@ class ManufactureProcessController extends Controller
                     $arr_data['endTime'] = $request->endTime[$key];
                     $arr_data['doneby'] = $request->doneby[$key];
                     $arr_data['homogenizing_id'] = $request->id;
-                    HomogenizingList::Create($arr_data);
+                  $result=HomogenizingList::Create($arr_data);
+
                 }
-                return redirect('add-batch-manufacturing-record#Packing')->with('success', "Raw Materrila Of Requisition done successfully");
-            } else {
-                return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
+                $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 3;
+                }
+                if ($result) {
+                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                }
             }
         }
     }

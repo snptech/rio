@@ -319,7 +319,8 @@
                 <div id="billOfRawMaterial" class="tab-pane fade {{($sequenceId=='4')?'in active show':''}}">
                     <form id="add_batch_manufacturing_bill" method="post" action="{{ route('bill_of_raw_material_update') }}">
                         <input type="hidden" value="3" name="sequenceId">
-
+@php  $res_data = (isset($res_data)?$res_data:'')
+@endphp
                         <input type="hidden" value="{{$res_data->id}}" name="id">
                         @csrf
 
@@ -1034,7 +1035,7 @@
                 <div id="homogenizing" class="tab-pane fade {{($sequenceId=='10')?'in active show':''}}">
                     <form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_update') }}">
                         <input type="hidden" value="8" name="sequenceId">
-                        <input type="hidden" value="{{$Homogenizing->id}},{{$HomogenizingList->id}}" name="id">
+                        <input type="hidden" value="{{$Homogenizing->id}}" name="id">
                         @csrf
 
                         <div class="form-row">
@@ -1087,62 +1088,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><input type="date" name="dateProcess[1]" value="{{$HomogenizingList->dateProcess}}" id="dateProcess[1]" class="form-control"></td>
-                                            <td>Lot No.: 1</td>
-                                            <td><input type="text" name="qty[1]" id="qty[1]"  value="{{$HomogenizingList->qty}}"class="form-control"></td>
-                                            <td><input type="text" name="stratTime[1]" id="stratTime[1]" value="{{$HomogenizingList->stratTime}}" class="form-control"></td>
-                                            <td><input type="text" name="endTime[1]" id="endTime[1]" value="{{$HomogenizingList->endTime}}" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[1]">
-                                                    <option>{{$HomogenizingList->doneby}}</option>
+                                    @if(isset($HomogenizingList))
+                                    @foreach($HomogenizingList as $temp)
+                                    <tr>
+                                            <td><input type="date" name="dateProcess[]" value="{{$temp->dateProcess}}" id="dateProcess[1]" class="form-control"></td>
+                                            <td>{{$temp->Process}}</td>
+                                            <td><input type="text" name="qty[]" id="qty"  value="{{$temp->qty}}"class="form-control"></td>
+                                            <td><input type="text" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control"></td>
+                                            <td><input type="text" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control"></td>
+                                            <td><select class="form-control select" id="doneby" name="doneby[]">
+                                                    <option>{{$temp->doneby}}</option>
                                                     <option>Employee Name</option>
                                                 </select></td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="text" name="dateProcess[2]" id="dateProcess[2]" value="{{$HomogenizingList->dateProcess}}"class="form-control"></td>
-                                            <td>Lot No.: 2</td>
-                                            <td><input type="text" name="qty[2]" id="qty[2]" value="{{$HomogenizingList->qty}}" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[2]" id="stratTime[2]" value="{{$HomogenizingList->stratTime}}"  class="form-control"></td>
-                                            <td><input type="text" name="endTime[2]" id="endTime[2]" value="{{$HomogenizingList->endTime}}" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[2]" value="{{$HomogenizingList->doneby}}">
-                                                    <option>{{$HomogenizingList->doneby}}</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="dateProcess[3]" id="dateProcess[3]" value="{{$HomogenizingList->dateProcess}}" class="form-control"></td>
-                                            <td>Lot No.: 3</td>
-                                            <td><input type="text" name="qty[3]" value="{{$HomogenizingList->qty}}" id="qty[3]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[3]" value="{{$HomogenizingList->stratTime}}" id="stratTime[3]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[3]" value="{{$HomogenizingList->endTime}}" id="endTime[3]" class="form-control"></td>
-                                            <td><select class="form-control select" value="{{$HomogenizingList->doneby}}" id="doneby[3]">
-                                                    <option>{{$HomogenizingList->doneby}}</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="dateProcess[4]" value="{{$HomogenizingList->dateProcess}}" id="dateProcess[4]" class="form-control"></td>
-                                            <td>Lot No.: 4</td>
-                                            <td><input type="text" name="qty[4]" value="{{$HomogenizingList->qty}}" id="qty[4]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[4]" value="{{$HomogenizingList->stratTime}}" id="stratTime[4]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[4]" value="{{$HomogenizingList->endTime}}" id="endTime[4]" class="form-control"></td>
-                                            <td><select class="form-control select" value="{{$HomogenizingList->doneby}}" id="doneby[4]">
-                                                    <option>{{$HomogenizingList->doneby}}</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="dateProcess[5]" value="{{$HomogenizingList->dateProcess}}" id="dateProcess[5]" class="form-control"></td>
-                                            <td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
-                                            <td><input type="text" name="qty[5]" value="{{$HomogenizingList->qty}}" id="qty[5]" class="form-control"></td>
-                                            <td><input type="text" name="stratTime[5]" value="{{$HomogenizingList->stratTime}}" id="stratTime[5]" class="form-control"></td>
-                                            <td><input type="text" name="endTime[5]" value="{{$HomogenizingList->endTime}}" id="endTime[5]" class="form-control"></td>
-                                            <td><select class="form-control select" value="{{$HomogenizingList->doneby}}" id="doneby[5]">
-                                                    <option>{{$HomogenizingList->doneby}}</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
-                                        </tr>
-                                    </tbody>
+
+                                    @endforeach
+                                    @endif
+
+                                  </tbody>
                                 </table>
                             </div>
                             <div class="col-12">
@@ -1374,7 +1337,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
+                                <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
+
                                 </div>
                             </div>
                         </div>

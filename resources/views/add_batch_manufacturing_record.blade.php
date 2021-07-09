@@ -64,7 +64,14 @@
 
                     <li><a role="tab" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
 
-                    <li><a role="tab" data-toggle="tab" href="#addLots">Lots</a></li>
+                    <li><a role="tab" data-toggle="tab" href="#addLots_listing">Lots </a></li>
+
+                    <!-- <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">  Lots<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a role="tab" data-toggle="tab" href="#addLots_listing">Lots Listing</a></li>
+                            <li><a role="tab" data-toggle="tab" href="#addLots">Add lots</a></li>
+                        </ul>
+                    </li> -->
 
                     <li><a role="tab" data-toggle="tab" href="#homogenizing">Homogenizing</a></li>
 
@@ -204,9 +211,9 @@
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
                                         <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">-->
-                                            <?php 
+                                            <?php
                                                 $proId = isset($batchdetails['proName'])?$batchdetails['proName']:'';
-                                                $proName = isset($product[$proId])?$product[$proId]:'Choose Product Name'; 
+                                                $proName = isset($product[$proId])?$product[$proId]:'Choose Product Name';
                                                 $rawMaterialId = isset($requestion_details[0]->id)?$requestion_details[0]->id:'';
                                                 $rawMaterialName = isset($requestion_details[0]->material_name)?$requestion_details[0]->material_name:'';
                                             ?>
@@ -215,7 +222,7 @@
                                             {{$proName}}
                                             </option>
                                         </select>
-                                        
+
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                                         @endif
@@ -947,6 +954,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+
                                     <table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
                                         <thead>
                                             <tr>
@@ -1037,6 +1045,48 @@
                             </div>
                         </form>
                     </div>
+                    <div id="addLots_listing" class="tab-pane fade">
+
+                    <div class="form-group">
+                    <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Add lots</a>
+                                    </div>
+                    @if(isset($lotsdetails))
+                        <table class="table table-hover table-bordered datatable" id="examplereq">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Product Name</th>
+                                    <th>Bmr.No</th>
+                                    <th>lot.No</th>
+                                    <th>batch.No</th>
+                                    <th>RefMfr.No</th>
+                                    <th>Date</th>
+                                    <th>Reactor No.</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if($lotsdetails)
+                                @foreach($lotsdetails as $lots)
+                                <tr>
+                                    <td>{{$loop->index +1}}</td>
+                                    <td>{{$lots->material_name}}</td>
+                                    <td>{{$lots->bmrNo}}</td>
+                                    <td>{{$lots->lotNo}}</td>
+                                    <td>{{$lots->batchNo}}</td>
+                                    <td>{{$lots->refMfrNo}}</td>
+                                    <td>{{$lots->Date?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
+                                    <td>{{$lots->ReactorNo}}</td>
+                                </tr>
+                                @endforeach
+                                @endif
+
+                            </tbody>
+                        </table>
+                        @endif
+                    </div>
                     <div id="addLots" class="tab-pane fade">
                        <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_lots') }}">
                             @csrf
@@ -1045,7 +1095,7 @@
                                 <div class="form-group">
                                     <label for="proName" class="active">Product Name</label>
                                     <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                                    {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) }}
+                                    {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
 
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
