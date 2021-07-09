@@ -1142,7 +1142,7 @@ class ManufactureProcessController extends Controller
 
         $sequenceId = 1;
         if (isset($request->sequenceId)) {
-            $sequenceId = (int)$request->sequenceId + 3;
+            $sequenceId = (int)$request->sequenceId + 1;
         }
         if ($result) {
             return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
@@ -1343,7 +1343,7 @@ class ManufactureProcessController extends Controller
 
                             $sequenceId = 1;
                             if (isset($request->sequenceId)) {
-                                $sequenceId = (int)$request->sequenceId + 2;
+                                $sequenceId = (int)$request->sequenceId + 1;
                             }
                             if ($result) {
                                 return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
@@ -1443,7 +1443,7 @@ class ManufactureProcessController extends Controller
 
                  $sequenceId = 1;
                 if (isset($request->sequenceId)) {
-                    $sequenceId = (int)$request->sequenceId + 2;
+                    $sequenceId = (int)$request->sequenceId + 1;
                 }
 
                 if ($result) {
