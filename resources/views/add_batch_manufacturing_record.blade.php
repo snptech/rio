@@ -118,25 +118,25 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="ProductionCommencedon" class="active">Production Commenced on</label>
-                                        <input type="date" class="form-control" name="ProductionCommencedon" id="ProductionCommencedon" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control" name="ProductionCommencedon" id="ProductionCommencedon" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="ProductionCompletedon" class="active">Production Completed on</label>
-                                        <input type="date" class="form-control" name="ProductionCompletedon" id="ProductionCompletedon" placeholder="" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control" name="ProductionCompletedon" id="ProductionCompletedon" placeholder="" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="ManufacturingDate" class="active">Manufacturing Date</label>
-                                        <input type="date" class="form-control" name="ManufacturingDate" id="ManufacturingDate" placeholder="" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control" name="ManufacturingDate" id="ManufacturingDate" placeholder="" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="RetestDate" class="active">Retest Date</label>
-                                        <input type="date" class="form-control" name="RetestDate" id="RetestDate" placeholder="" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control" name="RetestDate" id="RetestDate" placeholder="" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -193,31 +193,43 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
-                                   -->
-                                        {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) }}
+                                        <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">-->
 
+                                            <?php 
+                                                $proId = isset($batchdetails['proName'])?$batchdetails['proName']:'';
+                                                $proName = isset($product[$proId])?$product[$proId]:'Choose Product Name'; 
+                                                $rawMaterialId = isset($requestion_details[0]->id)?$requestion_details[0]->id:'';
+                                                $rawMaterialName = isset($requestion_details[0]->material_name)?$requestion_details[0]->material_name:'';
+                                            ?>
+                                        <select name="proName" id="proName" readonly class="form-control select">
+                                            <option value="{{$proId}}" class="form-control" selected="selected">
+                                            {{$proName}}
+                                            </option>
+                                        </select>
+                                        
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                                         @endif
+
+                                       <!--  {!! Form::select("proName", $product, isset($batchdetails->proName)?$batchdetails->proName:old("proName"), array("class"=>"form-control select","name"=>"proName","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) !!} -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old('bmrNo') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNoI">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNoI") }}" readonly>
+                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNoI') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old('refMfrNo') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -232,17 +244,14 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="rawMaterialName" class="active">Raw Material</label>
-                                                    <select class="form-control select" name="rawMaterialName[]" id="rawMaterialName">
-                                                        <option>Select</option>
-                                                        <option>Material Name</option>
-                                                    </select>
+                                                    <select name="rawMaterialName[]" class="form-control" readonly><option value="{{$rawMaterialId}}" selected="selected">{{$rawMaterialName}}</option></select>
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
+                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($requestion_details[0]->Quantity)?$requestion_details[0]->Quantity:''}}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
@@ -254,7 +263,7 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="date" class="active">Date</label>
-                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value={{ date("Y-m-d") }}>
+                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -283,6 +292,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <input type="hidden" name="currentForm" value="#billOfRawMaterial">
+                                        <input type="hidden" name="nextForm" value="#requisitionpacking">
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
                                     </div>
                                 </div>
@@ -296,6 +307,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="from" class="active">From</label>
+
                                         {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","placeholder"=>"From")) }}
 
 
@@ -310,13 +322,13 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly>
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNo') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="Date" class="active">Date</label>
-                                        <input type="date" class="form-control calendar" name="Date" id="Date" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control calendar" name="Date" id="Date" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
 
@@ -356,15 +368,15 @@
                                         </select> -->
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+<!--                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ApprovedBy">Approved By</label>
                                         <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
-                                            <!-- <option>Select</option>
+                                            <option>Select</option>
                                             <option>Manager Store</option>
-                                        </select> -->
+                                        </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="Remark" class="active">Note / Remark</label>
@@ -373,7 +385,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old("batch_id") }}" />
+                                        <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
                                     </div>
                                 </div>
@@ -530,7 +542,7 @@
                                         <label for="proName" class="active">Product Name</label>
                                         <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)">
                                    -->
-                                        {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name","disabled"=>"disabled")) }}
+                                        {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
 
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
@@ -540,19 +552,19 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No." value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old('bmrNo') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNoI">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNoI") }}" readonly>
+                                        <input type="text" class="form-control" name="batchNoI" id="batchNoI" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNoI') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
+                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No." value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old('refMfrNo') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -597,7 +609,7 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="date" class="active">Date</label>
-                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value={{ date("Y-m-d") }}>
+                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -626,6 +638,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <input type="hidden" name="currentForm" value="#billOfRawMaterialpacking">
+                                        <input type="hidden" name="nextForm" value="#listOfEquipment">
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
                                     </div>
                                 </div>
@@ -635,31 +649,35 @@
                     <div id="requisitionpacking" class="tab-pane fade">
                         <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_insert') }}">
                         @csrf
+                        <?php $from = Session::get('from');
+                             $to = Session::get('to');
+                             $fromdepartment = isset($from)?[$from => $department[$from]]:$department ;
+                             $todepartment = isset($to)?[$to => $department[$to]]:$department ;
+
+                              ?>
                         <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="from" class="active">From</label>
-                                        {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","placeholder"=>"From")) }}
-
-
+                                        {{ Form::select("from",$fromdepartment,old("from",$from),array("class"=>"form-control select","id"=>"from","placeholder"=>"Choose Department Name")) }}
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="to" class="active">To</label>
-                                        {{ Form::select("to",$department,old("to"),array("class"=>"form-control select","id"=>"to","placeholder"=>"To")) }}
+                                        {{ Form::select("to",$todepartment,old("to",$to),array("class"=>"form-control select","id"=>"to","placeholder"=>"Choose Department Name")) }}
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly>
+                                        <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNo') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="Date" class="active">Date</label>
-                                        <input type="date" class="form-control calendar" name="Date" id="Date" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control calendar" name="Date" id="Date" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
 
@@ -674,8 +692,8 @@
                                             <span class="add-count">1</span>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                    <input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName" placeholder="">
+                                                    <label for="rawMaterialName" class="active">Packing Material Name</label>
+                                                    <input type="text" class="form-control" name="rawMaterialName[]" id="rawMaterialName" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
@@ -703,15 +721,15 @@
                                         </select> -->
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+<!--                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ApprovedBy">Approved By</label>
                                         <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
-                                            <!-- <option>Select</option>
+                                            <option>Select</option>
                                             <option>Manager Store</option>
-                                        </select> -->
+                                        </select>
                                     </div>
-                                </div>
+                                </div>  -->
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="Remark" class="active">Note / Remark</label>
@@ -720,6 +738,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <input type="hidden" name="batch_id" id="batch_id" value="{{isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
+                                        <input type="hidden" name="currentForm" value="#requisitionpacking">
+                                        <input type="hidden" name="nextForm" value="#issualofrequisitionpacking">
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
                                     </div>
                                 </div>
@@ -735,13 +756,15 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="from" class="active">From</label>
-                                        <input type="text" class="form-control" name="from" id="from" placeholder="From">
+                                         {{ Form::select("from",$fromdepartment,old("from",$from),array("class"=>"form-control select","id"=>"from","placeholder"=>"Choose Department Name")) }}
+                                        <!-- <input type="text" class="form-control" name="from" id="from" placeholder="From"> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="to" class="active">To</label>
-                                        <input type="text" class="form-control" name="to" id="to" placeholder="To">
+                                         {{ Form::select("to",$todepartment,old("to",$to),array("class"=>"form-control select","id"=>"to","placeholder"=>"Choose Department Name")) }}
+                                        <!-- <input type="text" class="form-control" name="to" id="to" placeholder="To"> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -753,7 +776,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="Date" class="active">Date</label>
-                                        <input type="date" class="form-control calendar" name="Date" id="Date" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control calendar" name="Date" id="Date" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -792,7 +815,7 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="ARDate" class="active">Date</label>
-                                                    <input type="date" class="form-control" name="ARDate[]" id="ARDate" value={{ date("Y-m-d") }}>
+                                                    <input type="date" class="form-control" name="ARDate[]" id="ARDate" value="{{ date('Y-m-d') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -1068,7 +1091,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="Date">Date</label>
-                                    <input type="date" class="form-control" name="Date" id="Date" placeholder="" value={{ date("Y-m-d") }}>
+                                    <input type="date" class="form-control" name="Date" id="Date" placeholder="" value="{{ date('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1095,7 +1118,7 @@
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="Date">Date</label>
-                                    <input type="date" class="form-control" name="Process_date" id="Process_date " placeholder="" value={{ date("Y-m-d") }}>
+                                    <input type="date" class="form-control" name="Process_date" id="Process_date " placeholder="" value="{{ date('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -1247,7 +1270,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="ManufacturerDate" class="active">Date</label>
-                                        <input type="date" class="form-control calendar" name="ManufacturerDate" id="ManufacturerDate" value={{ date("Y-m-d") }}>
+                                        <input type="date" class="form-control calendar" name="ManufacturerDate" id="ManufacturerDate" value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -1627,7 +1650,7 @@
                 inlineRadioOptions: "required",
                 approval: "required",
                 approvalDate: "required",
-                checkedByI: "required",
+                // checkedByI: "required",
 
             },
             messages: {
@@ -1647,7 +1670,7 @@
                 inlineRadioOptions: "Please  Enter The Name inlineRadioOptions",
                 approval: "Please  Enter The Name approval",
                 approvalDate: "Please  Enter The Name approvalDate",
-                checkedByI: "Please  Enter The Name checkedBy",
+                //checkedByI: "Please  Enter The Name checkedBy",
             },
         });
         $("#add_batch_manufacturing_bill").validate({

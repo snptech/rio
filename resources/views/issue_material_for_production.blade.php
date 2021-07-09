@@ -39,7 +39,7 @@
                             <th>Material</th>
                             <th>Opening Bal</th>
                             <th>Batch No</th>
-                            <th>Viscosity</th>
+<!--                             <th>Viscosity</th -->>
                             <th>Issual Date</th>
                             <th>Issued Quantity</th>
 
@@ -62,7 +62,7 @@
                             <td> {{$temp->material_name}}</td>
                             <td> {{$temp->opening_bal}}</td>
                             <td> {{$temp->rbatch}}</td>
-                            <td> {{$temp->viscosity}}</td>
+<!--                             <td> {{ //$temp->viscosity}}</td> -->
                             <td> {{$temp->issual_date}}</td>
                             <td> {{$temp->issued_quantity}}</td>
                             <td> {{$temp->finished_batch_no}}</td>

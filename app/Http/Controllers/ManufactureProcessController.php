@@ -215,8 +215,11 @@ class ManufactureProcessController extends Controller
     {
         return view('add_batch_manufacturing_record_bill');
     }
+
     public function add_batch_manufacturing_recorde_insert(Request $request)
     {
+       $request->batchNo = isset($request->batchNo)?$request->batchNo:[0 =>$request->batchNoI];
+
         $arrRules = [
             "proName" => "required",
             "bmrNo" => "required",
@@ -244,9 +247,9 @@ class ManufactureProcessController extends Controller
             "checkedBy" => "This :attribute field is required.",
 
         ];
-
-        $validateData = $request->validate($arrRules, $arrMessages);
-
+        
+        //$validateData = $request->validate($arrRules, $arrMessages);
+        
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNoI'] = $request->batchNoI;
@@ -259,6 +262,7 @@ class ManufactureProcessController extends Controller
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
         $BillOfRwaMaterial_id = BillOfRwaMaterial::Create($arr);
+
         if ($BillOfRwaMaterial_id->id) {
             foreach ($request->rawMaterialName as $key => $value) {
                 $arr_data['rawMaterialName'] = $value;
@@ -269,9 +273,10 @@ class ManufactureProcessController extends Controller
                 $arr_data['bill_of_raw_material_id'] = $BillOfRwaMaterial_id->id;
                 BillOfRawMaterialsDetails::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record')->with('success', "Data Bill Of Raw Materrila successfully");
+
+            return redirect('add-batch-manufacturing-record'.$request->nextForm)->with('success', "Data Bill Of Raw Materrila successfully");
         } else {
-            return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
+            return redirect('add-batch-manufacturing-record'.$request->currentForm)->with('error', "Something went wrong");
         }
     }
     public function bill_of_raw_material_edit($id)
@@ -473,7 +478,7 @@ class ManufactureProcessController extends Controller
     }
     public function add_batch_equipment_insert(Request $request)
     {
-
+        //dd($request->all());
 
         $arrRules = [
             "proName" => "required.",
@@ -509,9 +514,9 @@ class ManufactureProcessController extends Controller
             }
 
 
-            return redirect("add-batch-manufacturing-record")->with('success', "Data List Of Equipment Successfully");
+            return redirect("add-batch-manufacturing-record#addLots")->with('success', "Data List Of Equipment Successfully");
         } else {
-            return redirect("add-batch-manufacturing-record")->with('error', " Something went wrong");
+            return redirect("add-batch-manufacturing-record#listOfEquipment")->with('error', " Something went wrong");
         }
     }
 
@@ -799,14 +804,18 @@ class ManufactureProcessController extends Controller
                 $a_data['packingmaterial_id'] = $packingmaterial_id->id;
                 MaterialDetails::Create($a_data);
             }
-            return redirect("add-batch-manufacturing-record")->with('success', "Packing Material Successfully");
+            return redirect("add-batch-manufacturing-record#billOfRawMaterialpacking")->with('success', "Packing Material Successfully");
         } else {
-            return redirect("add-batch-manufacturing-record")->with('error', " Something went wrong");
+            return redirect("add-batch-manufacturing-record#issualofrequisitionpacking")->with('error', " Something went wrong");
         }
     }
     public function packing_material_requisition_slip_insert(Request $request)
     {
-
+        if (isset($request->from)) {
+            $request->session()->put('from', $request->from);
+            $request->session()->put('to', $request->to);
+        }
+        //dd($request->all());die;
         $arrRules = [
             "from" => "required",
             "from" => "required",
@@ -860,9 +869,9 @@ class ManufactureProcessController extends Controller
                 $arr_data['type'] = "R";
                 DetailsRequisition::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record#issualofrequisition')->with('success', "Raw Materrila Of Requisition done successfully");
+            return redirect('add-batch-manufacturing-record#issualofrequisitionpacking')->with('success', "Raw Materrila Of Requisition done successfully");
         } else {
-            return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
+            return redirect('add-batch-manufacturing-record#requisitionpacking')->with('error', "Something went wrong");
         }
     }
 }

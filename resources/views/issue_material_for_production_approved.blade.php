@@ -66,8 +66,8 @@
                                 $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
                             @endphp
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                <span class="add-count">{{ $i }}</span>
-                                <div class="col-12 col-md-6 col-lg-4">
+                                <!-- <span class="add-count">{{ $i }}</span> -->
+                                <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label for="PackingMaterialName" class="active">Raw Material Name</label>
                                         <input type="text" class="form-control" name="material_name{{ $mat->details_id }}" id="material_name{{ $i }}" value="{{ $mat->material_name }}" readonly>
@@ -76,12 +76,19 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4">
+                                <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">Requestion Quantity (Kg.)</label>
                                         <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{$mat->Quantity}}" readonly>
                                     </div>
                                 </div>
+                            </div>
+                            <section class="input_fields_wrap_4{{$i}}">
+                            <div class="text-right m-0 mb-4">
+                                <button type="button" class="btn-primary add_field_button" data-id="input_fields_wrap_4{{$i}}">+ Add More</button>
+                            </div>
+                            <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                <span class="add-count">{{ $i }}</span>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">Raw Material Batch</label>
@@ -105,6 +112,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </section>
                             @php $i++; @endphp
                             @endforeach
                             @endif
@@ -149,6 +157,33 @@
 @endsection
 @push('custom-scripts')
 <script>
+    $(document).ready(function() {
+        var k=0;
+        var max_fields      = 16; //maximum input boxes allowed
+        var wrapper         =  '.'+ $(".add_field_button").data('id');// $(".input_fields_wrap_4"); //Fields wrapper
+        var add_button      = $(".add_field_button"); //Add button ID
+        
+        var x = 0; //initlal text box count
+        $(add_button).click(function(e){ //on add input button click
+            e.preventDefault();
+            if(x < max_fields){ //max input box allowed
+                x++; //text box increment
+                k++;
+                wrapper         =  '.'+ $(this).data('id');
+                $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity['+x+']" class="active">Raw Material Batch</label> {{Form::select("rBatch".$mat->details_id, $batch, old("rBatch".$mat->details_id), array("id" =>"rBatch['+x+']","placeholder" => "Choose Batch number", "class"=>"form-control","onchange"=>"getarnoandqty($(this).val(), ".$mat->PackingMaterialName.",'+x+')")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number/Date</label><input type="text" class="form-control" name="arno[{{ $mat->details_id }}]" id="arno'+x+'" placeholder="A.R.N. Number/Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app[{{ $mat->details_id }}]" id="Quantity_app'+x+'" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $mat->details_id }}]" value="{{ $mat->details_id }}"></div></div></div>');
+            } //add mulptple raw material
+            feather.replace()
+            wrapper         =  '.'+ $(this).data('id');
+        });
+        // $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+            
+        //     e.preventDefault(); $(this).parents('div.row').remove(); x--;
+        // });
+    });
+    function removedIV(did){
+        $('.extraDiv_'+did).remove();
+    }
+
     function getarnoandqty(batch,material,postion) {
         var material = material;
         var batch = batch;

@@ -37,7 +37,7 @@
                         <tr>
                             <th>Requisition No</th>
                             <th>Batch No</th>
-                            <th>Viscosity</th>
+                            <!-- <th>Viscosity</th> -->
                             <th>Issual Date</th>
                             <th>Dispensed By</th>
                             <th>Remark</th>
@@ -52,7 +52,6 @@
                         <tr>
                             <td> {{$temp->id}}</td>
                             <td> {{$temp->batchNo}}</td>
-                            <td> {{$temp->Viscosity}}</td>
                             <td> {{$temp->created_at?date("d/m/Y",strtotime($temp->created_at)):""}}</td>
                             <td> {{$temp->name}}</td>
                             <td> {{$temp->remark}}</td>
