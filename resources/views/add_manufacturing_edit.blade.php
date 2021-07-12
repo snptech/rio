@@ -232,7 +232,7 @@
                                     @if(isset($DetailsRequisition))
                                     @foreach($DetailsRequisition as $temp)
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                        <span class="add-count">1</span>
+                                        {{-- <span class="add-count">1</span> --}}
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="PackingMaterialName" class="active">Raw Material Name</label>
@@ -484,7 +484,7 @@
                                     @if(isset($DetailsRequisition))
                                     @foreach($DetailsRequisition as $temp)
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                        <span class="add-count">1</span>
+                                        {{-- <span class="add-count">1</span> --}}
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="PackingMaterialName" class="active">Packing Material Name</label>
@@ -543,112 +543,6 @@
                 @if(isset($res_data_3))
                 <div id="issualofrequisitionpacking" class="tab-pane fade {{($sequenceId=='6')?'in active show':''}}">
 
-                    <form id="packing_material_issuel_vali" method="post" action="{{ route('packing_material_issuel_insert_update') }}">
-                        <input type="hidden" value="6" name="sequenceId">
-                        <input type="hidden" value="{{$res_data_3->id}}" name="id">
-                        @csrf
-
-                        <div class="form-row">
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="from" class="active">From </label>
-                                    {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","value"=>"$res_data_3->from")) }}
-
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="to" class="active">To</label>
-                                    {{ Form::select("to",$department,old("to"),array("class"=>"form-control select","id"=>"to","value"=>"$res_data_3->to")) }}
-
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="batchNoI">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$res_data_3->batchNo}}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="Date" class="active">Date</label>
-                                    <input type="date" class="form-control calendar" name="Date" id="Date" value="{{$res_data_3->Date}}">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group input_fields_wrap_5" id="MaterialReceived">
-                                    <label class="control-label d-flex">Material Details
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-dark add-more add_field_button_5 waves-effect waves-light" type="button">Add More +</button>
-                                        </div>
-                                    </label>
-                                    @if(count($res_3))
-                                    @foreach($res_3 as $temp)
-                                    <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                        <span class="add-count">1</span>
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="form-group">
-                                                <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                <input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName" value="{{$temp->PackingMaterialName}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="form-group">
-                                                <label for="Capacity" class="active">Capacity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Capacity[]" id="Capacity" value="{{$temp->Capacity}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="form-group">
-                                                <label for="Quantity" class="active">Quantity (No)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="form-group">
-                                                <label for="arNo" class="active">AR No.</label>
-                                                <input type="text" class="form-control" name="arNo[]" id="arNo" value="{{$temp->arNo}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="form-group">
-                                                <label for="ARDate" class="active">Date</label>
-                                                <input type="date" class="form-control" name="ARDate[]" id="ARDate" value="{{$temp->ARDate}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                    @endif
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="doneBy">Manager - Store</label>
-                                    <select class="form-control select" name="doneBy" id="doneBy[]">
-                                        <option>{{$res_data_3->doneBy}}</option>
-                                        <option value="Employee Name">Employee Name</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="checkedBy">Officer - Production</label>
-                                    <select class="form-control select" name="checkedBy" id="checkedBy">
-                                        <option>{{$res_data_3->checkedBy}}</option>
-                                        <option value="Employee Name">Employee Name</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
                 @endif
                 @if(isset($res_data))
@@ -1913,7 +1807,6 @@
                 ActualYield: "required",
                 checkedBy: "required",
                 ApprovedBy: "required",
-                Remark: "required",
 
             },
             messages: {
@@ -1944,7 +1837,6 @@
                 ActualYield: "Please  Enter The Name ActualYield",
                 checkedBy: "Please  Enter The Name checkedBy",
                 ApprovedBy: "Please  Enter The Name ApprovedBy",
-                Remark: "Please  Enter The Name Remark",
             },
         });
         $("#add_batch_equipment_vali").validate({
@@ -2011,7 +1903,6 @@
                 Quantity: "required",
                 checkedBy: "required",
                 ApprovedBy: "required",
-                Remark: "required",
             },
             messages: {
                 from: "Please  Enter The from Name",
@@ -2023,7 +1914,6 @@
                 Quantity: "Please  Enter The Quantity Name",
                 checkedBy: "Please  Enter The checkedBy Name",
                 ApprovedBy: "Please  Enter The ApprovedBy Name",
-                Remark: "Please  Enter The Remark Name",
 
             },
         });

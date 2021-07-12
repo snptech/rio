@@ -221,6 +221,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/bill-of-raw-material', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material'])->name("bill-of-raw-material");
         Route::get('/add-batch-manufacturing-record-bill-of-raw-material', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_bill'])->name("add-batch-manufacturing-record-bill-of-raw-material");
         Route::post('/add_batch_manufacturing_recorde_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_recorde_insert'])->name("add_batch_manufacturing_recorde_insert");
+        Route::post('/add_batch_manufacturing_recorde_insert_packing', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_recorde_insert_packing'])->name("add_batch_manufacturing_recorde_insert_packing");
         Route::get('bill_of_raw_material_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_edit'])->name("bill_of_raw_material_edit");
         Route::get('/bill_of_raw_material_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_delete'])->name("bill_of_raw_material_delete");
         Route::post('/bill_of_raw_material_update', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_update'])->name("bill_of_raw_material_update");
@@ -269,6 +270,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
      // packing material issual slip
          Route::post('/packing_material_issuel_insert', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_issuel_insert'])->name("packing_material_issuel_insert");
          Route::post('/packing_material_requisition_slip_insert', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_insert'])->name("packing_material_requisition_slip_insert");
+         Route::post('/packing_material_requisition_slip_insert_packing', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_insert_packing'])->name("packing_material_requisition_slip_insert_packing");
          Route::post('/packing_material_requisition_slip_update', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_update'])->name("packing_material_requisition_slip_update");
          Route::post('/bill_of_raw_material_packing_update', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material_packing_update'])->name("bill_of_raw_material_packing_update");
          Route::post('/packing_material_requisition_slip_update_1', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_requisition_slip_update_1'])->name("packing_material_requisition_slip_update_1");
