@@ -616,7 +616,7 @@ class ManufactureProcessController extends Controller
     }
     public function add_batch_equipment_insert(Request $request)
     {
-        //dd($request->all());
+        
 
         $arrRules = [
             "proName" => "required.",
@@ -956,7 +956,7 @@ class ManufactureProcessController extends Controller
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
         }
-        //dd($request->all());die;
+        
         $arrRules = [
             "from" => "required",
             "from" => "required",
@@ -1022,7 +1022,7 @@ class ManufactureProcessController extends Controller
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
         }
-        //dd($request->all());die;
+        
         $arrRules = [
             "from" => "required",
             "from" => "required",
@@ -1388,7 +1388,7 @@ class ManufactureProcessController extends Controller
         $arr['ReactorNo'] = $request->ReactorNo;
         $arr['Process_date'] = $request->Process_date;
         $AddLotsl = AddLotsl::Create($arr);
-        dd($request->all());
+        
 
         if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
             (int)$prvCount++;
@@ -1415,7 +1415,7 @@ class ManufactureProcessController extends Controller
                                 $arr_data['process_id'] = $key+1;
                                 $result = Processlots::Create($arr_data);
                             }
-                            // dd($arr_Data['process_id']);
+                            
                             if ($result) {
                                 if ($prvCount == 10) {
                                     return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
