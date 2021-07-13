@@ -39,6 +39,17 @@ class MaterialForProductionController extends Controller
 
         return view('issue_material_for_production_new',$data);
     }
+    public function issue_packing_material()
+    {
+        $data['issue_packing_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
+        ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
+        ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
+        ->where("packing_material_requisition_slip.type","P")
+        // ->orderBy("")
+        ->get();
+
+        return view('issue_packing_material',$data);
+    }
     public function view_issue_material(Request $request)
     {
         if($request->id)
@@ -65,6 +76,12 @@ class MaterialForProductionController extends Controller
         $data['supplier_master']=Supplier::all();
         $data["rawmaterial"] = Rawmeterial::where("material_type","R")->where("material_stock",">",0)->pluck("material_name","id");
         return view('issue_material_for_production_add',$data);
+    }
+    public function issue_packing_material_add()
+    {
+        $data['supplier_master']=Supplier::all();
+        $data["rawmaterial"] = Rawmeterial::where("material_type","P")->where("material_stock",">",0)->pluck("material_name","id");
+        return view('issue_packing_material_add',$data);
     }
     public function issue_material_insert(Request $request)
     {
