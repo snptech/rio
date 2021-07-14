@@ -83,7 +83,8 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="finishedBatchNo">For finished Product Batch No.</label>
-                            <input type="text" class="form-control" name="finished_batch_no" id="finished_batch_no" placeholder="Finished Product Batch No.">
+                            {{-- <input type="text" class="form-control" name="finished_batch_no" id="finished_batch_no" placeholder="Finished Product Batch No." value="{{ Session::get('batchNo') }}"> --}}
+                            {{ Form::select("finished_batch_no",$finishedproducts,old("finished_batch_no"),array("class"=>"form-control select","id"=>"finished_batch_no","placeholder"=>"Choose Product")) }}
                         </div>
                     </div>
 

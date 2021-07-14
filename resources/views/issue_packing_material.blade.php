@@ -62,7 +62,7 @@
                            @if($temp->status == 1)
                             <a href="{{ route('issue_material_view',['id'=>$temp->id]) }}" class="btn action-btn" title="Approved Qty"><i data-feather="eye"></i></a>
                            @else
-                           <a href="{{ route('issue_packing_material',['id'=>$temp->id]) }}" class="btn action-btn" title="Approved Qty"><i data-feather="eye"></i></a>
+                           <a href="{{ route('issue_packing_material',['id'=>$temp->id]) }}" class="btn action-btn" onclick="viewsupp({{$temp->id}})" title="Approved Qty"><i data-feather="eye"></i></a>
                            @endif
 
                             </td>

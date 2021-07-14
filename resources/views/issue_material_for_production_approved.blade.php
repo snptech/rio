@@ -91,7 +91,7 @@
                                 <span class="add-count">{{ $i }}</span>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="Quantity" class="active">Raw Material Batch</label>
+                                        <label for="rBatch" class="active">Raw Material Batch</label>
                                         {{ Form::select("rBatch".$mat->details_id,$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")")) }}
 
 
@@ -100,7 +100,7 @@
 
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="Quantity" class="active">A.R.N. Number/Date</label>
+                                        <label for="arno" class="active">A.R.N. Number/Date</label>
                                         <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="">
                                     </div>
                                 </div>

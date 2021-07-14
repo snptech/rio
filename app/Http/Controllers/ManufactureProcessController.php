@@ -32,6 +32,7 @@ class ManufactureProcessController extends Controller
     {
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name')
             ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
+            ->orderBy('id','desc')
             ->get();
         $request->session()->put('batch', "");
         return view('add_batch_manufacture', $data);
@@ -88,6 +89,9 @@ class ManufactureProcessController extends Controller
 
     public function add_manufacturing_insert(Request $request)
     {
+       $alreadyBatchYN = BatchManufacture::get()->where("batchNo", $request['batchNo'])->count();
+       if(0 < $alreadyBatchYN)
+            return redirect("add-batch-manufacturing-record")->with('error', "Batch No. already Used");
 
         // $arrRules = [
         //     "proName" => "required",
@@ -151,6 +155,7 @@ class ManufactureProcessController extends Controller
             "is_active" => 1,
             "is_delete" => 1,
         ];
+
         $result = BatchManufacture::create($data);
 
         if ($result) {
@@ -350,8 +355,6 @@ class ManufactureProcessController extends Controller
 
     public function add_batch_manufacturing_recorde_insert(Request $request)
     {
-       $request->batchNo = isset($request->batchNo)?$request->batchNo:[0 =>$request->batchNoI];
-
         $arrRules = [
             "proName" => "required",
             "bmrNo" => "required",
@@ -398,7 +401,7 @@ class ManufactureProcessController extends Controller
         if ($BillOfRwaMaterial_id->id) {
             foreach ($request->rawMaterialName as $key => $value) {
                 $arr_data['rawMaterialName'] = $value;
-                $arr_data['batchNo'] = $request->batchNo[$key];
+                $arr_data['batchNo'] = $request->batchNoI;
                 $arr_data['Quantity'] = $request->Quantity[$key];
                 $arr_data['arNo'] = $request->arNo[$key];
                 $arr_data['date'] = $request->date[$key];
@@ -616,8 +619,6 @@ class ManufactureProcessController extends Controller
     }
     public function add_batch_equipment_insert(Request $request)
     {
-        
-
         $arrRules = [
             "proName" => "required.",
             "bmrNo" => "required.",
@@ -955,9 +956,7 @@ class ManufactureProcessController extends Controller
         if (isset($request->from)) {
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
-        }
-        
-        $arrRules = [
+        }$arrRules = [
             "from" => "required",
             "from" => "required",
             "to" => "required",
@@ -1021,9 +1020,7 @@ class ManufactureProcessController extends Controller
         if (isset($request->from)) {
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
-        }
-        
-        $arrRules = [
+        }$arrRules = [
             "from" => "required",
             "from" => "required",
             "to" => "required",
@@ -1414,9 +1411,7 @@ class ManufactureProcessController extends Controller
                                 $arr_data['lot_id'] = $AddLotsl->id;
                                 $arr_data['process_id'] = $key+1;
                                 $result = Processlots::Create($arr_data);
-                            }
-                            
-                            if ($result) {
+                            }if ($result) {
                                 if ($prvCount == 10) {
                                     return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
                                 } else {
@@ -1498,7 +1493,6 @@ class ManufactureProcessController extends Controller
             "dateProcess" => "required",
             "qty" => "required",
             "endTime" => "required",
-            "doneby" => "required",
             "stratTime" => "required",
         ];
         $arrMessages = [
@@ -1512,7 +1506,6 @@ class ManufactureProcessController extends Controller
             "dateProcess" => "This :attribute field is required.",
             "qty" => "This :attribute field is required.",
             "endTime" => "This :attribute field is required.",
-            "doneby" => "This :attribute field is required.",
             "stratTime" => "This :attribute field is required.",
         ];
         //$validateData = $request->validate($arrRules, $arrMessages);
@@ -1534,7 +1527,7 @@ class ManufactureProcessController extends Controller
                 $arr_data['qty'] = $request->qty[$key];
                 $arr_data['stratTime'] = $request->stratTime[$key];
                 $arr_data['endTime'] = $request->endTime[$key];
-                $arr_data['doneby'] = $request->doneby[$key];
+                $arr_data['doneby'] =  \Auth::user()->name;
                 $arr_data['homogenizing_id'] = $Homogenizing_id->id;
                 HomogenizingList::Create($arr_data);
             }

@@ -113,7 +113,9 @@
   <script>
       feather.replace()
     $(document).ready(function() {
-        $('.datatable').DataTable();
+        $('.datatable').DataTable({
+            order: [[ 0, 'desc' ], [ 3, 'asc' ]],
+        });
     });
 
     function viewsupp(id)

@@ -30,6 +30,13 @@
                 </div>
 
                 @endif
+                @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> {{ $message }}</strong>
+                </div>
+
+                @endif
                 @if ($message = Session::get('danger'))
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -112,6 +119,9 @@
                                         <label for="batchNo">Batch No.</label>
                                         <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
                                     </div>
+                                    @if ($errors->has('proName'))
+                                       <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
@@ -262,19 +272,27 @@
                                                 <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button>
                                             </div>
                                         </label>
+                                        @if(isset($requestion))
+                                        @foreach( $requestion_details as $index => $rd )
+                                        {{-- @foreach( $rawMaterialName as ) --}}
                                         <div class="row add-more-wrap after-add-more m-0 mb-4">
                                             <!-- <span class="add-count">1</span> -->
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="rawMaterialName" class="active">Raw Material</label>
-                                                    <select name="rawMaterialName[]" class="form-control" readonly><option value="{{$rawMaterialId}}" selected="selected">{{$rawMaterialName}}</option></select>
+                                                    {{ Form::select("rawMaterialName[]",$rawmaterials,old(),array("class"=>"form-control select")) }}
+
+                                                    {{-- <select name="rawMaterialName[]" class="form-control" readonly><option value="{{$rawMaterialId}}" selected="selected">{{$rawMaterialName}}</option></select> --}}
+                                                    {{-- <select name="rawMaterialName[]" id="rawMaterialName[]" class="form-control select">
+                                                        <option value="{{ $rd->PackingMaterialName }}" selected="selected">{{ $rd->material_name }}</option>
+                                                    </select> --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($requestion_details[0]->Quantity)?$requestion_details[0]->Quantity:''}}" readonly>
+                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($rd->Quantity)?$rd->Quantity:''}}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
@@ -290,6 +308,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -638,7 +658,6 @@
                                             </div>
                                         </div>
                                         @endforeach
-                                        {{-- {{dd($pm)}} --}}
                                         @endif
                                     </div>
                                 </div>
@@ -780,7 +799,7 @@
                     </div>
                      <div id="issualofrequisitionpacking" class="tab-pane fade">
                          @if(isset($requestion))
-                    <table class="table table-hover table-bordered datatable" id="examplereq">
+                    <table class="table table-hover table-bordered datatable" id="examplereq_packing">
                         <thead>
                             <tr>
                                 <th>Requestion No</th>
@@ -872,21 +891,21 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="EquipmentName" class="active">Equipment Name</label>
-                                                    <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
-                                                        <option>Select</option>
-                                                        <option>SS Reactor</option>
-                                                        <option>SS Homogenising Tank</option>
-                                                        <option>Filling Station</option>
+                                                    <select class="form-control select"  onchange='getEquipementCode(this);' name="EquipmentName[]" id="EquipmentName">
+                                                        <option disabled="disabled" selected="selected">Select</option>
+                                                        <option value="1">SS Reactor</option>
+                                                        <option value="2">SS Homogenising Tank</option>
+                                                        <option value="3">Filling Station</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="EquipmentCode" class="active">Equipment Code</label>
-                                                    <select class="form-control select" name="EquipmentCode[]" id="EquipmentCode">
-                                                        <option>Select</option>
-                                                        <option>PR/RC/001</option>
-                                                        <option>PR/RC/002</option>
+                                                    <select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode">
+                                                        <option disabled="disabled" selected="selected">Select</option>
+                                                        <option value="1">PR/RC/001</option>
+                                                        <option value="1">PR/RC/002</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -954,7 +973,6 @@
                                                 <th>Qty (Kg.)</th>
                                                 <th>Start Time (Hrs)</th>
                                                 <th>End Time (Hrs)</th>
-                                                <th>Done by</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -964,10 +982,6 @@
                                                 <td><input type="text" name="qty[1]" id="qty[1]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[1]" id="doneby[1]">
-                                                        <option>Select</option>
-                                                        <option value="Employee Name">Employee Name</option>
-                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[2]" id="dateProcess[2]" class="form-control"></td>
@@ -975,10 +989,6 @@
                                                 <td><input type="text" name="qty[2]" id="qty[2]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[2]"id="doneby[2]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[3]" id="dateProcess[3]" class="form-control"></td>
@@ -986,10 +996,6 @@
                                                 <td><input type="text" name="qty[3]" id="qty[3]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[3]" id="stratTime[3]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[3]" id="endTime[3]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[3]" id="doneby[3]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[4]" id="dateProcess[4]" class="form-control"></td>
@@ -997,10 +1003,6 @@
                                                 <td><input type="text" name="qty[4]" id="qty[4]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[4]" id="doneby[4]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[5]" id="dateProcess[5]" class="form-control"></td>
@@ -1008,10 +1010,6 @@
                                                 <td><input type="text" name="qty[5]" id="qty[5]" class="form-control" value="2000"></td>
                                                 <td><input type="text" name="stratTime[5]" id="stratTime[5]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[5]" id="endTime[5]" class="form-control" value="09:30"></td>
-                                                <td><select class="form-control select" name="doneby[5]" id="doneby[5]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1042,7 +1040,7 @@
                     <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Add lots</a>
                                     </div>
                     @if(isset($lotsdetails))
-                        <table class="table table-hover table-bordered datatable" id="examplereq">
+                        <table class="table table-hover table-bordered datatable" id="examplereq_lots">
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
@@ -1168,7 +1166,6 @@
                                                 {{ Form::select("EquipmentName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"EquipmentName[]","class"=>"form-control select","placeholder"=>"Raw Material Name")) }}
                                             </div>
                                         </div>
-                                        {{-- {{ dd($batchdetails) }} --}}
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="rmbatchno" class="active">Batch No.</label>
@@ -1536,7 +1533,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" name=EquipmentName[] id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" onclick="getEquipementCode(this);" name="EquipmentName[]" id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1721,6 +1718,7 @@
                 approvalDate: "Please  Enter The Name approvalDate",
                 //checkedByI: "Please  Enter The Name checkedBy",
             },
+
         });
         $("#add_batch_manufacturing_bill").validate({
             rules: {
@@ -1996,6 +1994,20 @@
 <script>
     $(document).ready(function() {
         $('#examplereq').DataTable();
+        $('#examplereq_packing').DataTable();
+        $('#examplereq_lots').DataTable();
     });
+    function getEquipementCode(val) {
+        if (val.value == 1) {
+            $(".ct option[value='2']").remove();$(".ct option[value='3']").remove();//$(".ct option[value='1']").remove();
+            // $(val.closest('.ct')).append(`<option value="1"> PR/RC/001 </option><option value="1"> PR/RC/002 </option>`);
+        } else if(val.value == 2){
+            $(".ct option[value='3']").remove();$(".ct option[value='1']").remove();
+            $('.ct').append(`<option value="2"> PR/BT/001 </option><option value="2"> PR/BT/002 </option>`);
+        } else{
+            $(".ct option[value='1']").remove();$(".ct option[value='2']").remove();
+            $('.ct').append(`<option value="3"> PR/FS/001 </option><option value="3"> PR/FS/002 </option>`);
+        }
+    }
 </script>
 @endpush
