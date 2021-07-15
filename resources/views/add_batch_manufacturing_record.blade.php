@@ -2016,7 +2016,7 @@
         var max_fields_20 = 15; //maximum input boxes allowed
         var wrapper_20 = $(".input_fields_wrap_20"); //Fields wrapper
         var add_button_20 = $(".add_field_button_20"); //Add button ID
-        var x = {{isset($lotCount)?$lotCount:2; }}; //initlal text box count
+        var x = 2; //initlal text box count
         $(add_button_20).click(function(e) { //on add input button click
             e.preventDefault();
             if (x < max_fields_20) { //max input box allowed
