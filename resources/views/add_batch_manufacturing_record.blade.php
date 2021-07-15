@@ -962,9 +962,9 @@
                                         <input type="text" class="form-control" id="homoTank" name="homoTank" placeholder="PR/BT/Come Tank number" value="">
                                     </div>
                                 </div>
-
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-
+                                <button type="button" class="btn-primary add_field_button_20 mb-4 float-right">Add More Lots +</button> 
+                                @if(isset($processlots))
                                     <table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
                                         <thead>
                                             <tr>
@@ -975,22 +975,24 @@
                                                 <th>End Time (Hrs)</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input type="date" name="dateProcess[1]" id="dateProcess[1]" class="form-control"></td>
-                                                <td>Lot No.: 1</td>
-                                                <td><input type="text" name="qty[1]" id="qty[1]" class="form-control" value="500"></td>
-                                                <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control" value="09:30"></td>
-                                                <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control" value="11:30"></td>
+                                        <tbody class="input_fields_wrap_20">
+                                            @foreach($processlots as $p_lots)
+                                            <tr>@php $lotCount = $loop->index+1  @endphp                                            
+                                                <td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>
+                                                <td>Lot No.: {{ $p_lots->lotNo }}</td>
+                                                <td><input type="text" name="qty[]" id="qty[1]" class="form-control" value="{{$p_lots->Quantity}}"></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control" value="{{$p_lots->stratTime}}"></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control" value="{{$p_lots->endTime}}"></td>
                                             </tr>
-                                            <tr>
-                                                <td><input type="text" name="dateProcess[2]" id="dateProcess[2]" class="form-control"></td>
+                                            @endforeach
+{{--                                             <tr>
+                                                <td><input type="text" name="dateProcess[]" id="dateProcess[2]" class="form-control"></td>
                                                 <td>Lot No.: 2</td>
-                                                <td><input type="text" name="qty[2]" id="qty[2]" class="form-control" value="500"></td>
-                                                <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control" value="09:30"></td>
-                                                <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control" value="11:30"></td>
-                                            </tr>
-                                            <tr>
+                                                <td><input type="text" name="qty[]" id="qty[2]" class="form-control" value="500"></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[2]" class="form-control" value="11:30"></td>
+                                            </tr> --}}
+                                            {{-- <tr>
                                                 <td><input type="text" name="dateProcess[3]" id="dateProcess[3]" class="form-control"></td>
                                                 <td>Lot No.: 3</td>
                                                 <td><input type="text" name="qty[3]" id="qty[3]" class="form-control" value="500"></td>
@@ -1003,16 +1005,17 @@
                                                 <td><input type="text" name="qty[4]" id="qty[4]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control" value="11:30"></td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="text" name="dateProcess[5]" id="dateProcess[5]" class="form-control"></td>
-                                                <td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
-                                                <td><input type="text" name="qty[5]" id="qty[5]" class="form-control" value="2000"></td>
-                                                <td><input type="text" name="stratTime[5]" id="stratTime[5]" class="form-control" value="09:30"></td>
-                                                <td><input type="text" name="endTime[5]" id="endTime[5]" class="form-control" value="09:30"></td>
-                                            </tr>
+                                            </tr> --}}
                                         </tbody>
+                                            <tr>
+                                                <td><input type="date" name="dateProcess[]" id="dateProcess[15]" class="form-control"></td>
+                                                <td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
+                                                <td><input type="text" name="qty[]" id="qty[15]" class="form-control"  placeholder="2000" value=""></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[15]" class="form-control" placeholder="15"  value=""></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[15]" class="form-control"  placeholder="20" value=""></td>
+                                            </tr>
                                     </table>
+                                    @endif
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
@@ -1967,8 +1970,8 @@
         })
     }
     $(document).ready(function() {
-        var max_fields = 15; //maximum input boxes allowed
         var wrapper = $(".input_fields_wrap_16"); //Fields wrapper
+                                        var max_fields = 15; //maximum input boxes allowedvar add_button = $(".add_field_button_20"); //Add button ID
         var add_button = $(".add_field_button_16"); //Add button ID
 
         var x = 1; //initlal text box count
@@ -2009,5 +2012,29 @@
             $('.ct').append(`<option value="3"> PR/FS/001 </option><option value="3"> PR/FS/002 </option>`);
         }
     }
+    $(document).ready(function() {
+        var max_fields_20 = 15; //maximum input boxes allowed
+        var wrapper_20 = $(".input_fields_wrap_20"); //Fields wrapper
+        var add_button_20 = $(".add_field_button_20"); //Add button ID
+        var x = {{isset($lotCount)?$lotCount:2; }}; //initlal text box count
+        $(add_button_20).click(function(e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields_20) { //max input box allowed
+                x++; //text box increment
+                $(wrapper_20).append('<tr><div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div><td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
+                                        '<td>Lot No.: '+x+'</td>'+
+                                        '<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" value="300"></td>'+
+                                        '<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" value="09:30"></td>'+
+                                        '<td><input type="text" name="endTime[]" id="endTime['+x+']" class="form-control" value="09:30"></td>'+
+                                   '</tr>'); //add input box
+                                      }
+                    feather.replace()
+                });
+        $(wrapper_20).on("click", ".remove_field_20", function(e) { //user click on remove text
+            e.preventDefault();
+            $(this).parents('div.row').remove();
+            x--;
+        })
+    }); 
 </script>
 @endpush

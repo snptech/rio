@@ -55,10 +55,19 @@ class ManufactureProcessController extends Controller
             }
 
             $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)
-             ->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')
-            ->get();
+                                 ->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')
+                                 ->get();
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
+                $lot_id = AddLotsl::select('id')->where("batchNo",$batch)->first();
+                $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batchNo",$batch)
+                // ->groupBy('process_lots.lot_id') ,'process_lots.*'
+                // ->leftJoin('process_lots', 'process_lots.lot_id','=','add_lots_raw_material_detail.add_lots_id')
+                ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
+                ->get();
+                if (isset($processlots) && $processlots)
+                    $data["processlots"] = $processlots;
+
             }
 
             $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->orderBy('id', 'desc')->first();
