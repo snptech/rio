@@ -38,6 +38,7 @@
                             <th>Requisition No</th>
                             <th>Batch No</th>
                             <!-- <th>Viscosity</th> -->
+                            <th>Material Type</th>
                             <th>Issual Date</th>
                             <th>Dispensed By</th>
                             <th>Remark</th>
@@ -52,13 +53,14 @@
                         <tr>
                             <td> {{$temp->id}}</td>
                             <td> {{$temp->batchNo}}</td>
+                            <td> {{($temp->type=='P')?'Packing Material':(($temp->type=='R')?'Raw Material': '')}}</td>
                             <td> {{$temp->created_at?date("d/m/Y",strtotime($temp->created_at)):""}}</td>
                             <td> {{$temp->name}}</td>
                             <td> {{$temp->remark}}</td>
 
                             <td> {!!  $temp->status == 1 ? '<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>' !!}</td>
                             <td>
-                           <!-- <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a>-->
+                            {{-- <a href="{{ route('view_issue_material',['id'=>$temp->id]) }}" class="btn action-btn" data-toggle="tooltip" data-placement="top" title="View"><i data-feather="eye"></i></a> --}}
                            @if($temp->status == 1)
                             <a href="{{ route('issue_material_view',['id'=>$temp->id]) }}" class="btn action-btn" title="Approved Qty"><i data-feather="eye"></i></a>
                            @else

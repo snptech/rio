@@ -8,7 +8,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Batch Manufacturing Records</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Add Batch Manufacturing Records</h4>
                 </div>
             </div>
         </div>
@@ -615,9 +615,9 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group input_fields_wrap" id="MaterialReceived">
                                         <label class="control-label d-flex">Bill of Raw Material Details and Weighing Record
-                                            <div class="input-group-btn">
+                                            {{-- <div class="input-group-btn">
                                                 <button class="btn btn-dark add-more add_field_button_packing waves-effect waves-light" type="button">Add More +</button>
-                                            </div>
+                                            </div> --}}
                                         </label>
                                         @if(isset($requestion_details))
                                         @foreach($requestion_details as $index=>$rd)
@@ -886,12 +886,12 @@
                                                 <button class="btn btn-dark add-more add_field_button_1 waves-effect waves-light" type="button">Add More +</button>
                                             </div>
                                         </label>
-                                        <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                        <div class="row add-more-wrap after-add-more m-0 mb-4" id="equipmentCode">
                                             <!-- <span class="add-count">1</span> -->
                                             <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="EquipmentName" class="active">Equipment Name</label>
-                                                    <select class="form-control select"  onchange='getEquipementCode(this);' name="EquipmentName[]" id="EquipmentName">
+                                                    <select class="form-control select"  onchange='getEquipementCode(this,"#equipmentCode");' name="EquipmentName[]" id="EquipmentName">
                                                         <option disabled="disabled" selected="selected">Select</option>
                                                         <option value="1">SS Reactor</option>
                                                         <option value="2">SS Homogenising Tank</option>
@@ -1536,7 +1536,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" onclick="getEquipementCode(this);" name="EquipmentName[]" id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4" id="equipmentCode"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" onclick="getEquipementCode(this,#equipmentCode);" name="EquipmentName[]" id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -2000,16 +2000,17 @@
         $('#examplereq_packing').DataTable();
         $('#examplereq_lots').DataTable();
     });
-    function getEquipementCode(val) {
-        if (val.value == 1) {
-            $(".ct option[value='2']").remove();$(".ct option[value='3']").remove();//$(".ct option[value='1']").remove();
-            // $(val.closest('.ct')).append(`<option value="1"> PR/RC/001 </option><option value="1"> PR/RC/002 </option>`);
+    function getEquipementCode(val,id) {
+        var id2 =id;
+        if(val.value == 3){
+            $(".ct option[value='1']").remove();$(".ct option[value='2']").remove();
+            $(id2).find('.ct').append(`<option value="3"> PR/FS/001 </option><option value="3"> PR/FS/002 </option>`);
         } else if(val.value == 2){
             $(".ct option[value='3']").remove();$(".ct option[value='1']").remove();
             $('.ct').append(`<option value="2"> PR/BT/001 </option><option value="2"> PR/BT/002 </option>`);
-        } else{
-            $(".ct option[value='1']").remove();$(".ct option[value='2']").remove();
-            $('.ct').append(`<option value="3"> PR/FS/001 </option><option value="3"> PR/FS/002 </option>`);
+        } else if (val.value == 1) {
+            $(".ct option[value='2']").remove();$(".ct option[value='3']").remove();$(".ct option[value='1']").remove();
+            $('.ct').append(`<option value="1"> PR/RC/001 </option><option value="1"> PR/RC/002 </option>`);
         }
     }
     $(document).ready(function() {
@@ -2021,11 +2022,12 @@
             e.preventDefault();
             if (x < max_fields_20) { //max input box allowed
                 x++; //text box increment
-                $(wrapper_20).append('<tr><div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div><td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
+                $(wrapper_20).append('<tr><<td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
                                         '<td>Lot No.: '+x+'</td>'+
-                                        '<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" value="300"></td>'+
-                                        '<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" value="09:30"></td>'+
-                                        '<td><input type="text" name="endTime[]" id="endTime['+x+']" class="form-control" value="09:30"></td>'+
+                                        '<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" placeholder="300"></td>'+
+                                        '<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" placeholder="12"></td>'+
+                                        '<td><input type="text" name="endTime[]" id="endTime['+x+']" class="form-control" placeholder="15"></td>'+
+                                        'div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div>'+
                                    '</tr>'); //add input box
                                       }
                     feather.replace()

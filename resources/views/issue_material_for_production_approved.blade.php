@@ -63,13 +63,21 @@
                             @foreach ($material_details as $mat)
                             @php
                                 $batch  = "";
-                                $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
+                                if ($mat->type == 'P') {
+                                    $batch = App\Models\InwardPackingMaterialItems::where("material",$mat->material)
+                                    ->join('goods_receipt_notes',"goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
+                                    ->pluck("good_receipt_id","goods_receipt_note_items.id");   
+                                }
+                                else
+                                    $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
+
                             @endphp
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                <!-- <span class="add-count">{{ $i }}</span> -->
+                                {{-- <span class="add-count">{{ $i }}</span> --}}
+                                @php $material_type = ($mat->type=='R')? 'Raw Material':(($mat->type=='P')? 'Packing Material' :'') ;   @endphp
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label for="PackingMaterialName" class="active">Raw Material Name</label>
+                                        <label for="PackingMaterialName" class="active">{{$material_type}} Name</label>
                                         <input type="text" class="form-control" name="material_name{{ $mat->details_id }}" id="material_name{{ $i }}" value="{{ $mat->material_name }}" readonly>
                                         <input type="hidden" class="form-control" name="material_name_id{{ $mat->details_id }}" id="material_name_id{{ $i }}" value="{{ $mat->PackingMaterialName }}" readonly>
 
@@ -87,12 +95,13 @@
                             <div class="text-right m-0 mb-4">
                                 <button type="button" class="btn-primary add_field_button" data-id="input_fields_wrap_4{{$i}}">+ Add More</button>
                             </div>
+                            {{-- {{dd($mat)}} --}}
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
                                 <span class="add-count">{{ $i }}</span>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="rBatch" class="active">Raw Material Batch</label>
-                                        {{ Form::select("rBatch".$mat->details_id,$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")")) }}
+                                        <label for="rBatch" class="active">{{$material_type}} Batch</label>
+                                        {{ Form::select("rBatch".$mat->details_id,$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type")) }}
 
 
                                     </div>
@@ -107,7 +116,7 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">Approved Quantity (Kg.)</label>
-                                        <input type="text" class="form-control" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="">
+                                        <input type="text" class="form-control Quantity_app{{ $mat->details_id }}" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="">
                                         <input type="hidden" name="details_id{{ $mat->details_id }}" value="{{ $mat->details_id }}">
                                     </div>
                                 </div>
@@ -162,7 +171,8 @@
         var max_fields      = 16; //maximum input boxes allowed
         var wrapper         =  '.'+ $(".add_field_button").data('id');// $(".input_fields_wrap_4"); //Fields wrapper
         var add_button      = $(".add_field_button"); //Add button ID
-        
+        var idFromButton ;
+
         var x = 0; //initlal text box count
         $(add_button).click(function(e){ //on add input button click
             e.preventDefault();
@@ -170,7 +180,16 @@
                 x++; //text box increment
                 k++;
                 wrapper         =  '.'+ $(this).data('id');
-                $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity['+x+']" class="active">Raw Material Batch</label> {{Form::select("rBatch".$mat->details_id, $batch, old("rBatch".$mat->details_id), array("id" =>"rBatch['+x+']","placeholder" => "Choose Batch number", "class"=>"form-control","onchange"=>"getarnoandqty($(this).val(), ".$mat->PackingMaterialName.",'+x+')")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number/Date</label><input type="text" class="form-control" name="arno[{{ $mat->details_id }}]" id="arno'+x+'" placeholder="A.R.N. Number/Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app[{{ $mat->details_id }}]" id="Quantity_app'+x+'" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $mat->details_id }}]" value="{{ $mat->details_id }}"></div></div></div>');
+                @php 
+                $material_type = isset($material_type)? $material_type: "Raw Material";
+                $details_id    = isset($mat->details_id) ?$mat->details_id: 3;
+                $batch_new     = isset($batch)?$batch:'';
+                $material_name_2 = isset($mat->PackingMaterialName)? $mat->PackingMaterialName:'';
+                @endphp
+                $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
+                 '{{Form::select("rBatch[".$details_id."]", $batch_new, old("rBatch".$details_id), array("id" =>"rBatch$i","placeholder" => "Choose Batch number", "class"=>"form-control","onchange"=>'getarnoandqty($(this).val(),'.$material_name_2.",$i)")) }}'+
+                 '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number/Date</label><input type="text" class="form-control" name="arno[{{ $details_id  }}]" id="arno{{$i}}" placeholder="A.R.N. Number/Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app[{{ $details_id  }}]" id="Quantity_app{{$i}}" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
+                @php  $details_id++ @endphp
             } //add mulptple raw material
             feather.replace()
             wrapper         =  '.'+ $(this).data('id');
@@ -188,22 +207,28 @@
         var material = material;
         var batch = batch;
         var postion = postion;
+        var placeholder;
+        var mat_type = $('#rBatch'+postion).data('id');
         $.ajax({
              url:'{{ route('getmatarialqtyofbatchwitharno') }}',
              method:'POST',
              data:{
                  "id":batch,
                  "rawmaterial":material,
+                 "mat_type":mat_type,
                  "_token":'{{ csrf_token() }}'
              }
          }).success(function(data){
-
-            $("#Quantity_app"+postion).val(data.qty);
+            placeholder = (data.qty!==undefined)? "Current Stock: "+data.qty: 'Enter Approved Qty';
+            $("#Quantity_app"+postion).attr("placeholder",placeholder); //val(data.qty);
+            //$("#Quantity_app"+postion).attr("data-stock",data.qty); //val(data.qty);
             $("#arno"+postion).val(data.arno);
-
          })
     }
+    {{-- console.log($('.Quantity_app{{ $mat->details_id }}').data('stock')) --}}
+    //|lte:"+$('.Quantity_app{{-- $mat->details_id --}}').data('stock'),
     $("#packing_material_requisition_slip").validate({
+
             rules: {
                 from:"required",
                 to:"required",
@@ -211,6 +236,7 @@
                 Date:"required",
                 @if(isset($material_details) && $material_details)
                 @foreach ($material_details as $mat)
+
                 "material_name{{ $mat->details_id }}":"required",
                 "rBatch{{ $mat->details_id }}":"required",
                 "arno{{ $mat->details_id }}":"required",
@@ -220,7 +246,6 @@
                 @endif
                 checkedBy: "required",
                 ApprovedBy:"required"
-
             },
             messages: {
                 from: "Please select from option",

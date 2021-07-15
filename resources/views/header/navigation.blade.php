@@ -38,13 +38,13 @@
       <span class="menu-title">Manufacture Process</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
       <div class="collapse" id="ui-manufacture"><ul class="nav flex-column sub-menu">
       <li class="nav-item">
-      <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch</a></li>
+      <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch Manufacturing Records</a></li>
      {{--   <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a></li>
       <li class="nav-item"><a class="nav-link" href="{{route('list-of-equipment')}}">List of Equipment</a></li>
       <li class="nav-item"><a class="nav-link" href="{{route('line-clearance')}}">Line Clearance Record</a></li>
       <li class="nav-item"><a class="nav-link" href="{{route('add-lots')}}">Add Lots</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{route('packing-detail')}}">Packing</a></li>--}}
-      <li class="nav-item"><a class="nav-link" href="{{route('generate-label')}}">Generate Label</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('packing-detail')}}">Packing</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('generate-label')}}">Generate Label</a></li> --}}
       </ul>
       </div>
       </li>
