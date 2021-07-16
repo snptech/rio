@@ -56,22 +56,21 @@
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group input_fields_wrap_6"  id="MaterialReceived">
                             <label class="control-label d-flex">Material Detail <br />
-<div class="input-group-btn">&nbsp;</div>
+                                <div class="input-group-btn">&nbsp;</div>
                             </label>
                             @if(isset($material_details) && $material_details)
-                            @php $i=1 @endphp
+                            @php  $i=1; @endphp
                             @foreach ($material_details as $mat)
-                            @php
-                                $batch  = "";
-                                if ($mat->type == 'P') {
-                                    $batch = App\Models\InwardPackingMaterialItems::where("material",$mat->material)
-                                    ->join('goods_receipt_notes',"goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
-                                    ->pluck("good_receipt_id","goods_receipt_note_items.id");   
-                                }
-                                else
-                                    $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
-
-                            @endphp
+                                @php
+                                    $batch  = "";
+                                    if ($mat->type == 'P') {
+                                    $batch = App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
+                                        ->join('goods_receipt_notes',"goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
+                                        ->pluck("good_receipt_id","goods_receipt_notes.id");
+                                    }
+                                    else
+                                        $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
+                                @endphp
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
                                 {{-- <span class="add-count">{{ $i }}</span> --}}
                                 @php $material_type = ($mat->type=='R')? 'Raw Material':(($mat->type=='P')? 'Packing Material' :'') ;   @endphp
@@ -95,15 +94,13 @@
                             <div class="text-right m-0 mb-4">
                                 <button type="button" class="btn-primary add_field_button" data-id="input_fields_wrap_4{{$i}}">+ Add More</button>
                             </div>
-                            {{-- {{dd($mat)}} --}}
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
                                 <span class="add-count">{{ $i }}</span>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
+                                        <input type="hidden" name="type{{ $mat->details_id }}" value="{{$mat->type}}">
                                         <label for="rBatch" class="active">{{$material_type}} Batch</label>
                                         {{ Form::select("rBatch".$mat->details_id,$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type")) }}
-
-
                                     </div>
                                 </div>
 
@@ -219,9 +216,11 @@
                  "_token":'{{ csrf_token() }}'
              }
          }).success(function(data){
-            placeholder = (data.qty!==undefined)? "Current Stock: "+data.qty: 'Enter Approved Qty';
-            $("#Quantity_app"+postion).attr("placeholder",placeholder); //val(data.qty);
-            //$("#Quantity_app"+postion).attr("data-stock",data.qty); //val(data.qty);
+            ph_qty = (data.qty!==undefined)? "Current Stock: "+data.qty: 'Enter Approved Quantity';
+            $("#Quantity_app"+postion).attr("placeholder",ph_qty);
+            $("#Quantity_app"+postion).attr("data-stock",data.qty); //val(data.qty);
+            ph_arno = (data.arno=='')? data.arno+"Not Available":'A.R.N. Number/Date';
+            $("#arno"+postion).attr("placeholder",ph_arno);
             $("#arno"+postion).val(data.arno);
          })
     }
@@ -236,7 +235,6 @@
                 Date:"required",
                 @if(isset($material_details) && $material_details)
                 @foreach ($material_details as $mat)
-
                 "material_name{{ $mat->details_id }}":"required",
                 "rBatch{{ $mat->details_id }}":"required",
                 "arno{{ $mat->details_id }}":"required",

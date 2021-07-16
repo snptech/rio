@@ -50,21 +50,19 @@ class ManufactureProcessController extends Controller
 
         if (isset($batch) && $batch) {
             $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo", $batch)->first();
-            if (isset($batchdetails) && $batchdetails) {
+            if (isset($batchdetails) && $batchdetails)
                 $data["batchdetails"] = $batchdetails;
-            }
 
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)
-                                 ->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')
-                                 ->get();
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
                 $lot_id = AddLotsl::select('id')->where("batchNo",$batch)->first();
                 $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batchNo",$batch)
-                // ->groupBy('process_lots.lot_id') ,'process_lots.*'
-                // ->leftJoin('process_lots', 'process_lots.lot_id','=','add_lots_raw_material_detail.add_lots_id')
                 ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
                 ->get();
+                // ->groupBy('process_lots.lot_id') ,'process_lots.*'
+                // ->leftJoin('process_lots', 'process_lots.lot_id','=','add_lots_raw_material_detail.add_lots_id')
+
                 if (isset($processlots) && $processlots)
                     $data["processlots"] = $processlots;
 
@@ -72,7 +70,31 @@ class ManufactureProcessController extends Controller
 
             $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->orderBy('id', 'desc')->first();
             if (isset($data["requestion"]))
-                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+                // $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name","i_details.ar_no_date")->where("requisition_id", $data["requestion"]->id)
+                //                         ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                //                         ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")
+                //                         ->orderBy('id', 'desc')->get();
+                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+
+                if(isset($data["requestion_details"])){
+                $data['billOMaterial'] = DetailsRequisition::select("detail_packing_material_requisition.*","i_details.ar_no_date", "raw_materials.material_name")
+                                        ->where("requisition_id", $data["requestion_details"][0]->requisition_id)
+                                        ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                                        ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")->orderBy('detail_packing_material_requisition.id', 'desc')->get();
+                }
+                if(isset($request->nextForm) && $request->nextForm =='#requisitionpacking'){
+                    $data['requestion_details_p'] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name",)
+                                        ->where("requisition_id", $data["requestion"]->id)
+                                        ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                                        ->orderBy('id', 'desc')->get();
+                // $data['material_data'] = DetailsRequisition::select("detail_packing_material_requisition.*","i_details.ar_no_date", "raw_materials.material_name")
+                //                         ->where("requisition_id", $data["requestion_details"][0]->requisition_id)
+                //                         ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                //                         ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")->orderBy('detail_packing_material_requisition.id', 'desc')->get();
+                                        
+                }
+
+                
         }
         // $data["department"] = Department::pluck("department", "id");
         $data["department"] = Department::get();

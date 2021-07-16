@@ -268,9 +268,9 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group input_fields_wrap" id="MaterialReceived">
                                         <label class="control-label d-flex">Bill of Raw Material Details and Weighing Record
-                                            <div class="input-group-btn">
+                                            {{-- <div class="input-group-btn">
                                                 <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button>
-                                            </div>
+                                            </div> --}}
                                         </label>
                                         @if(isset($requestion))
                                         @foreach( $requestion_details as $index => $rd )
@@ -279,8 +279,9 @@
                                             <!-- <span class="add-count">1</span> -->
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
+                                                    {{-- @php $rw = []; $rw[$rd->PackingMaterialName] = $rawmaterials[$rd->PackingMaterialName]; @endphp --}}
                                                     <label for="rawMaterialName" class="active">Raw Material</label>
-                                                    {{ Form::select("rawMaterialName[]",$rawmaterials,old(),array("class"=>"form-control select")) }}
+                                                    {{ Form::select("rawMaterialName[]",$rawmaterials,old(),array("class"=>"form-control select","readonly")) }}
 
                                                     {{-- <select name="rawMaterialName[]" class="form-control" readonly><option value="{{$rawMaterialId}}" selected="selected">{{$rawMaterialName}}</option></select> --}}
                                                     {{-- <select name="rawMaterialName[]" id="rawMaterialName[]" class="form-control select">
@@ -298,13 +299,14 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="arNo" class="active">AR No.</label>
-                                                    <input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="">
+                                                    
+                                                    <input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="" value="{{isset($billOMaterial[$index]['ar_no_date'])?$billOMaterial[$index]['ar_no_date']:''}}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="date" class="active">Date</label>
-                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}">
+                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -333,6 +335,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+
                                         <input type="hidden" name="currentForm" value="#billOfRawMaterial">
                                         <input type="hidden" name="nextForm" value="#requisitionpacking">
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
@@ -623,6 +626,7 @@
                                         @foreach($requestion_details as $index=>$rd)
                                         <div class="row add-more-wrap after-add-more m-0 mb-4">
                                             <!-- <span class="add-count">1</span> -->
+
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="PackingMaterialName[]" class="active">Packing Material</label>
@@ -693,12 +697,12 @@
                     <div id="requisitionpacking" class="tab-pane fade">
                         <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_insert_packing') }}">
                         @csrf
-                        <?php //$from = Session::get('from');
+                        {{-- <?php //$from = Session::get('from');
                              //$to = Session::get('to');
                              //$fromdepartment = isset($from)?[$from => $department[$from]]:$department ;
                              //$todepartment = isset($to)?[$to => $department[$to]]:$department ;
-                              ?>
-                              <input type="hidden" value="issualofrequisitionpacking" name="nextForm">
+                              ?> --}}
+                        <input type="hidden" value="issualofrequisitionpacking" name="nextForm">
                         <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
@@ -2036,7 +2040,10 @@
             e.preventDefault();
             $(this).parents('div.row').remove();
             x--;
-        })
+        });
+        //    setTimeout(function () { 
+        //     $('.alert').alert('close');
+        // }, 5000);
     }); 
 </script>
 @endpush

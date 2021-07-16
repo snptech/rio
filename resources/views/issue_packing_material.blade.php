@@ -32,7 +32,7 @@
                     <strong>{{ $message }}</strong>
                 </div>
                 @endif
-                <table class="table table-hover table-bordered datatable">
+                <table class="table table-hover table-bordered datatable_p">
                     <thead>
                         <tr>
                             <th>Requisition No</th>
@@ -113,7 +113,9 @@
   <script>
       feather.replace()
     $(document).ready(function() {
-        $('.datatable').DataTable();
+        $('.datatable_p').DataTable({
+        "order": [[ 0, "desc" ]]
+    } );
     });
 
     function viewsupp(id)

@@ -14,6 +14,7 @@ use App\Models\Requisitionissuedmaterialdetails;
 use App\Models\Requisitionissuedmaterial;
 use App\Models\InwardPackingMaterialItems;
 use App\Models\Requisition;
+
 class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
@@ -45,6 +46,7 @@ class MaterialForProductionController extends Controller
         ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
         ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
         ->where("packing_material_requisition_slip.type","P")
+        ->orderBy('id','desc')
         ->get();
 
         return view('issue_packing_material',$data);
@@ -206,13 +208,10 @@ class MaterialForProductionController extends Controller
             ->where("packing_material_requisition_slip.id",$request->id)
             ->first();
 
-            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")//,"gitem.*","gnotes.*","gnotes.goods_receipt_no as details_id")
+            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")
             ->where("requisition_id",$data["issue_material"]->id)
             ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
-            //->join("goods_receipt_note_items as gitem","gitem.material","raw_materials.id")
-            // ->join("goods_receipt_notes as gnotes","gnotes.id" ,"gitem.good_receipt_id")
             ->get();
-
             return view('issue_material_for_production_approved',$data);
         }
         else
@@ -224,9 +223,9 @@ class MaterialForProductionController extends Controller
     {
         if($request->id && $request->rawmaterial)
         {
-            // if($request->mat_type == 'P')
-            //     $items = InwardPackingMaterialItems::where("material",$request->rawmaterial)->where("id",$request->id)->first();
-            // else
+            if($request->mat_type == 'P')
+                $items = InwardPackingMaterialItems::where("material",$request->rawmaterial)->where("good_receipt_id",$request->id)->first();
+            else
                 $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
             
             if($items)
@@ -237,7 +236,7 @@ class MaterialForProductionController extends Controller
 
             }
             else 
-                return response()->json(['qty'=>' already used or in minus','arno'=>'not found']);
+                return response()->json(['qty'=>'Not Available','arno'=>'']);
         }
         else
         {
@@ -249,8 +248,6 @@ class MaterialForProductionController extends Controller
         if($request->id)
         {
             $material_details = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$request->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
-
-
 
             $arrRules = [
                 "from"=>"required",
@@ -330,8 +327,8 @@ class MaterialForProductionController extends Controller
                         $issualdata["approved_qty"] = $request->$appqty;
                         $detailsred = DetailsRequisition::find($request->$detailsid);
                         $detailsred->update($issualdata);
-
                         $rawmeterial = Rawmaterialitems::find($request->$batch);
+                        // dd($request->$batch);
 
                         $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty)));
 

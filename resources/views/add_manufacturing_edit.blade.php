@@ -447,17 +447,14 @@
                         <div class="form-row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
-                                    <label for="from" class="active">From </label>
+                                    <label for="from" class="active">From </label>{{-- "value"=>"$temp->from" --}}
                                     {{ Form::select("from",$department,old("from"),array("class"=>"form-control select","id"=>"from","value"=>"$temp->from")) }}
-
-
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
-                                    <label for="to" class="active">To</label>
+                                    <label for="to" class="active">To</label>{{-- ,"value"=>"$temp->to" --}}
                                     {{ Form::select("to",$department,old("to"),array("class"=>"form-control select","id"=>"to","value"=>"$temp->to")) }}
-
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
