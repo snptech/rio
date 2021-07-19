@@ -30,6 +30,45 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-12 col-xl-6">
                         <div class="form-group">
+                            <label for="from">Department Type</label>
+                            <div>
+
+                                <div class="form-check form-check-inline">
+                                    <input
+                                      class="form-check-input"
+                                      type="radio"
+                                      name="dep_type"
+                                      id="inlineRadio1"
+                                      value="1"
+                                      @if(old('dep_type') == 'W') checked @endif
+                                    />
+                                    <label class="form-check-label" for="inlineRadio1"> Warehouse</label>
+                                  </div>
+
+                                  <div class="form-check form-check-inline">
+                                    <input
+                                      class="form-check-input"
+                                      type="radio"
+                                      name="dep_type"
+                                      id="inlineRadio2"
+                                      value="0"
+                                      @if(old('dep_type') == "D") checked @endif
+                                    />
+                                    <label class="form-check-label" for="inlineRadio2">Department</label>
+                                  </div>
+
+                                  @if ($errors->has('dep_type'))
+                                    <span class="text-danger">{{ $errors->first('dep_type') }}</span>
+                                  @endif
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                        <div class="form-group">
                             <label for="from">Publish</label>
                             <div>
 

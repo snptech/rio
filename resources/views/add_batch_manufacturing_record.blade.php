@@ -8,7 +8,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row page-heading">
                 <div class="col-12 col-lg-8 mb-xl-0 align-self-center align-items-center">
-                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Batch Manufacturing Records</h4>
+                    <h4 class="font-weight-bold d-flex"><i class="menu-icon" data-feather="package"></i>Add Batch Manufacturing Records</h4>
                 </div>
             </div>
         </div>
@@ -27,6 +27,13 @@
                 <div class="alert alert-success alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Current Lot Count: {{ $message }}</strong>
+                </div>
+
+                @endif
+                @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> {{ $message }}</strong>
                 </div>
 
                 @endif
@@ -112,6 +119,9 @@
                                         <label for="batchNo">Batch No.</label>
                                         <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No.">
                                     </div>
+                                    @if ($errors->has('proName'))
+                                       <span class="text-danger">{{ $errors->first('proName') }}</span>
+                                    @endif
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
@@ -258,38 +268,50 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group input_fields_wrap" id="MaterialReceived">
                                         <label class="control-label d-flex">Bill of Raw Material Details and Weighing Record
-                                            <div class="input-group-btn">
+                                            {{-- <div class="input-group-btn">
                                                 <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button>
-                                            </div>
+                                            </div> --}}
                                         </label>
+                                        @if(isset($requestion))
+                                        @foreach( $requestion_details as $index => $rd )
+                                        {{-- @foreach( $rawMaterialName as ) --}}
                                         <div class="row add-more-wrap after-add-more m-0 mb-4">
                                             <!-- <span class="add-count">1</span> -->
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
+                                                    {{-- @php $rw = []; $rw[$rd->PackingMaterialName] = $rawmaterials[$rd->PackingMaterialName]; @endphp --}}
                                                     <label for="rawMaterialName" class="active">Raw Material</label>
-                                                    <select name="rawMaterialName[]" class="form-control" readonly><option value="{{$rawMaterialId}}" selected="selected">{{$rawMaterialName}}</option></select>
+                                                    {{ Form::select("rawMaterialName[]",$rawmaterials,old(),array("class"=>"form-control select","readonly")) }}
+
+                                                    {{-- <select name="rawMaterialName[]" class="form-control" readonly><option value="{{$rawMaterialId}}" selected="selected">{{$rawMaterialName}}</option></select> --}}
+                                                    {{-- <select name="rawMaterialName[]" id="rawMaterialName[]" class="form-control select">
+                                                        <option value="{{ $rd->PackingMaterialName }}" selected="selected">{{ $rd->material_name }}</option>
+                                                    </select> --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($requestion_details[0]->Quantity)?$requestion_details[0]->Quantity:''}}" readonly>
+                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($rd->Quantity)?$rd->Quantity:''}}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="arNo" class="active">AR No.</label>
-                                                    <input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="">
+                                                    
+                                                    <input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="" value="{{isset($billOMaterial[$index]['ar_no_date'])?$billOMaterial[$index]['ar_no_date']:''}}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="date" class="active">Date</label>
-                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}">
+                                                    <input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -313,6 +335,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+
                                         <input type="hidden" name="currentForm" value="#billOfRawMaterial">
                                         <input type="hidden" name="nextForm" value="#requisitionpacking">
                                         <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
@@ -329,7 +352,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="from" class="active">From</label>
-                                        <select name="from" id="from" class="form-control select">
+                                        <select name="from" id="from" class="form-control select" readonly>
                                              @if(count($department))
                                                 @foreach($department as $temp)
                                                     @if($temp->id==2)
@@ -343,7 +366,7 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="to" class="active">To</label>
-                                        <select name="to" id="to" class="form-control select">
+                                        <select name="to" id="to" class="form-control select" readonly>
                                              @if(count($department))
                                                 @foreach($department as $temp)
                                                     @if($temp->id==3)
@@ -370,7 +393,7 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group input_fields_wrap_6" id="MaterialReceived">
                                         <label class="control-label d-flex">Material Detail
-                                            <div class="input-group-btn">
+                                            <div class="input-group-btn text-right">
                                                 <button class="btn btn-dark add-more add_field_button_6 waves-effect waves-light" type="button">Add More +</button>
                                             </div>
                                         </label>
@@ -378,7 +401,7 @@
                                             <span class="add-count">1</span>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="PackingMaterialName" class="active">Raw Material Name</label>
+                                                    <label for="rawMaterialName" class="active">Raw Material Name</label>
                                                     {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}
 
                                                 </div>
@@ -563,8 +586,12 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
-
+                                        {{-- {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }} --}}
+                                        <select name="proName" id="proName" readonly class="form-control select">
+                                            <option value="{{$proId}}" class="form-control" selected="selected">
+                                            {{$proName}}
+                                            </option>
+                                        </select>
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                                         @endif
@@ -591,28 +618,34 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group input_fields_wrap" id="MaterialReceived">
                                         <label class="control-label d-flex">Bill of Raw Material Details and Weighing Record
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button>
-                                            </div>
+                                            {{-- <div class="input-group-btn">
+                                                <button class="btn btn-dark add-more add_field_button_packing waves-effect waves-light" type="button">Add More +</button>
+                                            </div> --}}
                                         </label>
+                                        @if(isset($requestion_details))
+                                        @foreach($requestion_details as $index=>$rd)
                                         <div class="row add-more-wrap after-add-more m-0 mb-4">
                                             <!-- <span class="add-count">1</span> -->
+
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="PackingMaterialName" class="active">Raw Material</label>
-                                                    {{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name")) }}
+                                                    <label for="PackingMaterialName[]" class="active">Packing Material</label>
+                                                    {{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name[]")) }} {{-- 
+                                                    <select name="PackingMaterialName[]" id="material_name[]" class="form-control">
+                                                      <option value="{{$key}}">{{$value}}</option>
+                                                    </select> --}}
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="batchNo" class="active">Batch No.</label>
-                                                   <input type="text" class="form-control" name="batchNo" id="batchNo" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNo') }}" readonly>
+                                                   <input type="text" class="form-control" name="batchNo[]" id="batchNo" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNo') }}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                    <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
+                                                    <input type="text" class="form-control" value="{{isset($rd->Quantity)?$rd->Quantity:''}}" readonly name="Quantity[]" id="Quantity" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
@@ -628,6 +661,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -662,12 +697,12 @@
                     <div id="requisitionpacking" class="tab-pane fade">
                         <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_insert_packing') }}">
                         @csrf
-                        <?php //$from = Session::get('from');
+                        {{-- <?php //$from = Session::get('from');
                              //$to = Session::get('to');
                              //$fromdepartment = isset($from)?[$from => $department[$from]]:$department ;
                              //$todepartment = isset($to)?[$to => $department[$to]]:$department ;
-                              ?>
-                              <input type="hidden" value="issualofrequisitionpacking" name="nextForm">
+                              ?> --}}
+                        <input type="hidden" value="issualofrequisitionpacking" name="nextForm">
                         <div class="form-row">
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
@@ -768,7 +803,7 @@
                     </div>
                      <div id="issualofrequisitionpacking" class="tab-pane fade">
                          @if(isset($requestion))
-                    <table class="table table-hover table-bordered datatable" id="examplereq">
+                    <table class="table table-hover table-bordered datatable" id="examplereq_packing">
                         <thead>
                             <tr>
                                 <th>Requestion No</th>
@@ -812,8 +847,12 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-
-                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                        <select name="proName" id="proName" readonly class="form-control select">
+                                            <option value="{{$proId}}" class="form-control" selected="selected">
+                                            {{$proName}}
+                                            </option>
+                                        </select>
+                                        {{-- {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }} --}}
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                                         @endif
@@ -851,26 +890,26 @@
                                                 <button class="btn btn-dark add-more add_field_button_1 waves-effect waves-light" type="button">Add More +</button>
                                             </div>
                                         </label>
-                                        <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                        <div class="row add-more-wrap after-add-more m-0 mb-4" id="equipmentCode">
                                             <!-- <span class="add-count">1</span> -->
                                             <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="EquipmentName" class="active">Equipment Name</label>
-                                                    <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
-                                                        <option>Select</option>
-                                                        <option>SS Reactor</option>
-                                                        <option>SS Homogenising Tank</option>
-                                                        <option>Filling Station</option>
+                                                    <select class="form-control select"  onchange='getEquipementCode(this,"#equipmentCode");' name="EquipmentName[]" id="EquipmentName">
+                                                        <option disabled="disabled" selected="selected">Select</option>
+                                                        <option value="1">SS Reactor</option>
+                                                        <option value="2">SS Homogenising Tank</option>
+                                                        <option value="3">Filling Station</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="EquipmentCode" class="active">Equipment Code</label>
-                                                    <select class="form-control select" name="EquipmentCode[]" id="EquipmentCode">
-                                                        <option>Select</option>
-                                                        <option>PR/RC/001</option>
-                                                        <option>PR/RC/002</option>
+                                                    <select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode">
+                                                        <option disabled="disabled" selected="selected">Select</option>
+                                                        <option value="1">PR/RC/001</option>
+                                                        <option value="1">PR/RC/002</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -893,8 +932,13 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="proName" class="active">Product Name</label>
-                                        {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name" )) }}
-
+                                        {{-- {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name" )) }}
+                                        --}}
+                                        <select name="proName" id="proName" readonly class="form-control select">
+                                          <option value="{{$proId}}" class="form-control" selected="selected">
+                                            {{$proName}}
+                                          </option>
+                                        </select>
                                        </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -922,9 +966,9 @@
                                         <input type="text" class="form-control" id="homoTank" name="homoTank" placeholder="PR/BT/Come Tank number" value="">
                                     </div>
                                 </div>
-
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-
+                                <button type="button" class="btn-primary add_field_button_20 mb-4 float-right">Add More Lots +</button> 
+                                @if(isset($processlots))
                                     <table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
                                         <thead>
                                             <tr>
@@ -933,42 +977,31 @@
                                                 <th>Qty (Kg.)</th>
                                                 <th>Start Time (Hrs)</th>
                                                 <th>End Time (Hrs)</th>
-                                                <th>Done by</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input type="date" name="dateProcess[1]" id="dateProcess[1]" class="form-control"></td>
-                                                <td>Lot No.: 1</td>
-                                                <td><input type="text" name="qty[1]" id="qty[1]" class="form-control" value="500"></td>
-                                                <td><input type="text" name="stratTime[1]" id="stratTime[1]" class="form-control" value="09:30"></td>
-                                                <td><input type="text" name="endTime[1]" id="endTime[1]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[1]" id="doneby[1]">
-                                                        <option>Select</option>
-                                                        <option value="Employee Name">Employee Name</option>
-                                                    </select></td>
+                                        <tbody class="input_fields_wrap_20">
+                                            @foreach($processlots as $p_lots)
+                                            <tr>@php $lotCount = $loop->index+1  @endphp                                            
+                                                <td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>
+                                                <td>Lot No.: {{ $p_lots->lotNo }}</td>
+                                                <td><input type="text" name="qty[]" id="qty[1]" class="form-control" value="{{$p_lots->Quantity}}"></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control" value="{{$p_lots->stratTime}}"></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control" value="{{$p_lots->endTime}}"></td>
                                             </tr>
-                                            <tr>
-                                                <td><input type="text" name="dateProcess[2]" id="dateProcess[2]" class="form-control"></td>
+                                            @endforeach
+{{--                                             <tr>
+                                                <td><input type="text" name="dateProcess[]" id="dateProcess[2]" class="form-control"></td>
                                                 <td>Lot No.: 2</td>
-                                                <td><input type="text" name="qty[2]" id="qty[2]" class="form-control" value="500"></td>
-                                                <td><input type="text" name="stratTime[2]" id="stratTime[2]" class="form-control" value="09:30"></td>
-                                                <td><input type="text" name="endTime[2]" id="endTime[2]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[2]"id="doneby[2]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
-                                            </tr>
-                                            <tr>
+                                                <td><input type="text" name="qty[]" id="qty[2]" class="form-control" value="500"></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control" value="09:30"></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[2]" class="form-control" value="11:30"></td>
+                                            </tr> --}}
+                                            {{-- <tr>
                                                 <td><input type="text" name="dateProcess[3]" id="dateProcess[3]" class="form-control"></td>
                                                 <td>Lot No.: 3</td>
                                                 <td><input type="text" name="qty[3]" id="qty[3]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[3]" id="stratTime[3]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[3]" id="endTime[3]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[3]" id="doneby[3]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="text" name="dateProcess[4]" id="dateProcess[4]" class="form-control"></td>
@@ -976,24 +1009,17 @@
                                                 <td><input type="text" name="qty[4]" id="qty[4]" class="form-control" value="500"></td>
                                                 <td><input type="text" name="stratTime[4]" id="stratTime[4]" class="form-control" value="09:30"></td>
                                                 <td><input type="text" name="endTime[4]" id="endTime[4]" class="form-control" value="11:30"></td>
-                                                <td><select class="form-control select" name="doneby[4]" id="doneby[4]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="text" name="dateProcess[5]" id="dateProcess[5]" class="form-control"></td>
-                                                <td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
-                                                <td><input type="text" name="qty[5]" id="qty[5]" class="form-control" value="2000"></td>
-                                                <td><input type="text" name="stratTime[5]" id="stratTime[5]" class="form-control" value="09:30"></td>
-                                                <td><input type="text" name="endTime[5]" id="endTime[5]" class="form-control" value="09:30"></td>
-                                                <td><select class="form-control select" name="doneby[5]" id="doneby[5]">
-                                                        <option>Select</option>
-                                                        <option>Employee Name</option>
-                                                    </select></td>
-                                            </tr>
+                                            </tr> --}}
                                         </tbody>
+                                            <tr>
+                                                <td><input type="date" name="dateProcess[]" id="dateProcess[15]" class="form-control"></td>
+                                                <td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
+                                                <td><input type="text" name="qty[]" id="qty[15]" class="form-control"  placeholder="2000" value=""></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[15]" class="form-control" placeholder="15"  value=""></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[15]" class="form-control"  placeholder="20" value=""></td>
+                                            </tr>
                                     </table>
+                                    @endif
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
@@ -1021,7 +1047,7 @@
                     <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Add lots</a>
                                     </div>
                     @if(isset($lotsdetails))
-                        <table class="table table-hover table-bordered datatable" id="examplereq">
+                        <table class="table table-hover table-bordered datatable" id="examplereq_lots">
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
@@ -1065,8 +1091,12 @@
                                 <div class="form-group">
                                     <label for="proName" class="active">Product Name</label>
                                     <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                                    {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
-
+                                    {{-- {{ Form::select("proName",$product,isset($batchdetails->proName)?$batchdetails->proName:old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }} --}}
+                                    <select name="proName" id="proName" readonly class="form-control select">
+                                        <option value="{{$proId}}" class="form-control" selected="selected">
+                                          {{$proName}}
+                                        </option>
+                                      </select>
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1101,10 +1131,11 @@
                                     <label class="control-label d-flex">Process Sheet</label>
                                 </div>
                             </div>
+                            @php   $prvCount = Session::get('prvCount')!==null ? Session::get('prvCount'): (Session::get('prvCount')) ;    @endphp
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="lotNo" class="active">Lot No.</label>
-                                    <input type="text" class="form-control" name="lotNo" id="lotNo" placeholder="Lot No." value="1">
+                                    <input type="text" class="form-control" name="lotNo" id="lotNo" placeholder="Lot No." value="{{ $prvCount }}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
@@ -1134,28 +1165,32 @@
                                         <!-- <span class="add-count">1</span> -->
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
-                                                <label for="EquipmentName" class="active">Raw Material</label>
-                                                <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
+                                                <label for="EquipmentName[]" class="active">Raw Material</label>
+                                                {{-- <select class="form-control select" name="EquipmentName[]" id="EquipmentName[]">
                                                     <option>Select</option>
                                                     <option>Raw Material Name</option>
-                                                </select>
+                                                </select> --}}
+                                                {{ Form::select("EquipmentName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"EquipmentName[]","class"=>"form-control select","placeholder"=>"Raw Material Name")) }}
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="rmbatchno" class="active">Batch No.</label>
-                                                <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno" placeholder="" value="">
+                                                <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[]" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNoI') }}" readonly>
+                                               {{--  <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno" placeholder="" value=""> --}}
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="">
+                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity[]" placeholder="" value="">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @php $doneBy = [\Auth::user()->id => \Auth::user()->name]
+                            @endphp                            
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                 <table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
                                     <thead>
@@ -1175,10 +1210,7 @@
                                             <td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control"></td>
-                                            <td><select class="form-control select"  name="doneby"id="doneby[1]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
+                                            <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[1]","class"=>"form-control select")) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Start heating the reactor and start stirring</td>
@@ -1186,10 +1218,7 @@
                                             <td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime[2]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[2]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
+                                            <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[2]","class"=>"form-control select")) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
@@ -1197,10 +1226,7 @@
                                             <td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime[3]" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime[3]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[3]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
+                                            <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[3]","class"=>"form-control select")) }}</td>
                                         </tr>
                                         <tr>
                                             <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
@@ -1208,10 +1234,7 @@
                                             <td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime[4]" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime[4]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[4]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
+                                            <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[4]","class"=>"form-control select")) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
@@ -1219,10 +1242,7 @@
                                             <td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
                                             <td><input type="text" name="stratTime[]" id="stratTime[5]" class="form-control"></td>
                                             <td><input type="text" name="endTime[]" id="endTime[5]" class="form-control"></td>
-                                            <td><select class="form-control select" id="doneby[5]">
-                                                    <option>Select</option>
-                                                    <option>Employee Name</option>
-                                                </select></td>
+                                            <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[5]","class"=>"form-control select")) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1245,8 +1265,12 @@
                                         <label for="proName" class="active">Product Name</label>
 
                                         <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-
-                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }}
+                                        <select name="proName" id="proName" readonly class="form-control select">
+                                          <option value="{{$proId}}" class="form-control" selected="selected">
+                                            {{$proName}}
+                                          </option>
+                                        </select>
+                                        {{-- {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }} --}}
                                         @if ($errors->has('proName'))
                                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                                         @endif
@@ -1255,19 +1279,19 @@
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="bmrNo" class="active">BMR No.</label>
-                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" placeholder="BMR No.">
+                                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="batchNo">Batch No.</label>
-                                        <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$batch}}" readonly>
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="refMfrNo">Ref. MFR No.</label>
-                                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" placeholder="Ref. MFR No.">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1476,6 +1500,28 @@
             feather.replace()
         });
 
+            $(document).ready(function() {
+        var max_fields = 15; //maximum input boxes allowed
+        var wrapper = $(".input_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_field_button_packing"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(add_button).click(function(e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields) { //max input box allowed
+                x++; //text box increment
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="PackingMaterialName[]" id="packingmaterials[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
+            }
+            feather.replace()
+        });
+
+        $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+            e.preventDefault();
+            $(this).parents('div.row').remove();
+            x--;
+        })
+    });
+
         $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
             e.preventDefault();
             $(this).parents('div.row').remove();
@@ -1494,7 +1540,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" name=EquipmentName[] id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4" id="equipmentCode"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" onclick="getEquipementCode(this,#equipmentCode);" name="EquipmentName[]" id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1561,9 +1607,14 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Raw Material</label><select class="form-control select"  name="EquipmentName[]"id="EquipmentName[' + x + ']"><option>Select</option><option>Raw Material Name</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno[' + x + ']" class="active">Batch No.</label><input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[' + x + ']" placeholder="" value=""></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder="" value=""></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4">'+
+                  '<div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Raw Material</label>'+
+                  '{{ Form::select("EquipmentName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"EquipmentName['+x+']","class"=>"form-control select","placeholder"=>"Raw Material Name")) }}'+
+                    '</div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno[' + x + ']" class="active">Batch No.</label><input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[' + x + ']" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNoI') }}" readonly>'+
+                    '</div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder="" value=""></div></div></div>'); //add input box
             }
             feather.replace()
+            // +                  '<select class="form-control select"  name="EquipmentName[]"id="EquipmentName[' + x + ']"><option>Select</option><option>Raw Material Name</option></select>'
         });
 
         $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
@@ -1674,6 +1725,7 @@
                 approvalDate: "Please  Enter The Name approvalDate",
                 //checkedByI: "Please  Enter The Name checkedBy",
             },
+
         });
         $("#add_batch_manufacturing_bill").validate({
             rules: {
@@ -1922,8 +1974,8 @@
         })
     }
     $(document).ready(function() {
-        var max_fields = 15; //maximum input boxes allowed
         var wrapper = $(".input_fields_wrap_16"); //Fields wrapper
+                                        var max_fields = 15; //maximum input boxes allowedvar add_button = $(".add_field_button_20"); //Add button ID
         var add_button = $(".add_field_button_16"); //Add button ID
 
         var x = 1; //initlal text box count
@@ -1949,6 +2001,49 @@
 <script>
     $(document).ready(function() {
         $('#examplereq').DataTable();
+        $('#examplereq_packing').DataTable();
+        $('#examplereq_lots').DataTable();
     });
+    function getEquipementCode(val,id) {
+        var id2 =id;
+        if(val.value == 3){
+            $(".ct option[value='1']").remove();$(".ct option[value='2']").remove();
+            $(id2).find('.ct').append(`<option value="3"> PR/FS/001 </option><option value="3"> PR/FS/002 </option>`);
+        } else if(val.value == 2){
+            $(".ct option[value='3']").remove();$(".ct option[value='1']").remove();
+            $('.ct').append(`<option value="2"> PR/BT/001 </option><option value="2"> PR/BT/002 </option>`);
+        } else if (val.value == 1) {
+            $(".ct option[value='2']").remove();$(".ct option[value='3']").remove();$(".ct option[value='1']").remove();
+            $('.ct').append(`<option value="1"> PR/RC/001 </option><option value="1"> PR/RC/002 </option>`);
+        }
+    }
+    $(document).ready(function() {
+        var max_fields_20 = 15; //maximum input boxes allowed
+        var wrapper_20 = $(".input_fields_wrap_20"); //Fields wrapper
+        var add_button_20 = $(".add_field_button_20"); //Add button ID
+        var x = 2; //initlal text box count
+        $(add_button_20).click(function(e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields_20) { //max input box allowed
+                x++; //text box increment
+                $(wrapper_20).append('<tr><<td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
+                                        '<td>Lot No.: '+x+'</td>'+
+                                        '<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" placeholder="300"></td>'+
+                                        '<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" placeholder="12"></td>'+
+                                        '<td><input type="text" name="endTime[]" id="endTime['+x+']" class="form-control" placeholder="15"></td>'+
+                                        'div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div>'+
+                                   '</tr>'); //add input box
+                                      }
+                    feather.replace()
+                });
+        $(wrapper_20).on("click", ".remove_field_20", function(e) { //user click on remove text
+            e.preventDefault();
+            $(this).parents('div.row').remove();
+            x--;
+        });
+        //    setTimeout(function () { 
+        //     $('.alert').alert('close');
+        // }, 5000);
+    }); 
 </script>
 @endpush

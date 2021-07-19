@@ -32,6 +32,7 @@ class ManufactureProcessController extends Controller
     {
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name')
             ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
+            ->orderBy('id','desc')
             ->get();
         $request->session()->put('batch', "");
         return view('add_batch_manufacture', $data);
@@ -49,21 +50,51 @@ class ManufactureProcessController extends Controller
 
         if (isset($batch) && $batch) {
             $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo", $batch)->first();
-            if (isset($batchdetails) && $batchdetails) {
+            if (isset($batchdetails) && $batchdetails)
                 $data["batchdetails"] = $batchdetails;
-            }
 
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)
-             ->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')
-            ->get();
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
+                $lot_id = AddLotsl::select('id')->where("batchNo",$batch)->first();
+                $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batchNo",$batch)
+                ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
+                ->get();
+                // ->groupBy('process_lots.lot_id') ,'process_lots.*'
+                // ->leftJoin('process_lots', 'process_lots.lot_id','=','add_lots_raw_material_detail.add_lots_id')
+
+                if (isset($processlots) && $processlots)
+                    $data["processlots"] = $processlots;
+
             }
 
-
-            $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
+            $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->orderBy('id', 'desc')->first();
             if (isset($data["requestion"]))
-                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
+                // $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name","i_details.ar_no_date")->where("requisition_id", $data["requestion"]->id)
+                //                         ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                //                         ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")
+                //                         ->orderBy('id', 'desc')->get();
+                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+
+                if(isset($data["requestion_details"])){
+                $data['billOMaterial'] = DetailsRequisition::select("detail_packing_material_requisition.*","i_details.ar_no_date", "raw_materials.material_name")
+                                        ->where("requisition_id", $data["requestion_details"][0]->requisition_id)
+                                        ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                                        ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")->orderBy('detail_packing_material_requisition.id', 'desc')->get();
+                }
+                if(isset($request->nextForm) && $request->nextForm =='#requisitionpacking'){
+                    $data['requestion_details_p'] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name",)
+                                        ->where("requisition_id", $data["requestion"]->id)
+                                        ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                                        ->orderBy('id', 'desc')->get();
+                // $data['material_data'] = DetailsRequisition::select("detail_packing_material_requisition.*","i_details.ar_no_date", "raw_materials.material_name")
+                //                         ->where("requisition_id", $data["requestion_details"][0]->requisition_id)
+                //                         ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+                //                         ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")->orderBy('detail_packing_material_requisition.id', 'desc')->get();
+                                        
+                }
+
+                
         }
         // $data["department"] = Department::pluck("department", "id");
         $data["department"] = Department::get();
@@ -89,47 +120,49 @@ class ManufactureProcessController extends Controller
 
     public function add_manufacturing_insert(Request $request)
     {
+       $alreadyBatchYN = BatchManufacture::get()->where("batchNo", $request['batchNo'])->count();
+       if(0 < $alreadyBatchYN)
+            return redirect("add-batch-manufacturing-record")->with('error', "Batch No. already Used");
 
-        $arrRules = [
-            "proName" => "required",
-            "bmrNo" => "required",
-            "batchNo" => "required|unique:add_batch_manufacture",
-            "refMfrNo" => "required",
-            "grade" => "required",
-            "BatchSize" => "required",
-            "Viscosity" => "required",
-            "ProductionCommencedon" => "required",
-            "ProductionCompletedon" => "required",
-            "ManufacturingDate" => "required",
-            "RetestDate" => "required",
-            "doneBy" => "required",
-            "checkedBy" => "required",
-            "inlineRadioOptions" => "required",
-            "approval" => "required",
-            "approvalDate" => "required",
-            "checkedByI" => "required",
-
-        ];
-        $arrMessages = [
-            "proName" => "This :attribute field is required.",
-            "bmrNo" => "This :attribute field is required.",
-            "batchNo" => "This :attribute field is required.",
-            "refMfrNo" => "This :attribute field is required.",
-            "grade" => "This :attribute field is required.",
-            "BatchSize" => "This :attribute field is required.",
-            "Viscosity" => "This :attribute field is required.",
-            "ProductionCommencedon" => "This :attribute field is required.",
-            "ProductionCompletedon" => "This :attribute field is required.",
-            "ManufacturingDate" => "This :attribute field is required.",
-            "RetestDate" => "This :attribute field is required.",
-            "doneBy" => "This :attribute field is required.",
-            "checkedBy" => "This :attribute field is required.",
-            "inlineRadioOptions" => "This :attribute field is required.",
-            "inlineRadioOptions" => "This :attribute field is required.",
-            "approval" => "This :attribute field is required.",
-            "approvalDate" => "This :attribute field is required.",
-            "checkedBy" => "This :attribute field is required.",
-        ];
+        // $arrRules = [
+        //     "proName" => "required",
+        //     "bmrNo" => "required",
+        //     "batchNo" => "required|unique:add_batch_manufacture",
+        //     "refMfrNo" => "required",
+        //     "grade" => "required",
+        //     "BatchSize" => "required",
+        //     "Viscosity" => "required",
+        //     "ProductionCommencedon" => "required",
+        //     "ProductionCompletedon" => "required",
+        //     "ManufacturingDate" => "required",
+        //     "RetestDate" => "required",
+        //     "doneBy" => "required",
+        //     "checkedBy" => "required",
+        //     "inlineRadioOptions" => "required",
+        //     "approval" => "required",
+        //     "approvalDate" => "required",
+        //     "checkedByI" => "required",
+        // ];
+        // $arrMessages = [
+        //     "proName" => "This :attribute field is required.",
+        //     "bmrNo" => "This :attribute field is required.",
+        //     "batchNo" => "This :attribute field is required.",
+        //     "refMfrNo" => "This :attribute field is required.",
+        //     "grade" => "This :attribute field is required.",
+        //     "BatchSize" => "This :attribute field is required.",
+        //     "Viscosity" => "This :attribute field is required.",
+        //     "ProductionCommencedon" => "This :attribute field is required.",
+        //     "ProductionCompletedon" => "This :attribute field is required.",
+        //     "ManufacturingDate" => "This :attribute field is required.",
+        //     "RetestDate" => "This :attribute field is required.",
+        //     "doneBy" => "This :attribute field is required.",
+        //     "checkedBy" => "This :attribute field is required.",
+        //     "inlineRadioOptions" => "This :attribute field is required.",
+        //     "inlineRadioOptions" => "This :attribute field is required.",
+        //     "approval" => "This :attribute field is required.",
+        //     "approvalDate" => "This :attribute field is required.",
+        //     "checkedBy" => "This :attribute field is required.",
+        // ];
         // $validated = $request->validate($arrRules,$arrMessages);
         $data = [
             "proName" =>  $request['proName'],
@@ -152,8 +185,8 @@ class ManufactureProcessController extends Controller
             "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
-
         ];
+
         $result = BatchManufacture::create($data);
 
         if ($result) {
@@ -353,8 +386,6 @@ class ManufactureProcessController extends Controller
 
     public function add_batch_manufacturing_recorde_insert(Request $request)
     {
-       $request->batchNo = isset($request->batchNo)?$request->batchNo:[0 =>$request->batchNoI];
-
         $arrRules = [
             "proName" => "required",
             "bmrNo" => "required",
@@ -401,7 +432,7 @@ class ManufactureProcessController extends Controller
         if ($BillOfRwaMaterial_id->id) {
             foreach ($request->rawMaterialName as $key => $value) {
                 $arr_data['rawMaterialName'] = $value;
-                $arr_data['batchNo'] = $request->batchNo[$key];
+                $arr_data['batchNo'] = $request->batchNoI;
                 $arr_data['Quantity'] = $request->Quantity[$key];
                 $arr_data['arNo'] = $request->arNo[$key];
                 $arr_data['date'] = $request->date[$key];
@@ -619,8 +650,6 @@ class ManufactureProcessController extends Controller
     }
     public function add_batch_equipment_insert(Request $request)
     {
-        //dd($request->all());
-
         $arrRules = [
             "proName" => "required.",
             "bmrNo" => "required.",
@@ -655,7 +684,7 @@ class ManufactureProcessController extends Controller
             }
 
 
-            return redirect("add-batch-manufacturing-record#addLots")->with('success', "Data List Of Equipment Successfully");
+            return redirect("add-batch-manufacturing-record#addLots_listing")->with('success', "Data List Of Equipment Successfully");
         } else {
             return redirect("add-batch-manufacturing-record#listOfEquipment")->with('error', " Something went wrong");
         }
@@ -958,9 +987,7 @@ class ManufactureProcessController extends Controller
         if (isset($request->from)) {
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
-        }
-        //dd($request->all());die;
-        $arrRules = [
+        }$arrRules = [
             "from" => "required",
             "to" => "required",
             "batchNo" => "required",
@@ -1023,9 +1050,7 @@ class ManufactureProcessController extends Controller
         if (isset($request->from)) {
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
-        }
-        //dd($request->all());die;
-        $arrRules = [
+        }$arrRules = [
             "from" => "required",
             "from" => "required",
             "to" => "required",
@@ -1076,9 +1101,9 @@ class ManufactureProcessController extends Controller
                 $arr_data['type'] = "R";
                 DetailsRequisition::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record#issualofrequisition')->with('success', "Raw Materrila Of Requisition done successfully");
+            return redirect('add-batch-manufacturing-record#issualofrequisition')->with('success', "Raw Material Of Requisition done successfully");
         } else {
-            return redirect('add-batch-manufacturing-record#requisitionpacking')->with('error', "Something went wrong");
+            return redirect('add-batch-manufacturing-record#requisition')->with('error', "Something went wrong");
         }
     }
     public function packing_material_requisition_slip_update(Request $request)
@@ -1326,59 +1351,56 @@ class ManufactureProcessController extends Controller
     {
 
         $prvCount = AddLotsl::where('batchNo', $request->batchNo)->count('id');
-        if ($prvCount > 5) {
-            return ['message' => 'Already Have 5 Records'];
+        if ($prvCount > 10) {
+            return ['message' => 'Already Have 10 lots Records'];
         }
 
-        $arrRules = [
-            "proName" => "required",
-            "bmrNo" => "required",
-            "batchNo" => "required",
-            "refMfrNo" => "required",
-            "Date" => "required",
-            "lotNo" => "required",
-            "ReactorNo" => "required",
-            "Process_date" => "required",
-            "qty" => "required",
-            "endTime" => "required",
-            "doneby" => "required",
-            "EquipmentName" => "required",
-            "rmbatchno" => "required",
-            "Quantity" => "required",
-            "add_lots_id" => "required",
-            " qty" => "required",
-            "temp" => "required",
-            "stratTime" => "required",
-            "endTime" => "required",
-            "doneby" => "required",
-            "process_id" => "required",
-
-
-        ];
-        $arrMessages = [
-            "proName" => "This :attribute field is required.",
-            "bmrNo" => "This :attribute field is required.",
-            "batchNo" => "This :attribute field is required.",
-            "refMfrNo" => "This :attribute field is required.",
-            "Date" => "This :attribute field is required.",
-            "lotNo" => "This :attribute field is required.",
-            "ReactorNo" => "This :attribute field is required.",
-            "Process_date" => "This :attribute field is required.",
-            "qty" => "This :attribute field is required.",
-            "endTime" => "This :attribute field is required.",
-            "doneby" => "This :attribute field is required.",
-            "EquipmentName" => "This :attribute field is required.",
-            "rmbatchno" => "This :attribute field is required.",
-            "Quantity" => "This :attribute field is required.",
-            "add_lots_id" => "This :attribute field is required.",
-            " qty" => "This :attribute field is required.",
-            "temp" => "This :attribute field is required.",
-            "stratTime" => "This :attribute field is required.",
-            "endTime" => "This :attribute field is required.",
-            "doneby" => "This :attribute field is required.",
-            "process_id" => "This :attribute field is required.",
-
-        ];
+        // $arrRules = [
+        //     "proName" => "required",
+        //     "bmrNo" => "required",
+        //     "batchNo" => "required",
+        //     "refMfrNo" => "required",
+        //     "Date" => "required",
+        //     "lotNo" => "required",
+        //     "ReactorNo" => "required",
+        //     "Process_date" => "required",
+        //     "qty" => "required",
+        //     "endTime" => "required",
+        //     "doneby" => "required",
+        //     "EquipmentName" => "required",
+        //     "rmbatchno" => "required",
+        //     "Quantity" => "required",
+        //     "add_lots_id" => "required",
+        //     " qty" => "required",
+        //     "temp" => "required",
+        //     "stratTime" => "required",
+        //     "endTime" => "required",
+        //     "doneby" => "required",
+        //     "process_id" => "required",
+        // ];
+        // $arrMessages = [
+        //     "proName" => "This :attribute field is required.",
+        //     "bmrNo" => "This :attribute field is required.",
+        //     "batchNo" => "This :attribute field is required.",
+        //     "refMfrNo" => "This :attribute field is required.",
+        //     "Date" => "This :attribute field is required.",
+        //     "lotNo" => "This :attribute field is required.",
+        //     "ReactorNo" => "This :attribute field is required.",
+        //     "Process_date" => "This :attribute field is required.",
+        //     "qty" => "This :attribute field is required.",
+        //     "endTime" => "This :attribute field is required.",
+        //     "doneby" => "This :attribute field is required.",
+        //     "EquipmentName" => "This :attribute field is required.",
+        //     "rmbatchno" => "This :attribute field is required.",
+        //     "Quantity" => "This :attribute field is required.",
+        //     "add_lots_id" => "This :attribute field is required.",
+        //     " qty" => "This :attribute field is required.",
+        //     "temp" => "This :attribute field is required.",
+        //     "stratTime" => "This :attribute field is required.",
+        //     "endTime" => "This :attribute field is required.",
+        //     "doneby" => "This :attribute field is required.",
+        //     "process_id" => "This :attribute field is required.",
+        // ];
 
         //$validateData = $request->validate($arrRules, $arrMessages);
 
@@ -1393,7 +1415,7 @@ class ManufactureProcessController extends Controller
         $arr['ReactorNo'] = $request->ReactorNo;
         $arr['Process_date'] = $request->Process_date;
         $AddLotsl = AddLotsl::Create($arr);
-
+        
 
         if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
             (int)$prvCount++;
@@ -1419,10 +1441,8 @@ class ManufactureProcessController extends Controller
                                 $arr_data['lot_id'] = $AddLotsl->id;
                                 $arr_data['process_id'] = $key+1;
                                 $result = Processlots::Create($arr_data);
-                            }
-                            // dd($arr_Data['process_id']);
-                            if ($result) {
-                                if ($prvCount == 5) {
+                            }if ($result) {
+                                if ($prvCount == 10) {
                                     return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
                                 } else {
                                     return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
@@ -1503,7 +1523,6 @@ class ManufactureProcessController extends Controller
             "dateProcess" => "required",
             "qty" => "required",
             "endTime" => "required",
-            "doneby" => "required",
             "stratTime" => "required",
         ];
         $arrMessages = [
@@ -1517,7 +1536,6 @@ class ManufactureProcessController extends Controller
             "dateProcess" => "This :attribute field is required.",
             "qty" => "This :attribute field is required.",
             "endTime" => "This :attribute field is required.",
-            "doneby" => "This :attribute field is required.",
             "stratTime" => "This :attribute field is required.",
         ];
         //$validateData = $request->validate($arrRules, $arrMessages);
@@ -1539,7 +1557,7 @@ class ManufactureProcessController extends Controller
                 $arr_data['qty'] = $request->qty[$key];
                 $arr_data['stratTime'] = $request->stratTime[$key];
                 $arr_data['endTime'] = $request->endTime[$key];
-                $arr_data['doneby'] = $request->doneby[$key];
+                $arr_data['doneby'] =  \Auth::user()->name;
                 $arr_data['homogenizing_id'] = $Homogenizing_id->id;
                 HomogenizingList::Create($arr_data);
             }

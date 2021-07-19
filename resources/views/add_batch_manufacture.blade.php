@@ -84,7 +84,7 @@
                         @if(count($manufacture))
                         @foreach($manufacture as $temp)
                         <tr>
-                            <td>{{$loop->index+1}}</td>
+                            <td>{{$temp->id}}</td>
                             <td>{{$temp->ManufacturingDate}}</td>
                             <td>{{$temp->material_name}}</td>
                             <td>{{$temp->bmrNo}}</td>
@@ -346,7 +346,9 @@ function() {
 
    <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            order: [[ 0, 'desc' ], [ 3, 'asc' ]],
+        });
     });
 </script>
 @endpush

@@ -171,6 +171,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get("/issue_material_view/{id}",[App\Http\Controllers\MaterialForProductionController::class, 'issue_material_view'])->name("issue_material_view");
         Route::post("/getmatarialqtyofbatchwitharno",[App\Http\Controllers\MaterialForProductionController::class, 'getmatarialqtyofbatchwitharno'])->name("getmatarialqtyofbatchwitharno");
 
+        Route::get('/issue_packing_material', [App\Http\Controllers\MaterialForProductionController::class, 'issue_packing_material'])->name("issue_packing_material");
+        Route::get('/issue_packing_material_add', [App\Http\Controllers\MaterialForProductionController::class, 'issue_packing_material_add'])->name("issue_packing_material_add");
 
         Route::post('view_issue_material', [App\Http\Controllers\MaterialForProductionController::class, 'view_issue_material'])->name("view_issue_material");
         Route::get('/issue_material_for_production_add', [App\Http\Controllers\MaterialForProductionController::class, 'issue_material_for_production_add'])->name("issue_material_for_production_add");

@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Requisitionissuedmaterialdetails;
 use App\Models\Requisitionissuedmaterial;
-
+use App\Models\InwardPackingMaterialItems;
 use App\Models\Requisition;
+
 class MaterialForProductionController extends Controller
 {
     public function issue_material_for_production()
@@ -38,6 +39,17 @@ class MaterialForProductionController extends Controller
         ->get();
 
         return view('issue_material_for_production_new',$data);
+    }
+    public function issue_packing_material()
+    {
+        $data['issue_packing_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
+        ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
+        ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
+        ->where("packing_material_requisition_slip.type","P")
+        ->orderBy('id','desc')
+        ->get();
+
+        return view('issue_packing_material',$data);
     }
     public function view_issue_material(Request $request)
     {
@@ -64,7 +76,15 @@ class MaterialForProductionController extends Controller
     {
         $data['supplier_master']=Supplier::all();
         $data["rawmaterial"] = Rawmeterial::where("material_type","R")->where("material_stock",">",0)->pluck("material_name","id");
+        $data["finishedproducts"] = Rawmeterial::where("material_type","F")->where("material_stock",">",0)->pluck("material_name","id");
         return view('issue_material_for_production_add',$data);
+    }
+    public function issue_packing_material_add()
+    {
+        $data['supplier_master']=Supplier::all();
+        $data["rawmaterial"] = Rawmeterial::where("material_type","P")->where("material_stock",">",0)->pluck("material_name","id");
+        $data["finishedproducts"] = Rawmeterial::where("material_type","F")->where("material_stock",">",0)->pluck("material_name","id");
+        return view('issue_packing_material_add',$data);
     }
     public function issue_material_insert(Request $request)
     {
@@ -103,7 +123,7 @@ class MaterialForProductionController extends Controller
             "dispensed_by"=>"This :attribute field is required.",
             "remark"=>"This :attribute field is required.",
      ];
-      $validateData = $request->validate($arrRules,$arrMessages);
+      //$validateData = $request->validate($arrRules,$arrMessages);
 
 
         $data = [
@@ -119,7 +139,8 @@ class MaterialForProductionController extends Controller
         'excess'=> $request['excess'],
         'wastage'=> $request['wastage'],
         'returned_from_day_store'=> $request['returned_from_day_store'],
-        'closing_balance_qty'=> $request['closing_balance_qty'],
+        'closing_balance_qty'=> $request['opening_bal'] - $request['issued_quantity'],
+        // 'closing_balance_qty'=> $request['closing_balance_qty'],
         'dispensed_by'=> Auth::user()->id,
         'remark'=> $request['remark'],
         ];
@@ -137,7 +158,7 @@ class MaterialForProductionController extends Controller
                 $batch = Rawmaterialitems::find($request["batch_no"]);
                 if(isset($batch)){
                     $bdata["used_qty"] = ($batch->used_qty-$request['issued_quantity']);
-                    $batch->updat($batch);
+                    $batch->update($batch);
                 }
             }
             return redirect("issue_material_for_production")->with('message', "Data created successfully");
@@ -183,12 +204,14 @@ class MaterialForProductionController extends Controller
             ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
             ->join("department as fromdep", "fromdep.id", "=", "packing_material_requisition_slip.from")
             ->join("department as todep", "todep.id", "=", "packing_material_requisition_slip.to")
+            // 
             ->where("packing_material_requisition_slip.id",$request->id)
             ->first();
 
-
-            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$data["issue_material"]->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
-
+            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")
+            ->where("requisition_id",$data["issue_material"]->id)
+            ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
+            ->get();
             return view('issue_material_for_production_approved',$data);
         }
         else
@@ -200,15 +223,20 @@ class MaterialForProductionController extends Controller
     {
         if($request->id && $request->rawmaterial)
         {
-            $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
-
+            if($request->mat_type == 'P')
+                $items = InwardPackingMaterialItems::where("material",$request->rawmaterial)->where("good_receipt_id",$request->id)->first();
+            else
+                $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
+            
             if($items)
-            {
+            {   
                 $data["qty"] = ($items->qty_received_kg-$items->used_qty);
                 $data["arno"] = ($items->ar_no_date);
                 return response()->json($data);
 
             }
+            else 
+                return response()->json(['qty'=>'Not Available','arno'=>'']);
         }
         else
         {
@@ -220,8 +248,6 @@ class MaterialForProductionController extends Controller
         if($request->id)
         {
             $material_details = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$request->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
-
-
 
             $arrRules = [
                 "from"=>"required",
@@ -301,8 +327,8 @@ class MaterialForProductionController extends Controller
                         $issualdata["approved_qty"] = $request->$appqty;
                         $detailsred = DetailsRequisition::find($request->$detailsid);
                         $detailsred->update($issualdata);
-
                         $rawmeterial = Rawmaterialitems::find($request->$batch);
+                        // dd($request->$batch);
 
                         $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty)));
 
@@ -329,7 +355,6 @@ class MaterialForProductionController extends Controller
             ->where("issue_material_production_requestion.requestion_id",$request->id)
             ->first();
 
-
             $data["material_details"] = Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","issue_material_production_requestion_details.id as details_id")->where("issual_material_id",$data["issue_material"]->id)->join("raw_materials","raw_materials.id","issue_material_production_requestion_details.material_id")->get();
 
             return view('issue_material_for_production_approved_view',$data);
@@ -338,5 +363,5 @@ class MaterialForProductionController extends Controller
         {
             redirect(404);
         }
-    }
+    }    
 }

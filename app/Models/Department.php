@@ -13,5 +13,6 @@ class Department extends Model
         'department',
         'publish',
         'id',
+        "department_type"
     ];
 }
