@@ -189,11 +189,11 @@ class ManufactureProcessController extends Controller
             if (isset($processlots) && $processlots) {
                 $data["processlots"] = $processlots;
             }
-            $data["requestion_1"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
-            if (isset($data["requestion_1"]))
-                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_1"]->id)
-                    ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
-        }
+            $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->first();
+            if (isset($data["requestion"]))
+                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
+
+          }
 
         $data['department'] = Department::pluck("department", "id");
 
@@ -961,7 +961,6 @@ class ManufactureProcessController extends Controller
         }
         //dd($request->all());die;
         $arrRules = [
-            "from" => "required",
             "from" => "required",
             "to" => "required",
             "batchNo" => "required",

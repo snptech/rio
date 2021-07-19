@@ -286,7 +286,7 @@
                 <div id="issualofrequisition" class="tab-pane fade {{($sequenceId=='3')?'in active show':''}}">
                 <input type="hidden" value="3" name="sequenceId">
 
-                    @if(isset($requestion_1))
+                    @if(isset($requestion))
                     <table class="table table-hover table-bordered datatable" id="examplereq">
                         <thead>
                             <tr>
@@ -303,19 +303,21 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            @if($requestion_details && $requestion_1)
+                            
+                        @if(isset($requestion_details))
+                            @if($requestion_details && $requestion)
                             @foreach($requestion_details as $temp)
                             <tr>
-                                <td>{{$requestion_1->id}}</td>
-                                <td>{{$requestion_1->batchNo}}</td>
-                                <td>{{$requestion_1->created_at?date("d/m/Y",strtotime($requestion_1->created_at)):""}}</td>
+                                <td>{{$requestion->id}}</td>
+                                <td>{{$requestion->batchNo}}</td>
+                                <td>{{$requestion->created_at?date("d/m/Y",strtotime($requestion->created_at)):""}}</td>
                                 <td>{{$temp->material_name}}</td>
                                 <td>{{$temp->Quantity}}</td>
                                 <td>{{$temp->approved_qty}}</td>
                                 <td>{{($temp->status == 1?"Approved":($temp->status == 2?"Reject":""))}}</td>
                             </tr>
                             @endforeach
+                            @endif
                             @endif
 
                         </tbody>
