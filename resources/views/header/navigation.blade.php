@@ -91,18 +91,13 @@
           </ul>
         </div>
       </li>
-      <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('comingsoon') }}">
           <i class="menu-icon" data-feather="shopping-bag"></i>
           <span class="menu-title">Product Masters</span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('comingsoon') }}">
-          <i class="menu-icon" data-feather="users"></i>
-          <span class="menu-title">User Masters</span>
-        </a>
-      </li>
+      </li> -->
+
 
 
       <li class="nav-item">
@@ -125,6 +120,11 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('action') }}">Actions</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('party_master') }}">Party Master</a></li>
             <li class="nav-item"><a class="nav-link" href="annexure-VI.html">User Permisition</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('comingsoon') }}">
+                  User Masters
+                </a>
+            </li>
           </ul>
         </div>
       </li>
