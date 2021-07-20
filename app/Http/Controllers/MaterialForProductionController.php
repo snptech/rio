@@ -375,9 +375,10 @@ class MaterialForProductionController extends Controller
     {
         if($request->id)
         {
-            $data['issue_material']=Requisitionissuedmaterial::select('issue_material_production_requestion.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
+            $data['issue_material']=Requisitionissuedmaterial::select('issue_material_production_requestion.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize","packing_material_requisition_slip.type")
             ->join("users", "users.id", "=", "issue_material_production_requestion.ApprovedBy")
             ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "issue_material_production_requestion.batch_id")
+            ->join("packing_material_requisition_slip", "packing_material_requisition_slip.id", "=", "issue_material_production_requestion.requestion_id")
             ->where("issue_material_production_requestion.requestion_id",$request->id)
             ->first();
 
