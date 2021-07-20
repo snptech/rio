@@ -1831,7 +1831,7 @@
 			e.preventDefault();
 			if (x < max_fields_20) { //max input box allowed
 				x++; //text box increment
-				$(wrapper_20).append('<tr><<td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
+				$(wrapper_20).append('<tr><td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
 										'<td>Lot No.: '+x+'</td>'+
 										'<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" placeholder="300"></td>'+
 										'<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" placeholder="12"></td>'+

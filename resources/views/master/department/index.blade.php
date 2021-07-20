@@ -29,6 +29,7 @@
                     <tr>
                         <th>#</th>
                         <th>Department</th>
+                        <th>Department Type</th>
                         <th align="center">Publish</th>
                         <th>Created At</th>
                         <th>Updated At</th>
@@ -42,6 +43,7 @@
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{{ $val->department }}</td>
+                        <td>{{ ($val->department_type == "D"?"Department":($val->department_type == "W"?"Warehouse":"")) }}</td>
                         <td align="center"> @if($val->publish ==1) <i data-feather="eye" style="color: green"></i> @else <i data-feather="eye-off" style="color: red"></i> @endif</td>
                         <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
 

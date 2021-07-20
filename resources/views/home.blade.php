@@ -17,17 +17,17 @@
                 <div class="row ml-0">
                     <div class="col-12 col-lg-4">
                         <i class="icon manufacture"></i>
-                        <p>Total Manufacturers</p>
+                        <p>Today's Production</p>
                         <h2>50</h2>
                     </div>
                     <div class="col-12 col-lg-4">
                         <i class="icon supplier"></i>
-                        <p>Total Suppliers</p>
+                        <p>Total Production</p>
                         <h2>100</h2>
                     </div>
                     <div class="col-12 col-lg-4">
                         <i class="icon customers"></i>
-                        <p>Total Customers</p>
+                        <p>Average Yield/ (Production Loss)</p>
                         <h2>20K</h2>
                     </div>
                 </div>
@@ -152,7 +152,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                Inward Raw Material Analysis
+                Final Production Monthaly Analysis
             </div>
             <div class="card-body">
                 <canvas id="canvas" style="height:40vh; width:80vw"></canvas>
@@ -174,7 +174,7 @@
 		var barChartData = {
 			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			datasets: [{
-				label: 'Inward Raw Material',
+				label: 'Final Production',
 				backgroundColor: "#ec1616",
 				borderColor: "#ff0000",
 				borderWidth: 1,

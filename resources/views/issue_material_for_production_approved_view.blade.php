@@ -85,7 +85,7 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">Raw Material Batch</label>
-                                        <input type="text" class="form-control" name="batch{{ $mat->details_id }}" id="batch{{ $i }}" placeholder="" value="{{$batch->batch_no}}" readonly>
+                                        <input type="text" class="form-control" name="batch{{ $mat->details_id }}" id="batch{{ $i }}" placeholder="" value="{{isset($batch->batch_no)?$batch->batch_no:$mat->batch_id}}" readonly>
 
 
                                     </div>
@@ -94,7 +94,7 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">A.R.N. Number/Date</label>
-                                        <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ $batch->ar_no_date }}" readonly>
+                                        <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ isset($batch->ar_no_date)?$batch->ar_no_date:$mat->ar_no_date}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">

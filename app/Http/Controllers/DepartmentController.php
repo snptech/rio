@@ -50,11 +50,13 @@ class DepartmentController extends Controller
     {
         //
         $arrRules = ["department"=>"required|unique:department,department",
+                    "dep_type"=>"required",
                      "publish"=>"required"];
 
 
         $arrMessages = [
         "department"=>"This :attribute field is required.",
+        "dep_type"=>"This :attribute field is required.",
         "publish"=>"This :attribute field is required.",
         ];
 
@@ -68,6 +70,7 @@ class DepartmentController extends Controller
         $data = array();
         $data["department"] = $request->department;
         $data["publish"] = $request->publish;
+        $data["department_type"] = $request->dep_type;
 
         $result = Department::create($data);
 
@@ -121,24 +124,28 @@ class DepartmentController extends Controller
     {
         //
         $arrRules = ["department"=>"required|unique:department,department,".$id,
-                     "publish"=>"required"];
+                    "dep_type"=>"required",
+                    "publish"=>"required"];
 
 
-        $arrMessages = [
-        "department"=>"This :attribute field is required.",
-        "publish"=>"This :attribute field is required.",
-        ];
+            $arrMessages = [
+            "department"=>"This :attribute field is required.",
+            "dep_type"=>"This :attribute field is required.",
+            "publish"=>"This :attribute field is required.",
+            ];
 
-        $attributes = array();
-        foreach ($request->input() as $key => $val)
+            $attributes = array();
+            foreach ($request->input() as $key => $val)
             $attributes[$key] = ucwords(str_replace("_", " ", $key));
 
-        $validateData = $request->validate($arrRules, $arrMessages,$attributes);
+            $validateData = $request->validate($arrRules, $arrMessages,$attributes);
 
 
-        $data = array();
-        $data["department"] = $request->department;
-        $data["publish"] = $request->publish;
+            $data = array();
+            $data["department"] = $request->department;
+            $data["publish"] = $request->publish;
+            $data["department_type"] = $request->dep_type;
+
         $department = Department::find($id);
         $result = $department->update($data);
 

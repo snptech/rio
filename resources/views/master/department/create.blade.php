@@ -30,7 +30,46 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-12 col-xl-6">
                         <div class="form-group">
-                            <label for="from">Publish</label>
+                            <label for="dep_type">Department Type</label>
+                            <div>
+
+                                <div class="form-check form-check-inline">
+                                    <input
+                                      class="form-check-input"
+                                      type="radio"
+                                      name="dep_type"
+                                      id="inlineRadio1"
+                                      value="1"
+                                      @if(old('dep_type') == 'W') checked @endif
+                                    />
+                                    <label class="form-check-label" for="inlineRadio1"> Warehouse</label>
+                                  </div>
+
+                                  <div class="form-check form-check-inline">
+                                    <input
+                                      class="form-check-input"
+                                      type="radio"
+                                      name="dep_type"
+                                      id="inlineRadio2"
+                                      value="0"
+                                      @if(old('dep_type') == "D") checked @endif
+                                    />
+                                    <label class="form-check-label" for="inlineRadio2">Department</label>
+                                  </div>
+
+                                  @if ($errors->has('dep_type'))
+                                    <span class="text-danger">{{ $errors->first('dep_type') }}</span>
+                                  @endif
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                        <div class="form-group">
+                            <label for="publish">Publish</label>
                             <div>
 
                                 <div class="form-check form-check-inline">
@@ -38,11 +77,11 @@
                                       class="form-check-input"
                                       type="radio"
                                       name="publish"
-                                      id="inlineRadio1"
+                                      id="inlineRadio3"
                                       value="1"
                                       @if(old('publish') == 1) checked @endif
                                     />
-                                    <label class="form-check-label" for="inlineRadio1"> Yes</label>
+                                    <label class="form-check-label" for="inlineRadio3"> Yes</label>
                                   </div>
 
                                   <div class="form-check form-check-inline">
@@ -50,11 +89,11 @@
                                       class="form-check-input"
                                       type="radio"
                                       name="publish"
-                                      id="inlineRadio2"
+                                      id="inlineRadio"
                                       value="0"
                                       @if(old('publish') == 0) checked @endif
                                     />
-                                    <label class="form-check-label" for="inlineRadio2">No</label>
+                                    <label class="form-check-label" for="inlineRadio4">No</label>
                                   </div>
 
                                   @if ($errors->has('publish'))
