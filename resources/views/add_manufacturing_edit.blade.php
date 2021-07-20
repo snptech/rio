@@ -20,7 +20,7 @@
                     <ul class="dropdown-menu">
                         <li><a role="tab" class="{{($sequenceId=='2')?'active':''}}" area-selected="{{($sequenceId=='2')?'true':'false'}}" data-toggle="tab" href="#requisition">Requisition</a></li>
                         <li><a role="tab" class="{{($sequenceId=='3')?'active':''}}" area-selected="{{($sequenceId=='3')?'true':'false'}}" data-toggle="tab" href="#issualofrequisition">Issual of requisition</a></li>
-                        <li><a role="tab" class="{{($sequenceId=='4')?'active':''}}" area-selected="{{($sequenceId=='4')?'true':'false'}}" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
+                        <!--<li><a role="tab" class="{{($sequenceId=='4')?'active':''}}" area-selected="{{($sequenceId=='4')?'true':'false'}}" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>-->
 
                     </ul>
                 </li>
@@ -28,7 +28,7 @@
                     <ul class="dropdown-menu">
                         <li><a role="tab" class="{{($sequenceId=='5')?'active':''}}" area-selected="{{($sequenceId=='5')?'true':'false'}}" data-toggle="tab" href="#requisitionpacking">Requisition</a></li>
                         <li><a role="tab" class="{{($sequenceId=='6')?'active':''}}" area-selected="{{($sequenceId=='6')?'true':'false'}}" data-toggle="tab" href="#issualofrequisitionpacking">Issual of requisition</a></li>
-                        <li><a role="tab" class="{{($sequenceId=='7')?'active':''}}" area-selected="{{($sequenceId=='7')?'true':'false'}}" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>
+                        <!--<li><a role="tab" class="{{($sequenceId=='7')?'active':''}}" area-selected="{{($sequenceId=='7')?'true':'false'}}" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li> -->
 
                     </ul>
                 </li>
@@ -229,8 +229,8 @@
                                             <button class="btn btn-dark add-more add_field_button_9 waves-effect waves-light" type="button">Add More +</button>
                                         </div>
                                     </label>
-                                    @if(isset($DetailsRequisition))
-                                    @foreach($DetailsRequisition as $temp)
+                                    @if(isset($requestion_details))
+                                    @foreach($requestion_details as $temp)
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
                                         {{-- <span class="add-count">1</span> --}}
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -286,7 +286,7 @@
                 <div id="issualofrequisition" class="tab-pane fade {{($sequenceId=='3')?'in active show':''}}">
                 <input type="hidden" value="3" name="sequenceId">
 
-                    @if(isset($requestion))
+
                     <table class="table table-hover table-bordered datatable" id="examplereq">
                         <thead>
                             <tr>
@@ -303,10 +303,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         @if(isset($requestion_details))
                             @if($requestion_details && $requestion)
                             @foreach($requestion_details as $temp)
+
                             <tr>
                                 <td>{{$requestion->id}}</td>
                                 <td>{{$requestion->batchNo}}</td>
@@ -314,7 +315,7 @@
                                 <td>{{$temp->material_name}}</td>
                                 <td>{{$temp->Quantity}}</td>
                                 <td>{{$temp->approved_qty}}</td>
-                                <td>{{($temp->status == 1?"Approved":($temp->status == 2?"Reject":""))}}</td>
+                                <td>{!! ($temp->approved_qty > 0?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
                             </tr>
                             @endforeach
                             @endif
@@ -322,7 +323,8 @@
 
                         </tbody>
                     </table>
-                    @endif
+
+
 
                 </div>
                 @if(isset($res_data))
@@ -440,11 +442,12 @@
 
                 </div>
                 @endif
-                @if(isset($requestion))
+
                 <div id="requisitionpacking" class="tab-pane fade {{($sequenceId=='5')?'in active show':''}}">
                     <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_update_1') }}">
                         <input type="hidden" value="4" name="sequenceId">
-                        <input type="hidden" value="{{$requestion->id}}" name="id">
+                        <input type="hidden" value="{{$edit_batchmanufacturing->id}}" name="id">
+                        <input type="hidden" value="{{isset($requestion_packing->id)?$requestion_packing->id:0}}" name="packingid">
                         @csrf
                         <div class="form-row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -462,13 +465,13 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" value="{{$requestion->batchNo}}" name="batchNo" id="batchNo" readonly>
+                                    <input type="text" class="form-control" value="{{isset($edit_batchmanufacturing->batchNo)?$edit_batchmanufacturing->batchNo:old("batchNo")}}" name="batchNo" id="batchNo" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="Date" class="active">Date</label>
-                                    <input type="date" class="form-control calendar" value="{{$requestion->Date}}" name="Date" id="Date" value={{ date("Y-m-d") }}>
+                                    <input type="date" class="form-control calendar" value="{{isset($requestion_packing->Date)?$requestion_packing->Date:date("Y-m-d")}}" name="Date" id="Date" value={{ date("Y-m-d") }}>
                                 </div>
                             </div>
 
@@ -480,14 +483,15 @@
                                             <button class="btn btn-dark add-more add_field_button_6 waves-effect waves-light" type="button">Add More +</button>
                                         </div>
                                     </label>
-                                    @if(isset($DetailsRequisition))
-                                    @foreach($DetailsRequisition as $temp)
+
+                                    @if(isset($requestion_details_packing) && count($requestion_details_packing) >0)
+                                    @foreach($requestion_details_packing as $temp)
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
                                         {{-- <span class="add-count">1</span> --}}
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                {{ Form::select("PackingMaterialName[]",$rawmaterials,old($temp->PackingMaterialName),array("class"=>"form-control select","id"=>"material_name")) }}
+                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old($temp->PackingMaterialName),array("class"=>"form-control select","id"=>"material_name")) }}
 
                                             </div>
                                         </div>
@@ -505,6 +509,28 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @else
+                                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                        {{-- <span class="add-count">1</span> --}}
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="PackingMaterialName" class="active">Packing Material Name</label>
+                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select","id"=>"material_name")) }}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Capacity" class="active">Capacity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Capacity[]" id="Capacity" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Quantity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="">
+                                            </div>
+                                        </div>
                                     @endif
 
                                 </div>
@@ -538,12 +564,46 @@
                         </div>
                     </form>
                 </div>
-                @endif
-                @if(isset($res_data_3))
+
+
                 <div id="issualofrequisitionpacking" class="tab-pane fade {{($sequenceId=='6')?'in active show':''}}">
 
+                    <table class="table table-hover table-bordered datatable" id="examplereq_packing">
+                        <thead>
+                            <tr>
+                                <th>Requestion No</th>
+                                <th>Batch No</th>
+                                <th>Date</th>
+
+                                <th>Requestion Packing  Material Name</th>
+                                <th>Requestion Packing  Material Qty</th>
+                                <th>Issued Packing  Material Qty</th>
+                                <th>Status</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if(isset($requestion_details_packing) && $requestion_details_packing)
+                            @foreach($requestion_details_packing as $temp)
+                            <tr>
+                                <td>{{$requestion->id}}</td>
+                                <td>{{$requestion->batchNo}}</td>
+                                <td>{{$requestion->created_at?date("d/m/Y",strtotime($requestion->created_at)):""}}</td>
+                                <td>{{$temp->material_name}}</td>
+                                <td>{{$temp->Quantity}}</td>
+                                <td>{{$temp->approved_qty}}</td>
+                                <td>{!! ($temp->approved_qty > 0?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
+                            </tr>
+                            @endforeach
+                            @endif
+
+                        </tbody>
+                    </table>
+
                 </div>
-                @endif
+
                 @if(isset($res_data))
                 <div id="billOfRawMaterialpacking" class="tab-pane fade {{($sequenceId=='7')?'in active show':''}}">
                     <form id="add_batch_manufacturing_bill" method="post" action="{{ route('bill_of_raw_material_packing_update') }}">
@@ -1917,6 +1977,16 @@
             },
         });
 
+    });
+</script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#examplereq').DataTable();
+        $('#examplereq_packing').DataTable();
+        $('#examplereq_lots').DataTable();
     });
 </script>
 @endpush

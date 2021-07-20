@@ -50,7 +50,7 @@ class DepartmentController extends Controller
     {
         //
         $arrRules = ["department"=>"required|unique:department,department",
-                    "dep_type"=>"true",
+                    "dep_type"=>"required",
                      "publish"=>"required"];
 
 
@@ -124,7 +124,7 @@ class DepartmentController extends Controller
     {
         //
         $arrRules = ["department"=>"required|unique:department,department,".$id,
-                    "dep_type"=>"true",
+                    "dep_type"=>"required",
                     "publish"=>"required"];
 
 

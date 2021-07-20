@@ -30,7 +30,7 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-12 col-xl-6">
                         <div class="form-group">
-                            <label for="from">Department Type</label>
+                            <label for="dep_type">Department Type</label>
                             <div>
 
                                 <div class="form-check form-check-inline">
@@ -39,7 +39,7 @@
                                       type="radio"
                                       name="dep_type"
                                       id="inlineRadio1"
-                                      value="1"
+                                      value="W"
                                       @if(old('dep_type') == 'W') checked @endif
                                     />
                                     <label class="form-check-label" for="inlineRadio1"> Warehouse</label>
@@ -51,7 +51,7 @@
                                       type="radio"
                                       name="dep_type"
                                       id="inlineRadio2"
-                                      value="0"
+                                      value="D"
                                       @if(old('dep_type') == "D") checked @endif
                                     />
                                     <label class="form-check-label" for="inlineRadio2">Department</label>
@@ -89,11 +89,11 @@
                                       class="form-check-input"
                                       type="radio"
                                       name="publish"
-                                      id="inlineRadio1"
+                                      id="inlineRadio3"
                                       value="1"
                                      {{ $pulishy }}
                                     />
-                                    <label class="form-check-label" for="inlineRadio1"> Yes</label>
+                                    <label class="form-check-label" for="inlineRadio3"> Yes</label>
                                   </div>
 
                                   <div class="form-check form-check-inline">
@@ -101,11 +101,11 @@
                                       class="form-check-input"
                                       type="radio"
                                       name="publish"
-                                      id="inlineRadio2"
+                                      id="inlineRadio4"
                                       value="0"
                                       {{ $pulishn }}
                                     />
-                                    <label class="form-check-label" for="inlineRadio2">No</label>
+                                    <label class="form-check-label" for="inlineRadio4">No</label>
                                   </div>
 
                                   @if ($errors->has('publish'))

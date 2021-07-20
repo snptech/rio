@@ -65,8 +65,9 @@
                                     $batch  = "";
                                     if ($mat->type == 'P') {
                                     $batch = App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
-                                        ->join('goods_receipt_notes',"goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
-                                        ->pluck("good_receipt_id","goods_receipt_notes.id");
+                                        ->select(DB::raw("concat(DATE_FORMAT(created_at,\"%d-%m-%Y\"),'-',(total_qty-used_qty)) as Qty"),"id")
+                                        ->pluck("Qty","id");
+                                        //->pluck("id","id");
                                     }
                                     else
                                         $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
@@ -151,7 +152,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($issue_material->id)?$issue_material->id:old("batch_id") }}" />
+                            <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($issue_material->batch_id)?$issue_material->batch_id:old("batch_id") }}" />
                             <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
                         </div>
                     </div>
@@ -177,7 +178,7 @@
                 x++; //text box increment
                 k++;
                 wrapper         =  '.'+ $(this).data('id');
-                @php 
+                @php
                 $material_type = isset($material_type)? $material_type: "Raw Material";
                 $details_id    = isset($mat->details_id) ?$mat->details_id: 3;
                 $batch_new     = isset($batch)?$batch:'';
@@ -192,7 +193,7 @@
             wrapper         =  '.'+ $(this).data('id');
         });
         // $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-            
+
         //     e.preventDefault(); $(this).parents('div.row').remove(); x--;
         // });
     });

@@ -38,6 +38,8 @@ class MaterialForProductionController extends Controller
 
         ->get();
 
+
+
         return view('issue_material_for_production_new',$data);
     }
     public function issue_packing_material()
@@ -204,7 +206,7 @@ class MaterialForProductionController extends Controller
             ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
             ->join("department as fromdep", "fromdep.id", "=", "packing_material_requisition_slip.from")
             ->join("department as todep", "todep.id", "=", "packing_material_requisition_slip.to")
-            // 
+            //
             ->where("packing_material_requisition_slip.id",$request->id)
             ->first();
 
@@ -223,20 +225,32 @@ class MaterialForProductionController extends Controller
     {
         if($request->id && $request->rawmaterial)
         {
-            if($request->mat_type == 'P')
-                $items = InwardPackingMaterialItems::where("material",$request->rawmaterial)->where("good_receipt_id",$request->id)->first();
-            else
-                $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
-            
-            if($items)
-            {   
-                $data["qty"] = ($items->qty_received_kg-$items->used_qty);
-                $data["arno"] = ($items->ar_no_date);
-                return response()->json($data);
+            if($request->mat_type == 'P'){
+                $items = InwardPackingMaterialItems::where("material",$request->rawmaterial)->where("id",$request->id)->first();
+                if($items)
+                {
+                    $data["qty"] = ($items->total_qty-$items->used_qty);
+                    $data["arno"] = ($items->ar_no_date);
+                    return response()->json($data);
 
-            }
-            else 
-                return response()->json(['qty'=>'Not Available','arno'=>'']);
+                }
+                else
+                    return response()->json(['qty'=>'Not Available','arno'=>'']);
+                }
+            else{
+                $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
+                if($items)
+                {
+                    $data["qty"] = ($items->qty_received_kg-$items->used_qty);
+                    $data["arno"] = ($items->ar_no_date);
+                    return response()->json($data);
+
+                }
+                else
+                    return response()->json(['qty'=>'Not Available','arno'=>'']);
+                }
+
+
         }
         else
         {
@@ -293,7 +307,7 @@ class MaterialForProductionController extends Controller
                $data["to"] = $request->to;
                $data["batch_no"] = $request->batchNo;
                $data["issed_date"] = $request->Date;
-               $data["requestion_id"] = $request->batch_id;
+               $data["requestion_id"] = $request->id;
                $data["checkedBy"] = Auth::user()->id;
                $data["ApprovedBy"] = Auth::user()->id;
                $data["batch_id"] = $request->batch_id;
@@ -301,7 +315,8 @@ class MaterialForProductionController extends Controller
                $result = Requisitionissuedmaterial::create($data);
                if($result)
                {
-                   $requesetion = RequisitionSlip::find($request->batch_id);
+                   $requesetion = RequisitionSlip::find($request->id);
+
                    if(isset($requesetion) && $requesetion)
                    {
                        $requesetion->update(array("status"=>1));
@@ -327,10 +342,21 @@ class MaterialForProductionController extends Controller
                         $issualdata["approved_qty"] = $request->$appqty;
                         $detailsred = DetailsRequisition::find($request->$detailsid);
                         $detailsred->update($issualdata);
-                        $rawmeterial = Rawmaterialitems::find($request->$batch);
-                        // dd($request->$batch);
+                        $type = "type".$material->id;
+                        $type = $request->$type;
+                        if($type == 'P'){
+                            $rawmeterial = InwardPackingMaterialItems::find($request->$batch);
 
-                        $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty)));
+                            $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty)));
+                        }
+                        else
+                            {
+                                $rawmeterial = Rawmaterialitems::find($request->$batch);
+                                $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty)));
+                            }
+
+
+
 
 
 
@@ -363,5 +389,5 @@ class MaterialForProductionController extends Controller
         {
             redirect(404);
         }
-    }    
+    }
 }
