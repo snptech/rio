@@ -26,12 +26,12 @@
           <span class="menu-title">Issue Material For Production</span>
         </a>
       </li>
-      <li class="nav-item">
+{{--       <li class="nav-item">
         <a class="nav-link" href="{{ route('issue_packing_material') }}">
           <i class="menu-icon" data-feather="hard-drive"></i>
           <span class="menu-title">Issue Packing Material</span>
         </a>
-      </li>
+      </li> --}}
 
       <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#ui-manufacture" aria-expanded="false" aria-controls="ui-manufacture"><i class="menu-icon" data-feather="tool"></i>
