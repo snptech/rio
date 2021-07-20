@@ -60,53 +60,95 @@
                             </label>
                             @if(isset($material_details) && $material_details)
                             @php $i=1 @endphp
-                            @foreach ($material_details as $mat)
-                            @php
-                                $batch  = "";
-                                $batch = App\Models\Rawmaterialitems::where("id",$mat->batch_id)->first();
+                            @if($issue_material->type =='P')
 
-                            @endphp
-                            <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                <span class="add-count">{{ $i }}</span>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="PackingMaterialName" class="active">Raw Material Name</label>
-                                        <input type="text" class="form-control" name="material_name{{ $mat->details_id }}" id="material_name{{ $i }}" value="{{ $mat->material_name }}" readonly>
+                                    @foreach ($material_details as $mat)
+                                    @php
+                                        $batch  = "";
+                                        $batch = App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
+                                        ->select(DB::raw("concat(DATE_FORMAT(created_at,\"%d-%m-%Y\"),'-',(total_qty-used_qty)) as Qty"),"id")
+                                        ->pluck("Qty","id");
 
+                                    @endphp
+                                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                        <span class="add-count">{{ $i }}</span>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="PackingMaterialName" class="active">Raw Material Name</label>
+                                                <input type="text" class="form-control" name="material_name{{ $mat->details_id }}" id="material_name{{ $i }}" value="{{ $mat->material_name }}" readonly>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Requestion Quantity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{$mat->requesist_qty}}" readonly>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">A.R.N. Number/Date</label>
+                                                <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ $mat->ar_no_date }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Approved Quantity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="{{ $mat->approved_qty }}" readonly>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="Quantity" class="active">Requestion Quantity (Kg.)</label>
-                                        <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{$mat->requesist_qty}}" readonly>
+                                    @php $i++; @endphp
+                                    @endforeach
+                            @else
+                                    @foreach ($material_details as $mat)
+                                    @php
+                                        $batch  = "";
+                                        $batch = App\Models\Rawmaterialitems::where("id",$mat->batch_id)->first();
+
+                                    @endphp
+                                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                        <span class="add-count">{{ $i }}</span>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="PackingMaterialName" class="active">Raw Material Name</label>
+                                                <input type="text" class="form-control" name="material_name{{ $mat->details_id }}" id="material_name{{ $i }}" value="{{ $mat->material_name }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Requestion Quantity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{$mat->requesist_qty}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Raw Material Batch</label>
+                                                <input type="text" class="form-control" name="batch{{ $mat->details_id }}" id="batch{{ $i }}" placeholder="" value="{{isset($batch->batch_no)?$batch->batch_no:$mat->batch_id}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">A.R.N. Number/Date</label>
+                                                <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ isset($batch->ar_no_date)?$batch->ar_no_date:$mat->ar_no_date}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Approved Quantity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="{{ $mat->approved_qty }}" readonly>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="Quantity" class="active">Raw Material Batch</label>
-                                        <input type="text" class="form-control" name="batch{{ $mat->details_id }}" id="batch{{ $i }}" placeholder="" value="{{isset($batch->batch_no)?$batch->batch_no:$mat->batch_id}}" readonly>
-
-
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="Quantity" class="active">A.R.N. Number/Date</label>
-                                        <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ isset($batch->ar_no_date)?$batch->ar_no_date:$mat->ar_no_date}}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="Quantity" class="active">Approved Quantity (Kg.)</label>
-                                        <input type="text" class="form-control" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="{{ $mat->approved_qty }}" readonly>
-
-                                    </div>
-                                </div>
-                            </div>
-                            @php $i++; @endphp
-                            @endforeach
+                                    @php $i++; @endphp
+                                    @endforeach
+                                @endif
                             @endif
                         </div>
                     </div>
