@@ -94,7 +94,7 @@ class ManufactureProcessController extends Controller
                     ->get();
             }
         }
-        
+
         $data["department"] = Department::where("department_type","W")->get();
         $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
         $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
@@ -204,15 +204,20 @@ class ManufactureProcessController extends Controller
         if (isset($data["requestion"]))
              $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
 
+             $reqIssualCount =  Requisitionissuedmaterialdetails::where('main_details_id', $data["requestion"]->id)->count();
+                if(isset($reqIssualCount) && $reqIssualCount > 0)
+                {
+                    $data['raw_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
+                    ->where("issue_material_production_requestion_details.main_details_id", $data["requestion"]->id)
+                    ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                    ->get();
+
+                }
 
 
-        if ($request->session()->has('batch') &&  $request->session()->get('batch') >0) {
-            $batch = $request->session()->get('batch');
-        }
-        else
-        {
-            $batch = $id;
-        }
+
+
+        $batch = $id;
 
         $data["batch"] = $batch;
         if (isset($batch) && $batch) {
@@ -228,8 +233,8 @@ class ManufactureProcessController extends Controller
             if (isset($processlots) && $processlots) {
                 $data["processlots"] = $processlots;
             }
-
-            $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->first();
+            if(isset($batchdetails->id))
+                $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->first();
 
             if (isset($data["requestion_packing"]))
                 $data["requestion_details_packing"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_packing"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
@@ -1083,7 +1088,8 @@ class ManufactureProcessController extends Controller
         if (isset($request->from)) {
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
-        }$arrRules = [
+        }
+        $arrRules = [
             "from" => "required",
             "from" => "required",
             "to" => "required",
@@ -1515,24 +1521,32 @@ class ManufactureProcessController extends Controller
         $arr['lotNo'] = $request->lotNo;
         $arr['ReactorNo'] = $request->ReactorNo;
         $arr['Process_date'] = $request->Process_date;
+        $arr['batch_id'] = $request->mainid;
+        $lotsid = 0;
+        if(isset($request->id) && $request->id){
+            $AddLotsl = AddLotsl::where('id', $request->id)->update($arr);
+            $lotsid = $request->id;
+        }
+        else{
+            $AddLotsl = AddLotsl::create($arr);
+            $lotsid = $AddLotsl->id;
+        }
 
-        $AddLotsl = AddLotsl::where('id', $request->id)->update($arr);
-
-        if ((isset($request->id)) && ($request->id > 0)) {
+        if ((isset($lotsid)) && ($lotsid > 0)) {
             if (count($request->EquipmentName)) {
-                AddLotslRawMaterialDetails::where('add_lots_id', $request->id)->delete();
+                AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->delete();
                 foreach ($request->EquipmentName as $key => $value) {
                     $arr_data['EquipmentName'] = $value;
                     $arr_data['rmbatchno'] = $request->rmbatchno[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
-                    $arr_data['add_lots_id'] = $request->id;
-                  AddLotslRawMaterialDetails::Create($arr_data);
+                    $arr_data['add_lots_id'] = $lotsid;
+                    AddLotslRawMaterialDetails::Create($arr_data);
 
                 }
 
-                if ((isset($request->id)) && ($request->id > 0)) {
+                if ((isset($lotsid)) && ($lotsid > 0)) {
                     foreach ($request->qty as $key => $value) {
-                        Processlots::where('process_id', $request->id)->delete();
+                        Processlots::where('process_id', $lotsid)->delete();
 
                         if (count($request->qty)) {
                             foreach ($request->qty as $key => $value) {
@@ -1541,7 +1555,7 @@ class ManufactureProcessController extends Controller
                                 $arr_data['stratTime'] = $request->stratTime[$key];
                                 $arr_data['endTime'] = $request->endTime[$key];
                                 $arr_data['doneby'] = $request->doneby[$key];
-                                $arr_data['process_id'] = $request->id;
+                                $arr_data['process_id'] = $lotsid;
                                 $result = Processlots::Create($arr_data);
                             }
 
@@ -1550,7 +1564,7 @@ class ManufactureProcessController extends Controller
                                 $sequenceId = (int)$request->sequenceId + 1;
                             }
                             if ($result) {
-                                return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                                return redirect("add_manufacturing_edit/" . $lotsid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                             }
                         }
                     }

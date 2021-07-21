@@ -19,6 +19,7 @@ class AddLotsl extends Model
         'Date',
         'lotNo',
         'ReactorNo',
+        'batch_id',
         'Process_date',
         'created_at',
         'updated_at',

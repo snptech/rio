@@ -829,38 +829,44 @@
 
                       <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Add Lot</a>
                      </div>
+
                 @if(isset($lotsdetails))
-                    <table class="table table-hover table-bordered datatable" id="examplereq_lots">
-                        <thead>
-                            <tr>
-                                <th>Sr.No</th>
-                                <th>Product Name</th>
-                                <th>Bmr.No</th>
-                                <th>lot.No</th>
-                                <th>batch.No</th>
-                                <th>RefMfr.No</th>
-                                <th>Date</th>
-                                <th>Reactor No.</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if($lotsdetails)
-                            @foreach($lotsdetails as $lots)
-                            <tr>
-                                <td>{{$loop->index +1}}</td>
-                                <td>{{$lots->material_name}}</td>
-                                <td>{{$lots->bmrNo}}</td>
-                                <td>{{$lots->lotNo}}</td>
-                                <td>{{$lots->batchNo}}</td>
-                                <td>{{$lots->refMfrNo}}</td>
-                                <td>{{$lots->Date?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
-                                <td>{{$lots->ReactorNo}}</td>
-                            </tr>
-                            @endforeach
-                            @endif
-                        </tbody>
-                    </table>
-                    @endif
+                <table class="table table-hover table-bordered datatable" id="examplereq_lots">
+                    <thead>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Product Name</th>
+                            <th>Bmr.No</th>
+                            <th>lot.No</th>
+                            <th>batch.No</th>
+                            <th>RefMfr.No</th>
+                            <th>Date</th>
+                            <th>Reactor No.</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if($lotsdetails)
+                        @foreach($lotsdetails as $lots)
+                        <tr>
+                            <td>{{$loop->index +1}}</td>
+                            <td>{{$lots->material_name}}</td>
+                            <td>{{$lots->bmrNo}}</td>
+                            <td>{{$lots->lotNo}}</td>
+                            <td>{{$lots->batchNo}}</td>
+                            <td>{{$lots->refMfrNo}}</td>
+                            <td>{{$lots->Date?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
+                            <td>{{$lots->ReactorNo}}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+
+                    </tbody>
+                </table>
+                @endif
+
 
                 </div>
 
@@ -870,6 +876,7 @@
                         <div class="form-row">
                             <input type="hidden" value="10" name="sequenceId">
                             <input type="hidden" value="{{isset($addlots->id)?$addlots->id:""}}" name="id">
+                            <input type="hidden" value="{{isset($edit_batchmanufacturing->id)?$edit_batchmanufacturing->id:""}}" name="mainid">
                             @csrf
 
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -937,59 +944,31 @@
                                             <button class="btn btn-dark add-more add_field_button_4 waves-effect waves-light" type="button">Add More +</button>
                                         </div>
                                     </label>
-                                    @if(isset($AddLotslRawMaterialDetails) && count($AddLotslRawMaterialDetails) >0)
-                                    @foreach($AddLotslRawMaterialDetails as $temp)
-                                    <div class="row add-more-wrap5 after-add-more m-0 mb-4">
-                                        <!-- <span class="add-count">1</span> -->
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <label for="EquipmentName" class="active">Raw Material</label>
-                                                <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
-                                                    <option>{{$temp->EquipmentName}}</option>
-                                                    <option>Raw Material Name</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <label for="rmbatchno" class="active">Batch No.</label>
-                                                <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno" value="{{$temp->rmbatchno}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                    @else
-                                    <div class="row add-more-wrap5 after-add-more m-0 mb-4">
-                                        <!-- <span class="add-count">1</span> -->
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <label for="EquipmentName" class="active">Raw Material</label>
-                                                <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
-                                                    <option>{{$temp->EquipmentName}}</option>
-                                                    <option>Raw Material Name</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <label for="rmbatchno" class="active">Batch No.</label>
-                                                <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno" value="{{$temp->rmbatchno}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
+                                    @if(isset($raw_material_bills))
+									@foreach( $raw_material_bills as $index => $rd )
+									<div class="row add-more-wrap5 after-add-more m-0 mb-4">
+										<div class="col-12 col-md-4">
+											<div class="form-group">
+											   @php $rw = [$rd->material_id => $rawmaterials[$rd->material_id] ]; @endphp
+												<label for="EquipmentName[]" class="active">Raw Material</label>
+												{{ Form::select("EquipmentName[]",$rw,old("EquipmentName[]"),array("id"=>"EquipmentName[]","class"=>"form-control select","selected"=>"selected")) }}
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="form-group">
+												<label for="rmbatchno" class="active">Batch No.</label>
+												<input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[]" placeholder="Batch No." value="{{ isset($rd->batch_id)?$rd->batch_id:old('rmbatchno[]') }}" readonly>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="form-group">
+												<label for="Quantity" class="active">Quantity (Kg.)</label>
+												<input type="text" class="form-control" name="Quantity[]" id="Quantity[]" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}" readonly>
+											</div>
+										</div>
+									</div>
+									@endforeach
+									@endif
 
                                 </div>
                             </div>
@@ -1006,8 +985,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @if(count($Processlots))
+                                    @php $doneBy = [\Auth::user()->id => \Auth::user()->name]
+                                        @endphp
+                                    @if(isset($Processlots) && count($Processlots) > 0)
                                     @foreach($Processlots as $key => $v)
+
                                     <tr>
                                             <td>{{($key==0)?"Charge Polydimethylsiloxane in reactor.":(($key==1)?"Start heating the reactor and start stirring":(($key==2)?"Once the temperature is between 100 - 120oC start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.":(($key==3)?"When temperature reaches 180 - 190 oC stop heating the reactor.":"Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number")))}}</td>
                                             <td><input type="text" value="{{$v->qty}}"name="qty[]" id="qty" class="form-control"></td>
@@ -1020,6 +1002,51 @@
                                                 </select></td>
                                         </tr>
                                     @endforeach
+                                    @else
+
+
+
+                                                    <tr>
+                                                        <td>Charge Polydimethylsiloxane in reactor.</td>
+                                                        <td><input type="text" name="qty[]" id="qty[1]" class="form-control"></td>
+                                                        <td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
+                                                        <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control"></td>
+                                                        <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control"></td>
+                                                        <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[1]","class"=>"form-control select")) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Start heating the reactor and start stirring</td>
+                                                        <td><input type="text" name="qty[]" id="qty[2]" class="form-control"></td>
+                                                        <td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
+                                                        <td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control"></td>
+                                                        <td><input type="text" name="endTime[]" id="endTime[2]" class="form-control"></td>
+                                                        <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[2]","class"=>"form-control select")) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
+                                                        <td><input type="text" name="qty[]" id="qty[3]" class="form-control"></td>
+                                                        <td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
+                                                        <td><input type="text" name="stratTime[]" id="stratTime[3]" class="form-control"></td>
+                                                        <td><input type="text" name="endTime[]" id="endTime[3]" class="form-control"></td>
+                                                        <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[3]","class"=>"form-control select")) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
+                                                        <td><input type="text" name="qty[]" id="qty[4]" class="form-control"></td>
+                                                        <td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
+                                                        <td><input type="text" name="stratTime[]" id="stratTime[4]" class="form-control"></td>
+                                                        <td><input type="text" name="endTime[]" id="endTime[4]" class="form-control"></td>
+                                                        <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[4]","class"=>"form-control select")) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
+                                                        <td><input type="text" name="qty[]" id="qty[5]" class="form-control"></td>
+                                                        <td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
+                                                        <td><input type="text" name="stratTime[]" id="stratTime[5]" class="form-control"></td>
+                                                        <td><input type="text" name="endTime[]" id="endTime[5]" class="form-control"></td>
+                                                        <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[5]","class"=>"form-control select")) }}</td>
+                                                    </tr>
+
                                     @endif
 
 
