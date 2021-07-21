@@ -22,6 +22,7 @@ use App\Models\Processlots;
 use App\Models\AddLotslRawMaterialDetails;
 use App\Models\HomogenizingList;
 use App\Models\Homogenizing;
+use App\Models\Requisitionissuedmaterialdetails;
 use session;
 use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
@@ -44,7 +45,6 @@ class ManufactureProcessController extends Controller
 
         $batch = "";
         if ($request->session()->has('batch')) {
-
             $batch = $request->session()->get('batch');
         }
         $data["batch"] = $batch;
@@ -61,39 +61,40 @@ class ManufactureProcessController extends Controller
                 $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batchNo",$batch)
                 ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
                 ->get();
-                // ->groupBy('process_lots.lot_id') ,'process_lots.*'
-                // ->leftJoin('process_lots', 'process_lots.lot_id','=','add_lots_raw_material_detail.add_lots_id')
 
                 if (isset($processlots) && $processlots)
                     $data["processlots"] = $processlots;
-
             }
 
             $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","R")->orderBy('id', 'desc')->first();
-            if (isset($data["requestion"]))
-                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
 
-                if(isset($data["requestion_details"])){
-                $data['billOMaterial'] = DetailsRequisition::select("detail_packing_material_requisition.*","i_details.ar_no_date", "raw_materials.material_name")
-                                        ->where("requisition_id", $data["requestion_details"][0]->requisition_id)
-                                        ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
-                                        ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")->orderBy('detail_packing_material_requisition.id', 'desc')->get();
-                }
-                if(isset($request->nextForm) && $request->nextForm =='#requisitionpacking'){
-                    $data['requestion_details_p'] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name",)
-                                        ->where("requisition_id", $data["requestion"]->id)
-                                        ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
-                                        ->orderBy('id', 'desc')->get();
-                // $data['material_data'] = DetailsRequisition::select("detail_packing_material_requisition.*","i_details.ar_no_date", "raw_materials.material_name")
-                //                         ->where("requisition_id", $data["requestion_details"][0]->requisition_id)
-                //                         ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
-                //                         ->join("issue_material_production_requestion_details as i_details", "i_details.main_details_id", "detail_packing_material_requisition.requisition_id")->orderBy('detail_packing_material_requisition.id', 'desc')->get();
+            if (isset($data["requestion"]) && $data["requestion"]){
+                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+
+                $reqIssualCount =  Requisitionissuedmaterialdetails::where('main_details_id', $data["requestion"]->id)->count();
+                if(isset($reqIssualCount) && $reqIssualCount > 0)
+                {
+                    $data['raw_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
+                    ->where("issue_material_production_requestion_details.main_details_id", $data["requestion"]->id)
+                    ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                    ->get();
 
                 }
+            }
 
+            $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->orderBy('id', 'desc')->first();
+            $reqPackingCount = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->orderBy('id', 'desc')->count();
 
+            if (isset($data["requestion_packing"]) && $reqPackingCount > 0){
+                $data["requestion_packing_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_packing"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+
+                $data['packing_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
+                    ->where("issue_material_production_requestion_details.main_details_id", $data["requestion_packing"]->id)
+                    ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                    ->get();
+            }
         }
-        // $data["department"] = Department::pluck("department", "id");
+        
         $data["department"] = Department::where("department_type","W")->get();
         $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
         $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
@@ -959,6 +960,10 @@ class ManufactureProcessController extends Controller
     }
     public function packing_material_issuel_insert(Request $request)
     {
+        if (isset($request->from)) {
+            $request->session()->put('from', $request->from);
+            $request->session()->put('to', $request->to);
+        }
         $arrRules = [
             "from" => "required",
             "to" => "required",
@@ -1458,8 +1463,8 @@ class ManufactureProcessController extends Controller
         $arr['Process_date'] = $request->Process_date;
         $AddLotsl = AddLotsl::Create($arr);
 
-
         if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
+            $prvCount = ($prvCount == 0) ? 1 : $prvCount;
             (int)$prvCount++;
             if (count($request->EquipmentName)) {
                 foreach ($request->EquipmentName as $key => $value) {
@@ -1485,9 +1490,9 @@ class ManufactureProcessController extends Controller
                                 $result = Processlots::Create($arr_data);
                             }if ($result) {
                                 if ($prvCount == 10) {
-                                    return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                    return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
                                 } else {
-                                    return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Data Bill Of Raw Materrila successfully", "prvCount" => $prvCount]);
+                                    return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
                                 }
                             }
                         }

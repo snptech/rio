@@ -334,7 +334,8 @@ class MaterialForProductionController extends Controller
                         $detailsdata["ar_no_date"] = $request->$arno;
                         $appqty = "Quantity_app".$material->id;
                         $detailsdata["approved_qty"] = $request->$appqty;
-                        $detailsdata["main_details_id"] = $request->batch_id;
+                         // dd( $request->id);
+                        $detailsdata["main_details_id"] = $request->id;
                         $res = Requisitionissuedmaterialdetails::create($detailsdata);
 
                         $detailsid = "details_id".$material->id;
