@@ -1301,7 +1301,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="filledDrums" class="active">Filled in Drums (Kg)</label>
-                                                <input type="text" class="form-control" name="filledDrums" value="{{isset($packingmateria->filledDrums)?packingmateria->filledDrums:""}}" id="filledDrums" placeholder="">
+                                                <input type="text" class="form-control" name="filledDrums" value="{{isset($packingmateria->filledDrums)?$packingmateria->filledDrums:""}}" id="filledDrums" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
