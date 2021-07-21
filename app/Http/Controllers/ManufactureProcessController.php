@@ -25,6 +25,7 @@ use App\Models\Homogenizing;
 use session;
 use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
+use DB;
 
 class ManufactureProcessController extends Controller
 {
@@ -246,10 +247,12 @@ class ManufactureProcessController extends Controller
             ->get();
         $data['res_data_3'] = PackingMaterialSlip::where('id', '=', $id)
             ->first();
-        $data['res_1'] = ListOfEquipmentManufacturing::where('batch_manufacturing_id', '=', $id)
-            ->get();
-        $data['res_data_1'] = BatchManufacturingEquipment::where('id', '=', $id)
+        $data['res_data_1'] = BatchManufacturingEquipment::where('batch_id', '=', $id)
             ->first();
+        if(isset($data['res_data_1']) && $data['res_data_1'])
+             $data['res_1'] = ListOfEquipmentManufacturing::where('batch_manufacturing_id', '=', $data['res_data_1']->id)
+            ->get();
+
         $data['packingmateria'] = BatchManufacturingPacking::where('id', '=', $id)
             ->first();
         $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
@@ -267,6 +270,13 @@ class ManufactureProcessController extends Controller
 
 
         $data['sequenceId'] = ($formSeqId) ? ($formSeqId) : 1;
+
+
+        $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
+        $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
+        $data["selected_crop"] =  ListOfEquipmentManufacturing::select("list_of_equipment_in_manufacturin_process.EquipmentCode","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->pluck("EquipmentCode","id");
+
+
         //$data['sequenceId'] = '#requisition';
         return view('add_manufacturing_edit', $data);
     }
@@ -723,17 +733,27 @@ class ManufactureProcessController extends Controller
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;
         $arr['refMfrNo'] = $request->refMfrNo;
+        $arr['batch_id'] = $request->mainid;
         $arr['Remark'] = $request->Remark;
-        $BatchManufacturing_id = BatchManufacturingEquipment::where('id', $request->id)->update($arr);
+        $batchmanid = 0;
+       if($request->id){
+            $BatchManufacturing_id = BatchManufacturingEquipment::where('id', $request->id)->update($arr);
+            $batchmanid =  $request->id;
+        }
+        else{
 
-        if ((isset($request->id)) && ($request->id > 0)) {
+            $BatchManufacturing_id = BatchManufacturingEquipment::create($arr);
+            $batchmanid =  $BatchManufacturing_id->id;
+        }
+
+        if ((isset($batchmanid)) && ($batchmanid > 0)) {
 
             if (count($request->EquipmentName)) {
-                ListOfEquipmentManufacturing::where('batch_manufacturing_id', $request->id)->delete();
+                ListOfEquipmentManufacturing::where('batch_manufacturing_id', $batchmanid)->delete();
                 foreach ($request->EquipmentName as $key => $value) {
                     $arr_data['EquipmentName'] = $value;
                     $arr_data['EquipmentCode'] = $request->EquipmentCode[$key];
-                    $arr_data['batch_manufacturing_id'] = $request->id;
+                    $arr_data['batch_manufacturing_id'] = $batchmanid;
                     $result = ListOfEquipmentManufacturing::Create($arr_data);
                 }
                 $sequenceId = 1;
@@ -741,7 +761,7 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 2;
                 }
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    return redirect("add_manufacturing_edit/" .$request->mainid. "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }

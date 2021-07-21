@@ -15,9 +15,11 @@ class BatchManufacturingEquipment extends Model
         'proName',
         'bmrNo',
         'batchNo',
+        "batch_id",
         'refMfrNo',
         'Remark',
         'created_at',
         'updated_at',
+
     ];
 }

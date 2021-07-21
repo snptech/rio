@@ -574,7 +574,6 @@
                                 <th>Requestion No</th>
                                 <th>Batch No</th>
                                 <th>Date</th>
-
                                 <th>Requestion Packing  Material Name</th>
                                 <th>Requestion Packing  Material Qty</th>
                                 <th>Issued Packing  Material Qty</th>
@@ -722,11 +721,12 @@
                     </form>
                 </div>
                 @endif
-                @if(isset($res_data_1))
+
                 <div id="listOfEquipment" class="tab-pane fade {{($sequenceId=='8')?'in active show':''}}">
                     <form id="add_batch_equipment_vali" method="post" action="{{ route('list_of_equipment_update') }}">
                         <input type="hidden" value="8" name="sequenceId">
-                        <input type="hidden" value="{{$res_data_1->id}}" name="id">
+                        <input type="hidden" value="{{isset($res_data_1->id)?$res_data_1->id:""}}" name="id">
+                        <input type="hidden" value="{{$edit_batchmanufacturing->id}}" name="mainid">
                         @csrf
                         <div class="form-row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -741,25 +741,25 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$res_data_1->bmrNo}}">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{isset($res_data_1->bmrNo)?$res_data_1->bmrNo:$edit_batchmanufacturing->bmrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$res_data_1->batchNo}}" readonly>
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$res_data_1->refMfrNo}}">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="Remark" class="active">Note / Remark</label>
-                                    <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark">{{$res_data->Remark}}</textarea>
+                                    <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark">{{isset($res_data->Remark)?$res_data->Remark:""}}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -769,33 +769,46 @@
                                             <button class="btn btn-dark add-more add_field_button_1 waves-effect waves-light" type="button">Add More +</button>
                                         </div>
                                     </label>
-                                    @if(isset($res_1))
+
+                                    @if(isset($res_1) && count($res_1)>0)
                                     @foreach($res_1 as $temp)
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
                                         <!-- <span class="add-count">1</span> -->
                                         <div class="col-12 col-md-6">
                                             <div class="form-group">
                                                 <label for="EquipmentName" class="active">Equipment Name</label>
-                                                <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
-                                                    <option>{{$temp->EquipmentName}}</option>
-                                                    <option>SS Reactor</option>
-                                                    <option>SS Homogenising Tank</option>
-                                                    <option>Filling Station</option>
-                                                </select>
+                                                {{ Form::select("EquipmentName[]",$eqipment_name,old("eqipment_name")?old("eqipment_name"):$temp->EquipmentName,array("class"=>"form-control select","id"=>"eqipment_name","Placeholder"=>"Equipment Name")) }}
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <div class="form-group">
                                                 <label for="EquipmentCode" class="active">Equipment Code</label>
-                                                <select class="form-control select" name="EquipmentCode[]" id="EquipmentCode">
-                                                    <option>{{$temp->EquipmentCode}}</option>
-                                                    <option>PR/RC/001</option>
-                                                    <option>PR/RC/002</option>
-                                                </select>
+                                                {{ Form::select("EquipmentCode[]",$eqipment_code,old("EquipmentCode")?old("EquipmentCode"):$temp->EquipmentCode,array("class"=>"form-control select","id"=>"eqipment_name","Placeholder"=>"Equipment Code")) }}
+
+
                                             </div>
                                         </div>
                                     </div>
                                     @endforeach
+                                    @else
+                                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                        <!-- <span class="add-count">1</span> -->
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label for="EquipmentName" class="active">Equipment Name</label>
+                                                {{ Form::select("EquipmentName[]",$eqipment_name,old("eqipment_name"),array("class"=>"form-control select","id"=>"eqipment_name","Placeholder"=>"Equipment Name")) }}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label for="EquipmentCode" class="active">Equipment Code</label>
+                                                {{ Form::select("EquipmentCode[]",$eqipment_code,old("EquipmentCode"),array("class"=>"form-control select","id"=>"eqipment_name","Placeholder"=>"Equipment Code")) }}
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
 
 
@@ -809,16 +822,15 @@
                         </div>
                     </form>
                 </div>
-                @endif
-                @if(isset($addlots))
+
                 <div id="addLots_listing" class="tab-pane fade {{($sequenceId=='9')?'in active show':''}}">
                     <div class="form-group">
                     <input type="hidden" value="9" name="sequenceId">
 
-                      <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Open Lots</a>
+                      <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addLots">Add Lot</a>
                      </div>
                 @if(isset($lotsdetails))
-                    <table class="table table-hover table-bordered datatable" id="examplereq">
+                    <table class="table table-hover table-bordered datatable" id="examplereq_lots">
                         <thead>
                             <tr>
                                 <th>Sr.No</th>
@@ -851,14 +863,13 @@
                     @endif
 
                 </div>
-                @endif
-                @if(isset($addlots))
+
                 <div id="addLots" class="tab-pane fade {{($sequenceId=='10')?'in active show':''}}">
 
                     <form method="post" action="{{ route('add_lots_update') }}">
                         <div class="form-row">
                             <input type="hidden" value="10" name="sequenceId">
-                            <input type="hidden" value="{{$addlots->id}}" name="id">
+                            <input type="hidden" value="{{isset($addlots->id)?$addlots->id:""}}" name="id">
                             @csrf
 
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -874,25 +885,25 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$addlots->bmrNo}}">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$addlots->batchNo}}">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$addlots->refMfrNo}}">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="Date">Date</label>
-                                    <input type="date" class="form-control" name="Date" id="Date" value="{{$addlots->Date}}">
+                                    <input type="date" class="form-control" name="Date" id="Date" value="{{isset($addlots->Date)?$addlots->Date:date("Y-m-d")}}">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -903,23 +914,20 @@
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="lotNo" class="active">Lot No.</label>
-                                    <input type="text" class="form-control" name="lotNo" id="lotNo" value="{{$addlots->lotNo}}">
+                                    <input type="text" class="form-control" name="lotNo" id="lotNo" value="{{isset($addlots->lotNo)?$addlots->lotNo:""}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="ReactorNo">Reactor No.</label>
-                                    <select class="form-control" name="ReactorNo" id="ReactorNo">
-                                        <option>{{$addlots->ReactorNo}}</option>
-                                        <option>PR/RC/001</option>
-                                        <option>PR/RC/002</option>
-                                    </select>
+                                   {{  Form::select("ReactorNo",$selected_crop,(old("ReactorNo")?old("ReactorNo"):(isset($addlots->ReactorNo)?$addlots->ReactorNo:"")),array("class"=>"form-control select","id"=>"ReactorNo","placeholder"=>"Reactor No.")) }}
+
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="Date">Date</label>
-                                    <input type="date" class="form-control" name="Process_date" id="Process_date " placeholder="" value="{{$addlots->Process_date}}">
+                                    <input type="date" class="form-control" name="Process_date" id="Process_date " placeholder="" value="{{isset($addlots->Process_date)?$addlots->Process_date:date('Y-m-d')}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -929,7 +937,7 @@
                                             <button class="btn btn-dark add-more add_field_button_4 waves-effect waves-light" type="button">Add More +</button>
                                         </div>
                                     </label>
-                                    @if(isset($AddLotslRawMaterialDetails))
+                                    @if(isset($AddLotslRawMaterialDetails) && count($AddLotslRawMaterialDetails) >0)
                                     @foreach($AddLotslRawMaterialDetails as $temp)
                                     <div class="row add-more-wrap5 after-add-more m-0 mb-4">
                                         <!-- <span class="add-count">1</span> -->
@@ -956,6 +964,31 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @else
+                                    <div class="row add-more-wrap5 after-add-more m-0 mb-4">
+                                        <!-- <span class="add-count">1</span> -->
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <label for="EquipmentName" class="active">Raw Material</label>
+                                                <select class="form-control select" name="EquipmentName[]" id="EquipmentName">
+                                                    <option>{{$temp->EquipmentName}}</option>
+                                                    <option>Raw Material Name</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <label for="rmbatchno" class="active">Batch No.</label>
+                                                <input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno" value="{{$temp->rmbatchno}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">Quantity (Kg.)</label>
+                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
 
                                 </div>
@@ -1002,12 +1035,11 @@
                         </div>
                     </form>
                 </div>
-                @endif
-                @if(isset($Homogenizing))
+
                 <div id="homogenizing" class="tab-pane fade {{($sequenceId=='11')?'in active show':''}}">
                     <form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_update') }}">
                         <input type="hidden" value="11" name="sequenceId">
-                        <input type="hidden" value="{{$Homogenizing->id}}" name="id">
+                        <input type="hidden" value="{{isset($Homogenizing->id)?$Homogenizing->id:""}}" name="id">
                         @csrf
 
                         <div class="form-row">
@@ -1025,25 +1057,25 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$Homogenizing->bmrNo}}">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$Homogenizing->batchNo}}">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$Homogenizing->refMfrNo}}">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="homoTank">Homogenizing tank No.</label>
-                                    <input type="text" class="form-control" name="homoTank" id="homoTank" value="{{$Homogenizing->homoTank}}">
+                                    <input type="text" class="form-control" name="homoTank" id="homoTank" value="{{isset($Homogenizing->homoTank)?$Homogenizing->homoTank:""}}">
                                 </div>
                             </div>
 
@@ -1089,7 +1121,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="Observedvalue">Observed value (cSt)</label>
-                                    <input type="text" class="form-control" name="Observedvalue" id="Observedvalue" value="{{$Homogenizing->Observedvalue}}" placeholder="" value="">
+                                    <input type="text" class="form-control" name="Observedvalue" id="Observedvalue" value="{{isset($Homogenizing->Observedvalue)?$Homogenizing->Observedvalue:""}}" placeholder="" value="">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1100,13 +1132,12 @@
                         </div>
                     </form>
                 </div>
-                @endif
-                @if(isset($packingmateria))
+
 
                 <div id="Packing" class="tab-pane fade {{($sequenceId=='12')?'in active show':''}}">
                     <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_update') }}">
                         <input type="hidden" value="12" name="sequenceId">
-                        <input type="hidden" value="{{$packingmateria->id}}" name="id">
+                        <input type="hidden" value="{{isset($packingmateria->id)?$packingmateria->id:""}}" name="id">
                         @csrf
 
                         <div class="form-row">
@@ -1116,7 +1147,7 @@
 
                                     <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
 
-                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","value"=>"$packingmateria->proName")) }}
+                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1125,29 +1156,29 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" value="{{$packingmateria->bmrNo}}" id="bmrNo">
+                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" value="{{$packingmateria->batchNo}}" id="batchNo" readonly>
+                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" value="{{$packingmateria->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No.">
+                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No.">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="ManufacturerDate" class="active">Date</label>
-                                    <input type="date" class="form-control calendar" name="ManufacturerDate" value="{{$packingmateria->ManufacturerDate}}" id="ManufacturerDate" value={{ date("Y-m-d") }}>
+                                    <input type="date" class="form-control calendar" name="ManufacturerDate" value="{{isset($packingmateria->ManufacturerDate)?$packingmateria->ManufacturerDate:""}}" id="ManufacturerDate" value={{ date("Y-m-d") }}>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group input_fields_wrap" value="{{$packingmateria->MaterialReceived}}" id="MaterialReceived">
+                                <div class="form-group input_fields_wrap" value="{{isset($packingmateria->MaterialReceived)?$packingmateria->MaterialReceived:""}}" id="MaterialReceived">
                                     <label class="control-label d-flex">Packing
                                         <!-- <div class="input-group-btn">  -->
                                         <!-- <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button> -->
@@ -1158,49 +1189,49 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Observation" class="active">Area cleanliness checked by Production Observation</label>
-                                                <input type="text" class="form-control" name="Observation" value="{{$packingmateria->Observation}}" id="Observation" placeholder="Observation">
+                                                <input type="text" class="form-control" name="Observation" value="{{isset($packingmateria->Observation)?$packingmateria->Observation:""}}" id="Observation" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Temperature" class="active">Temperature ( <sup>o</sup>C) of Filling area</label>
-                                                <input type="text" class="form-control" name="Temperature" value="{{$packingmateria->Temperature}}" id="Temperature" placeholder="Observation">
+                                                <input type="text" class="form-control" name="Temperature" value="{{isset($packingmateria->Temperature)?$packingmateria->Temperature:""}}" id="Temperature" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Humidity" class="active">Humidity (%RH) of Filling area</label>
-                                                <input type="text" class="form-control" name="Humidity" value="{{$packingmateria->Humidity}}" id="Humidity" placeholder="Observation">
+                                                <input type="text" class="form-control" name="Humidity" value="{{isset($packingmateria->Humidity)?$packingmateria->Humidity:""}}" id="Humidity" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="TemperatureP" class="active">Temperature ( <sup>o</sup>C) of Product</label>
-                                                <input type="text" class="form-control" name="TemperatureP" value="{{$packingmateria->TemperatureP}}" id="TemperatureP" placeholder="Observation">
+                                                <input type="text" class="form-control" name="TemperatureP" value="{{isset($packingmateria->TemperatureP)?$packingmateria->TemperatureP:""}}" id="TemperatureP" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="50kgDrums" class="active">50 Kg No of Drums filled</label>
-                                                <input type="Number" class="form-control" name="50kgDrums" value="{{$packingmateria['50kgDrums']}}" id="50kgDrums">
+                                                <input type="Number" class="form-control" name="50kgDrums" value="{{isset($packingmateria['50kgDrums'])?$packingmateria['50kgDrums']:0}}" id="50kgDrums">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="200kgDrums" class="active">200 Kg No of Drums filled</label>
-                                                <input type="Number" class="form-control" name="20kgDrums" id="20kgDrums" value="{{$packingmateria['20kgDrums']}}">
+                                                <input type="Number" class="form-control" name="20kgDrums" id="20kgDrums" value="{{isset($packingmateria['20kgDrums'])?$packingmateria['20kgDrums']:""}}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="startTime" class="active">Start Time (Hrs.)</label>
-                                                <input type="number" class="form-control time" name="startTime" value="{{$packingmateria->startTime}}" id="startTime" placeholder="">
+                                                <input type="number" class="form-control time" name="startTime" value="{{isset($packingmateria->startTime)?$packingmateria->startTime:""}}" id="startTime" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="EndstartTime" class="active">End Time (Hrs.)</label>
-                                                <input type="number" class="form-control time" name="EndstartTime" value="{{$packingmateria->EndstartTime}}" id="EndstartTime" placeholder="">
+                                                <input type="number" class="form-control time" name="EndstartTime" value="{{isset($packingmateria->EndstartTime)?$packingmateria->EndstartTime:""}}" id="EndstartTime" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -1220,7 +1251,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group input_fields_wrap" value="{{$packingmateria->MaterialReceived}}" id="MaterialReceived">
+                                <div class="form-group input_fields_wrap" value="{{isset($packingmateria->MaterialReceived)?$packingmateria->MaterialReceived:""}}" id="MaterialReceived">
                                     <label class="control-label d-flex">Yield
                                         <!-- <div class="input-group-btn">  -->
                                         <!-- <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button> -->
@@ -1231,61 +1262,61 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="rmInput" class="active">RM Input (Kg.)</label>
-                                                <input type="text" class="form-control" name="rmInput" value="{{$packingmateria->rmInput}}" id="rmInput" placeholder="">
+                                                <input type="text" class="form-control" name="rmInput" value="{{isset($packingmateria->rmInput)?$packingmateria->rmInput:""}}" id="rmInput" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="fgOutput" class="active">FG Output</label>
-                                                <input type="text" class="form-control" name="fgOutput" value="{{$packingmateria->fgOutput}}" id="fgOutput" placeholder="">
+                                                <input type="text" class="form-control" name="fgOutput" value="{{isset($packingmateria->fgOutput)?$packingmateria->fgOutput:""}}" id="fgOutput" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="filledDrums" class="active">Filled in Drums (Kg)</label>
-                                                <input type="text" class="form-control" name="filledDrums" value="{{$packingmateria->filledDrums}}" id="filledDrums" placeholder="">
+                                                <input type="text" class="form-control" name="filledDrums" value="{{isset($packingmateria->filledDrums)?packingmateria->filledDrums:""}}" id="filledDrums" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="excessFilledDrums" class="active">Excess filled in drums</label>
-                                                <input type="text" class="form-control" name="excessFilledDrums" value="{{$packingmateria->excessFilledDrums}}" id="excessFilledDrums" placeholder="">
+                                                <input type="text" class="form-control" name="excessFilledDrums" value="{{isset($packingmateria->excessFilledDrums)?$packingmateria->excessFilledDrums:""}}" id="excessFilledDrums" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="qcsampling" class="active">QC Sampling (Kg.)</label>
-                                                <input type="text" class="form-control" name="qcsampling" value="{{$packingmateria->qcsampling}}" id="qcsampling" placeholder="">
+                                                <input type="text" class="form-control" name="qcsampling" value="{{isset($packingmateria->qcsampling)?$packingmateria->qcsampling:""}}" id="qcsampling" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="StabilitySample" class="active">Stability Sample (Kg.)</label>
-                                                <input type="Number" class="form-control" name="StabilitySample" value="{{$packingmateria->StabilitySample}}" id="StabilitySample" placeholder="">
+                                                <input type="Number" class="form-control" name="StabilitySample" value="{{isset($packingmateria->StabilitySample)?$packingmateria->StabilitySample:""}}" id="StabilitySample" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="WorkingSlandered" class="active">Working Slandered</label>
-                                                <input type="text" class="form-control" name="WorkingSlandered" value="{{$packingmateria->WorkingSlandered}}" id="WorkingSlandered" placeholder="">
+                                                <input type="text" class="form-control" name="WorkingSlandered" value="{{isset($packingmateria->WorkingSlandered)?$packingmateria->WorkingSlandered:""}}" id="WorkingSlandered" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="ValidationSample" class="active">Validation Sample</label>
-                                                <input type="text" class="form-control" name="ValidationSample" value="{{$packingmateria->ValidationSample}}" id="ValidationSample" placeholder="">
+                                                <input type="text" class="form-control" name="ValidationSample" value="{{isset($packingmateria->ValidationSample)?$packingmateria->ValidationSample:""}}" id="ValidationSample" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="CustomerSample" class="active">Filled in Jerry can / Drum (Kg.) (Customer Sample)</label>
-                                                <input type="text" class="form-control" name="CustomerSample" value="{{$packingmateria->CustomerSample}}" id="CustomerSample" placeholder="">
+                                                <input type="text" class="form-control" name="CustomerSample" value="{{isset($packingmateria->CustomerSample)?$packingmateria->CustomerSample:""}}" id="CustomerSample" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="ActualYield" class="active">Actual Yield [(Output/Input)*100]</label>
-                                                <input type="text" class="form-control" name="ActualYield" value="{{$packingmateria->ActualYield}}" id="ActualYield" placeholder="98.00 / 102.00%">
+                                                <input type="text" class="form-control" name="ActualYield" value="{{isset($packingmateria->ActualYield)?$packingmateria->ActualYield:""}}" id="ActualYield" placeholder="98.00 / 102.00%">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -1307,7 +1338,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="Remark" class="active">Note / Remark</label>
-                                    <textarea class="form-control" name="Remark" value="{{$packingmateria->Remark}}" id="Remark" placeholder="Note / Remark">{{$packingmateria->Remark}}</textarea>
+                                    <textarea class="form-control" name="Remark"  id="Remark" placeholder="Note / Remark">{{isset($packingmateria->Remark)?$packingmateria->Remark:""}}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1319,13 +1350,12 @@
                         </div>
                     </form>
                 </div>
-                @endif
-                @if(isset($packingmateria))
+
 
                 <div id="Packing_1" class="tab-pane fade {{($sequenceId=='13')?'in active show':''}}">
                     <form id="add_manufacturing_packing" method="post" action="{{ route('add_manufacturing_packing_update') }}">
                         <input type="hidden" value="13" name="sequenceId">
-                        <input type="hidden" value="{{$packingmateria->id}}" name="id">
+                        <input type="hidden" value="{{isset($packingmateria->id)?$packingmateria->id:""}}" name="id">
                         @csrf
 
                         <div class="form-row">
@@ -1335,7 +1365,7 @@
 
                                     <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
 
-                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","value"=>"$packingmateria->proName")) }}
+                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1344,29 +1374,29 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" value="{{$packingmateria->bmrNo}}" id="bmrNo">
+                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" value="{{$packingmateria->batchNo}}" id="batchNo" readonly>
+                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" value="{{$packingmateria->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No.">
+                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No.">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="ManufacturerDate" class="active">Date</label>
-                                    <input type="date" class="form-control calendar" name="ManufacturerDate" value="{{$packingmateria->ManufacturerDate}}" id="ManufacturerDate" value={{ date("Y-m-d") }}>
+                                    <input type="date" class="form-control calendar" name="ManufacturerDate" value="{{isset($packingmateria->ManufacturerDate)?$packingmateria->ManufacturerDate:date("Y-m-d")}}" id="ManufacturerDate" value={{ date("Y-m-d") }}>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group input_fields_wrap" value="{{$packingmateria->MaterialReceived}}" id="MaterialReceived">
+                                <div class="form-group input_fields_wrap" value="{{isset($packingmateria->MaterialReceived)?$packingmateria->MaterialReceived:""}}" id="MaterialReceived">
                                     <label class="control-label d-flex">Packing
                                         <!-- <div class="input-group-btn">  -->
                                         <!-- <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button> -->
@@ -1377,49 +1407,49 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Observation" class="active">Area cleanliness checked by Production Observation</label>
-                                                <input type="text" class="form-control" name="Observation" value="{{$packingmateria->Observation}}" id="Observation" placeholder="Observation">
+                                                <input type="text" class="form-control" name="Observation" value="{{isset($packingmateria->Observation)?$packingmateria->Observation:""}}" id="Observation" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Temperature" class="active">Temperature ( <sup>o</sup>C) of Filling area</label>
-                                                <input type="text" class="form-control" name="Temperature" value="{{$packingmateria->Temperature}}" id="Temperature" placeholder="Observation">
+                                                <input type="text" class="form-control" name="Temperature" value="{{isset($packingmateria->Temperature)?$packingmateria->Temperature:""}}" id="Temperature" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Humidity" class="active">Humidity (%RH) of Filling area</label>
-                                                <input type="text" class="form-control" name="Humidity" value="{{$packingmateria->Humidity}}" id="Humidity" placeholder="Observation">
+                                                <input type="text" class="form-control" name="Humidity" value="{{isset($packingmateria->Humidity)?$packingmateria->Humidity:""}}" id="Humidity" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="TemperatureP" class="active">Temperature ( <sup>o</sup>C) of Product</label>
-                                                <input type="text" class="form-control" name="TemperatureP" value="{{$packingmateria->TemperatureP}}" id="TemperatureP" placeholder="Observation">
+                                                <input type="text" class="form-control" name="TemperatureP" value="{{isset($packingmateria->TemperatureP)?$packingmateria->TemperatureP:""}}" id="TemperatureP" placeholder="Observation">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="50kgDrums" class="active">50 Kg No of Drums filled</label>
-                                                <input type="Number" class="form-control" name="50kgDrums" value="{{$packingmateria['50kgDrums']}}" id="50kgDrums">
+                                                <input type="Number" class="form-control" name="50kgDrums" value="{{isset($packingmateria['50kgDrums'])?$packingmateria['50kgDrums']:""}}" id="50kgDrums">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="200kgDrums" class="active">200 Kg No of Drums filled</label>
-                                                <input type="Number" class="form-control" name="20kgDrums" id="20kgDrums" value="{{$packingmateria['20kgDrums']}}">
+                                                <input type="Number" class="form-control" name="20kgDrums" id="20kgDrums" value="{{isset($packingmateria['20kgDrums'])?$packingmateria['20kgDrums']:""}}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="startTime" class="active">Start Time (Hrs.)</label>
-                                                <input type="number" class="form-control time" name="startTime" value="{{$packingmateria->startTime}}" id="startTime" placeholder="">
+                                                <input type="number" class="form-control time" name="startTime" value="{{isset($packingmateria->startTime)?$packingmateria->startTime:""}}" id="startTime" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="EndstartTime" class="active">End Time (Hrs.)</label>
-                                                <input type="number" class="form-control time" name="EndstartTime" value="{{$packingmateria->EndstartTime}}" id="EndstartTime" placeholder="">
+                                                <input type="number" class="form-control time" name="EndstartTime" value="{{isset($packingmateria->EndstartTime)?$packingmateria->EndstartTime:""}}" id="EndstartTime" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -1439,7 +1469,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group input_fields_wrap" value="{{$packingmateria->MaterialReceived}}" id="MaterialReceived">
+                                <div class="form-group input_fields_wrap" value="{{isset($packingmateria->MaterialReceived)?$packingmateria->MaterialReceived:""}}" id="MaterialReceived">
                                     <label class="control-label d-flex">Yield
                                         <!-- <div class="input-group-btn">  -->
                                         <!-- <button class="btn btn-dark add-more add_field_button waves-effect waves-light" type="button">Add More +</button> -->
@@ -1450,61 +1480,61 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="rmInput" class="active">RM Input (Kg.)</label>
-                                                <input type="text" class="form-control" name="rmInput" value="{{$packingmateria->rmInput}}" id="rmInput" placeholder="">
+                                                <input type="text" class="form-control" name="rmInput" value="{{isset($packingmateria->rmInput)?$packingmateria->rmInput:""}}" id="rmInput" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="fgOutput" class="active">FG Output</label>
-                                                <input type="text" class="form-control" name="fgOutput" value="{{$packingmateria->fgOutput}}" id="fgOutput" placeholder="">
+                                                <input type="text" class="form-control" name="fgOutput" value="{{isset($packingmateria->fgOutput)?$packingmateria->fgOutput:""}}" id="fgOutput" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="filledDrums" class="active">Filled in Drums (Kg)</label>
-                                                <input type="text" class="form-control" name="filledDrums" value="{{$packingmateria->filledDrums}}" id="filledDrums" placeholder="">
+                                                <input type="text" class="form-control" name="filledDrums" value="{{isset($packingmateria->filledDrums)?$packingmateria->filledDrums:""}}" id="filledDrums" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="excessFilledDrums" class="active">Excess filled in drums</label>
-                                                <input type="text" class="form-control" name="excessFilledDrums" value="{{$packingmateria->excessFilledDrums}}" id="excessFilledDrums" placeholder="">
+                                                <input type="text" class="form-control" name="excessFilledDrums" value="{{isset($packingmateria->excessFilledDrums)?$packingmateria->excessFilledDrums:""}}" id="excessFilledDrums" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="qcsampling" class="active">QC Sampling (Kg.)</label>
-                                                <input type="text" class="form-control" name="qcsampling" value="{{$packingmateria->qcsampling}}" id="qcsampling" placeholder="">
+                                                <input type="text" class="form-control" name="qcsampling" value="{{isset($packingmateria->qcsampling)?$packingmateria->qcsampling:""}}" id="qcsampling" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="StabilitySample" class="active">Stability Sample (Kg.)</label>
-                                                <input type="Number" class="form-control" name="StabilitySample" value="{{$packingmateria->StabilitySample}}" id="StabilitySample" placeholder="">
+                                                <input type="Number" class="form-control" name="StabilitySample" value="{{isset($packingmateria->StabilitySample)?$packingmateria->StabilitySample:""}}" id="StabilitySample" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="WorkingSlandered" class="active">Working Slandered</label>
-                                                <input type="text" class="form-control" name="WorkingSlandered" value="{{$packingmateria->WorkingSlandered}}" id="WorkingSlandered" placeholder="">
+                                                <input type="text" class="form-control" name="WorkingSlandered" value="{{isset($packingmateria->WorkingSlandered)?$packingmateria->WorkingSlandered:""}}" id="WorkingSlandered" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="ValidationSample" class="active">Validation Sample</label>
-                                                <input type="text" class="form-control" name="ValidationSample" value="{{$packingmateria->ValidationSample}}" id="ValidationSample" placeholder="">
+                                                <input type="text" class="form-control" name="ValidationSample" value="{{isset($packingmateria->ValidationSample)?$packingmateria->ValidationSample:""}}" id="ValidationSample" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="CustomerSample" class="active">Filled in Jerry can / Drum (Kg.) (Customer Sample)</label>
-                                                <input type="text" class="form-control" name="CustomerSample" value="{{$packingmateria->CustomerSample}}" id="CustomerSample" placeholder="">
+                                                <input type="text" class="form-control" name="CustomerSample" value="{{isset($packingmateria->CustomerSample)?$packingmateria->CustomerSample:""}}" id="CustomerSample" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="ActualYield" class="active">Actual Yield [(Output/Input)*100]</label>
-                                                <input type="text" class="form-control" name="ActualYield" value="{{$packingmateria->ActualYield}}" id="ActualYield" placeholder="98.00 / 102.00%">
+                                                <input type="text" class="form-control" name="ActualYield" value="{{isset($packingmateria->ActualYield)?$packingmateria->ActualYield:""}}" id="ActualYield" placeholder="98.00 / 102.00%">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -1526,7 +1556,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="Remark" class="active">Note / Remark</label>
-                                    <textarea class="form-control" name="Remark" value="{{$packingmateria->Remark}}" id="Remark" placeholder="Note / Remark">{{$packingmateria->Remark}}</textarea>
+                                    <textarea class="form-control" name="Remark" id="Remark" placeholder="Note / Remark">{{isset($packingmateria->Remark)?$packingmateria->Remark:""}}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1537,7 +1567,7 @@
                         </div>
                     </form>
                 </div>
-                @endif
+
             </div>
         </div>
     </div>
