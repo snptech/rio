@@ -10,7 +10,7 @@ class Requisitionissuedmaterial extends Model
     use HasFactory;
     protected $table = 'issue_material_production_requestion';
     protected $fillable = [
-        "id", "requestion_id", "from", "to", "issed_date", "batch_no", "checkedBy", "ApprovedBy", "batch_id", "created_at", "updated_at","status"
+        "id", "requestion_id", "from", "to", "issed_date", "batch_no", "checkedBy", "ApprovedBy", "batch_id", "created_at", "updated_at","status","type"
     ];
 
     public function DetailsRequisitions()

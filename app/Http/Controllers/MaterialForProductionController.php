@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Requisitionissuedmaterialdetails;
 use App\Models\Requisitionissuedmaterial;
 use App\Models\InwardPackingMaterialItems;
+use App\Models\PackingMaterialSlip;
 use App\Models\Requisition;
+use App\Models\Stock;
 
 class MaterialForProductionController extends Controller
 {
@@ -201,7 +203,7 @@ class MaterialForProductionController extends Controller
     {
         if($request->id)
         {
-            $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize","fromdep.department as fromdepartmet","todep.department as todepartmet")
+            $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize","fromdep.department as fromdepartmet","todep.department as todepartmet","packing_material_requisition_slip.type")
             ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
             ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
             ->join("department as fromdep", "fromdep.id", "=", "packing_material_requisition_slip.from")
@@ -263,6 +265,7 @@ class MaterialForProductionController extends Controller
         {
             $material_details = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$request->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
 
+
             $arrRules = [
                 "from"=>"required",
                  "to"=>"required",
@@ -311,6 +314,7 @@ class MaterialForProductionController extends Controller
                $data["checkedBy"] = Auth::user()->id;
                $data["ApprovedBy"] = Auth::user()->id;
                $data["batch_id"] = $request->batch_id;
+               $data["type"] = $request->type;
 
                $result = Requisitionissuedmaterial::create($data);
                if($result)
@@ -357,6 +361,18 @@ class MaterialForProductionController extends Controller
                             }
 
 
+                      $stocka = array();
+                      $materialreq =  RequisitionSlip::where("batch_id",$request->batch_id)->first();
+                      $stocka["matarial_id"] =  $request->$matrail_id;
+                      $stocka["material_type"] =  $type;
+                      $stocka["department"] =  $materialreq->to;
+                      $stocka["qty"] =  $request->$appqty;
+                      $stocka["batch_no"] =  $request->$batch;
+                      $stocka["process_batch_id"] =  $request->batch_id;
+                      $stocka["ar_no_date"] =  $request->$arno;
+                      $stocka["type"] =  $type;
+
+                      $resstock = Stock::create($stocka);
 
 
 

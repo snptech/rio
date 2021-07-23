@@ -153,6 +153,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($issue_material->batch_id)?$issue_material->batch_id:old("batch_id") }}" />
+                            <input type="hidden" name="type" id="type" value="{{ isset($issue_material->type)?$issue_material->type:old("type") }}" />
                             <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
                         </div>
                     </div>

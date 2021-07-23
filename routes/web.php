@@ -243,6 +243,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
        Route::get('/list_of_equipment_edit/{id}', [App\Http\Controllers\ManufactureProcessController::class,'list_of_equipment_edit'])->name("list_of_equipment_edit");
        Route::post('/list_of_equipment_update', [App\Http\Controllers\ManufactureProcessController::class,'list_of_equipment_update'])->name("list_of_equipment_update");
        Route::get('/list_of_equipment_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'list_of_equipment_delete'])->name("list_of_equipment_delete");
+
+       Route::post("/getequipmentcode",[App\Http\Controllers\ManufactureProcessController::class,'getequipmentcode'])->name("getequipmentcode");
        // line-clearance
        Route::get('/line-clearance', [App\Http\Controllers\ManufactureProcessController::class,'line_clearance'])->name("line-clearance");
        Route::get('/add-batch-manufacturing-line-clearance-record', [App\Http\Controllers\ManufactureProcessController::class,'add_line_clearance_record'])->name("add-batch-manufacturing-line-clearance-record");

@@ -22,10 +22,12 @@ use App\Models\Processlots;
 use App\Models\AddLotslRawMaterialDetails;
 use App\Models\HomogenizingList;
 use App\Models\Homogenizing;
+use App\Models\Requisitionissuedmaterial;
 use App\Models\Requisitionissuedmaterialdetails;
 use session;
 use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
+use App\Models\stock;
 use DB;
 
 class ManufactureProcessController extends Controller
@@ -72,6 +74,7 @@ class ManufactureProcessController extends Controller
                 $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
 
                 $reqIssualCount =  Requisitionissuedmaterialdetails::where('main_details_id', $data["requestion"]->id)->count();
+
                 if(isset($reqIssualCount) && $reqIssualCount > 0)
                 {
                     $data['raw_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
@@ -204,15 +207,24 @@ class ManufactureProcessController extends Controller
         if (isset($data["requestion"]))
              $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
 
-             $reqIssualCount =  Requisitionissuedmaterialdetails::where('main_details_id', $data["requestion"]->id)->count();
-                if(isset($reqIssualCount) && $reqIssualCount > 0)
-                {
-                    $data['raw_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
-                    ->where("issue_material_production_requestion_details.main_details_id", $data["requestion"]->id)
-                    ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
-                    ->get();
+             $Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->first();
+             if(isset($Requisitionissuedmaterial) && $Requisitionissuedmaterial)
+             {
+                $reqIssualCount =  Requisitionissuedmaterialdetails::where('issual_material_id', $Requisitionissuedmaterial->id)->count();
 
-                }
+                    if(isset($reqIssualCount) && $reqIssualCount > 0)
+                    {
+                        $data['raw_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
+                        ->where("issue_material_production_requestion_details.issual_material_id", $Requisitionissuedmaterial->id)
+                        ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                        ->get();
+
+                    }
+            }
+
+            $data["stock"] = Stock::select("raw_materials.material_name","stock.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->pluck("material_name","id");
+
+
 
 
 
@@ -280,7 +292,8 @@ class ManufactureProcessController extends Controller
 
         $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
         $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
-        $data["selected_crop"] =  ListOfEquipmentManufacturing::select("list_of_equipment_in_manufacturin_process.EquipmentCode","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->pluck("EquipmentCode","id");
+        $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->pluck("code","id");
+
 
 
         //$data['sequenceId'] = '#requisition';
@@ -1666,6 +1679,15 @@ class ManufactureProcessController extends Controller
                     return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
+        }
+    }
+    public function getequipmentcode(Request $request)
+    {
+        if($request->id)
+        {
+            $code = DB::table("equipment_code")->where("equipment_id",$request->id)->pluck("code","id");
+            $data["code"] = $code;
+            return response()->json($data);
         }
     }
 }

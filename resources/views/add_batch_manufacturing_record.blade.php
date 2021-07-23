@@ -243,7 +243,7 @@
 										<div class="row add-more-wrap after-add-more m-0 mb-4">
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
-													@php $rw = [$rd->material_id => $rawmaterials[$rd->material_id] ]; 
+													@php $rw = [$rd->material_id => $rawmaterials[$rd->material_id] ];
 													@endphp
 													<label for="rawMaterialName" class="active">Raw Material</label>
 													{{ Form::select("rawMaterialName[]",$rw,old(),array("class"=>"form-control","readonly")) }}
@@ -471,7 +471,7 @@
 										@if(isset($packing_material_bills))
 										@foreach($packing_material_bills as $index=>$rd)
 										<div class="row add-more-wrap after-add-more m-0 mb-4">
-											 @php $pm = [$rd->material_id => $packingmaterials[$rd->material_id]]; 
+											 @php $pm = [$rd->material_id => $packingmaterials[$rd->material_id]];
 											 @endphp
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
@@ -693,7 +693,7 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="bmrNo" class="active">BMR No.</label>
- 
+
 										<input type="text" class="form-control" name="bmrNo" value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old('bmrNo') }}" readonly id="bmrNo" placeholder="BMR No.">
 									</div>
 								</div>
@@ -796,7 +796,7 @@
 									</div>
 								</div>
 								<div class="col-12 col-md-12 col-lg-12 col-xl-12">
-								<button type="button" class="btn-primary add_field_button_20 mb-4 float-right">Add More Lots +</button> 
+								<button type="button" class="btn-primary add_field_button_20 mb-4 float-right">Add More Lots +</button>
 								@if(isset($processlots))
 									<table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
 										<thead>
@@ -810,7 +810,7 @@
 										</thead>
 										<tbody class="input_fields_wrap_20">
 											@foreach($processlots as $p_lots)
-											<tr>@php $lotCount = $loop->index+1  @endphp                                            
+											<tr>@php $lotCount = $loop->index+1  @endphp
 												<td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>    @php  $index = $p_lots->EquipmentName;   @endphp
 												<td>Lot No.: {{ $p_lots->lotNo }} - <span class="text-primary p-2"> {{$lotCount}} {{$rawmaterials[$index]}}</span></td>
 												<td><input type="text" name="qty[]" id="qty[1]" class="form-control" value="{{$p_lots->Quantity}}"></td>
@@ -995,7 +995,7 @@
 								</div>
 							</div>
 							@php $doneBy = [\Auth::user()->id => \Auth::user()->name]
-							@endphp                            
+							@endphp
 							<div class="col-12 col-md-12 col-lg-12 col-xl-12">
 								<table class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
 									<thead>
@@ -1846,9 +1846,9 @@
 			$(this).parents('div.row').remove();
 			x--;
 		});
-		//    setTimeout(function () { 
+		//    setTimeout(function () {
 		//     $('.alert').alert('close');
 		// }, 5000);
-	}); 
+	});
 </script>
 @endpush
