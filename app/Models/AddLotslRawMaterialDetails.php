@@ -11,7 +11,7 @@ class AddLotslRawMaterialDetails extends Model
     protected $table = 'add_lots_raw_material_detail';
     protected $fillable = [
         'id',
-        'EquipmentName',
+        'MaterialName',
         'rmbatchno',
         'Quantity',
         'add_lots_id',

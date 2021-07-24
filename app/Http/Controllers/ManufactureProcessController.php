@@ -27,7 +27,8 @@ use App\Models\Requisitionissuedmaterialdetails;
 use session;
 use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
-use App\Models\stock;
+use App\Models\Stock;
+
 use DB;
 
 class ManufactureProcessController extends Controller
@@ -222,9 +223,15 @@ class ManufactureProcessController extends Controller
                     }
             }
 
-            $data["stock"] = Stock::select("raw_materials.material_name","stock.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->pluck("material_name","id");
+            $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->pluck("material_name","id");
 
-
+            $data["lotno"] =1;
+            $lotsnum = AddLotsl::select(DB::raw("max(lotNo) as lotno"))->where('batch_id', $request->id)->first();
+            if(isset($lotsnum) && $lotsnum){
+                $data["lotno"]  = $lotsnum->lotno+1;
+            }
+            else
+                $data["lotno"]  = 1;
 
 
 
@@ -281,6 +288,11 @@ class ManufactureProcessController extends Controller
             ->get();
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
+        $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","equipment_code.code","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->leftJoin("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.batch_id","add_lotsl.batch_id")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.batch_manufacturing_id","batch_manufacturing_records_list_of_equipment.id")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->leftJoin("raw_materials","raw_materials.id","add_lotsl.proName")->groupBy("add_lotsl.id")
+            ->get();
+
+
+
         $data['HomogenizingList'] = HomogenizingList::where('homogenizing_id', '=', $id)
             ->get();
         $data['Homogenizing'] = Homogenizing::where('id', '=', $id)
@@ -1171,16 +1183,26 @@ class ManufactureProcessController extends Controller
         $arr['checkedBy'] =  Auth::user()->id;
         $arr['ApprovedBy'] =  Auth::user()->id;
         $arr['Remark'] = $request->Remark;
+        $arr['batch_id'] = $request->mainid;
         $arr['type'] = "R";
-
-        $RequisitionSlip_id = RequisitionSlip::where('id', $request->id)->update($arr);
-        if ((isset($request->id)) && ($request->id > 0)) {
+        $reqid = 0;
+        if(isset($request->id) && $request->id)
+        {
+            $RequisitionSlip_id = RequisitionSlip::where('id', $request->id)->update($arr);
+            $reqid = $request->id;
+        }
+        else
+        {
+            $RequisitionSlip_id = RequisitionSlip::create($arr);
+            $reqid = $RequisitionSlip_id->id;
+        }
+        if ((isset($reqid)) && ($reqid > 0)) {
             if (count($request->PackingMaterialName)) {
-                DetailsRequisition::where('requisition_id', $request->id)->delete();
+                DetailsRequisition::where('requisition_id', $reqid)->delete();
                 foreach ($request->PackingMaterialName as $key => $value) {
                     $arr_data['PackingMaterialName'] = $value;
                     $arr_data['Quantity'] = $request->Quantity[$key];
-                    $arr_data['requisition_id'] = $request->id;
+                    $arr_data['requisition_id'] = $reqid;
                     $arr_data['type'] = "R";
                     $result = DetailsRequisition::Create($arr_data);
                 }
@@ -1190,7 +1212,7 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 1;
                 }
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
             return redirect('add_manufacturing_edit#issualofrequisition')->with('error', "Invalid Data");
@@ -1531,7 +1553,20 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['Date'] = $request->Date;
-        $arr['lotNo'] = $request->lotNo;
+        if($request->lotNo)
+            $arr['lotNo'] = $request->lotNo;
+        else
+        {
+            $lotno = AddLotsl::select(DB::raw("max(lotNo) as lotno"))->where('id', $request->id)->first();
+            if(isset($lotno) && $lotno)
+            {
+                $arr['lotNo'] = $lotno->lotno+1;
+            }
+            else
+            {
+                $arr['lotNo'] = 1;
+            }
+        }
         $arr['ReactorNo'] = $request->ReactorNo;
         $arr['Process_date'] = $request->Process_date;
         $arr['batch_id'] = $request->mainid;
@@ -1546,14 +1581,24 @@ class ManufactureProcessController extends Controller
         }
 
         if ((isset($lotsid)) && ($lotsid > 0)) {
-            if (count($request->EquipmentName)) {
+            if (count($request->MaterialName)) {
                 AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->delete();
-                foreach ($request->EquipmentName as $key => $value) {
-                    $arr_data['EquipmentName'] = $value;
+                foreach ($request->MaterialName as $key => $value) {
+                    $arr_data['MaterialName'] = $value;
                     $arr_data['rmbatchno'] = $request->rmbatchno[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
                     $arr_data['add_lots_id'] = $lotsid;
                     AddLotslRawMaterialDetails::Create($arr_data);
+
+                    $stockless = array();
+                    $stock = Stock::where("matarial_id",$value)->where("batch_no",$request->rmbatchno[$key])->first();
+                    if(isset($stock) && $stock)
+                    {
+                        $st = Stock::find($stock->id);
+                        $stockless["used_qty"] = $request->Quantity[$key];
+                        $st->update($stockless);
+                    }
+
 
                 }
 
@@ -1577,7 +1622,7 @@ class ManufactureProcessController extends Controller
                                 $sequenceId = (int)$request->sequenceId + 1;
                             }
                             if ($result) {
-                                return redirect("add_manufacturing_edit/" . $lotsid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                                return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                             }
                         }
                     }
@@ -1687,6 +1732,17 @@ class ManufactureProcessController extends Controller
         {
             $code = DB::table("equipment_code")->where("equipment_id",$request->id)->pluck("code","id");
             $data["code"] = $code;
+            return response()->json($data);
+        }
+    }
+    public function getbatchofmaterial(Request $request)
+    {
+        if($request->id)
+        {
+            $batchstock = Stock::select("inward_raw_materials_items.batch_no","inward_raw_materials_items.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
+
+            $data["batch"] = $batchstock;
+
             return response()->json($data);
         }
     }
