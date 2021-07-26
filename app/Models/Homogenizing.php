@@ -13,6 +13,7 @@ class Homogenizing extends Model
         'id',
         'order_id',
         'proName',
+        'batch_id',
         'bmrNo',
         'batchNo',
         'refMfrNo',

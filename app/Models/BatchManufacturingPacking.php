@@ -39,6 +39,7 @@ class BatchManufacturingPacking extends Model
         'checkedBy',
         'ApprovedBy',
         'Remark',
+        'batch_id',
         'created_at',
         'updated_at',
     ];

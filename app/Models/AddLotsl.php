@@ -21,6 +21,8 @@ class AddLotsl extends Model
         'ReactorNo',
         'batch_id',
         'Process_date',
+        "homogenize_done",
+        "homogenize_date",
         'created_at',
         'updated_at',
     ];
