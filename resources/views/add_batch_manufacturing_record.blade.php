@@ -239,7 +239,9 @@
 									<div class="form-group input_fields_wrap" id="MaterialReceived">
 										<label class="control-label d-flex">Bill of Raw Material Details and Weighing Record</label>
 										@if(isset($raw_material_bills))
+										
 										@foreach( $raw_material_bills as $index => $rd )
+										
 										<div class="row add-more-wrap after-add-more m-0 mb-4">
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
@@ -640,35 +642,35 @@
 					</div>
 					 <div id="issualofrequisitionpacking" class="tab-pane fade">
 						 @if(isset($requestion_packing))
-					<table class="table table-hover table-bordered datatable" id="examplereq_packing">
-						<thead>
-							<tr>
-								<th>Requestion No</th>
-								<th>Batch No</th>
-								<th>Date</th>
-								<th>Requestion Packing  Material Name</th>
-								<th>Requestion Packing  Material Qty</th>
-								<th>Issued Packing  Material Qty</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							@if(isset($requestion_packing_details) && $requestion_packing)
-							@foreach($requestion_packing_details as $temp)
-							<tr>
-								<td>{{$requestion_packing->id}}</td>
-								<td>{{$requestion_packing->batchNo}}</td>
-								<td>{{$requestion_packing->created_at?date("d/m/Y",strtotime($requestion_packing->created_at)):""}}</td>
-								<td>{{$temp->material_name}}</td>
-								<td>{{$temp->Quantity}}</td>
-								<td>{{$temp->approved_qty}}</td>
-								<td>{!! ($temp->approved_qty >= $temp->Quantity?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
-							</tr>
-							@endforeach
-							@endif
-						</tbody>
-					</table>
-					@endif
+						<table class="table table-hover table-bordered datatable" id="examplereq_packing">
+							<thead>
+								<tr>
+									<th>Requestion No</th>
+									<th>Batch No</th>
+									<th>Date</th>
+									<th>Requestion Packing  Material Name</th>
+									<th>Requestion Packing  Material Qty</th>
+									<th>Issued Packing  Material Qty</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if(isset($requestion_packing_details) && $requestion_packing)
+								@foreach($requestion_packing_details as $temp)
+								<tr>
+									<td>{{$requestion_packing->id}}</td>
+									<td>{{$requestion_packing->batchNo}}</td>
+									<td>{{$requestion_packing->created_at?date("d/m/Y",strtotime($requestion_packing->created_at)):""}}</td>
+									<td>{{$temp->material_name}}</td>
+									<td>{{$temp->Quantity}}</td>
+									<td>{{$temp->approved_qty}}</td>
+									<td>{!! ($temp->approved_qty >= $temp->Quantity?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
+								</tr>
+								@endforeach
+								@endif
+							</tbody>
+						</table>
+						@endif
 					</div>
 					{{-- end of packing materials --}}
 
@@ -750,6 +752,7 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
+										<input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
 									</div>
 								</div>
@@ -810,8 +813,9 @@
 										</thead>
 										<tbody class="input_fields_wrap_20">
 											@foreach($processlots as $p_lots)
+											
 											<tr>@php $lotCount = $loop->index+1  @endphp
-												<td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>    @php  $index = $p_lots->EquipmentName;   @endphp
+												<td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>    @php  $index = $p_lots->MaterialName;   @endphp
 												<td>Lot No.: {{ $p_lots->lotNo }} - <span class="text-primary p-2"> {{$lotCount}} {{$rawmaterials[$index]}}</span></td>
 												<td><input type="text" name="qty[]" id="qty[1]" class="form-control" value="{{$p_lots->Quantity}}"></td>
 												<td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control" value="{{$p_lots->stratTime}}"></td>
@@ -843,6 +847,7 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
+										<input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
 									</div>
 								</div>
@@ -1054,6 +1059,7 @@
 							</div>
 							<div class="col-12">
 								<div class="form-group">
+									<input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 									<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Save &amp; Quite</button><a href="add-batch-manufacturing-record-add-lot2.html" class="btn btn-dark btn-md form-btn waves-effect waves-light">Continue</a>
 								</div>
 							</div>
@@ -1271,6 +1277,7 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
+										<input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Clear</button>
 									</div>
 								</div>

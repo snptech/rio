@@ -83,6 +83,7 @@ class ManufactureProcessController extends Controller
                     ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
                     ->get();
 
+                    
                 }
             }
 
@@ -309,11 +310,11 @@ class ManufactureProcessController extends Controller
 
         
         $data['HomogenizingList'] = array();
-        if(isset($data['Homogenizing']) && $data['Homogenizing'])
+        /*if(isset($data['Homogenizing']) && $data['Homogenizing'])
         {
             $data['HomogenizingList'] = HomogenizingList::where('homogenizing_id', '=', $data['Homogenizing'][0]->id)
             ->get();
-        }
+        }*/
 
 
         $data['sequenceId'] = ($formSeqId) ? ($formSeqId) : 1;
@@ -1545,7 +1546,7 @@ class ManufactureProcessController extends Controller
             (int)$prvCount++;
             if (count($request->EquipmentName)) {
                 foreach ($request->EquipmentName as $key => $value) {
-                    $arr_data['EquipmentName'] = $value;
+                    $arr_data['MaterialName'] = $value;
                     $arr_data['rmbatchno'] = $request->rmbatchno[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
                     $arr_data['add_lots_id'] = $AddLotsl->id;
