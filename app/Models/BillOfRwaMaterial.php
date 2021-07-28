@@ -18,6 +18,7 @@ class BillOfRwaMaterial extends Model
         'doneBy',
         'checkedBy',
         'order_id',
+        'batch_id',
         'Remark',
         'is_active',
         'is_delete',

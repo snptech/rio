@@ -293,7 +293,7 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
-
+                                        <input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 										<input type="hidden" name="currentForm" value="#billOfRawMaterial">
 										<input type="hidden" name="nextForm" value="#requisitionpacking">
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
@@ -529,6 +529,7 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
+                                        <input type="hidden" name="batch_id" id="batch_id" value="{{isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 										<input type="hidden" name="currentForm" value="#billOfRawMaterialpacking">
 										<input type="hidden" name="nextForm" value="#listOfEquipment">
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
@@ -722,34 +723,29 @@
 												<button class="btn btn-dark add-more add_field_button_1 waves-effect waves-light" type="button">Add More +</button>
 											</div>
 										</label>
+                                        @php $c = 1; @endphp
 										<div class="row add-more-wrap after-add-more m-0 mb-4" id="equipmentCode">
-											<!-- <span class="add-count">1</span> -->
+											<span class="add-count">1</span>
 											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label for="EquipmentName" class="active">Equipment Name</label>
-													<select class="form-control select"  onchange='getEquipementCode(this,"#equipmentCode");' name="EquipmentName[]" id="EquipmentName">
-														<option disabled="disabled" selected="selected">Select</option>
-														<option value="1">SS Reactor</option>
-														<option value="2">SS Homogenising Tank</option>
-														<option value="3">Filling Station</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label for="EquipmentCode" class="active">Equipment Code</label>
-													<select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode">
-														<option disabled="disabled" selected="selected">Select</option>
-														<option value="1">PR/RC/001</option>
-														<option value="1">PR/RC/002</option>
-													</select>
-												</div>
-											</div>
+                                                <div class="form-group">
+                                                    <label for="EquipmentName" class="active">Equipment Name</label>
+                                                    {{ Form::select("EquipmentName[]",$eqipment_name,old("eqipment_name"),array("class"=>"form-control select","id"=>"eqipment_name1","Placeholder"=>"Equipment Name","onchange"=>"getcodes($(this).val(),".$c.")")) }}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="EquipmentCode" class="active">Equipment Code</label>
+                                                    {{ Form::select("EquipmentCode[]",$eqipment_code,old("EquipmentCode"),array("class"=>"form-control select","id"=>"eqipment_code1","Placeholder"=>"Equipment Code")) }}
+
+                                                </div>
+                                            </div>
 										</div>
 									</div>
 								</div>
 								<div class="col-12">
 									<div class="form-group">
+                                        <input type="hidden" name="batch_id" id="batch_id" value="{{isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
 									</div>
 								</div>
@@ -941,17 +937,13 @@
 							<div class="col-12 col-md-6 col-lg-4">
 								<div class="form-group">
 									<label for="lotNo" class="active">Lot No.</label>
-									<input type="text" class="form-control" name="lotNo" id="lotNo" placeholder="Lot No." value="{{ isset($prvCount)?$prvCount:1}}">
+									<input type="text" class="form-control" name="lotNo" id="lotNo" placeholder="Lot No." value="{{ isset($prvCount)?$prvCount:$lotno}}">
 								</div>
 							</div>
 							<div class="col-12 col-md-6 col-lg-4">
 								<div class="form-group">
 									<label for="ReactorNo">Reactor No.</label>
-									<select class="form-control" name="ReactorNo" id="ReactorNo">
-										<option>Select</option>
-										<option>PR/RC/001</option>
-										<option>PR/RC/002</option>
-									</select>
+									{{  Form::select("ReactorNo",$selected_crop,(old("ReactorNo")?old("ReactorNo"):(isset($addlots->ReactorNo)?$addlots->ReactorNo:"")),array("class"=>"form-control select","id"=>"ReactorNo","placeholder"=>"Reactor No.")) }}
 								</div>
 							</div>
 							<div class="col-12 col-md-6 col-lg-4">
@@ -1345,7 +1337,7 @@
 			e.preventDefault();
 			if (x < max_fields) { //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4" id="equipmentCode"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" onclick="getEquipementCode(this,#equipmentCode);" name="EquipmentName[]" id="EquipmentName[' + x + ']"><option>Select</option><option>SS Reactor</option><option>SS Homogenising Tank</option><option>Filling Station</option></select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control ct select" name="EquipmentCode[]" id="EquipmentCode[' + x + ']"><option>Select</option><option>PR/RC/001</option><option>PR/RC/002</option></select></div></div></div>'); //add input box
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Equipment Name</label><select class="form-control select" name=EquipmentName[] id="eqipment_name' + x + '" onchange="getcodes($(this).val(),'+x+')"><option>Select</option>@foreach($eqipment_name as $key=>$eq) <option value="{{ $key }}">{{ $eq }}</option>@endforeach<select></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="EquipmentCode[' + x + ']" class="active">Equipment Code</label><select class="form-control select" name="EquipmentCode[]" id="eqipment_code' + x + '"><option>Select</option>@foreach($eqipment_code as $key=>$eq) <option value="{{ $key }}">{{ $eq }}</option>@endforeach</select></div></div></div>'); //add input box
 			}
 			feather.replace()
 		});
@@ -1758,7 +1750,25 @@
 		});
 
 	}
-
+    function getcodes(val,pos)
+    {
+        $.ajax({
+             url:'{{ route('getequipmentcode') }}',
+             method:'POST',
+             data:{
+                 "id":val,
+                 "_token":'{{ csrf_token() }}'
+             }
+         }).success(function(data){
+            $("#eqipment_code"+pos).empty();
+            var option ="<option value=''>Choose Equipment Code</option>";
+            $("#eqipment_code"+pos).append(option);
+            $.each(data.code, function (key, val) {
+                var option ="<option value='"+key+"'>"+val+"</option>";
+                $("#eqipment_code"+pos).append(option);
+            });
+        });
+    }
 	function getmatarialqtyandbatch(raw, index) {
 
 		$.ajax({
