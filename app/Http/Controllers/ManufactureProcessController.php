@@ -84,6 +84,7 @@ class ManufactureProcessController extends Controller
                     ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
                     ->get();
 
+                    
                 }
             }
 
@@ -242,6 +243,20 @@ class ManufactureProcessController extends Controller
                     }
             }
 
+
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batch_id",$id)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+            
+            if (isset($lotsdetails) && $lotsdetails) {
+                $data["lotsdetails"] = $lotsdetails;
+                $lot_id = AddLotsl::select('id')->where("batch_id",$id)->first();
+                $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batch_id",$id)
+                ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
+                ->get();
+
+                if (isset($processlots) && $processlots)
+                    $data["processlots"] = $processlots;
+            }
+
             $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->pluck("material_name","id");
 
             $data["lotno"] =1;
@@ -267,10 +282,7 @@ class ManufactureProcessController extends Controller
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
             }
-             $processlots = Processlots::select('process_lots.*','add_lotsl.*')->where("lot_id",$id)->leftJoin('add_lotsl', 'add_lotsl.id','=','process_lots.lot_id')->get();
-            if (isset($processlots) && $processlots) {
-                $data["processlots"] = $processlots;
-            }
+             
             if(isset($batchdetails->id))
                 $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->first();
 
@@ -303,8 +315,7 @@ class ManufactureProcessController extends Controller
         $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
         $data['AddLotslRawMaterialDetails'] = AddLotslRawMaterialDetails::where('add_lots_id', '=', $id)
             ->get();
-        $data['Processlots'] = Processlots::where('process_id', '=', $id)
-            ->get();
+        
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
         $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","equipment_code.code","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->leftJoin("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.batch_id","add_lotsl.batch_id")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.batch_manufacturing_id","batch_manufacturing_records_list_of_equipment.id")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->leftJoin("raw_materials","raw_materials.id","add_lotsl.proName")->groupBy("add_lotsl.id")
@@ -312,10 +323,17 @@ class ManufactureProcessController extends Controller
 
 
 
-        $data['HomogenizingList'] = HomogenizingList::where('homogenizing_id', '=', $id)
+        
+        $data['Homogenizing'] = Homogenizing::select("homogenizing.*","raw_materials.material_name")->leftJoin('raw_materials', 'raw_materials.id','=','homogenizing.proName')->where('batch_id', '=', $id)
             ->get();
-        $data['Homogenizing'] = Homogenizing::where('id', '=', $id)
-            ->first();
+
+        
+        $data['HomogenizingList'] = array();
+        /*if(isset($data['Homogenizing']) && $data['Homogenizing'])
+        {
+            $data['HomogenizingList'] = HomogenizingList::where('homogenizing_id', '=', $data['Homogenizing'][0]->id)
+            ->get();
+        }*/
 
 
         $data['sequenceId'] = ($formSeqId) ? ($formSeqId) : 1;
@@ -1405,16 +1423,25 @@ class ManufactureProcessController extends Controller
             "checkedBy" => Auth::user()->id,
             "ApprovedBy" => Auth::user()->id,
             "Remark" => $request['Remark'],
+            "batch_id"=>$request['mainid']
 
         ];
-        $result = BatchManufacturingPacking::where('id', $request->id)->update($data);
+        if(isset($request->id) && $request->id)
+        {
+            $result = BatchManufacturingPacking::where('id', $request->id)->update($data);
+        }
+        else
+        {
+            $result = BatchManufacturingPacking::create($data);
+        }
+
 
         $sequenceId = 1;
         if (isset($request->sequenceId)) {
             $sequenceId = (int)$request->sequenceId + 1;
         }
         if ($result) {
-            return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+            return redirect("add_manufacturing_edit/" . $request['mainid'] . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
     }
     public function add_manufacturing_packing_ganerate_update(Request $request)
@@ -1449,9 +1476,19 @@ class ManufactureProcessController extends Controller
             "checkedBy" => Auth::user()->id,
             "ApprovedBy" => Auth::user()->id,
             "Remark" => $request['Remark'],
+            "batch_id"=>$request['mainid']
 
         ];
-        $result = BatchManufacturingPacking::where('id', $request->id)->update($data);
+        if(isset($request->id) && $request->id)
+        {
+            $result = BatchManufacturingPacking::where('id', $request->id)->update($data);
+        }
+        else
+        {
+            $result = BatchManufacturingPacking::create($data);
+        }
+
+       
         if ($result) {
             return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
@@ -1531,7 +1568,7 @@ class ManufactureProcessController extends Controller
             (int)$prvCount++;
             if (count($request->EquipmentName)) {
                 foreach ($request->EquipmentName as $key => $value) {
-                    $arr_data['EquipmentName'] = $value;
+                    $arr_data['MaterialName'] = $value;
                     $arr_data['rmbatchno'] = $request->rmbatchno[$key];
                     $arr_data['Quantity'] = $request->Quantity[$key];
                     $arr_data['add_lots_id'] = $AddLotsl->id;
@@ -1720,20 +1757,37 @@ class ManufactureProcessController extends Controller
         $arr['homoTank'] = $request->homoTank;
         $arr['Observedvalue'] = $request->Observedvalue;
         $arr['homoTank'] = $request->homoTank;
-        $Homogenizing_id = Homogenizing::where('id', $request->id)->update($arr);
+        $arr['batch_id'] = $request->mainid;
+        $homeid = 0;
+        if(isset($request->id))
+        {
+            $Homogenizing_id = Homogenizing::where('id', $request->id)->update($arr);
+            $homeid = $request->id;
+        }
+        else
+        {
+            $Homogenizing_id = Homogenizing::create($arr);
+            $homeid = $Homogenizing_id->id;
+        }
 
 
-        if ((isset($request->id)) && ($request->id > 0)) {
+        if ((isset($homeid)) && ($homeid > 0)) {
             if (count($request->dateProcess)) {
-                HomogenizingList::where('homogenizing_id', $request->id)->delete();
+                HomogenizingList::where('homogenizing_id', $homeid)->delete();
               foreach ($request->dateProcess as $key => $value) {
                     $arr_data['dateProcess'] = $value;
                     $arr_data['qty'] = $request->qty[$key];
                     $arr_data['stratTime'] = $request->stratTime[$key];
                     $arr_data['endTime'] = $request->endTime[$key];
-                    $arr_data['doneby'] = $request->doneby[$key];
-                    $arr_data['homogenizing_id'] = $request->id;
+                    
+                    $arr_data['homogenizing_id'] = $homeid;
                     $result=HomogenizingList::Create($arr_data);
+
+                    $lotsarray = array();
+                    $lotsarray["homogenize_done"]=1;
+                    $lotsarray["homogenize_date"]=\Carbon\Carbon::now();;
+                    if(isset($request->lotsid[$key]) && $request->lotsid[$key] >0)
+                        $lots = AddLotsl::where("id",$request->lotsid[$key])->update($lotsarray);
 
                 }
 
@@ -1743,7 +1797,7 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }
