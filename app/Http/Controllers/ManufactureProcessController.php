@@ -226,7 +226,7 @@ class ManufactureProcessController extends Controller
             ->where('add_batch_manufacture.id', '=', $id)->first();
             $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.id', '=', $id)->first();
 
-        $data['product'] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "F")->pluck("material_name", "id");
+        $data['product'] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
 
         $data["requestion"] = RequisitionSlip::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->first();
         if (isset($data["requestion"]))
@@ -322,8 +322,8 @@ class ManufactureProcessController extends Controller
 
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
-        $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","equipment_code.code","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->leftJoin("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.batch_id","add_lotsl.batch_id")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.batch_manufacturing_id","batch_manufacturing_records_list_of_equipment.id")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->leftJoin("raw_materials","raw_materials.id","add_lotsl.proName")->groupBy("add_lotsl.id")
-            ->get();
+        $data['lotsdetails'] = array(); /*AddLotsl::select("add_lotsl.*","equipment_code.code","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->leftJoin("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.batch_id","add_lotsl.batch_id")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.batch_manufacturing_id","batch_manufacturing_records_list_of_equipment.id")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->leftJoin("raw_materials","raw_materials.id","add_lotsl.proName")->groupBy("add_lotsl.id")
+            ->get();*/
 
 
 
@@ -347,7 +347,7 @@ class ManufactureProcessController extends Controller
         $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
         $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->pluck("code","id");
 
-
+//dd($data["requestion_details"]);
 
         //$data['sequenceId'] = '#requisition';
         return view('add_manufacturing_edit', $data);

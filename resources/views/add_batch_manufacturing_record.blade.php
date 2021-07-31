@@ -51,7 +51,7 @@
 						<ul class="dropdown-menu">
 						  <li><a role="tab" data-toggle="tab" href="#requisition">Requisition</a></li>
 							<li><a role="tab" data-toggle="tab" href="#issualofrequisition">Issual of requisition</a></li>
-							<li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>
+							<!--<li><a role="tab" data-toggle="tab" href="#billOfRawMaterial">Bill of Raw Material</a></li>-->
 						</ul>
 					</li>
 
@@ -59,7 +59,7 @@
 						<ul class="dropdown-menu">
 							<li><a role="tab" data-toggle="tab" href="#requisitionpacking">Requisition</a></li>
 							<li><a role="tab" data-toggle="tab" href="#issualofrequisitionpacking">Issual of requisition</a></li>
-							<li><a role="tab" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>
+							<!--<li><a role="tab" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>-->
 						</ul>
 					</li>
 
