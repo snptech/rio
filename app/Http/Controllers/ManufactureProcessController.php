@@ -28,6 +28,7 @@ use session;
 use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Stock;
+use App\Models\GanerateLable;
 
 use DB;
 
@@ -1822,5 +1823,46 @@ class ManufactureProcessController extends Controller
 
             return response()->json($data);
         }
+    }
+
+    public function add_manufacturing_generate_label_insert( Request $request)
+    {
+        $arrRules = [
+            "simethicone"=> "required",
+            "batch_no_I"=> "required",
+            "mfg_date"=> "required",
+            "retest_date"=> "required",
+            "net_wt"=> "required",
+            "tare_wt"=> "required",
+            "Remark"=> "required",
+
+        ];
+        $arrMessages = [
+
+            "simethicone"=> "This :attribute field is required.",
+            "batch_no_I"=> "This :attribute field is required.",
+            "mfg_date"=> "This :attribute field is required.",
+            "retest_date"=> "This :attribute field is required.",
+            "net_wt"=> "This :attribute field is required.",
+            "tare_wt"=> "This :attribute field is required.",
+            "Remark"=> "This :attribute field is required.",
+        ];
+        // $validated = $request->validate($arrRules, $arrMessages);
+        $data = [
+            "simethicone"=> $request['Remark'],
+            "batch_no_I"=> $request['Remark'],
+            "mfg_date"=> $request['Remark'],
+            "retest_date"=> $request['Remark'],
+            "net_wt"=> $request['Remark'],
+            "tare_wt"=> $request['Remark'],
+            "Remark"=> $request['Remark'],
+        ];
+        $result = GanerateLable::create($data);
+
+        if ($result) {
+
+            return redirect("add-batch-manufacturing-record")->with('success', "Data Batch Manufacturing  Generate Lable  successfully");
+        }
+
     }
 }
