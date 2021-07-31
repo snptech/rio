@@ -226,7 +226,7 @@ class ManufactureProcessController extends Controller
             ->where('add_batch_manufacture.id', '=', $id)->first();
             $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.id', '=', $id)->first();
 
-        $data['product'] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "F")->pluck("material_name", "id");
+        $data['product'] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
 
         $data["requestion"] = RequisitionSlip::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->first();
         if (isset($data["requestion"]))
