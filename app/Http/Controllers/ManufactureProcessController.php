@@ -45,7 +45,8 @@ class ManufactureProcessController extends Controller
     public function add_batch_manufacturing_record(Request $request)
     {
         $data["product"] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
-
+        $data["lotno"] =1;
+        $data["selected_crop"] = array();
         $batch = "";
         if ($request->session()->has('batch')) {
             $batch = $request->session()->get('batch');
@@ -101,18 +102,11 @@ class ManufactureProcessController extends Controller
             }
 
             $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $batchdetails->id)->pluck("code","id");
-            $data["department"] = Department::where("department_type","W")->get();
-            $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
-            $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
-            $data["batchName"] = array();
-
-            $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
-            $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
 
 
-            $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->pluck("material_name","id");
+            $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
 
-            $data["lotno"] =1;
+
             $lotsnum = AddLotsl::select(DB::raw("max(lotNo) as lotno"))->where('batch_id', $batchdetails->id)->first();
             if(isset($lotsnum) && $lotsnum){
                 $data["lotno"]  = $lotsnum->lotno+1;
@@ -120,6 +114,13 @@ class ManufactureProcessController extends Controller
             else
                 $data["lotno"]  = 1;
         }
+            $data["department"] = Department::where("department_type","W")->get();
+            $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
+            $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
+            $data["batchName"] = array();
+
+            $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
+            $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
 
 
 
@@ -257,7 +258,7 @@ class ManufactureProcessController extends Controller
                     $data["processlots"] = $processlots;
             }
 
-            $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->pluck("material_name","id");
+            $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
 
             $data["lotno"] =1;
             $lotsnum = AddLotsl::select(DB::raw("max(lotNo) as lotno"))->where('batch_id', $request->id)->first();
