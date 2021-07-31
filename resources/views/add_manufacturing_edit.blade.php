@@ -967,8 +967,7 @@
 
                                     <label class="control-label d-flex">Raw Material Detail
                                         <div class="input-group-btn">
-                                            <button class="btn btn-dark add-more add_field_button_4 waves-effect waves-light" type="button">Add More +</button>
-                                        </div>
+                                            <button class="btn btn-dark add-more add_field_button_4 waves-effect waves-light" type="button">Add More +</button>                                        </div>
                                     </label>
 
                                     @if(isset($raw_material_bills))
@@ -1110,7 +1109,7 @@
                             <th>Bmr.No</th>
                             <th>Main Batch.No</th>
                             <th>RefMfr.No</th>
-                            <th>Date</th>                            
+                            <th>Date</th>
                             <th>Homogenizing Tank No.</th>
 
 
@@ -1123,12 +1122,12 @@
                         <tr>
                             <td>{{$loop->index +1}}</td>
                             <td>{{$lots->material_name}}</td>
-                            <td>{{$lots->bmrNo}}</td>                            
+                            <td>{{$lots->bmrNo}}</td>
                             <td>{{$lots->batchNo}}</td>
                             <td>{{$lots->refMfrNo}}</td>
                             <td>{{$lots->created_at?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
                             <td>{{$lots->homoTank}}</td>
-                            
+
                         </tr>
                         @endforeach
                         @endif
@@ -1197,7 +1196,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="input_fields_wrap_20">
-                                        
+
                                         @if(isset($HomogenizingList) && count($HomogenizingList) > 0)
                                             @foreach($HomogenizingList as $key => $temp)
                                             <tr>
@@ -2246,7 +2245,7 @@
             var output = $("#fgOutput").val();
             if(!isNaN(input) && !isNaN(output))
             {
-               
+
                 $("#ActualYield").val(((output/input)*100).toFixed(2));
             }
         })

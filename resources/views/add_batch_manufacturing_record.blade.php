@@ -239,9 +239,9 @@
 									<div class="form-group input_fields_wrap" id="MaterialReceived">
 										<label class="control-label d-flex">Bill of Raw Material Details and Weighing Record</label>
 										@if(isset($raw_material_bills))
-										
+
 										@foreach( $raw_material_bills as $index => $rd )
-										
+
 										<div class="row add-more-wrap after-add-more m-0 mb-4">
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
@@ -747,11 +747,7 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
-<<<<<<< HEAD
                                         <input type="hidden" name="batch_id" id="batch_id" value="{{isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
-=======
-										<input type="hidden" name="batch_id" id="batch_id" value="{{ isset($batchdetails->id)?$batchdetails->id:old('batch_id') }}" />
->>>>>>> 047a620655743085e32e4c62b3e3a94d6ca545eb
 										<button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit & Next</button><button type="clear" class="btn btn-light btn-md form-btn waves-effect waves-light">Save & Quite</button>
 									</div>
 								</div>
@@ -812,7 +808,7 @@
 										</thead>
 										<tbody class="input_fields_wrap_20">
 											@foreach($processlots as $p_lots)
-											
+
 											<tr>@php $lotCount = $loop->index+1  @endphp
 												<td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>    @php  $index = $p_lots->MaterialName;   @endphp
 												<td>Lot No.: {{ $p_lots->lotNo }} - <span class="text-primary p-2"> {{$lotCount}} {{$rawmaterials[$index]}}</span></td>
@@ -968,28 +964,35 @@
 										</div>
 									</label>
 									@if(isset($raw_material_bills))
+                                    @php $lm =1; @endphp
 									@foreach( $raw_material_bills as $index => $rd )
+                                            @php
+                                                $batchstock = App\Models\Stock::select("inward_raw_materials_items.batch_no","inward_raw_materials_items.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$rd->material_id)->pluck("batch_no","id");
+                                            @endphp
 									<div class="row add-more-wrap5 after-add-more m-0 mb-4">
+                                        <span class="add-count">{{ $lm }}</span>
 										<div class="col-12 col-md-4">
 											<div class="form-group">
-											   @php $rw = [$rd->material_id => $rawmaterials[$rd->material_id] ]; @endphp
-												<label for="EquipmentName[]" class="active">Raw Material</label>
-												{{ Form::select("EquipmentName[]",$rw,old("EquipmentName[]"),array("id"=>"EquipmentName[]","class"=>"form-control select","selected"=>"selected")) }}
+
+												<label for="MaterialName[]" class="active">Raw Material</label>
+												{{ Form::select("MaterialName[]",$stock,old("MaterialName[]")?old("MaterialName[]"):$rd->material_id,array("id"=>"MaterialName[]","class"=>"form-control select","selected"=>"selected","onchange"=>"getbatchlot($(this).val(),".$lm.")")) }}
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="form-group">
 												<label for="rmbatchno" class="active">Batch No.</label>
-												<input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[]" placeholder="Batch No." value="{{ isset($rd->batch_id)?$rd->batch_id:old('rmbatchno[]') }}" readonly>
+                                                {{ Form::select("rmbatchno[]",$batchstock,old("rmbatchno[]")?old("rmbatchno[]"):$rd->batch_id,array("id"=>"rmbatchno".$lm,"class"=>"form-control select","selected"=>"selected","placeholder"=>"Batch No.")) }}
+
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="form-group">
 												<label for="Quantity" class="active">Quantity (Kg.)</label>
-												<input type="text" class="form-control" name="Quantity[]" id="Quantity[]" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}" readonly>
+												<input type="text" class="form-control" name="Quantity[]" id="Quantity{{ $lm }}" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}">
 											</div>
 										</div>
 									</div>
+                                    @php $lm++; @endphp
 									@endforeach
 									@endif
 								</div>
@@ -1406,29 +1409,24 @@
 	});*/
 	$(document).ready(function() {
 		var max_fields = 15; //maximum input boxes allowed
-		var wrapper = $(".input_fields_wrap_4"); //Fields wrapper
-		var add_button = $(".add_field_button_4"); //Add button ID
+        var wrapper = $(".input_fields_wrap_4"); //Fields wrapper
+        var add_button = $(".add_field_button_4"); //Add button ID
 
-		var x = 1; //initlal text box count
-		$(add_button).click(function(e) { //on add input button click
-			e.preventDefault();
-			if (x < max_fields) { //max input box allowed
-				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4">'+
-				  '<div class="form-group"><label for="EquipmentName[' + x + ']" class="active">Raw Material</label>'+
-				  '{{ Form::select("EquipmentName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"EquipmentName['+x+']","class"=>"form-control select","placeholder"=>"Raw Material Name")) }}'+
-					'</div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno[' + x + ']" class="active">Batch No.</label><input type="text" class="form-control" name="rmbatchno[]" id="rmbatchno[' + x + ']" placeholder="Batch No." value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old('batchNoI') }}" readonly>'+
-					'</div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder="" value=""></div></div></div>'); //add input box
-			}
-			feather.replace()
-			// +                  '<select class="form-control select"  name="EquipmentName[]"id="EquipmentName[' + x + ']"><option>Select</option><option>Raw Material Name</option></select>'
-		});
+        var x = '{{ (isset($raw_material_bills) && count($raw_material_bills) >0)?count($raw_material_bills):1  }}' ; //initlal text box count
+        $(add_button).click(function(e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields) { //max input box allowed
+                x++; //text box increment
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="MaterialName' + x + '" class="active">Raw Material</label><select class="form-control select" id="MaterialName' + x + '" onchange="getbatchlot($(this).val(),'+x+')"><option>Select Raw Material</option>@if(isset($stock)) @foreach($stock as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' + x + '" class="active">Batch No.</label><select name="rmbatchno[]" class="form-control" id="rmbatchno' + x + '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' + x + '" class="active">Quantity (Kg.)</label><input type="text" class="form-control" id="Quantity' + x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'); //add input box
+            }
+            feather.replace()
+        });
 
-		$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
-			e.preventDefault();
-			$(this).parents('div.row').remove();
-			x--;
-		})
+        $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+            e.preventDefault();
+            $(this).parents('div.row').remove();
+            x--;
+        })
 	});
 	$(document).ready(function() {
 		var max_fields = 15; //maximum input boxes allowed
@@ -1760,6 +1758,27 @@
 		});
 
 	}
+    function getbatchlot(val,pos)
+    {
+        $.ajax({
+             url:'{{ route('getbatchofmaterial') }}',
+             method:'POST',
+             data:{
+                 "id":val,
+                 "_token":'{{ csrf_token() }}'
+             }
+         }).success(function(data){
+            $("#rmbatchno"+pos).empty();
+            var option ="<option value=''>Choose Batch No.</option>";
+            $("#rmbatchno"+pos).append(option);
+
+            $.each(data.batch, function (key, val) {
+
+                var option ="<option value='"+key+"'>"+val+"</option>";
+                $("#rmbatchno"+pos).append(option);
+            });
+        });
+    }
     function getcodes(val,pos)
     {
         $.ajax({
