@@ -512,6 +512,7 @@
                                         <span class="add-count">1</span>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
+
                                                 <label for="PackingMaterialName" class="active">Packing Material Name</label>
                                                 {{ Form::select("PackingMaterialName[]",$packingmaterials,old($temp->PackingMaterialName),array("class"=>"form-control select","id"=>"material_name")) }}
 
@@ -536,8 +537,15 @@
                                         <span class="add-count">1</span>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
+
+
+
+
+
+
+
                                                 <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select","id"=>"material_name")) }}
+                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select material_stock","id"=>"material_name")) }}
 
                                             </div>
                                         </div>
@@ -1741,7 +1749,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label><input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Capacity (Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label>       {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select","id"=>"material_name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Capacity (Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -2144,5 +2152,26 @@
             }
         })
 	});
+
+    $(".material_stock").change(function()
+    {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var id=$(this).val();
+        var material_name = 'id='+ id;
+
+
+        $.ajax({
+    type: "post",
+    url: 'material_name_get',
+    data:  { _token: CSRF_TOKEN,material_name:material_name},
+    success: function (data) {
+      console.log(data.status);
+
+        swal(data.status,data.message);
+    }
+
+  });
+
+    });
 </script>
 @endpush

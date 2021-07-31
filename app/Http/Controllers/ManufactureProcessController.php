@@ -225,6 +225,8 @@ class ManufactureProcessController extends Controller
         $data['edit_batchmanufacturing'] = BatchManufacture::select('add_batch_manufacture.*')
             ->where('add_batch_manufacture.id', '=', $id)->first();
             $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.id', '=', $id)->first();
+            $data['rawmeterial_capacity']=Rawmeterial::all();
+
 
         $data['product'] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
 
@@ -1915,4 +1917,8 @@ class ManufactureProcessController extends Controller
         }
 
     }
+ public function material_name_get(Request $request)
+ {
+
+ }
 }
