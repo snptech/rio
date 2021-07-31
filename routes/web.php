@@ -255,6 +255,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
       //generate-label
        Route::get('/generate-label', [App\Http\Controllers\ManufactureProcessController::class,'generate_label'])->name("generate-label");
        Route::get('/add-manufacturing-record-label', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record_label'])->name("add-manufacturing-record-label");
+       Route::post('/add_manufacturing_generate_label', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_generate_label'])->name("add_manufacturing_generate_label");
         //add-lots
         Route::get('/add-lots', [App\Http\Controllers\ManufactureProcessController::class,'add_lots'])->name("add-lots");
         Route::get('/add-batch-manufacturing-record-add-lot', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot'])->name("add-batch-manufacturing-record-add-lot");

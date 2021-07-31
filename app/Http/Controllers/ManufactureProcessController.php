@@ -84,7 +84,7 @@ class ManufactureProcessController extends Controller
                     ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
                     ->get();
 
-                    
+
                 }
             }
 
@@ -245,7 +245,7 @@ class ManufactureProcessController extends Controller
 
 
             $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batch_id",$id)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
-            
+
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
                 $lot_id = AddLotsl::select('id')->where("batch_id",$id)->first();
@@ -282,7 +282,7 @@ class ManufactureProcessController extends Controller
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
             }
-             
+
             if(isset($batchdetails->id))
                 $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->first();
 
@@ -315,7 +315,7 @@ class ManufactureProcessController extends Controller
         $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
         $data['AddLotslRawMaterialDetails'] = AddLotslRawMaterialDetails::where('add_lots_id', '=', $id)
             ->get();
-        
+
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
         $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","equipment_code.code","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->leftJoin("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.batch_id","add_lotsl.batch_id")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.batch_manufacturing_id","batch_manufacturing_records_list_of_equipment.id")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->leftJoin("raw_materials","raw_materials.id","add_lotsl.proName")->groupBy("add_lotsl.id")
@@ -323,11 +323,11 @@ class ManufactureProcessController extends Controller
 
 
 
-        
+
         $data['Homogenizing'] = Homogenizing::select("homogenizing.*","raw_materials.material_name")->leftJoin('raw_materials', 'raw_materials.id','=','homogenizing.proName')->where('batch_id', '=', $id)
             ->get();
 
-        
+
         $data['HomogenizingList'] = array();
         /*if(isset($data['Homogenizing']) && $data['Homogenizing'])
         {
@@ -1488,7 +1488,7 @@ class ManufactureProcessController extends Controller
             $result = BatchManufacturingPacking::create($data);
         }
 
-       
+
         if ($result) {
             return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
@@ -1779,7 +1779,7 @@ class ManufactureProcessController extends Controller
                     $arr_data['qty'] = $request->qty[$key];
                     $arr_data['stratTime'] = $request->stratTime[$key];
                     $arr_data['endTime'] = $request->endTime[$key];
-                    
+
                     $arr_data['homogenizing_id'] = $homeid;
                     $result=HomogenizingList::Create($arr_data);
 
