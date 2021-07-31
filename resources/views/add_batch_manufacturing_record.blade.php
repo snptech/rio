@@ -1357,13 +1357,13 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="net_wt" class="active">Net Wt</label>
-													<input type="Number" class="form-control" name="net_wt" id="net_wt" placeholder="No of Drums">
+													<input type="text" class="form-control" name="net_wt" id="net_wt" placeholder="No of Drums">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="tare_wt" class="active">Tare Wt</label>
-													<input type="Number" class="form-control" name="tare_wt" id="tare_wt" placeholder="No of Drums">
+													<input type="text" class="form-control" name="tare_wt" id="tare_wt" placeholder="No of Drums">
 												</div>
 											</div>
                                         </div>
