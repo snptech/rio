@@ -224,6 +224,8 @@ class ManufactureProcessController extends Controller
     {
         $data['edit_batchmanufacturing'] = BatchManufacture::select('add_batch_manufacture.*')
             ->where('add_batch_manufacture.id', '=', $id)->first();
+            $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.id', '=', $id)->first();
+
         $data['product'] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "F")->pluck("material_name", "id");
 
         $data["requestion"] = RequisitionSlip::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->first();
@@ -1849,12 +1851,12 @@ class ManufactureProcessController extends Controller
         ];
         // $validated = $request->validate($arrRules, $arrMessages);
         $data = [
-            "simethicone"=> $request['Remark'],
-            "batch_no_I"=> $request['Remark'],
-            "mfg_date"=> $request['Remark'],
-            "retest_date"=> $request['Remark'],
-            "net_wt"=> $request['Remark'],
-            "tare_wt"=> $request['Remark'],
+            "simethicone"=> $request['simethicone'],
+            "batch_no_I"=> $request['batch_no_I'],
+            "mfg_date"=> $request['mfg_date'],
+            "retest_date"=> $request['retest_date'],
+            "net_wt"=> $request['net_wt'],
+            "tare_wt"=> $request['tare_wt'],
             "Remark"=> $request['Remark'],
         ];
         $result = GanerateLable::create($data);
@@ -1862,6 +1864,54 @@ class ManufactureProcessController extends Controller
         if ($result) {
 
             return redirect("add-batch-manufacturing-record")->with('success', "Data Batch Manufacturing  Generate Lable  successfully");
+        }
+
+    }
+    public function add_manufacturing_generate_update(Request $request)
+    {
+        $arrRules = [
+            "simethicone"=> "required",
+            "batch_no_I"=> "required",
+            "mfg_date"=> "required",
+            "retest_date"=> "required",
+            "net_wt"=> "required",
+            "tare_wt"=> "required",
+            "Remark"=> "required",
+
+        ];
+        $arrMessages = [
+
+            "simethicone"=> "This :attribute field is required.",
+            "batch_no_I"=> "This :attribute field is required.",
+            "mfg_date"=> "This :attribute field is required.",
+            "retest_date"=> "This :attribute field is required.",
+            "net_wt"=> "This :attribute field is required.",
+            "tare_wt"=> "This :attribute field is required.",
+            "Remark"=> "This :attribute field is required.",
+        ];
+        // $validated = $request->validate($arrRules, $arrMessages);
+        $data = [
+            "simethicone"=> $request['simethicone'],
+            "batch_no_I"=> $request['batch_no_I'],
+            "mfg_date"=> $request['mfg_date'],
+            "retest_date"=> $request['retest_date'],
+            "net_wt"=> $request['net_wt'],
+            "tare_wt"=> $request['tare_wt'],
+            "Remark"=> $request['Remark'],
+        ];
+
+        if(isset($request->id) && $request->id)
+        {
+            $result = GanerateLable::where('id', $request->id)->update($data);
+        }
+        else
+        {
+            $result = GanerateLable::create($data);
+        }
+
+
+        if ($result) {
+            return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully"]);
         }
 
     }
