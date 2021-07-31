@@ -266,7 +266,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/add-batch-manufacturing-record-add-lot5', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_add_lot5'])->name("add-batch-manufacturing-record-add-lot5");
         Route::get('/add-batch-manufacturing-record-process-chec-5', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_process_chec_5'])->name("add-batch-manufacturing-record-process-chec-5");
 
-      // capacity stock
+        // capacity stock
         Route::post('material_name_get', [App\Http\Controllers\ManufactureProcessController::class,'material_name_get'])->name("material_name_get");
 
      //comming Soon

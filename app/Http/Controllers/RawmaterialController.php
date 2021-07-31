@@ -73,6 +73,7 @@ class RawmaterialController extends Controller
         $data["material_name"] = $request->rawmeterial;
         $data["material_mesurment"] = $request->mesurment;
         $data["material_stock"] = $request->stock;
+        $data["capacity"] = $request->capacity;
         $data["material_preorder_stock"] = $request->prestock?$request->prestock:0;
         $data["expiry_date"] = $request->expierydate?strtotime($request->expierydate):'';
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';

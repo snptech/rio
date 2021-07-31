@@ -537,15 +537,8 @@
                                         <span class="add-count">1</span>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
-
-
-
-
-
-
-
-                                                <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select material_stock","id"=>"material_name")) }}
+                                              <label for="PackingMaterialName" class="active">Packing Material Name</label>
+                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select capacity_stock","id"=>"material_name")) }}
 
                                             </div>
                                         </div>
@@ -2153,21 +2146,22 @@
         })
 	});
 
-    $(".material_stock").change(function()
+    $(".capacity_stock").change(function()
     {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var id=$(this).val();
-        var material_name = 'id='+ id;
+ var id = $('.capacity_stock').val();
 
+ var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $.ajax({
-    type: "post",
-    url: 'material_name_get',
-    data:  { _token: CSRF_TOKEN,material_name:material_name},
+   $.ajax({
+    type: "POST",
+    url:'{{ route("material_name_get") }}',
+
+    data:  { _token: CSRF_TOKEN,id:id},
     success: function (data) {
       console.log(data.status);
+      $('#Capacity').val(data.capacity)
 
-        swal(data.status,data.message);
+
     }
 
   });
