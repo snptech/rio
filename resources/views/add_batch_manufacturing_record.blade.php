@@ -415,17 +415,23 @@
 								</tr>
 							</thead>
 							<tbody>
-								@if($requestion_details && $requestion)
-								@foreach($requestion_details as $temp)
-								<tr>
-									<td>{{$requestion->id}}</td>
-									<td>{{$requestion->batchNo}}</td>
-									<td>{{$requestion->created_at?date("d/m/Y",strtotime($requestion->created_at)):""}}</td>
-									<td>{{$temp->material_name}}</td>
-									<td>{{$temp->Quantity}}</td>
-									<td>{{$temp->approved_qty}}</td>
-									<td>{!! ($temp->approved_qty >= $temp->Quantity?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
-								</tr>
+								@if($requestion)
+								@foreach($requestion as $req)
+									@php $requestion_details = \App\Models\DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $req->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+									@endphp
+									@if(isset($requestion_details) && $requestion_details)
+										@foreach($requestion_details as $temp)
+										<tr>
+											<td>{{$req->id}}</td>
+											<td>{{$req->batchNo}}</td>
+											<td>{{$req->created_at?date("d/m/Y",strtotime($req->created_at)):""}}</td>
+											<td>{{$temp->material_name}}</td>
+											<td>{{$temp->Quantity}}</td>
+											<td>{{$temp->approved_qty}}</td>
+											<td>{!! ($temp->approved_qty >= $temp->Quantity?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
+										</tr>
+										@endforeach
+									@endif
 								@endforeach
 								@endif
 							</tbody>
@@ -598,7 +604,7 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="PackingMaterialName" class="active">Packing Material Name</label>
-													{{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name")) }}
+													{{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name","placeholder"=>"Choose Material Name")) }}
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -609,7 +615,7 @@
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
-													<label for="Quantity" class="active">Quantity (Kg.)</label>
+													<label for="Quantity" class="active">Quantity</label>
 													<input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
 												</div>
 											</div>
@@ -656,19 +662,25 @@
 								</tr>
 							</thead>
 							<tbody>
-								@if(isset($requestion_packing_details) && $requestion_packing)
-								@foreach($requestion_packing_details as $temp)
-								<tr>
-									<td>{{$requestion_packing->id}}</td>
-									<td>{{$requestion_packing->batchNo}}</td>
-									<td>{{$requestion_packing->created_at?date("d/m/Y",strtotime($requestion_packing->created_at)):""}}</td>
-									<td>{{$temp->material_name}}</td>
-									<td>{{$temp->Quantity}}</td>
-									<td>{{$temp->approved_qty}}</td>
-									<td>{!! ($temp->approved_qty >= $temp->Quantity?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
-								</tr>
-								@endforeach
-								@endif
+							@if(isset($requestion_packing) && $requestion_packing)
+                            @foreach($requestion_packing as $req)
+                                @php $requestion_details_packing = \App\Models\DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $req->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
+                                @endphp
+                            @if($requestion_details_packing)
+                                @foreach($requestion_details_packing as $temp)
+                                <tr>
+                                    <td>{{$req->id}}</td>
+                                    <td>{{$req->batchNo}}</td>
+                                    <td>{{$req->created_at?date("d/m/Y",strtotime($req->created_at)):""}}</td>
+                                    <td>{{$temp->material_name}}</td>
+                                    <td>{{$temp->Quantity}}</td>
+                                    <td>{{$temp->approved_qty}}</td>
+                                    <td>{!! ($temp->approved_qty > 0?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
+                                </tr>
+                                @endforeach
+                            @endif
+                            @endforeach
+                            @endif
 							</tbody>
 						</table>
 						@endif
@@ -790,7 +802,8 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="homoTank">Homogenizing tank No.</label>
-										<input type="text" class="form-control" id="homoTank" name="homoTank" placeholder="PR/BT/Come Tank number" value="">
+										<!--<input type="text" class="form-control" id="homoTank" name="homoTank" placeholder="PR/BT/Come Tank number" value=""> -->
+										{{Form::select("homoTank",$selected_crop_tank,(old("homoTank")),array("id"=>"homoTank","class"=>"form-control","placeholder"=>"Choose Homogenizing tank"))}}
 									</div>
 								</div>
 								<div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -820,10 +833,10 @@
 										</tbody>
 											<tr>
 												<td><input type="date" name="dateProcess[]" id="dateProcess[15]" class="form-control"></td>
-												<td>Homogenize the product, generated from 1-4 lots for 45 - 60 minutes.</td>
-												<td><input type="text" name="qty[]" id="qty[15]" class="form-control"  placeholder="2000" value=""></td>
-												<td><input type="text" name="stratTime[]" id="stratTime[15]" class="form-control" placeholder="15"  value=""></td>
-												<td><input type="text" name="endTime[]" id="endTime[15]" class="form-control"  placeholder="20" value=""></td>
+												<td>Homogenize the product generated.</td>
+												<td><input type="text" name="qty[]" id="qty[15]" class="form-control"  placeholder="" value=""></td>
+												<td><input type="text" name="stratTime[]" id="stratTime[15]" class="form-control" placeholder=""  value=""></td>
+												<td><input type="text" name="endTime[]" id="endTime[15]" class="form-control"  placeholder="" value=""></td>
 											</tr>
 									</table>
 									@endif
@@ -865,7 +878,7 @@
 									<th>batch.No</th>
 									<th>RefMfr.No</th>
 									<th>Date</th>
-									<th>Reactor No.</th>
+									
 
 
 								</tr>
@@ -882,7 +895,7 @@
 									<td>{{$lots->batchNo}}</td>
 									<td>{{$lots->refMfrNo}}</td>
 									<td>{{$lots->Date?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
-									<td>{{$lots->ReactorNo}}</td>
+									
 								</tr>
 								@endforeach
 								@endif
@@ -1014,7 +1027,7 @@
 									<tbody>
 										<tr>
 											<td>Charge Polydimethylsiloxane in reactor.</td>
-											<td><input type="text" name="qty[]" id="qty[1]" class="form-control"></td>
+											<td><input type="number" name="qty[]" id="qty[1]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
 											<td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control"></td>
 											<td><input type="text" name="endTime[]" id="endTime[1]" class="form-control"></td>
@@ -1022,7 +1035,7 @@
 										</tr>
 										<tr>
 											<td>Start heating the reactor and start stirring</td>
-											<td><input type="text" name="qty[]" id="qty[2]" class="form-control"></td>
+											<td><input type="number" name="qty[]" id="qty[2]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
 											<td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control"></td>
 											<td><input type="text" name="endTime[]" id="endTime[2]" class="form-control"></td>
@@ -1030,7 +1043,7 @@
 										</tr>
 										<tr>
 											<td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
-											<td><input type="text" name="qty[]" id="qty[3]" class="form-control"></td>
+											<td><input type="number" name="qty[]" id="qty[3]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
 											<td><input type="text" name="stratTime[]" id="stratTime[3]" class="form-control"></td>
 											<td><input type="text" name="endTime[]" id="endTime[3]" class="form-control"></td>
@@ -1038,7 +1051,7 @@
 										</tr>
 										<tr>
 											<td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
-											<td><input type="text" name="qty[]" id="qty[4]" class="form-control"></td>
+											<td><input type="number" name="qty[]" id="qty[4]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
 											<td><input type="text" name="stratTime[]" id="stratTime[4]" class="form-control"></td>
 											<td><input type="text" name="endTime[]" id="endTime[4]" class="form-control"></td>
@@ -1046,7 +1059,7 @@
 										</tr>
 										<tr>
 											<td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
-											<td><input type="text" name="qty[]" id="qty[5]" class="form-control"></td>
+											<td><input type="number" name="qty[]" id="qty[5]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
 											<td><input type="text" name="stratTime[]" id="stratTime[5]" class="form-control"></td>
 											<td><input type="text" name="endTime[]" id="endTime[5]" class="form-control"></td>
@@ -1332,38 +1345,38 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="simethicone" class="active">Simethicone</label>
-													<input type="text" class="form-control" name="simethicone" id="simethicone" placeholder="Observation">
+													<input type="text" class="form-control" name="simethicone" id="simethicone" placeholder="Simethicone">
 												</div>
 											</div>
                                             <div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="batch_no_I" class="active">Batch No</label>
-													<input type="text" class="form-control" name="batch_no_I" id="batch_no_I" placeholder="Observation">
+													<input type="text" class="form-control" name="batch_no_I" id="batch_no_I" placeholder="Batch No" value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="mfg_date" class="active">MFG Date</label>
-													<input type="date" class="form-control" name="mfg_date" id="mfg_date" value="{{ date('Y-m-d') }}"placeholder="Observation">
+													<input type="date" class="form-control" name="mfg_date" id="mfg_date" value="{{ date('Y-m-d') }}"placeholder="MFG Date">
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="retest_date" class="active">Retest Date</label>
-													<input type="date" class="form-control" name="retest_date" id="retest_date" value="{{ date('Y-m-d') }}" placeholder="Observation">
+													<input type="date" class="form-control" name="retest_date" id="retest_date" value="{{ date('Y-m-d') }}" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="net_wt" class="active">Net Wt</label>
-													<input type="text" class="form-control" name="net_wt" id="net_wt" placeholder="No of Drums">
+													<input type="text" class="form-control" name="net_wt" id="net_wt" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="tare_wt" class="active">Tare Wt</label>
-													<input type="text" class="form-control" name="tare_wt" id="tare_wt" placeholder="No of Drums">
+													<input type="text" class="form-control" name="tare_wt" id="tare_wt" placeholder="">
 												</div>
 											</div>
                                         </div>
@@ -1993,4 +2006,5 @@
 		// }, 5000);
 	});
 </script>
+
 @endpush

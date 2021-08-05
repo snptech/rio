@@ -72,12 +72,13 @@ class ManufactureProcessController extends Controller
                     $data["processlots"] = $processlots;
             }
 
-            $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","R")->orderBy('id', 'desc')->first();
-
+            $data["requestion"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","R")->orderBy('id', 'desc')->get();
+            
+           
             if (isset($data["requestion"]) && $data["requestion"]){
-                $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+              
 
-                $reqIssualCount =  Requisitionissuedmaterialdetails::where('main_details_id', $data["requestion"]->id)->count();
+                /*$reqIssualCount =  Requisitionissuedmaterialdetails::where('main_details_id', $data["requestion"]->id)->count();
 
                 if(isset($reqIssualCount) && $reqIssualCount > 0)
                 {
@@ -87,22 +88,24 @@ class ManufactureProcessController extends Controller
                     ->get();
 
 
-                }
+                }*/
             }
 
-            $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->orderBy('id', 'desc')->first();
+            $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->orderBy('id', 'desc')->get();
             $reqPackingCount = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->orderBy('id', 'desc')->count();
 
-            if (isset($data["requestion_packing"]) && $reqPackingCount > 0){
+            /*if (isset($data["requestion_packing"]) && $reqPackingCount > 0){
                 $data["requestion_packing_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_packing"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
 
                 $data['packing_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
                     ->where("issue_material_production_requestion_details.main_details_id", $data["requestion_packing"]->id)
                     ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
                     ->get();
-            }
+            }*/
 
-            $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $batchdetails->id)->pluck("code","id");
+            $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $batchdetails->id)->where("equipment_code.equipment_id","<>",2)->pluck("code","id");
+
+            $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $batchdetails->id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
 
 
             $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
@@ -229,23 +232,27 @@ class ManufactureProcessController extends Controller
 
         $data['product'] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
 
-        $data["requestion"] = RequisitionSlip::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->first();
+        $data["requestion"] = RequisitionSlip::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->get();
         if (isset($data["requestion"]))
-             $data["requestion_details"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->orderBy('id', 'desc')->get();
+            
 
-             $Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->first();
+             $Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->get();
              if(isset($Requisitionissuedmaterial) && $Requisitionissuedmaterial)
              {
-                $reqIssualCount =  Requisitionissuedmaterialdetails::where('issual_material_id', $Requisitionissuedmaterial->id)->count();
+               
 
-                    if(isset($reqIssualCount) && $reqIssualCount > 0)
-                    {
-                        $data['raw_material_bills'] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
-                        ->where("issue_material_production_requestion_details.issual_material_id", $Requisitionissuedmaterial->id)
-                        ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
-                        ->get();
+                   
+                        foreach($Requisitionissuedmaterial as $mat)
+                        {
+                            $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
+                            ->where("issue_material_production_requestion_details.issual_material_id", $mat->id)
+                            ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                            ->get();
+                        }
 
-                    }
+                       
+
+                    
             }
 
 
@@ -254,9 +261,12 @@ class ManufactureProcessController extends Controller
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
                 $lot_id = AddLotsl::select('id')->where("batch_id",$id)->first();
+
                 $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batch_id",$id)
                 ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
                 ->get();
+
+                
 
                 if (isset($processlots) && $processlots)
                     $data["processlots"] = $processlots;
@@ -283,16 +293,18 @@ class ManufactureProcessController extends Controller
             if (isset($batchdetails) && $batchdetails) {
                 $data["batchdetails"] = $batchdetails;
             }
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+            
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batch_id",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();      
+           
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
             }
 
             if(isset($batchdetails->id))
-                $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->first();
+                $data["requestion_packing"] = RequisitionSlip::where("batch_id", $batchdetails->id)->where("type","P")->get();
 
-            if (isset($data["requestion_packing"]))
-                $data["requestion_details_packing"] = DetailsRequisition::select("detail_packing_material_requisition.*", "raw_materials.material_name")->where("requisition_id", $data["requestion_packing"]->id)->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")->get();
+            
+                
 
 
 
@@ -323,8 +335,8 @@ class ManufactureProcessController extends Controller
 
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
-        $data['lotsdetails'] = array(); /*AddLotsl::select("add_lotsl.*","equipment_code.code","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->leftJoin("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.batch_id","add_lotsl.batch_id")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.batch_manufacturing_id","batch_manufacturing_records_list_of_equipment.id")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->leftJoin("raw_materials","raw_materials.id","add_lotsl.proName")->groupBy("add_lotsl.id")
-            ->get();*/
+        $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->join("raw_materials","raw_materials.id","add_lotsl.proName")
+            ->get();
 
 
 
@@ -346,7 +358,9 @@ class ManufactureProcessController extends Controller
 
         $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
         $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
-        $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->pluck("code","id");
+        $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->where("equipment_code.equipment_id","<>",2)->pluck("code","id");
+
+        $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
 
 //dd($data["requestion_details"]);
 
@@ -1635,14 +1649,14 @@ class ManufactureProcessController extends Controller
         $arr['Process_date'] = $request->Process_date;
         $arr['batch_id'] = $request->mainid;
         $lotsid = 0;
-        if(isset($request->id) && $request->id){
+        /*if(isset($request->id) && $request->id){
             $AddLotsl = AddLotsl::where('id', $request->id)->update($arr);
             $lotsid = $request->id;
         }
-        else{
+        else{*/
             $AddLotsl = AddLotsl::create($arr);
             $lotsid = $AddLotsl->id;
-        }
+        /*}*/
 
         if ((isset($lotsid)) && ($lotsid > 0)) {
             if (count($request->MaterialName)) {
@@ -1764,16 +1778,16 @@ class ManufactureProcessController extends Controller
         $arr['homoTank'] = $request->homoTank;
         $arr['batch_id'] = $request->mainid;
         $homeid = 0;
-        if(isset($request->id))
+        /*if(isset($request->id))
         {
             $Homogenizing_id = Homogenizing::where('id', $request->id)->update($arr);
             $homeid = $request->id;
         }
         else
-        {
+        {*/
             $Homogenizing_id = Homogenizing::create($arr);
             $homeid = $Homogenizing_id->id;
-        }
+       /* }*/
 
 
         if ((isset($homeid)) && ($homeid > 0)) {
