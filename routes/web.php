@@ -292,7 +292,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
          //get ajax for batch in Add lot
          Route::post("/getbatchofmaterial", [App\Http\Controllers\ManufactureProcessController::class,'getbatchofmaterial'])->name("getbatchofmaterial");
-
+         Route::get('pdfview', [App\Http\Controllers\ManufactureProcessController::class,'pdfview'])->name("pdfview");
+         //Route::get('pdfview',array('as'=>'pdfview','uses'=>'ItemController@pdfview'));
 
 
 

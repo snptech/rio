@@ -31,6 +31,7 @@ use App\Models\Stock;
 use App\Models\GanerateLable;
 
 use DB;
+use PDF;
 
 class ManufactureProcessController extends Controller
 {
@@ -1948,4 +1949,16 @@ class ManufactureProcessController extends Controller
 
 
  }
+
+  public function pdfview(Request $request)
+    {
+        $batch = DB::table("add_batch_manufacture")->get();
+        view()->share('batches',$batch);
+
+        if($request->has('download')){
+            $pdf = PDF::loadView('pdfview');
+            return $pdf->download('pdfview.pdf');
+        }
+        return view('pdfview');
+    }
 }
