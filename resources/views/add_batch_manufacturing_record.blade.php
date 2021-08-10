@@ -114,7 +114,7 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="BatchSize" class="active">Batch Size</label>
-										<input type="text" class="form-control" name="BatchSize" id="BatchSize" placeholder="batch size">
+										<input type="number" class="form-control" name="BatchSize" id="BatchSize" placeholder="batch size">
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -604,13 +604,13 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="PackingMaterialName" class="active">Packing Material Name</label>
-													{{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name","placeholder"=>"Choose Material Name")) }}
+													{{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name","placeholder"=>"Choose Material Name","onchange"=>"getcapacity($(this).val(),1)")) }}
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="Capacity" class="active">Capacity (Kg.)</label>
-													<input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder="">
+													<input type="text" class="form-control" name="Capacity[]" id="Capacity1" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -1027,42 +1027,42 @@
 									<tbody>
 										<tr>
 											<td>Charge Polydimethylsiloxane in reactor.</td>
-											<td><input type="number" name="qty[]" id="qty[1]" class="form-control"></td>
+											<td><input type="number" name="qty[]" id="qty[1]" class="form-control "></td>
 											<td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
-											<td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control"></td>
-											<td><input type="text" name="endTime[]" id="endTime[1]" class="form-control"></td>
+											<td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time" data-mask="00:00"></td>
+											<td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time" data-mask="00:00"></td>
 											<td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[1]","class"=>"form-control select")) }}</td>
 										</tr>
 										<tr>
 											<td>Start heating the reactor and start stirring</td>
 											<td><input type="number" name="qty[]" id="qty[2]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
-											<td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control"></td>
-											<td><input type="text" name="endTime[]" id="endTime[2]" class="form-control"></td>
+											<td><input type="time" name="stratTime[]" id="stratTime[2]" class="form-control time" data-mask="00:00"></td>
+											<td><input type="time" name="endTime[]" id="endTime[2]" class="form-control time" data-mask="00:00"></td>
 											<td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[2]","class"=>"form-control select")) }}</td>
 										</tr>
 										<tr>
 											<td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
 											<td><input type="number" name="qty[]" id="qty[3]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
-											<td><input type="text" name="stratTime[]" id="stratTime[3]" class="form-control"></td>
-											<td><input type="text" name="endTime[]" id="endTime[3]" class="form-control"></td>
+											<td><input type="time" name="stratTime[]" id="stratTime[3]" class="form-control time" data-mask="00:00"></td>
+											<td><input type="time" name="endTime[]" id="endTime[3]" class="form-control time" data-mask="00:00"></td>
 											<td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[3]","class"=>"form-control select")) }}</td>
 										</tr>
 										<tr>
 											<td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
 											<td><input type="number" name="qty[]" id="qty[4]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
-											<td><input type="text" name="stratTime[]" id="stratTime[4]" class="form-control"></td>
-											<td><input type="text" name="endTime[]" id="endTime[4]" class="form-control"></td>
+											<td><input type="time" name="stratTime[]" id="stratTime[4]" class="form-control time" data-mask="00:00"></td>
+											<td><input type="time" name="endTime[]" id="endTime[4]" class="form-control time" data-mask="00:00"></td>
 											<td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[4]","class"=>"form-control select")) }}</td>
 										</tr>
 										<tr>
 											<td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
 											<td><input type="number" name="qty[]" id="qty[5]" class="form-control"></td>
 											<td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
-											<td><input type="text" name="stratTime[]" id="stratTime[5]" class="form-control"></td>
-											<td><input type="text" name="endTime[]" id="endTime[5]" class="form-control"></td>
+											<td><input type="time" name="stratTime[]" id="stratTime[5]" class="form-control time" data-mask="00:00"></td>
+											<td><input type="time" name="endTime[]" id="endTime[5]" class="form-control time" data-mask="00:00"></td>
 											<td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[5]","class"=>"form-control select")) }}</td>
 										</tr>
 									</tbody>
@@ -2005,6 +2005,29 @@
 		//     $('.alert').alert('close');
 		// }, 5000);
 	});
+	function getcapacity(value,pos)
+	{
+		var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+		$.ajax({
+			type: "POST",
+			url:'{{ route("material_name_get") }}',
+
+			data:  { _token: CSRF_TOKEN,id:value},
+				success: function (data) {
+				console.log(data.status);
+				$('#Capacity'+pos).val(data.capacity)
+
+
+			}
+	})
+	}   
+</script>
+<script src="{{asset('assets/js/jquery.mask.js?v=2.1.1')}}"></script>
+<script>
+    $(document).ready(function(){
+        $(".time").mask('00:00');
+    });
 </script>
 
 @endpush

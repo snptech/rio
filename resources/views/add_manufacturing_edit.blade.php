@@ -104,7 +104,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="BatchSize" class="active">Batch Size</label>
-                                    <input type="text" class="form-control" name="BatchSize" value="{{$edit_batchmanufacturing->BatchSize}}" id="BatchSize" placeholder="">
+                                    <input type="number" class="form-control" name="BatchSize" value="{{$edit_batchmanufacturing->BatchSize}}" id="BatchSize" placeholder="">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -468,7 +468,7 @@
 
                 <div id="requisitionpacking" class="tab-pane fade {{($sequenceId=='5')?'in active show':''}}">
                     <form id="packing_material_requisition_slip" method="post" action="{{ route('packing_material_requisition_slip_update_1') }}">
-                        <input type="hidden" value="7" name="sequenceId">
+                        <input type="hidden" value="6" name="sequenceId">
                         <input type="hidden" value="{{isset($edit_batchmanufacturing->id)?$edit_batchmanufacturing->id:""}}" name="id">
                         <input type="hidden" value="{{isset($requestion_packing->id)?$requestion_packing->id:0}}" name="packingid">
                         @csrf
@@ -508,7 +508,7 @@
                                             <button class="btn btn-dark add-more add_field_button_6 waves-effect waves-light" type="button">Add More +</button>
                                         </div>
                                     </label>
-
+                                    @php $p = 1; @endphp
                                     @if(isset($requestion_details_packing) && count($requestion_details_packing) >0)
                                     @foreach($requestion_details_packing as $temp)
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
@@ -517,14 +517,14 @@
                                             <div class="form-group">
 
                                                 <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old($temp->PackingMaterialName),array("class"=>"form-control select","id"=>"material_name","placeholder"=>"Choose Material Name")) }}
+                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old($temp->PackingMaterialName),array("class"=>"form-control select","id"=>"packing_material_name".$p,"placeholder"=>"Choose Material Name","onchange"=>"getcapacity($(this).val(),".$p.")")) }}
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Capacity" class="active">Capacity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Capacity[]" id="Capacity" value="{{$temp->Capacity}}">
+                                                <input type="text" class="form-control" name="Capacity[]" id="Capacity{{$p}}" value="{{$temp->Capacity}}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -534,6 +534,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @php $p++; @endphp
                                     @endforeach
                                     @else
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
@@ -541,14 +542,14 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                               <label for="PackingMaterialName" class="active">Packing Material Name</label>
-                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select capacity_stock","id"=>"material_name","placeholder"=>"Choose Material Name")) }}
+                                                {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select capacity_stock","id"=>"packing_material_name".$p,"placeholder"=>"Choose Material Name","onchange"=>"getcapacity($(this).val(),".$p.")")) }}
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Capacity" class="active">Capacity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Capacity[]" id="Capacity" value="">
+                                                <input type="text" class="form-control" name="Capacity[]" id="Capacity{{$p}}" value="">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -807,24 +808,24 @@
 
                                     @foreach($res_1 as $temp)
 
-                                    <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                         <span class="add-count">1</span>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-group">
-                                                <label for="EquipmentName" class="active">Equipment Name</label>
-                                                {{ Form::select("EquipmentName[]",$eqipment_name,old("eqipment_name")?old("eqipment_name"):$temp->EquipmentName,array("class"=>"form-control select","id"=>"eqipment_name".$c,"Placeholder"=>"Equipment Name","onchange"=>"getcodes($(this).val(),".$c.")")) }}
+                                        <div class="row add-more-wrap after-add-more m-0 mb-4">
+                                            <span class="add-count">1</span>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="EquipmentName" class="active">Equipment Name</label>
+                                                    {{ Form::select("EquipmentName[]",$eqipment_name,old("eqipment_name")?old("eqipment_name"):$temp->EquipmentName,array("class"=>"form-control select","id"=>"eqipment_name".$c,"Placeholder"=>"Equipment Name","onchange"=>"getcodes($(this).val(),".$c.")")) }}
 
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="EquipmentCode" class="active">Equipment Code</label>
+                                                    {{ Form::select("EquipmentCode[]",$eqipment_code,old("EquipmentCode")?old("EquipmentCode"):$temp->EquipmentCode,array("class"=>"form-control select","id"=>"eqipment_code".$c,"Placeholder"=>"Equipment Code")) }}
+
+
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-group">
-                                                <label for="EquipmentCode" class="active">Equipment Code</label>
-                                                {{ Form::select("EquipmentCode[]",$eqipment_code,old("EquipmentCode")?old("EquipmentCode"):$temp->EquipmentCode,array("class"=>"form-control select","id"=>"eqipment_code".$c,"Placeholder"=>"Equipment Code")) }}
-
-
-                                            </div>
-                                        </div>
-                                    </div>
                                     @endforeach
                                     @else
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
@@ -979,7 +980,7 @@
                                         <div class="input-group-btn">
                                             <button class="btn btn-dark add-more add_field_button_4 waves-effect waves-light" type="button">Add More +</button>                                        </div>
                                     </label>
-
+                                   
                                     @if(isset($raw_material_bills))
                                     @php $lm =1; @endphp
 									@foreach( $raw_material_bills as $index => $rd )
@@ -1039,8 +1040,8 @@
                                             <td>{{($key==0)?"Charge Polydimethylsiloxane in reactor.":(($key==1)?"Start heating the reactor and start stirring":(($key==2)?"Once the temperature is between 100 - 120oC start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.":(($key==3)?"When temperature reaches 180 - 190 oC stop heating the reactor.":"Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number")))}}</td>
                                             <td><input type="number" value="{{$v->qty}}"name="qty[]" id="qty" class="form-control"></td>
                                             <td><input type="text" value="{{$v->temp}}"name="temp[]" id="temp" class="form-control"></td>
-                                            <td><input type="text" value="{{$v->stratTime}}"name="stratTime[]" id="stratTime" class="form-control"  data-mask="00:00" class="time"></td>
-                                            <td><input type="text" value="{{$v->endTime}}"name="endTime[]" id="endTime[1]" class="form-control" data-mask="00:00" class="time"></td>
+                                            <td><input type="time" value="{{$v->stratTime}}"name="stratTime[]" id="stratTime" class="form-control time"  data-mask="00:00"></td>
+                                            <td><input type="time" value="{{$v->endTime}}"name="endTime[]" id="endTime[1]" class="form-control time" data-mask="00:00"></td>
                                             <td>{{ Form::select("doneby[]", $doneBy, old("doneby")?old("doneby"):$v->doneby, array("id"=>"doneby[5]","class"=>"form-control select")) }}
                                                 </td>
                                         </tr>
@@ -1053,40 +1054,40 @@
                                                         <td>Charge Polydimethylsiloxane in reactor.</td>
                                                         <td><input type="number" name="qty[]" id="qty[1]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
-                                                        <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control" data-mask="00:00" class="time"></td>
-                                                        <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control" data-mask="00:00" class="time"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time" data-mask="00:00" ></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time" data-mask="00:00"></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[1]","class"=>"form-control select")) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Start heating the reactor and start stirring</td>
                                                         <td><input type="number" name="qty[]" id="qty[2]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
-                                                        <td><input type="text" name="stratTime[]" id="stratTime[2]" class="form-control" data-mask="00:00" class="time"></td>
-                                                        <td><input type="text" name="endTime[]" id="endTime[2]" class="form-control" data-mask="00:00" class="time"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime[2]" class="form-control time" data-mask="00:00"></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime[2]" class="form-control time" data-mask="00:00"></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[2]","class"=>"form-control select")) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Once the temperature is between 100 - 120<sup>o</sup>C start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.</td>
                                                         <td><input type="number" name="qty[]" id="qty[3]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
-                                                        <td><input type="text" name="stratTime[]" id="stratTime[3]" class="form-control" data-mask="00:00" class="time"></td>
-                                                        <td><input type="text" name="endTime[]" id="endTime[3]" class="form-control" data-mask="00:00" class="time"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime[3]" class="form-control time" data-mask="00:00"></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime[3]" class="form-control time" data-mask="00:00" ></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[3]","class"=>"form-control select")) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
                                                         <td><input type="number" name="qty[]" id="qty[4]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
-                                                        <td><input type="text" name="stratTime[]" id="stratTime[4]" class="form-control" data-mask="00:00" class="time"></td>
-                                                        <td><input type="text" name="endTime[]" id="endTime[4]" class="form-control" data-mask="00:00" class="time"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime[4]" class="form-control time" data-mask="00:00" ></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime[4]" class="form-control time" data-mask="00:00"></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[4]","class"=>"form-control select")) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
                                                         <td><input type="number" name="qty[]" id="qty[5]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
-                                                        <td><input type="text" name="stratTime[]" id="stratTime[5]" class="form-control" data-mask="00:00" class="time"></td>
-                                                        <td><input type="text" name="endTime[]" id="endTime[5]" class="form-control" data-mask="00:00" class="time"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime[5]" class="form-control time" data-mask="00:00"></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime[5]" class="form-control time" data-mask="00:00"></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[5]","class"=>"form-control select")) }}</td>
                                                     </tr>
 
@@ -1216,8 +1217,8 @@
                                                 <td><input type="date" name="dateProcess[]" value="{{$temp->dateProcess}}" id="dateProcess[1]" class="form-control"></td>
                                                 <td><input type="text" name="lot[]" id="lot" class="form-control" value=""></td>
                                                 <td><input type="number" name="qty[]" id="qty" value="{{$temp->qty}}" class="form-control"></td>
-                                                <td><input type="text" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control" data-mask="00:00" class="time"></td>
-                                                <td><input type="text" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control" data-mask="00:00" class="time"></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control time" data-mask="00:00"></td>
+                                                <td><input type="text" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control time"  data-mask="00:00"></td>
 
                                             </tr>
 
@@ -1228,8 +1229,8 @@
                                                 <td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{date('Y-m-d')}}"></td>   
                                                 <td><input type="text" name="lot[]" id="lot" class="form-control" value=""><input type="hidden" name="lotsid[]" value=""></td>
                                                 <td><input type="number" name="qty[]" id="qty[1]" class="form-control" value=""></td>
-                                                <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control" value="" data-mask="00:00" class="time"></td>
-                                                <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control" value="" data-mask="00:00" class="time"></td>
+                                                <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control time" value="" data-mask="00:00"></td>
+                                                <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control time" value="" data-mask="00:00"></td>
                                             </tr>
                                             
                                         @endif
@@ -1748,7 +1749,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label>       {{ Form::select("PackingMaterialName[]",$packingmaterials,old("PackingMaterialName"),array("class"=>"form-control select","id"=>"material_name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Capacity (Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName' + x + '" class="active">Packing Material Name</label><select class="form-control select" name="PackingMaterialName[]" id="PackingMaterialName' + x + '" onchange="getcapacity($(this).val(),'+x+')"><option>Select Packing Raw Material</option>@if(isset($packingmaterials)) @foreach($packingmaterials as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Capacity (Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity'+x+'" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -2152,27 +2153,44 @@
         })
 	});
 
-    $(".capacity_stock").change(function()
+    /*$(".capacity_stock").change(function()
     {
- var id = $('.capacity_stock').val();
+        var id = $('.capacity_stock').val();
 
- var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-   $.ajax({
-    type: "POST",
-    url:'{{ route("material_name_get") }}',
+        $.ajax({
+            type: "POST",
+            url:'{{ route("material_name_get") }}',
 
-    data:  { _token: CSRF_TOKEN,id:id},
-    success: function (data) {
-      console.log(data.status);
-      $('#Capacity').val(data.capacity)
+            data:  { _token: CSRF_TOKEN,id:id},
+            success: function (data) {
+            console.log(data.status);
+            $('#Capacity').val(data.capacity)
 
 
-    }
+        }
 
   });
 
-    });    
+}); */
+function getcapacity(value,pos)
+{
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        type: "POST",
+        url:'{{ route("material_name_get") }}',
+
+        data:  { _token: CSRF_TOKEN,id:value},
+            success: function (data) {
+            console.log(data.status);
+            $('#Capacity'+pos).val(data.capacity)
+
+
+        }
+  })
+}   
 </script>
 <script src="{{asset('assets/js/jquery.mask.js?v=2.1.1')}}"></script>
 <script>

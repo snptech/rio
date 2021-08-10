@@ -29,6 +29,7 @@ class QualityControlController extends Controller
             'raw_materials.material_name',
             "suppliers.name",
             "manufacturers.manufacturer",
+            "raw_materials.created_at",
             "inward_raw_materials_items.id as itemid"
             )
 
