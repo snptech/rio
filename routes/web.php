@@ -212,7 +212,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/annexure_vii', [App\Http\Controllers\ReportsController::class, 'annexure_vii'])->name("annexure_vii");
         //Manufacture Process
         Route::get('/add-batch-manufacture', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacture'])->name("add-batch-manufacture");
-      //  Route::get('/add-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record'])->name("add-manufacturing-record");
+        Route::post("/manufacturing-listAjax",[App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufactureAjax'])->name("manufacturing-listAjax");
+      //Route::get('/add-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_record'])->name("add-manufacturing-record");
         Route::get('/add-batch-manufacturing-record', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record'])->name("add-batch-manufacturing-record");
         Route::post('/add_manufacturing_insert', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_insert'])->name("add_manufacturing_insert");
         Route::get('/add_manufacturing_edit/{id}/{any?}', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_edit'])->name("add_manufacturing_edit");
@@ -292,7 +293,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
          //get ajax for batch in Add lot
          Route::post("/getbatchofmaterial", [App\Http\Controllers\ManufactureProcessController::class,'getbatchofmaterial'])->name("getbatchofmaterial");
-         Route::get('pdfview', [App\Http\Controllers\ManufactureProcessController::class,'pdfview'])->name("pdfview");
+         Route::get('/pdfview/{id}', [App\Http\Controllers\ManufactureProcessController::class,'pdfview'])->name("pdfview");
          //Route::get('pdfview',array('as'=>'pdfview','uses'=>'ItemController@pdfview'));
 
 

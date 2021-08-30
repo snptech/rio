@@ -18,6 +18,7 @@ class GanerateLable extends Model
         'net_wt',
         'tare_wt',
         'Remark',
+        'batch_id',
         'mfg_date',
         'created_at',
         'updated_at',

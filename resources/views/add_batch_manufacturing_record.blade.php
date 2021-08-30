@@ -239,38 +239,41 @@
 									<div class="form-group input_fields_wrap" id="MaterialReceived">
 										<label class="control-label d-flex">Bill of Raw Material Details and Weighing Record</label>
 										@if(isset($raw_material_bills))
+										
+										@foreach( $raw_material_bills as $mat )
+										
+										@foreach($mat as $index => $rd)
+											
+											<div class="row add-more-wrap after-add-more m-0 mb-4">
+												<div class="col-12 col-md-6 col-lg-4">
+													<div class="form-group">
+														@php $rw = [$rd->material_id => $rawmaterials[$rd->material_id] ];
+														@endphp
+														<label for="rawMaterialName" class="active">Raw Material</label>
+														{{ Form::select("rawMaterialName[]",$rw,old(),array("class"=>"form-control","readonly")) }}
+													</div>
+												</div>
 
-										@foreach( $raw_material_bills as $index => $rd )
-
-										<div class="row add-more-wrap after-add-more m-0 mb-4">
-											<div class="col-12 col-md-6 col-lg-4">
-												<div class="form-group">
-													@php $rw = [$rd->material_id => $rawmaterials[$rd->material_id] ];
-													@endphp
-													<label for="rawMaterialName" class="active">Raw Material</label>
-													{{ Form::select("rawMaterialName[]",$rw,old(),array("class"=>"form-control","readonly")) }}
+												<div class="col-12 col-md-6 col-lg-4">
+													<div class="form-group">
+														<label for="Quantity" class="active">Quantity (Kg.)</label>
+														<input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($rd->requesist_qty)?$rd->requesist_qty:('Quantity[]')}}" readonly>
+													</div>
+												</div>
+												<div class="col-12 col-md-6 col-lg-4">
+													<div class="form-group">
+														<label for="arNo" class="active">AR No.</label>
+														<input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="" value="{{isset($rd->ar_no_date)?$rd->ar_no_date:old('arNo[]')}}" readonly>
+													</div>
+												</div>
+												<div class="col-12 col-md-6 col-lg-4">
+													<div class="form-group">
+														<label for="date" class="active">Date</label>
+														<input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}" readonly>
+													</div>
 												</div>
 											</div>
-
-											<div class="col-12 col-md-6 col-lg-4">
-												<div class="form-group">
-													<label for="Quantity" class="active">Quantity (Kg.)</label>
-													<input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($rd->requesist_qty)?$rd->requesist_qty:('Quantity[]')}}" readonly>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-lg-4">
-												<div class="form-group">
-													<label for="arNo" class="active">AR No.</label>
-													<input type="text" class="form-control" name="arNo[]" id="arNo" placeholder="" value="{{isset($rd->ar_no_date)?$rd->ar_no_date:old('arNo[]')}}" readonly>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-lg-4">
-												<div class="form-group">
-													<label for="date" class="active">Date</label>
-													<input type="date" class="form-control calendar" name="date[]" id="date" value="{{ date('Y-m-d') }}" readonly>
-												</div>
-											</div>
-										</div>
+										@endforeach
 										@endforeach
 										@endif
 									</div>
@@ -767,7 +770,55 @@
 						</form>
 					</div>
 					<div id="homogenizing" class="tab-pane fade">
-						<form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_insert') }}">
+						
+							<div class="form-group">
+							<input type="hidden" value="9" name="sequenceId">
+		
+							  <a role="tab" data-toggle="tab"  class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "href="#addhomogenizing">Add Homogenize</a>
+							 </div>
+		
+		
+						<table class="table table-hover table-bordered datatable" id="examplereq_homogenizing">
+							<thead>
+								<tr>
+									<th>Sr.No</th>
+									<th>Product Name</th>
+									<th>Bmr.No</th>
+									<th>Main Batch.No</th>
+									<th>RefMfr.No</th>
+									<th>Date</th>
+									<th>Homogenizing Tank No.</th>
+		
+		
+								</tr>
+							</thead>
+							<tbody>
+		
+								@if(isset($Homogenizing) && $Homogenizing)
+								@foreach($Homogenizing as $lots)
+								<tr>
+									<td>{{$loop->index +1}}</td>
+									<td>{{$lots->material_name}}</td>
+									<td>{{$lots->bmrNo}}</td>
+									<td>{{$lots->batchNo}}</td>
+									<td>{{$lots->refMfrNo}}</td>
+									<td>{{$lots->created_at?date("d/m/Y",strtotime($lots->created_at)):""}}</td>
+									<td>{{$lots->homoTank}}</td>
+		
+								</tr>
+								@endforeach
+								@endif
+		
+							</tbody>
+						</table>
+		
+		
+		
+						
+						
+					</div>
+					<div id="addhomogenizing" class="tab-pane fade">
+						<form id="add_homogninge" method="post" action="{{ route('homogenizing_insert') }}">
 							@csrf
 
 							<div class="form-row">
@@ -820,24 +871,32 @@
 											</tr>
 										</thead>
 										<tbody class="input_fields_wrap_20">
-											@foreach($processlots as $p_lots)
+											{{--@foreach($processlots as $p_lots)
 
 											<tr>@php $lotCount = $loop->index+1  @endphp
 												<td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{$p_lots->Date}}"></td>    @php  $index = $p_lots->MaterialName;   @endphp
 												<td>Lot No.: {{ $p_lots->lotNo }} - <span class="text-primary p-2"> {{$lotCount}} {{$rawmaterials[$index]}}</span></td>
 												<td><input type="text" name="qty[]" id="qty[1]" class="form-control" value="{{$p_lots->Quantity}}"></td>
-												<td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control" value="{{$p_lots->stratTime}}"></td>
-												<td><input type="text" name="endTime[]" id="endTime[1]" class="form-control" value="{{$p_lots->endTime}}"></td>
+												<td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time" value="{{$p_lots->stratTime}}" data-mask="00:00"></td>
+												<td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time" value="{{$p_lots->endTime}}" data-mask="00:00"></td>
 											</tr>
 											@endforeach
-										</tbody>
+										
 											<tr>
 												<td><input type="date" name="dateProcess[]" id="dateProcess[15]" class="form-control"></td>
 												<td>Homogenize the product generated.</td>
 												<td><input type="text" name="qty[]" id="qty[15]" class="form-control"  placeholder="" value=""></td>
-												<td><input type="text" name="stratTime[]" id="stratTime[15]" class="form-control" placeholder=""  value=""></td>
-												<td><input type="text" name="endTime[]" id="endTime[15]" class="form-control"  placeholder="" value=""></td>
-											</tr>
+												<td><input type="time" name="stratTime[]" id="stratTime[15]" class="form-control time" placeholder=""  value="" data-mask="00:00"></td>
+												<td><input type="time" name="endTime[]" id="endTime[15]" class="form-control time"  placeholder="" value="" data-mask="00:00"></td>
+											</tr> --}}
+											<tr>
+                                                <td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{date('Y-m-d')}}"></td>   
+                                                <td><input type="text" name="lot[]" id="lot" class="form-control" value=""><input type="hidden" name="lotsid[]" value=""></td>
+                                                <td><input type="number" name="qty[]" id="qty[1]" class="form-control" value=""></td>
+                                                <td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time" value="" data-mask="00:00"></td>
+                                                <td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time" value="" data-mask="00:00"></td>
+                                            </tr>
+										</tbody>
 									</table>
 									@endif
 								</div>
@@ -978,34 +1037,36 @@
 									</label>
 									@if(isset($raw_material_bills))
                                     @php $lm =1; @endphp
-									@foreach( $raw_material_bills as $index => $rd )
+									@foreach( $raw_material_bills as $mat )
+										@foreach( $mat as $index => $rd )
                                             @php
                                                 $batchstock = App\Models\Stock::select("inward_raw_materials_items.batch_no","inward_raw_materials_items.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$rd->material_id)->pluck("batch_no","id");
                                             @endphp
-									<div class="row add-more-wrap5 after-add-more m-0 mb-4">
-                                        <span class="add-count">{{ $lm }}</span>
-										<div class="col-12 col-md-4">
-											<div class="form-group">
+											<div class="row add-more-wrap5 after-add-more m-0 mb-4">
+												<span class="add-count">{{ $lm }}</span>
+												<div class="col-12 col-md-4">
+													<div class="form-group">
 
-												<label for="MaterialName[]" class="active">Raw Material</label>
-												{{ Form::select("MaterialName[]",$stock,old("MaterialName[]")?old("MaterialName[]"):$rd->material_id,array("id"=>"MaterialName[]","class"=>"form-control select","selected"=>"selected","onchange"=>"getbatchlot($(this).val(),".$lm.")")) }}
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="form-group">
-												<label for="rmbatchno" class="active">Batch No.</label>
-                                                {{ Form::select("rmbatchno[]",$batchstock,old("rmbatchno[]")?old("rmbatchno[]"):$rd->batch_id,array("id"=>"rmbatchno".$lm,"class"=>"form-control select","selected"=>"selected","placeholder"=>"Batch No.")) }}
+														<label for="MaterialName[]" class="active">Raw Material</label>
+														{{ Form::select("MaterialName[]",$stock,old("MaterialName[]")?old("MaterialName[]"):$rd->material_id,array("id"=>"MaterialName[]","class"=>"form-control select","selected"=>"selected","onchange"=>"getbatchlot($(this).val(),".$lm.")")) }}
+													</div>
+												</div>
+												<div class="col-12 col-md-4">
+													<div class="form-group">
+														<label for="rmbatchno" class="active">Batch No.</label>
+														{{ Form::select("rmbatchno[]",$batchstock,old("rmbatchno[]")?old("rmbatchno[]"):$rd->batch_id,array("id"=>"rmbatchno".$lm,"class"=>"form-control select","selected"=>"selected","placeholder"=>"Batch No.")) }}
 
+													</div>
+												</div>
+												<div class="col-12 col-md-4">
+													<div class="form-group">
+														<label for="Quantity" class="active">Quantity (Kg.)</label>
+														<input type="text" class="form-control" name="Quantity[]" id="Quantity{{ $lm }}" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}">
+													</div>
+												</div>
 											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="form-group">
-												<label for="Quantity" class="active">Quantity (Kg.)</label>
-												<input type="text" class="form-control" name="Quantity[]" id="Quantity{{ $lm }}" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}">
-											</div>
-										</div>
-									</div>
-                                    @php $lm++; @endphp
+                                   	 @php $lm++; @endphp
+									@endforeach
 									@endforeach
 									@endif
 								</div>
@@ -1170,13 +1231,13 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="startTime" class="active">Start Time (Hrs.)</label>
-													<input type="number" class="form-control time" name="startTime" id="startTime" placeholder="">
+													<input type="time" class="form-control time" name="startTime" id="startTime" placeholder="" data-mask="00:00" data-mask="00:00">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="EndstartTime" class="active">End Time (Hrs.)</label>
-													<input type="number" class="form-control time" name="EndstartTime" id="EndstartTime" placeholder="">
+													<input type="time" class="form-control time" name="EndstartTime" id="EndstartTime" placeholder="" data-mask="00:00">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -1357,20 +1418,20 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="mfg_date" class="active">MFG Date</label>
-													<input type="date" class="form-control" name="mfg_date" id="mfg_date" value="{{ date('Y-m-d') }}"placeholder="MFG Date">
+													<input type="date" class="form-control" name="mfg_date" id="mfg_date" value="{{ isset($batchdetails->ManufacturingDate)?$batchdetails->ManufacturingDate:date('Y-m-d') }}"placeholder="MFG Date">
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="retest_date" class="active">Retest Date</label>
-													<input type="date" class="form-control" name="retest_date" id="retest_date" value="{{ date('Y-m-d') }}" placeholder="">
+													<input type="date" class="form-control" name="retest_date" id="retest_date" value="{{ isset($batchdetails->RetestDate)?$batchdetails->RetestDate:date('Y-m-d') }}" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="net_wt" class="active">Net Wt</label>
-													<input type="text" class="form-control" name="net_wt" id="net_wt" placeholder="">
+													<input type="text" class="form-control" name="net_wt" id="net_wt" placeholder="{{isset($batchdetails)?$batchdetails->BatchSize:""}}">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -1841,6 +1902,31 @@
 			},
 		});
 
+		$("#add_homogninge").validate({
+            rules: {
+                proName: "required",
+                bmrNo: "required",
+                batchNo: "required",
+                refMfrNo: "required",
+                homoTank: "required",
+                "dateProcess[]": "required",
+                "lot[]": "required",
+                "qty[]": "required",
+                "stratTime[]": "required",
+                "endTime[]": "required",
+            },
+            messages: {
+                proName: "Please  Enter The Name proName",
+                bmrNo: "Please  Enter The Name bmrNo",
+                batchNo: "Please  Enter The Name batchNo",
+                refMfrNo: "Please  Enter The Name refMfrNo",
+                Date: "Please  Enter The  Date",
+                EquipmentName: "Please  Enter The Name EquipmentName",
+                Observation: "Please  Enter The Name Observation",
+                time: "Please  Enter The Name time",
+            },  
+        })
+
 	});
 	window.onload = function() {
 
@@ -1963,6 +2049,7 @@
 		$('#examplereq').DataTable();
 		$('#examplereq_packing').DataTable();
 		$('#examplereq_lots').DataTable();
+		$("#examplereq_homogenizing").DataTable();
 	});
 	function getEquipementCode(val,id) {
 		var id2 =id;
@@ -1986,11 +2073,11 @@
 			e.preventDefault();
 			if (x < max_fields_20) { //max input box allowed
 				x++; //text box increment
-				$(wrapper_20).append('<tr><td><input type="text" name="dateProcess[]" id="dateProcess['+x+']" class="form-control"></td>'+
-										'<td>Lot No.: '+x+'</td>'+
-										'<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" placeholder="300"></td>'+
-										'<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" placeholder="12"></td>'+
-										'<td><input type="text" name="endTime[]" id="endTime['+x+']" class="form-control" placeholder="15"></td>'+
+				$(wrapper_20).append('<tr><td><input type="date" name="dateProcess[]" id="dateProcess['+x+']" class="form-control" value="{{date("Y-m-d")}}"></td>'+
+										'<td><input type="text" name="lot[]" id="lot'+x+'" class="form-control" value=""></td>'+
+										'<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" placeholder=""></td>'+
+										'<td><input type="time" name="stratTime[]" id="stratTime['+x+']" class="form-control time" placeholder="" data-mask="00:00"></td>'+
+										'<td><input type="time" name="endTime[]" id="endTime['+x+']" class="form-control itme" placeholder="" data-mask="00:00"></td>'+
 										'div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div>'+
 								   '</tr>'); //add input box
 									  }

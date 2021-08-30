@@ -21,22 +21,21 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
-                            <input type="date" class="form-control" id="ReceiptDate" placeholder="Date of Receipt">
+                            <input type="date" class="form-control" id="ReceiptDate" name="ReceiptDate" placeholder="Date of Receipt">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="ReceiptNo" placeholder="Batch No.">
+                            <input type="text" class="form-control" id="batchno" name="batchno" placeholder="Batch No.">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="MaterialName" placeholder="Product Name">
+                            {!! Form::select("product", $product, old("product"), ["class"=>"form-control","placeholder"=>"Choose Product","id"=>"product"]) !!}
+                            
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-3">
-                        <button type="search" class="btn btn-primary">Search</button>
-                    </div>
+                    
                 </div>
             </div>
             <div class="tbl-sticky">
@@ -81,38 +80,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(count($manufacture))
-                        @foreach($manufacture as $temp)
-                        <tr>
-                            <td>{{$temp->id}}</td>
-                            <td>{{$temp->ManufacturingDate}}</td>
-                            <td>{{$temp->material_name}}</td>
-                            <td>{{$temp->bmrNo}}</td>
-                            <td>{{$temp->batchNo}}</td>
-                            <td>{{$temp->refMfrNo}}</td>
-                            <td>{{$temp->grade}}</td>
-                            <td>{{$temp->BatchSize}}</td>
-                            <td>{{$temp->Viscosity}}</td>
-                            <td>{{$temp->ProductionCommencedon}}</td>
-                            <td>{{$temp->ProductionCompletedon}}</td>
-                             <td>{{$temp->ManufacturingDate}}</td>
-                            <td>{{$temp->RetestDate}}</td>
-                            <!-- <td>{{$temp->approvalDate}}</td> -->
-                            @if($temp->approval=='1')
-                             <td><span class="badge badge-success p-2">Approved</span></td>
-                            @else
-
-                            <td><span class="badge badge-warning p-2">Not Approved</span></td>
-                            @endif
-                            <td class="actions">
-
-                            <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" value="{{$temp->id}}" data-id="{{$temp->id}}" title="View" data-toggle="modal" data-target="#viewDetail"><i data-feather="eye"></i></a>
-                                <a href="{{url('add_manufacturing_edit',[$temp->id])}}" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
-
-
-                        </tr>
-                        @endforeach
-                        @endif
+                        
+                       
 
                     </tbody>
                 </table>
@@ -122,61 +91,7 @@
     </div>
 </div>
 
-<!-- <div class="modal fade show" id="checkQuntity" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="checkQuntityLabel">Material Name - Batch no.</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="_post" id="checkQuantity">
-                    <div class="form-row">
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group">
-                                <label for="QuantityApproved">Quantity Approved</label>
-                                <input type="text" class="form-control" id="QuantityApproved" placeholder="Quantity Approved">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group">
-                                <label for="QuantityRejected">Quantity Rejected</label>
-                                <input type="text" class="form-control" id="QuantityRejected" placeholder="Quantity Rejected">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group">
-                                <label for="Status">Status</label>
-                                <select class="form-control select" id="Status">
-                                    <option>Select</option>
-                                    <option>Approved</option>
-                                    <option>Rejected</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group">
-                                <label for="ApprovalDate">Date of Approval</label>
-                                <input type="date" class="form-control calendar" id="ApprovalDate" placeholder="DD-MM-YYYY">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="Remark">Remark</label>
-                                <textarea class="form-control" id="Remark" placeholder="Remark"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-md m-0">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
+
 <div class="modal fade" id="viewDetail" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -210,107 +125,7 @@
 $(document).ready(function() {
 
 
-$('.view').on('click',function(){
-        var id =$(this).attr('data-id')
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-       $.ajax({
-      type: "post",
-      url: 'add_btch_manufacture_view',
-      data:  {'_method':'post', _token: CSRF_TOKEN,id:id},
-      success: function (data) {
-     $('#viewDetail').modal('show');
-       var str = '';
-        str += '<div class="form-row form-detail">';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Product Name</label>';
-        str += '<h4>'+data.res.material_name+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>BMR NO.</label>';
-        str += ' <h4>'+data.res.bmrNo+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>BATCH NO.</label>';
-        str += '<h4>'+data.res.batchNo+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>REF MFR NO.</label>';
-        str += '<h4>'+data.res.refMfrNo+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Grade</label>';
-        str += '<h4>'+data.res.grade+'</h4>';
-        str += '</div></div>';
-        str += '</div>';
-        str += '<div class="form-row form-detail">';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Batch Size</label>';
-        str += '<h4>'+data.res.BatchSize+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Viscosity</label>';
-        str += ' <h4>'+data.res.Viscosity+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Production Commenced on</label>';
-        str += '<h4>'+data.res.ProductionCommencedon+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Production Completed on</label>';
-        str += '<h4>'+data.res.ProductionCompletedon+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Manufacturing Date</label>';
-        str += '<h4>'+data.res.ManufacturingDate+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Retest Date</label>';
-        str += '<h4>'+data.res.RetestDate+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Prepared by</label>';
-        str += '<h4>'+data.res.doneBy+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Checked By</label>';
-        str += '<h4>'+data.res.checkedBy+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Reviewed and Approved by</label>';
-        str += '<h4>'+data.res.checkedByI+'</h4>';
-        str += '</div></div>';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>This Batch is approved/not approved</label>';
-        str += '<h4>'+data.res.approval+'</h4>';
-        str += '</div></div>';
-        str += '</div>';
-        str += '<div class="form-row form-detail">';
-        str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
-        str += '<div class="form-group">';
-        str += '<label>Note / Remark</label>';
-        str += '<h4>'+data.res.Remark+'</h4>';
-        str += '</div></div>';
-        str += '</div>';
-        str+='</div>';
-        $('.data_push').html(str);
-      }
-    });
-});
+
 function deleteConfirmation(id){
     alert(id);
 
@@ -337,6 +152,110 @@ function() {
 }
 });
 
+
+function view(id){
+   
+   var id =id;
+   var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+  $.ajax({
+ type: "post",
+ url: 'add_btch_manufacture_view',
+ data:  {'_method':'post', _token: CSRF_TOKEN,id:id},
+ success: function (data) {
+$('#viewDetail').modal('show');
+  var str = '';
+   str += '<div class="form-row form-detail">';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Product Name</label>';
+   str += '<h4>'+data.res.material_name+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>BMR NO.</label>';
+   str += ' <h4>'+data.res.bmrNo+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>BATCH NO.</label>';
+   str += '<h4>'+data.res.batchNo+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>REF MFR NO.</label>';
+   str += '<h4>'+data.res.refMfrNo+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Grade</label>';
+   str += '<h4>'+data.res.grade+'</h4>';
+   str += '</div></div>';
+   str += '</div>';
+   str += '<div class="form-row form-detail">';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Batch Size</label>';
+   str += '<h4>'+data.res.BatchSize+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Viscosity</label>';
+   str += ' <h4>'+data.res.Viscosity+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Production Commenced on</label>';
+   str += '<h4>'+data.res.ProductionCommencedon+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Production Completed on</label>';
+   str += '<h4>'+data.res.ProductionCompletedon+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Manufacturing Date</label>';
+   str += '<h4>'+data.res.ManufacturingDate+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Retest Date</label>';
+   str += '<h4>'+data.res.RetestDate+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Prepared by</label>';
+   str += '<h4>'+data.res.doneBy+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Checked By</label>';
+   str += '<h4>'+data.res.checkedBy+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Reviewed and Approved by</label>';
+   str += '<h4>'+data.res.checkedByI+'</h4>';
+   str += '</div></div>';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>This Batch is approved/not approved</label>';
+   str += '<h4>'+data.res.approval+'</h4>';
+   str += '</div></div>';
+   str += '</div>';
+   str += '<div class="form-row form-detail">';
+   str += '<div class="col-12 col-md-6 col-lg-6 col-xl-6">';
+   str += '<div class="form-group">';
+   str += '<label>Note / Remark</label>';
+   str += '<h4>'+data.res.Remark+'</h4>';
+   str += '</div></div>';
+   str += '</div>';
+   str+='</div>';
+   $('.data_push').html(str);
+ }
+});
+}
+
    </script>
    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -346,9 +265,113 @@ function() {
 
    <script>
     $(document).ready(function() {
-        $('#example').DataTable({
-            order: [[ 0, 'desc' ], [ 3, 'asc' ]],
+            var table = $('.datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                drawCallback: function(settings) {
+                    feather.replace();
+                },
+                ajax: {
+                    "url": "{{route('manufacturing-listAjax')}}",
+                    "type": "POST",
+                    "dataType": "json",
+                    'data': function(data) {
+                        // Read values
+                        var rcdate = $('#ReceiptDate').val();
+                        var batch_no = $('#batchno').val();
+                        var product = $('#product').val();
+                       
+
+
+                        // Append to data
+                        data.rcdate = rcdate;
+                        data.batch_no = batch_no;
+                        data.product = product;                        
+                        data._token = '{{csrf_token()}}';
+
+                        feather.replace()
+                    }
+
+                },
+
+                columns: [{
+                        "data": "id"
+                    },
+
+                    {
+                        "data": "date",
+                        "orderable": true
+                    },
+                    {
+                        "data": "material_name",
+                        "orderable": true
+                    },
+                    {
+                        "data": "batchno",
+                        "orderable": true
+                    },
+                    {
+                        "data": "bmrno",
+                        "orderable": true
+                    },
+                    {
+                        "data": "refmfrno",
+                        "orderable": true
+                    },
+                    {
+                        "data": "grade",
+                        "orderable": true
+                    },
+                    {
+                        "data": "batchsize",
+                        "orderable": true
+                    },
+                    {
+                        "data": "viscosity",
+                        "orderable": true
+                    },
+
+                    {
+                        "data": "product_commence",
+                        "orderable": true
+                    },
+                    {
+                        "data": "product_completion",
+                        "orderable": false
+                    },
+                    
+                    {
+                        "data": "manfuactring_date",
+                        "orderable": false
+                    },                                       
+                    {
+                        "data": "retest_date",
+                        "orderable": false
+                    },
+                                        
+                    {
+                        "data": "status",
+                        "orderable": false
+                    },
+                    {
+                        "data": "action",
+                        "orderable": false
+                    }
+                ]
+            });
+            $('#ReceiptDate').change(function() {
+                table.draw();
+            });
+
+            $('#batchno').keyup(function() {
+                table.draw();
+            });
+
+            $('#product').change(function() {
+                table.draw();
+            });
+            
         });
-    });
 </script>
 @endpush

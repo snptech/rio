@@ -59,7 +59,9 @@
                                 <div class="input-group-btn">&nbsp;</div>
                             </label>
                             @if(isset($material_details) && $material_details)
-                            @php  $i=1; @endphp
+                            @php  $i=1;
+                                $type = "";
+                            @endphp
                             @foreach ($material_details as $mat)
                                 @php
                                     $batch  = "";
@@ -74,7 +76,9 @@
                                 @endphp
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
                                 {{-- <span class="add-count">{{ $i }}</span> --}}
-                                @php $material_type = ($mat->type=='R')? 'Raw Material':(($mat->type=='P')? 'Packing Material' :'') ;   @endphp
+                                @php $material_type = ($mat->type=='R')? 'Raw Material':(($mat->type=='P')? 'Packing Material' :'') ;   
+                                $type = $mat->type;
+                                @endphp
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label for="PackingMaterialName" class="active">{{$material_type}} Name</label>
@@ -101,20 +105,20 @@
                                     <div class="form-group">
                                         <input type="hidden" name="type{{ $mat->details_id }}" value="{{$mat->type}}">
                                         <label for="rBatch" class="active">{{$material_type}} Batch</label>
-                                        {{ Form::select("rBatch".$mat->details_id,$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type")) }}
+                                        {{ Form::select("rBatch".$mat->details_id."[]",$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type")) }}
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="arno" class="active">A.R.N. Number/Date</label>
-                                        <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="">
+                                        <input type="text" class="form-control" name="arno{{ $mat->details_id }}[]" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">Issued Quantity (Kg.)</label>
-                                        <input type="text" class="form-control Quantity_app{{ $mat->details_id }}" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="">
+                                        <input type="text" class="form-control Quantity_app{{ $mat->details_id }}" name="Quantity_app{{ $mat->details_id }}[]" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="">
                                         <input type="hidden" name="details_id{{ $mat->details_id }}" value="{{ $mat->details_id }}">
                                     </div>
                                 </div>
@@ -186,8 +190,8 @@
                 $material_name_2 = isset($mat->PackingMaterialName)? $mat->PackingMaterialName:'';
                 @endphp
                 $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
-                 '{{Form::select("rBatch[".$details_id."]", $batch_new, old("rBatch".$details_id), array("id" =>"rBatch$i","placeholder" => "Choose Batch number", "class"=>"form-control","onchange"=>'getarnoandqty($(this).val(),'.$material_name_2.",$i)")) }}'+
-                 '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number/Date</label><input type="text" class="form-control" name="arno[{{ $details_id  }}]" id="arno{{$i}}" placeholder="A.R.N. Number/Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app[{{ $details_id  }}]" id="Quantity_app{{$i}}" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
+                 '{{Form::select("rBatch".$details_id."[]", $batch_new, old("rBatch".$details_id), array("id" =>"rBatch$i","placeholder" => "Choose Batch number", "class"=>"form-control","onchange"=>'getarnoandqty($(this).val(),'.$material_name_2.",$i,$type)")) }}'+
+                 '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number/Date</label><input type="text" class="form-control" name="arno{{ $details_id  }}[]" id="arno{{$i}}" placeholder="A.R.N. Number/Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app{{ $details_id  }}[]" id="Quantity_app{{$i}}" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
                 @php  $details_id++ @endphp
             } //add mulptple raw material
             feather.replace()

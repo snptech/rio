@@ -12,6 +12,7 @@ class HomogenizingList extends Model
     protected $fillable = [
         'id',
         'dateProcess',
+        'lots_name',
         'qty',
         'stratTime',
         'endTime',

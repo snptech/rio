@@ -70,7 +70,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="proName" class="active">Product Name</label>
-                                    {{ Form::select("proName",$product,old($edit_batchmanufacturing->proName),array("class"=>"form-control select","id"=>"material_name")) }}
+                                    {{ Form::select("proName",$product,old("proName")?old("proName"):$edit_batchmanufacturing->proName,array("class"=>"form-control select","id"=>"material_name")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -337,7 +337,7 @@
 											<td>{{$temp->material_name}}</td>
 											<td>{{$temp->Quantity}}</td>
 											<td>{{$temp->approved_qty}}</td>
-											<td>{!! ($temp->approved_qty >= $temp->Quantity?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>')!!}</td>
+											<td>{!! ($temp->approved_qty)?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Pending</span>'!!}</td>
 										</tr>
 										@endforeach
 									@endif
@@ -1078,16 +1078,16 @@
                                                         <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the reactor.</td>
                                                         <td><input type="number" name="qty[]" id="qty[4]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
-                                                        <td><input type="time" name="stratTime[]" id="stratTime[4]" class="form-control time" data-mask="00:00" ></td>
-                                                        <td><input type="time" name="endTime[]" id="endTime[4]" class="form-control time" data-mask="00:00"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime4" class="form-control time" data-mask="00:00" ></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime4" class="form-control time" data-mask="00:00"></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[4]","class"=>"form-control select")) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number</td>
                                                         <td><input type="number" name="qty[]" id="qty[5]" class="form-control"></td>
                                                         <td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
-                                                        <td><input type="time" name="stratTime[]" id="stratTime[5]" class="form-control time" data-mask="00:00"></td>
-                                                        <td><input type="time" name="endTime[]" id="endTime[5]" class="form-control time" data-mask="00:00"></td>
+                                                        <td><input type="time" name="stratTime[]" id="stratTime5" class="form-control time" data-mask="00:00"></td>
+                                                        <td><input type="time" name="endTime[]" id="endTime5" class="form-control time" data-mask="00:00"></td>
                                                         <td>{{ Form::select("doneby[]", $doneBy, old("doneby"), array("id"=>"doneby[5]","class"=>"form-control select")) }}</td>
                                                     </tr>
 
@@ -1152,7 +1152,7 @@
 
                 </div>
                 <div id="addhomogenizing" class="tab-pane fade {{($sequenceId=='11')?'in active show':''}}">
-                    <form id="add_manufacturing_line" method="post" action="{{ route('homogenizing_update') }}">
+                    <form id="add_homogninge" method="post" action="{{ route('homogenizing_update') }}">
                         <input type="hidden" value="11" name="sequenceId">
                         <input type="hidden" value="{{isset($Homogenizing->id)?$Homogenizing->id:""}}" name="id">
                         <input type="hidden" value="{{isset($edit_batchmanufacturing->id)?$edit_batchmanufacturing->id:""}}" name="mainid">
@@ -1163,7 +1163,7 @@
                                 <div class="form-group">
                                     <label for="proName" class="active">Product Name</label>
 
-                                    {{ Form::select("proName",$product,(old("proName")?old("proName"):(isset($Homogenizing->proName)?$Homogenizing->proName:"")),array("class"=>"form-control select","id"=>"proName")) }}
+                                    {{ Form::select("proName",$product,(old("proName")?old("proName"):(isset($edit_batchmanufacturing->proName)?$edit_batchmanufacturing->proName:"")),array("class"=>"form-control select","id"=>"proName")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1217,8 +1217,8 @@
                                                 <td><input type="date" name="dateProcess[]" value="{{$temp->dateProcess}}" id="dateProcess[1]" class="form-control"></td>
                                                 <td><input type="text" name="lot[]" id="lot" class="form-control" value=""></td>
                                                 <td><input type="number" name="qty[]" id="qty" value="{{$temp->qty}}" class="form-control"></td>
-                                                <td><input type="text" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control time" data-mask="00:00"></td>
-                                                <td><input type="text" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control time"  data-mask="00:00"></td>
+                                                <td><input type="time" name="stratTime[]" id="stratTime" value="{{$temp->stratTime}}" class="form-control time" data-mask="00:00"></td>
+                                                <td><input type="time" name="endTime[]" id="endTime" value="{{$temp->endTime}}" class="form-control time"  data-mask="00:00"></td>
 
                                             </tr>
 
@@ -1229,8 +1229,8 @@
                                                 <td><input type="date" name="dateProcess[]" id="dateProcess[1]" class="form-control" value="{{date('Y-m-d')}}"></td>   
                                                 <td><input type="text" name="lot[]" id="lot" class="form-control" value=""><input type="hidden" name="lotsid[]" value=""></td>
                                                 <td><input type="number" name="qty[]" id="qty[1]" class="form-control" value=""></td>
-                                                <td><input type="text" name="stratTime[]" id="stratTime[1]" class="form-control time" value="" data-mask="00:00"></td>
-                                                <td><input type="text" name="endTime[]" id="endTime[1]" class="form-control time" value="" data-mask="00:00"></td>
+                                                <td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time" value="" data-mask="00:00"></td>
+                                                <td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time" value="" data-mask="00:00"></td>
                                             </tr>
                                             
                                         @endif
@@ -1275,7 +1275,7 @@
 
                                     <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
 
-                                    {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName")) }}
+                                    {{ Form::select("proName",$product,old("proName")?old("proName"):$edit_batchmanufacturing->proName,array("class"=>"form-control select","id"=>"proName")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1353,13 +1353,13 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="startTime" class="active">Start Time (Hrs.)</label>
-                                                <input type="number" class="form-control time" name="startTime" value="{{isset($packingmateria->startTime)?$packingmateria->startTime:""}}" id="startTime" placeholder="">
+                                                <input type="time" class="form-control time" name="startTime" value="{{isset($packingmateria->startTime)?$packingmateria->startTime:""}}" id="startTime" placeholder="" data-mask="00:00">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="EndstartTime" class="active">End Time (Hrs.)</label>
-                                                <input type="number" class="form-control time" name="EndstartTime" value="{{isset($packingmateria->EndstartTime)?$packingmateria->EndstartTime:""}}" id="EndstartTime" placeholder="">
+                                                <input type="time" class="form-control time" name="EndstartTime" value="{{isset($packingmateria->EndstartTime)?$packingmateria->EndstartTime:""}}" id="EndstartTime" placeholder="" data-mask="00:00">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -1482,8 +1482,8 @@
                 <div id="generate_label" class="tab-pane fade {{($sequenceId=='13')?'in active show':''}}">
                     <form id="add_manufacturing_generate_label" method="post" action="{{ route('add_manufacturing_generate_update') }}">
                         <input type="hidden" value="13" name="sequenceId">
-                        <input type="hidden" value="{{isset($packingmateria->id)?$packingmateria->id:""}}" name="id">
                         <input type="hidden" value="{{isset($edit_ganerat_lable->id)?$edit_ganerat_lable->id:""}}" name="id">
+                        <input type="hidden" value="{{isset($edit_batchmanufacturing->id)?$edit_batchmanufacturing->id:""}}" name="batch_id">
 
                         @csrf
 
@@ -1493,7 +1493,7 @@
 										<label for="proName" class="active">Product Name</label>
 
 										<!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                                        {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName")) }}
+                                        {{ Form::select("proName",$product,old("proName")?old("proName"):$edit_batchmanufacturing->proName,array("class"=>"form-control select","id"=>"proName")) }}
                                     @if ($errors->has('proName'))
                                     <span class="text-danger">{{ $errors->first('proName') }}</span>
                                     @endif
@@ -1502,19 +1502,19 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="bmrNo" class="active">BMR No.</label>
-										<input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($batchdetails->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
+										<input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($edit_batchmanufacturing->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="batchNo">Batch No.</label>
-									<input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($batchdetails->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly>
+									<input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($edit_batchmanufacturing->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="refMfrNo">Ref. MFR No.</label>
-									<input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($batchdetails->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
+									<input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($edit_batchmanufacturing->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly>
 									</div>
 								</div>
 
@@ -1534,26 +1534,26 @@
                                             <div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="batch_no_I" class="active">Batch No</label>
-													<input type="text" class="form-control" name="batch_no_I"value="{{isset($edit_ganerat_lable->batch_no_I)?$edit_ganerat_lable->batch_no_I:""}}" id="batch_no_I" placeholder="">
+													<input type="text" class="form-control" name="batch_no_I"value="{{isset($edit_ganerat_lable->batch_no_I)?$edit_ganerat_lable->batch_no_I:$edit_batchmanufacturing->batchNo}}" id="batch_no_I" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="mfg_date" class="active">MFG Date</label>
-													<input type="date" class="form-control" name="mfg_date" id="mfg_date" value="{{isset($edit_ganerat_lable->mfg_date)?$edit_ganerat_lable->mfg_date:""}}" placeholder="">
+													<input type="date" class="form-control" name="mfg_date" id="mfg_date" value="{{isset($edit_ganerat_lable->mfg_date)?$edit_ganerat_lable->mfg_date:$edit_batchmanufacturing->ManufacturingDate}}" placeholder="">
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="retest_date" class="active">Retest Date</label>
-													<input type="date" class="form-control" name="retest_date" id="retest_date" value="{{isset($edit_ganerat_lable->retest_date)?$edit_ganerat_lable->retest_date:""}}" placeholder="">
+													<input type="date" class="form-control" name="retest_date" id="retest_date" value="{{isset($edit_ganerat_lable->retest_date)?$edit_ganerat_lable->retest_date:$edit_batchmanufacturing->RetestDate}}" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="net_wt" class="active">Net Wt</label>
-													<input type="text" class="form-control" name="net_wt" id="net_wt" value="{{isset($edit_ganerat_lable->net_wt)?$edit_ganerat_lable->net_wt:""}}" placeholder="">
+													<input type="text" class="form-control" name="net_wt" id="net_wt" value="{{isset($edit_ganerat_lable->net_wt)?$edit_ganerat_lable->net_wt:$edit_batchmanufacturing->BatchSize}}" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -1881,6 +1881,30 @@
                 time: "Please  Enter The Name time",
             },
         });
+        $("#add_homogninge").validate({
+            rules: {
+                proName: "required",
+                bmrNo: "required",
+                batchNo: "required",
+                refMfrNo: "required",
+                homoTank: "required",
+                "dateProcess[]": "required",
+                "lot[]": "required",
+                "qty[]": "required",
+                "stratTime[]": "required",
+                "endTime[]": "required",
+            },
+            messages: {
+                proName: "Please  Enter The Name proName",
+                bmrNo: "Please  Enter The Name bmrNo",
+                batchNo: "Please  Enter The Name batchNo",
+                refMfrNo: "Please  Enter The Name refMfrNo",
+                Date: "Please  Enter The  Date",
+                EquipmentName: "Please  Enter The Name EquipmentName",
+                Observation: "Please  Enter The Name Observation",
+                time: "Please  Enter The Name time",
+            },  
+        })
         $("#add_manufacturing_packing").validate({
             rules: {
                 proName: "required",
@@ -2117,8 +2141,8 @@
 				$(wrapper_20).append('<tr><td><input type="date" name="dateProcess[]" id="dateProcess['+x+']" class="form-control" value="{{date("Y-m-d")}}"></td>'+
 										'<td><input type="text" name="lot[]" id="lot'+x+'" class="form-control" value=""></td>'+
 										'<td><input type="text" name="qty[]" id="qty['+x+']" class="form-control" placeholder=""></td>'+
-										'<td><input type="text" name="stratTime[]" id="stratTime['+x+']" class="form-control" placeholder=""></td>'+
-										'<td><input type="text" name="endTime[]" id="endTime['+x+']" class="form-control" placeholder=""></td>'+
+										'<td><input type="time" name="stratTime[]" id="stratTime['+x+']" class="form-control time" placeholder="" data-mask="00:00"></td>'+
+										'<td><input type="time" name="endTime[]" id="endTime['+x+']" class="form-control itme" placeholder="" data-mask="00:00"></td>'+
 										'div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div>'+
 								   '</tr>'); //add input box
 									  }
