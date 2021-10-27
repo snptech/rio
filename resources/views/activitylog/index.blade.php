@@ -58,7 +58,8 @@
                     <td>{{ $act->description  }}</td>
                     <td>{{ $act->subject_type   }}</td>
                     <td>{{ $act->event   }}</td>
-                    <td>@php $data = json_decode($act->properties, true);  ; if(isset($data)) echo (isset($data["first_name"])?"Name:".$data["first_name"]:""); echo (isset($data["ip"])?"<br> IP:".$data["ip"]:""); @endphp</td>
+                    <td>@php $data = json_decode($act->properties, true);  ; if(isset($data)) echo (isset($data["first_name"])?"Name:".$data["first_name"]:""); echo (isset($data["ip"])?"<br> IP:".$data["ip"]:"");
+                    echo (isset($data["event"])?"<br> Event:".$data["event"]:""); @endphp</td>
                     <td>
                       {{ $act->created_at?date("d/m/Y H:i:s",strtotime($act->created_at)):""   }}
                     </td>
