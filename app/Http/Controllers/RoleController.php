@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 class RoleController extends Controller
 {
-    //
-    public function __construct()
+    function __construct()
     {
-        $this->middleware('auth');
-
-
+         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:role-create', ['only' => ['create','store']]);
+         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //LISTING THE Departments
-        $roles = Role::get();
-
-        return view("master.role.index")->with(["roles"=>$roles]);
-
+        $data = Role::orderBy('id','DESC')->paginate(5);
+        
+        return view('roles.index', compact('data'));
     }
 
     /**
@@ -34,7 +35,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view("master.role.create");
+        $permission = Permission::get();
+
+        return view('roles.create', compact('permission'));
     }
 
     /**
@@ -45,36 +48,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $arrRules = ["role"=>"required|unique:roles,role",
-                     "publish"=>"required"];
-
-
-        $arrMessages = [
-        "role"=>"This :attribute field is required.",
-        "publish"=>"This :attribute field is required.",
-        ];
-
-        $attributes = array();
-        foreach ($request->input() as $key => $val)
-            $attributes[$key] = ucwords(str_replace("_", " ", $key));
-
-        $validateData = $request->validate($arrRules, $arrMessages,$attributes);
-
-
-        $data = array();
-        $data["role"] = $request->role;
-        $data["publish"] = $request->publish;
-
-        $result = Role::create($data);
-
-        if($result->id)
-        {
-            return redirect("role")->with('message', "Role created successfully");
-        }
-        else
-            return redirect("role")->with('error', "Something went wrong");
-
+        $this->validate($request, [
+            'name' => 'required|unique:roles,name',
+            'permission' => 'required',
+        ]);
+    
+        $role = Role::create(['name' => $request->input('name')]);
+        $role->syncPermissions($request->input('permission'));
+    
+        return redirect()->route('roles.index')
+            ->with('success', 'Role created successfully.');
     }
 
     /**
@@ -83,10 +66,15 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+   public function show($id)
     {
-        //
-
+        $role = Role::find($id);
+        
+        $rolePermissions = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', 'permissions.id')
+            ->where('role_has_permissions.role_id',$id)
+            ->get();
+    
+        return view('roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
@@ -97,14 +85,14 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
-        if($id)
-        {
-            $role = Role::where("id",$id)->first();
-            return view("master.role.edit")->with(["role"=>$role]);
-        }
-        else
-            redirect(404);
+        $role = Role::find($id);
+        $permission = Permission::get();
+        $rolePermissions = DB::table('role_has_permissions')
+            ->where('role_has_permissions.role_id', $id)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+            ->all();
+    
+        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
     }
 
     /**
@@ -114,37 +102,21 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
     {
-        //
-        $arrRules = ["role"=>"required|unique:roles,role,".$id,
-                     "publish"=>"required"];
-
-
-        $arrMessages = [
-        "role"=>"This :attribute field is required.",
-        "publish"=>"This :attribute field is required.",
-        ];
-
-        $attributes = array();
-        foreach ($request->input() as $key => $val)
-            $attributes[$key] = ucwords(str_replace("_", " ", $key));
-
-        $validateData = $request->validate($arrRules, $arrMessages,$attributes);
-
-
-        $data = array();
-        $data["role"] = $request->role;
-        $data["publish"] = $request->publish;
-        $roles = Role::find($id);
-        $result = $roles->update($data);
-
-        if($result)
-        {
-            return redirect("role")->with('message', "Role updated successfully");
-        }
-        else
-            return redirect("role")->with('error', "Something went wrong");
+        $this->validate($request, [
+            'name' => 'required',
+            'permission' => 'required',
+        ]);
+    
+        $role = Role::find($id);
+        $role->name = $request->input('name');
+        $role->save();
+    
+        $role->syncPermissions($request->input('permission'));
+    
+        return redirect()->route('roles.index')
+            ->with('success', 'Role updated successfully.');
     }
 
     /**
@@ -155,17 +127,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $role = Role::findOrFail($id);
-        if($role)
-        {
-            $result = $role->delete();
-            if($result)
-            {
-                return redirect("role")->with('message', "Role deleted successfully");
-            }
-            else
-                return redirect("role")->with('error', "Something went wrong");
-            }
+        Role::find($id)->delete();
+        
+        return redirect()->route('roles.index')
+            ->with('success', 'Role deleted successfully');
     }
 }

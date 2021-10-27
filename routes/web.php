@@ -30,12 +30,12 @@ $router->group(['middleware' => ['auth']], function ($router) {
 
 
     // Role managment
-    Route::get("role", [App\Http\Controllers\RoleController::class, "index"])->name("role")->middleware("adminmaster");
-    Route::get("new-role", [App\Http\Controllers\RoleController::class, "create"])->name("new-role")->middleware("adminmaster");;
-    Route::post("role-store", [App\Http\Controllers\RoleController::class, "store"])->name("role-store")->middleware("adminmaster");;
-    Route::get("/role/edit/{id}", [App\Http\Controllers\RoleController::class, "edit"])->name("edit-role")->middleware("adminmaster");;
-    Route::post("role/update/{id}", [App\Http\Controllers\RoleController::class, "update"])->name("role-update")->middleware("adminmaster");;
-    Route::get("/role/remove/{id}", [App\Http\Controllers\RoleController::class, "destroy"])->name("delete-role")->middleware("adminmaster");;
+    Route::get("role", [App\Http\Controllers\RoleController::class, "index"])->name("roles.index")->middleware("adminmaster");
+    Route::get("roles/create", [App\Http\Controllers\RoleController::class, "create"])->name("new-role")->middleware("adminmaster");;
+    Route::post("role-store", [App\Http\Controllers\RoleController::class, "store"])->name("roles.store")->middleware("adminmaster");;
+    Route::get("/role/edit/{id}", [App\Http\Controllers\RoleController::class, "edit"])->name("roles.edit")->middleware("adminmaster");;
+    Route::post("role/update/{id}", [App\Http\Controllers\RoleController::class, "update"])->name("roles.update")->middleware("adminmaster");;
+    Route::get("/role/remove/{id}", [App\Http\Controllers\RoleController::class, "destroy"])->name("roles.destroy")->middleware("adminmaster");;
 
 
     // Designation managment
@@ -295,6 +295,15 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::post("/getbatchofmaterial", [App\Http\Controllers\ManufactureProcessController::class,'getbatchofmaterial'])->name("getbatchofmaterial");
          Route::get('/pdfview/{id}', [App\Http\Controllers\ManufactureProcessController::class,'pdfview'])->name("pdfview");
          //Route::get('pdfview',array('as'=>'pdfview','uses'=>'ItemController@pdfview'));
+
+
+         //permission
+          Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+
+         //user Controller 
+         Route::resource('users', App\Http\Controllers\UserController::class);
+         Route::resource('activitylog', App\Http\Controllers\ActivitylogController::class);
+         
 
 
 

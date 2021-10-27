@@ -109,22 +109,30 @@
         <div class="collapse" id="ui-master">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"><a class="nav-link" href="{{ route('department') }}">Department</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('role') }}">Role</a></li>
+            @can("role-list")
+            <li class="nav-item"><a class="nav-link" href="{{ route('roles.index') }}">Role</a></li>
+            @endcan
             <li class="nav-item"><a class="nav-link" href="{{ route('designation') }}">Designation</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('grade') }}">Grade</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('supplier') }}">Supplier</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('modedispatch') }}">Mode of Dispatch</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('manufacturer') }}">Manufacturers</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('rawmaterial') }}">Matrials Master</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('controller') }}">Controllers</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('action') }}">Actions</a></li>
+           
             <li class="nav-item"><a class="nav-link" href="{{ route('party_master') }}">Party Master</a></li>
-            <li class="nav-item"><a class="nav-link" href="annexure-VI.html">User Permisition</a></li>
+            @can("permission-list")
+            <li class="nav-item"><a class="nav-link" href="{{url('permissions')}}">Permisition</a></li>
+            @endcan
+            @can('user-list')
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('comingsoon') }}">
+                <a class="nav-link" href="{{ route('users.index') }}">
                   User Masters
                 </a>
             </li>
+            @endcan
+            @can("activitylog-list")
+            <li class="nav-item"><a class="nav-link" href="{{url('activitylog')}}">Activity Log</a></li>
+            @endcan
           </ul>
         </div>
       </li>
