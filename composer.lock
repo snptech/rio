@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85b78e160b1184ea2ef3f07d96833a28",
+    "content-hash": "b9467600f15a3755bfc074864fa66885",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1156,16 +1156,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.68.0",
+            "version": "v8.68.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "08781be9c1e3f83b0c38ce9539e1dc4664e33a14"
+                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/08781be9c1e3f83b0c38ce9539e1dc4664e33a14",
-                "reference": "08781be9c1e3f83b0c38ce9539e1dc4664e33a14",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
+                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
                 "shasum": ""
             },
             "require": {
@@ -1324,7 +1324,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-26T12:52:38+00:00"
+            "time": "2021-10-27T12:31:46+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -2802,30 +2802,30 @@
         },
         {
             "name": "psr/log",
-            "version": "2.0.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376"
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/ef29f6d262798707a9edd554e2b82517ef3a9376",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "src"
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2846,9 +2846,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/2.0.0"
+                "source": "https://github.com/php-fig/log/tree/1.1.4"
             },
-            "time": "2021-07-14T16:41:46+00:00"
+            "time": "2021-05-03T11:20:27+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -3248,28 +3248,27 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "4.3.1",
+            "version": "3.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "334e7427f5b025d081fb37e9d3ec35854a3438ae"
+                "reference": "bdc44862aaca39ecbd824133b80dbd7c8017ed7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/334e7427f5b025d081fb37e9d3ec35854a3438ae",
-                "reference": "334e7427f5b025d081fb37e9d3ec35854a3438ae",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/bdc44862aaca39ecbd824133b80dbd7c8017ed7f",
+                "reference": "bdc44862aaca39ecbd824133b80dbd7c8017ed7f",
                 "shasum": ""
             },
             "require": {
-                "illuminate/config": "^8.0",
-                "illuminate/database": "^8.53",
-                "illuminate/support": "^8.0",
-                "php": "^8.0",
-                "spatie/laravel-package-tools": "^1.6.3"
+                "illuminate/config": "^6.0 || ^7.0 || ^8.0",
+                "illuminate/database": "^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0",
+                "php": "^7.3 || ^8.0"
             },
             "require-dev": {
                 "ext-json": "*",
-                "orchestra/testbench": "^6.0",
+                "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
                 "phpunit/phpunit": "^9.3"
             },
             "type": "library",
@@ -3323,7 +3322,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-activitylog/issues",
-                "source": "https://github.com/spatie/laravel-activitylog/tree/4.3.1"
+                "source": "https://github.com/spatie/laravel-activitylog/tree/3.17.0"
             },
             "funding": [
                 {
@@ -3335,67 +3334,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-20T16:35:50+00:00"
-        },
-        {
-            "name": "spatie/laravel-package-tools",
-            "version": "1.9.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "f710fe196c126fb9e0aee67eb5af49ad8f13f528"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/f710fe196c126fb9e0aee67eb5af49ad8f13f528",
-                "reference": "f710fe196c126fb9e0aee67eb5af49ad8f13f528",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "^7.0|^8.0",
-                "php": "^7.4|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^5.0|^6.0",
-                "phpunit/phpunit": "^9.3",
-                "spatie/test-time": "^1.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\LaravelPackageTools\\": "src",
-                    "Spatie\\LaravelPackageTools\\Database\\Factories\\": "database/factories"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Tools for creating Laravel packages",
-            "homepage": "https://github.com/spatie/laravel-package-tools",
-            "keywords": [
-                "laravel-package-tools",
-                "spatie"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.9.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-09-21T13:06:51+00:00"
+            "time": "2021-03-02T16:49:06+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -6593,16 +6532,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.12.0",
+            "version": "v1.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "80f6cd93844e87ebc2e7310f9a9b9917473f5eb0"
+                "reference": "1acae00ddb5c6ec4a2957fe42c0004f13cd17a7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/80f6cd93844e87ebc2e7310f9a9b9917473f5eb0",
-                "reference": "80f6cd93844e87ebc2e7310f9a9b9917473f5eb0",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/1acae00ddb5c6ec4a2957fe42c0004f13cd17a7a",
+                "reference": "1acae00ddb5c6ec4a2957fe42c0004f13cd17a7a",
                 "shasum": ""
             },
             "require": {
@@ -6649,7 +6588,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2021-10-12T15:38:11+00:00"
+            "time": "2021-10-26T21:37:54+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8648,7 +8587,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^7.3"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"

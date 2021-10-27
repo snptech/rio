@@ -83,11 +83,12 @@ class User extends Authenticatable
         activity('user')
             ->performedOn($user)
             ->causedBy(auth()->user())
-            ->event('created')
+            /*->event('created')*/
             ->withProperties([
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
-                    'ip'=>\Request::ip()           
+                    'ip'=>\Request::ip(),
+                    "event"=> "Created"         
                 ])
             ->log('Account Created');
         });
@@ -97,23 +98,25 @@ class User extends Authenticatable
             activity('user')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
-                ->event('updated')
+                /*->event('updated')*/
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip()               
+                        'ip'=>\Request::ip(),   
+                        "event"=> "updated" 
                     ])
                 ->log('Account Updated');
             });
         static::deleting(function ($user) {
         activity('user')
             ->performedOn($user)
-            ->event('deleted')
+            /*->event('deleted')*/
             ->causedBy(auth()->user())
             ->withProperties([
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
-                'ip'=>Request::ip() 
+                'ip'=>Request::ip(),
+                "event"=> "deleted" 
                 ])
             ->log('Account Deleted');
         });

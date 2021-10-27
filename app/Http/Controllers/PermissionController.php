@@ -58,11 +58,12 @@ class PermissionController extends Controller
         activity('Permission')
             ->performedOn($permission)
             ->causedBy(auth()->user())
-            ->event('created')
+            /*->event('created')*/
             ->withProperties([
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
-                    'ip'=>\Request::ip()           
+                    'ip'=>\Request::ip(),
+                    "event"=> "Created"           
                 ])
             ->log('Permission Created');
        
