@@ -60,7 +60,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="MaterialName">Opening Balance</label>
-                            <input type="text" class="form-control" name="opening_balance" id="opening_balance" placeholder="Opening Balance" readonly>
+                            <input type="text" class="form-control" name="opening_balance" id="opening_balance" placeholder="Opening Balance" >
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">

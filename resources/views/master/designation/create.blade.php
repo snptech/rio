@@ -19,7 +19,8 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="rno">Designation</label>
-                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Designation" value="{{ old("designtion") }}">
+                            <input type="text" class="form-control" name="designation" id="designation" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+ placeholder="Designation" value="{{ old("designtion") }}">
                             @if ($errors->has('designation'))
                                     <span class="text-danger">{{ $errors->first('designation') }}</span>
                             @endif
@@ -108,6 +109,13 @@
       }
     }
   });
+  $(function() {
+$('input:text').keydown(function(e) {
+if(e.keyCode==65)
+    return false;
+
+});
+});
 });
 
     </script>
