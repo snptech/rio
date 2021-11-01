@@ -19,7 +19,7 @@
 
                 <div class="filter">
                     <h3>Filter</h3>
-                    <form id="inward_packing_material" name="inward_packing_material" method="post" action="">
+                    <form id="inward_packing_material" name="inward_packing_material" method="get" action="">
                         <div class="form-row">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group">
@@ -53,7 +53,9 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
                                 <button type="submit" class="btn btn-primary">Search</button>
+                                <button type="submit"  id="btnClear"class="btn btn-primary">clear</button>
                             </div>
+                           
                         </div>
                     </form>
                 </div>
@@ -236,7 +238,15 @@
             $('#invoiceNo').keyup(function() {
                 table.draw();
             });
-        });
+            $('#btnClear').click(function(){
+        $('#ReceiptNo').val();
+        $('#manufacturer').val('');
+        $('#supplier').val('');
+        $('#invoiceNo').val('');
+
+     })
+         		
+	    });
 
         function remove(url) {
 

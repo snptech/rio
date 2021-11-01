@@ -57,8 +57,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="Viscosity">Viscosity <span class="text-danger">(Only for certain Products)</span></label>
-                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity">
+                            <label for="Viscosity" >Viscosity <span class="text-danger">(Only for certain Products)</span></label>
+                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -206,6 +206,14 @@
             $('#dispensed_by').val('');
             $('#remark').val('');
         });
+        
+            $(function() {
+            $('input:text').keydown(function(e) {
+            if(e.keyCode==65)
+                return false;
+
+            });
+            });
 
 
     });

@@ -16,7 +16,9 @@ class InwardFinishedController extends Controller
     public function new_stock()
     {
 
-        $data['inward_goods']=Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","grades.grade","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")->join("grades","grades.id","inward_finished_goods.grade")->join("users","users.id","inward_finished_goods.received_by")->get();
+        $data['inward_goods']=Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","grades.grade","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")
+        ->join("grades","grades.id","inward_finished_goods.grade")
+        ->join("users","users.id","inward_finished_goods.received_by")->get();
 
         return view('new_stock',$data);
     }
@@ -25,7 +27,13 @@ class InwardFinishedController extends Controller
 
         if($request->id)
         {
-             $inward_goods = Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","grades.grade","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")->join("grades","grades.id","inward_finished_goods.grade")->join("users","users.id","inward_finished_goods.received_by")->where("id",$request->id)->first();
+             $inward_goods = Inwardfinishedgoods::select("inward_finished_goods.*"
+             ,"raw_materials.material_name","grades.grade",
+             "users.name")->join("raw_materials","raw_materials.id",
+             "inward_finished_goods.product_name")
+             ->join("grades","grades.id","inward_finished_goods.grade")
+             ->join("users","users.id","inward_finished_goods.received_by")
+             ->where("inward_finished_goods.id",$request->id)->first();
              $view = view('view_new_stock', ['inward_goods'=> $inward_goods])->render();
              return response()->json(['html'=>$view]);
 
@@ -52,51 +60,52 @@ class InwardFinishedController extends Controller
     }
     public function inward_finished_insert(Request $request)
     {
-        $arrRules = [
-             "inward_no"=>"required",
-             "inward_date" => "required",
-             "product_name" => "required",
-             "batch_no" => "required",
-             "grade" => "required",
-             "viscosity" => "required",
-             "mfg_date" => "required",
-             "expiry_ratest_date" => "required",
-             "total_no_of_200kg_drums" => "required",
-             "total_no_of_50kg_drums" => "required",
-             "total_no_of_30kg_drums" => "required",
-             "total_no_of_5kg_drums" => "required",
-             "total_no_of_fiber_board_drums" => "required",
-             "total_quantity" => "required",
-             "total_no_of_200kg_drums_bal" => "required",
-             "total_no_of_50kg_drums_bal" => "required",
-             "total_no_of_30kg_drums_bal" => "required",
-             "total_no_of_5kg_drums_bal" => "required",
-             "total_no_of_fiber_board_drums_bal" => "required",
-             "total_quantity_bal" => "required",
-             "ar_no" => "required",
-             "approval_data" => "required",
-             "remark" => "required",
-            ];
-            $arrMessages = [
-                "inward_date"=>"Please  This :attribute field is required.",
-                "product_name"=>"This :attribute field is required.",
-                "batch_no"=>"Please  This :attribute field is required.",
-                "grade"=>"This :attribute field is required.",
-                "viscosity"=>"This :attribute field is required.",
-                "mfg_date"=>"Please  This :attribute field is required.",
-                "expiry_ratest_date"=>"Please  Enter This :attribute field is required.",
-                "total_no_of_200kg_drums"=>"Please  Enter The Name This :attribute field is required.",
-                "total_no_of_50kg_drums"=>"Please  This :attribute field is required.",
-                "total_no_of_30kg_drums"=>"Please  This :attribute field is required.",
-                "total_no_of_5kg_drums"=>"Please  This :attribute field is required.",
-                "total_no_of_fiber_board_drums"=>"Please  Enter The Name Total This :attribute field is required.",
-                "total_quantity"=>"Please  This :attribute field is required.",
-                "ar_no"=>"Please  This :attribute field is required.",
-                "approval_data"=>"Please  This :attribute field is required.",
-                "received_by"=>"Please  This :attribute field is required.",
-                "remark"=>"This :attribute field is required.",
-             ];
-            $validateData = $request->validate($arrRules, $arrMessages);
+
+        // $arrRules = [
+        //      "inward_no"=>"required",
+        //      "inward_date" => "required",
+        //      "product_name" => "required",
+        //      "batch_no" => "required",
+        //      "grade" => "required",
+        //      "viscosity" => "required",
+        //      "mfg_date" => "required",
+        //      "expiry_ratest_date" => "required",
+        //      "total_no_of_200kg_drums" => "required",
+        //      "total_no_of_50kg_drums" => "required",
+        //      "total_no_of_30kg_drums" => "required",
+        //      "total_no_of_5kg_drums" => "required",
+        //      "total_no_of_fiber_board_drums" => "required",
+        //      "total_quantity" => "required",
+        //      "total_no_of_200kg_drums_bal" => "required",
+        //      "total_no_of_50kg_drums_bal" => "required",
+        //      "total_no_of_30kg_drums_bal" => "required",
+        //      "total_no_of_5kg_drums_bal" => "required",
+        //      "total_no_of_fiber_board_drums_bal" => "required",
+        //      "total_quantity_bal" => "required",
+        //      "ar_no" => "required",
+        //      "approval_data" => "required",
+        //      "remark" => "required",
+        //     ];
+        //     $arrMessages = [
+        //         "inward_date"=>"Please  This :attribute field is required.",
+        //         "product_name"=>"This :attribute field is required.",
+        //         "batch_no"=>"Please  This :attribute field is required.",
+        //         "grade"=>"This :attribute field is required.",
+        //         "viscosity"=>"This :attribute field is required.",
+        //         "mfg_date"=>"Please  This :attribute field is required.",
+        //         "expiry_ratest_date"=>"Please  Enter This :attribute field is required.",
+        //         "total_no_of_200kg_drums"=>"Please  Enter The Name This :attribute field is required.",
+        //         "total_no_of_50kg_drums"=>"Please  This :attribute field is required.",
+        //         "total_no_of_30kg_drums"=>"Please  This :attribute field is required.",
+        //         "total_no_of_5kg_drums"=>"Please  This :attribute field is required.",
+        //         "total_no_of_fiber_board_drums"=>"Please  Enter The Name Total This :attribute field is required.",
+        //         "total_quantity"=>"Please  This :attribute field is required.",
+        //         "ar_no"=>"Please  This :attribute field is required.",
+        //         "approval_data"=>"Please  This :attribute field is required.",
+        //         "received_by"=>"Please  This :attribute field is required.",
+        //         "remark"=>"This :attribute field is required.",
+        //      ];
+        //     $validateData = $request->validate($arrRules, $arrMessages);
             $data = [
             'inward_no'=>$request->rno,
             'inward_date' => $request['inward_date'],

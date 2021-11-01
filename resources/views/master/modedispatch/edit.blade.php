@@ -19,7 +19,8 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="rno">Mode of Dispatch</label>
-                            <input type="text" class="form-control" name="mode" id="mode" placeholder="Mode of Dispatch" value="{{ old("mode")?old("mode"):$mode->mode }}">
+                            <input type="text" class="form-control" name="mode" id="mode" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+ placeholder="Mode of Dispatch" value="{{ old("mode")?old("mode"):$mode->mode }}">
                             @if ($errors->has('mode'))
                                     <span class="text-danger">{{ $errors->first('mode') }}</span>
                             @endif
@@ -120,6 +121,13 @@
       }
     }
   });
+  $(function() {
+$('input:text').keydown(function(e) {
+if(e.keyCode==65)
+    return false;
+
+});
+});
 });
 
     </script>

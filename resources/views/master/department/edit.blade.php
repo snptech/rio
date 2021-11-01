@@ -19,7 +19,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="rno">Deparment Name</label>
-                            <input type="text" class="form-control" name="department" id="department" placeholder="Department Name" value="{{ old("department")?old("department"):$department->department }}">
+                            <input type="text" class="form-control" name="department" pattern="\d*" maxlength="15" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" id="department" placeholder="Department Name" value="{{ old("department")?old("department"):$department->department }}">
                             @if ($errors->has('department'))
                                     <span class="text-danger">{{ $errors->first('department') }}</span>
                             @endif
@@ -159,6 +159,14 @@
       }
     }
   });
+  
+$(function() {
+$('input:text').keydown(function(e) {
+if(e.keyCode==65)
+    return false;
+
+});
+});
 });
 
     </script>

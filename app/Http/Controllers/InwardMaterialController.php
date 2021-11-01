@@ -36,7 +36,7 @@ class InwardMaterialController extends Controller
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
         $maxid = InwardMaterial::select(DB::Raw("max(id) as nextid"))->first();
-        $department = Department::pluck("department","id");
+        $department = Department::where('publish',1)->pluck("department","id");
         $nextid =1;
         if($maxid->nextid)
             $nextid = $maxid->nextid+1;

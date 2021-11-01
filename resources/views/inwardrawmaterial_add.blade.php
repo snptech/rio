@@ -112,13 +112,14 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity <span class="text-danger">(Only for certain Products)</span></label>
-                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" value="{{ old("viscosity") }}">
+                            <input type="text" class="form-control"  pattern="\d*" maxlength="12" name="viscosity" id="viscosity" placeholder="Viscosity"   value="{{ old("viscosity") }}" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
                         </div>
                     </div>
+                  
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="invoiceNo">Invoice No.</label>
-						  <input type="text" class="form-control" id="invoiceNo" name="invoiceNo" placeholder="Invoice No">
+						  <input type="text" class="form-control" id="invoiceNo" name="invoiceNo"   pattern="^[a-zA-Z0-9]" / maxlength="12 placeholder="Invoice No" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
                           @if ($errors->has('invoiceNo'))
                           <span class="text-danger">{{ $errors->first('invoiceNo') }}</span>
                         @endif
@@ -127,7 +128,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="receiptNo">Goods Receipt No.</label>
-						  <input type="text" class="form-control" id="receiptNo"  name="receiptNo" placeholder="GRM/RM/Receipt No.">
+						  <input type="text" class="form-control" id="receiptNo" pattern="\d*" maxlength="12"  name="receiptNo" placeholder="GRM/RM/Receipt No." onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
                           @if ($errors->has('receiptNo'))
                           <span class="text-danger">{{ $errors->first('receiptNo') }}</span>
                         @endif
@@ -151,19 +152,22 @@
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="batch">Batch No.</label>
-									  <input type="text" class="form-control" name="batch[]" id="batch" placeholder="Batch">
+									  <input type="text" class="form-control" name="batch[]" id="batch" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+>
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="Containers">Total no of Containers / Bags</label>
-									  <input type="text" class="form-control" id="Containers" name="Containers[]" placeholder="No of Containers / Bags">
+									  <input type="text" class="form-control" id="Containers" name="Containers[]" placeholder="No of Containers / Bags" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+>
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="Quantity">Quantity Received (Kg)</label>
-									  <input type="text" class="form-control" id="Quantity" name="Quantity[]" placeholder="Quantity">
+									  <input type="text" class="form-control" id="Quantity" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+>
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
@@ -187,7 +191,7 @@
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="ARNo">AR No. / Date</label>
-									  <input type="text" class="form-control" id="ARNo" placeholder="AR No. / Date" name="ARNo[]" value="">
+									  <input type="text" class="form-control" id="ARNo" placeholder="AR No. / Date" name="ARNo[]" value="" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
 									</div>
 								</div>
 							</div>
@@ -246,7 +250,7 @@
 			e.preventDefault();
 			if(x < max_fields){ //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">'+x+'</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="rawMaterialName['+x+']">Raw Material Name</label> {{ Form::select("materialnames[]",$rawmaterial,old("materialnames[]"),array("class"=>"form-control select","id"=>"materialname1","placeholder"=>"Choose Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="batch['+x+']">Batch No.</label><input type="text" class="form-control" id="batch['+x+']" name="batch[]" placeholder="Batch"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Containers['+x+']">Total no of Containers / Bags</label><input type="text" class="form-control" id="Containers['+x+']" name="Containers[]" placeholder="No of Containers / Bags"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity['+x+']">Quantity Received (Kg)</label><input type="text" class="form-control" id="Quantity['+x+']" name="Quantity[]" placeholder="Quantity"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="mfgDate['+x+']">Manufacturer’s Mfg. Date</label><input type="date" name="mfgDate[]" class="form-control calendar" id="mfgDate['+x+']" placeholder="Mfg. Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ExpiryDate['+x+']">Manufacturer’s Expiry Date</label><input type="date" class="form-control calendar" name="ExpiryDate[]" id="ExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group">'+x+'<label for="RIOExpiryDate['+x+']">RIO Care Expiry Date</label><input type="date" class="form-control calendar" name="RIOExpiryDate[]" id="RIOExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo['+x+']">AR No. / Date</label><input type="text" class="form-control" name="ARNo[]" id="ARNo['+x+']" placeholder="AR No. / Date"></div></div></div>');
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">'+x+'</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="rawMaterialName['+x+']">Raw Material Name</label> {{ Form::select("materialnames[]",$rawmaterial,old("materialnames[]"),array("class"=>"form-control select","id"=>"materialname1","placeholder"=>"Choose Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="batch['+x+']">Batch No.</label><input type="text" class="form-control" id="batch['+x+']" name="batch[]" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Containers['+x+']">Total no of Containers / Bags</label><input type="text" class="form-control" id="Containers['+x+']" name="Containers[]" placeholder="No of Containers / Bags" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity['+x+']">Quantity Received (Kg)</label><input type="text" class="form-control" id="Quantity['+x+']" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="mfgDate['+x+']">Manufacturer’s Mfg. Date</label><input type="date" name="mfgDate[]" class="form-control calendar" id="mfgDate['+x+']" placeholder="Mfg. Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ExpiryDate['+x+']">Manufacturer’s Expiry Date</label><input type="date" class="form-control calendar" name="ExpiryDate[]" id="ExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group">'+x+'<label for="RIOExpiryDate['+x+']">RIO Care Expiry Date</label><input type="date" class="form-control calendar" name="RIOExpiryDate[]" id="RIOExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo['+x+']">AR No. / Date</label><input type="text" class="form-control" name="ARNo[]" id="ARNo['+x+']" placeholder="AR No. / Date" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"></div></div></div>');
 			}
 			feather.replace()
 		});
@@ -259,6 +263,7 @@
 	});
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    
     <script>
         $(document).ready(function() {
            /* $("#suppliername").change(function(){
@@ -388,7 +393,20 @@
           }
         }
       });
+      $(function() {
+$('input:text').keydown(function(e) {
+if(e.keyCode==65)
+    return false;
+
+});
+});
+   
     });
+    // function AvoidSpace(event) {
+    // var k = event ? event.which : window.event.keyCode;
+    // if (k == 32) return false;
+//}
+
     </script>
 
     @endpush

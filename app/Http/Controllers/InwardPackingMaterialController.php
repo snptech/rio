@@ -31,7 +31,7 @@ class InwardPackingMaterialController extends Controller
     public function add()
     {
         $rawmaterial = Rawmeterial::where("material_type","P")->pluck("material_name","id");
-        $department = Department::pluck("department","id");
+        $department = Department::where("publish",1)->pluck("department","id");
         $supplier  = Supplier::where("publish",1)->pluck("name","id");
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
         return view("inwardpackingmatrial.add_inward_packing_material")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"department"=>$department]);
@@ -245,7 +245,7 @@ class InwardPackingMaterialController extends Controller
         if($id)
         {
             $rawmaterial = Rawmeterial::where("material_type","P")->pluck("material_name","id");
-            $department = Department::pluck("department","id");
+            $department = Department::where("publish",1)->pluck("department","id");
             $supplier  = Supplier::where("publish",1)->pluck("name","id");
             $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
             $packingrawmaterial = InwardPackingMaterial::find($id);

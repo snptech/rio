@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="batchno" name="batchno" placeholder="Batch No.">
+                            <input type="text" class="form-control" id="batchno" pattern="\d*" maxlength="12" name="batchno" placeholder="Batch No." onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
@@ -371,6 +371,13 @@ $('#viewDetail').modal('show');
             $('#product').change(function() {
                 table.draw();
             });
+            $(function() {
+$('input:text').keydown(function(e) {
+if(e.keyCode==65)
+    return false;
+
+});
+});
             
         });
 </script>

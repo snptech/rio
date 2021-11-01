@@ -37,7 +37,7 @@
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
                 <label for="QuantityRejected">Ar Number</label>
-                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date">
+                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
             </div>
         </div>
 
@@ -104,6 +104,13 @@
                 ar_number:"Please Enter ar number/date"
 
             },
+        });
+        $(function() {
+        $('input:text').keydown(function(e) {
+        if(e.keyCode==65)
+            return false;
+
+        });
         });
     });
 </script>

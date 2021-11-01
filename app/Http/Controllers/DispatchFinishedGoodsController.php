@@ -42,7 +42,7 @@ class DispatchFinishedGoodsController extends Controller
         $data['supplier_master'] = Supplier::all();
         $data['mode'] = Modedispatch::all();
         $data["product"] = Rawmeterial::where("material_type","F")->where("material_preorder_stock",">",0)->pluck("material_name","id");
-        $data["department"] = Department::pluck("department","id");
+        $data["department"] = Department::where("publish",1)->pluck("department","id");
         $data["partyname"] = PartyMaster::pluck("company_name","id");
         $data['grade'] = Grade::all();
         $maxid = FinishedGoodsDispatch::select(DB::Raw("max(dispath_no) as nextid"))->first();
@@ -55,55 +55,55 @@ class DispatchFinishedGoodsController extends Controller
     }
     public function dispatch_finished_good_insert(Request $request)
     {
-        $arrRules = [
-            "dispath_no"=>"required",
-            "dispatch_form"=>"required",
-            "dispatch_to"=>"required",
-            "good_dispatch_date"=>"required",
-            "mode_of_dispatch"=>"required",
-            "party_name"=>"required",
-            "product"=>"required",
-            "invoice_no"=>"required",
-            "batch_no"=>"required",
-            "grade"=>"required",
-            "viscosity"=>"required",
-            "mfg_date"=>"required",
-            "expiry_ratest_date"=>"required",
-            "total_no_of_200kg_drums"=>"required",
-            "total_no_of_50kg_drums"=>"required",
-            "total_no_of_30kg_drums"=>"required",
-            "total_no_of_5kg_drums"=>"required",
-            "total_no_of_fiber_board_drums"=>"required",
-            "total_no_qty"=>"required",
-            "seal_no"=>"required",
-            "dispatch_date"=>"required",
-            "remark"=>"required",
+        // $arrRules = [
+        //     "dispath_no"=>"required",
+        //     "dispatch_form"=>"required",
+        //     "dispatch_to"=>"required",
+        //     "good_dispatch_date"=>"required",
+        //     "mode_of_dispatch"=>"required",
+        //     "party_name"=>"required",
+        //     "product"=>"required",
+        //     "invoice_no"=>"required",
+        //     "batch_no"=>"required",
+        //     "grade"=>"required",
+        //     "viscosity"=>"required",
+        //     "mfg_date"=>"required",
+        //     "expiry_ratest_date"=>"required",
+        //     "total_no_of_200kg_drums"=>"required",
+        //     "total_no_of_50kg_drums"=>"required",
+        //     "total_no_of_30kg_drums"=>"required",
+        //     "total_no_of_5kg_drums"=>"required",
+        //     "total_no_of_fiber_board_drums"=>"required",
+        //     "total_no_qty"=>"required",
+        //     "seal_no"=>"required",
+        //     "dispatch_date"=>"required",
+        //     "remark"=>"required",
 
-           ];
-           $arrMessages = [
-            "dispath_no"=>"This :attribute field is required.",
-            "dispatch_form"=>"This :attribute field is required.",
-            "dispatch_to"=>"This :attribute field is required.",
-            "good_dispatch_date"=>"This :attribute field is required.",
-            "mode_of_dispatch"=>"This :attribute field is required.",
-            "party_name"=>"This :attribute field is required.",
-            "product"=>"This :attribute field is required.",
-            "invoice_no"=>"This :attribute field is required.",
-            "batch_no"=>"This :attribute field is required.",
-            "grade"=>"This :attribute field is required.",
-            "viscosity"=>"This :attribute field is required.",
-            "mfg_date"=>"This :attribute field is required.",
-            "expiry_ratest_date"=>"This :attribute field is required.",
-            "total_no_of_50kg_drums"=>"This :attribute field is required.",
-            "total_no_of_30kg_drums"=>"This :attribute field is required.",
-            "total_no_of_5kg_drums"=>"This :attribute field is required.",
-            "total_no_qty"=>"This :attribute field is required.",
-            "seal_no"=>"This :attribute field is required.",
-            "dispatch_date"=>"This :attribute field is required.",
-            "dispatch_by"=>"This :attribute field is required.",
-            "remark"=>"This :attribute field is required.",
-            ];
-           $validateData = $request->validate($arrRules, $arrMessages);
+        //    ];
+        //    $arrMessages = [
+        //     "dispath_no"=>"This :attribute field is required.",
+        //     "dispatch_form"=>"This :attribute field is required.",
+        //     "dispatch_to"=>"This :attribute field is required.",
+        //     "good_dispatch_date"=>"This :attribute field is required.",
+        //     "mode_of_dispatch"=>"This :attribute field is required.",
+        //     "party_name"=>"This :attribute field is required.",
+        //     "product"=>"This :attribute field is required.",
+        //     "invoice_no"=>"This :attribute field is required.",
+        //     "batch_no"=>"This :attribute field is required.",
+        //     "grade"=>"This :attribute field is required.",
+        //     "viscosity"=>"This :attribute field is required.",
+        //     "mfg_date"=>"This :attribute field is required.",
+        //     "expiry_ratest_date"=>"This :attribute field is required.",
+        //     "total_no_of_50kg_drums"=>"This :attribute field is required.",
+        //     "total_no_of_30kg_drums"=>"This :attribute field is required.",
+        //     "total_no_of_5kg_drums"=>"This :attribute field is required.",
+        //     "total_no_qty"=>"This :attribute field is required.",
+        //     "seal_no"=>"This :attribute field is required.",
+        //     "dispatch_date"=>"This :attribute field is required.",
+        //     "dispatch_by"=>"This :attribute field is required.",
+        //     "remark"=>"This :attribute field is required.",
+        //     ];
+        //    $validateData = $request->validate($arrRules, $arrMessages);
 
 
         $data = [

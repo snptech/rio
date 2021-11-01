@@ -201,9 +201,12 @@ class MaterialForProductionController extends Controller
     }
     public function issue_material(Request $request)
     {
+        
         if($request->id)
         {
-            $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize","fromdep.department as fromdepartmet","todep.department as todepartmet","packing_material_requisition_slip.type")
+            $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name",
+            "add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize",
+            "fromdep.department as fromdepartmet","todep.department as todepartmet","packing_material_requisition_slip.type")
             ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
             ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
             ->join("department as fromdep", "fromdep.id", "=", "packing_material_requisition_slip.from")
@@ -212,13 +215,14 @@ class MaterialForProductionController extends Controller
             ->where("packing_material_requisition_slip.id",$request->id)
             ->first();
 
-            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")
+            $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*",
+            "raw_materials.material_name","detail_packing_material_requisition.id as details_id")
             ->where("requisition_id",$data["issue_material"]->id)
             ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
             ->get();
             return view('issue_material_for_production_approved',$data);
         }
-        else
+        else    
         {
             redirect(404);
         }

@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="rno">Mobile No</label>
-                    <input type="text" class="form-control" name="mobileno" id="mobileno" placeholder="Mobile No">
+                    <input type="text" class="form-control" name="mobileno"   pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$"  maxlength="10"id="mobileno" placeholder="Mobile No">
                     @if ($errors->has('mobileno'))
                     <span class="text-danger">{{ $errors->first('mobileno') }}</span>
                     @endif
@@ -64,10 +64,23 @@
         $("#ar_no_vali").validate({
             rules: {
                 name: 'required',
+                mobileno: {
+            required: true,
+            digits: true,
+            minlength: 10,
+            maxlength: 10,
+        },
 
             },
+          
             messages: {
                 name: "Please Enter The AR NO",
+                mobileno: {
+                required: "Please enter Mobile  Number",
+                digits: "Please enter valid phone number",
+                minlength: "Phone number field accept only 10 digits",
+                maxlength: "Phone number field accept only 10 digits",
+            },
 
             }
         });
