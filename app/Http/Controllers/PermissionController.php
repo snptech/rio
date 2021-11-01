@@ -116,11 +116,12 @@ class PermissionController extends Controller
         activity('Permission')
         ->performedOn($permission)
         ->causedBy(auth()->user())
-        ->event('updated')
+        
         ->withProperties([
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
-                'ip'=>\Request::ip()           
+                'ip'=>\Request::ip(),
+                'event'=> "Update"          
             ])
         ->log('Permission Updated');
         return redirect()->route('permissions.index')
