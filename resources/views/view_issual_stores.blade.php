@@ -1,8 +1,5 @@
 <div class="form-row" >
-    
 				<div class="col-12">
-					<h3>ssual by stores for production  Details</h3>
-				</div>
 				<div class="col-12 table-responsive">
                      <table class="table table-hover table-bordered">
                          <tr>
