@@ -25,8 +25,7 @@
     </li>
     @endcan
     @can('issue-material-for-production-list')
-
-    <li class="nav-item">
+     <li class="nav-item">
       <a class="nav-link" href="{{ route('issue_material_for_production') }}">
         <i class="menu-icon" data-feather="hard-drive"></i>
         <span class="menu-title">Issue Material For Production</span>
@@ -50,6 +49,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch</a>
           </li>
+          @endcan
           {{-- <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a>
     </li>
     <li class="nav-item"><a class="nav-link" href="{{route('list-of-equipment')}}">List of Equipment</a></li>
@@ -60,7 +60,7 @@
   </ul>
   </div>
   </li>
-  @endcan
+  
   @can('inward-finished-goods-new-stock-list')
   <li class="nav-item">
     <a class="nav-link" href="{{ route('new_stock') }}">
@@ -95,6 +95,7 @@
     </a>
   </li>
   @endcan
+  @canany(['annexure-i-list','annexure-ii-list','annexure-iii-list','annexure-iv-list','packing-annexure-list','annexure-iv-list','packing-annexure-list','annexure-vi-list','annexure-vii-list'])
   <li class="nav-item">
     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
       <i class="menu-icon" data-feather="pie-chart"></i>
@@ -132,6 +133,7 @@
       </ul>
     </div>
   </li>
+  @endcanany
   <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('comingsoon') }}">
           <i class="menu-icon" data-feather="shopping-bag"></i>
@@ -151,19 +153,17 @@
       <ul class="nav flex-column sub-menu">
         @can('department-list')
         <li class="nav-item"><a class="nav-link" href="{{ route('department') }}">Department</a></li>
-        @encan
+        @endcan
         @can("role-list")
         <li class="nav-item"><a class="nav-link" href="{{ route('roles.index') }}">Role</a></li>
         @endcan
         @can('designation-list')
         <li class="nav-item"><a class="nav-link" href="{{ route('designation') }}">Designation</a></li>
-        @encan
+        @endcan
         @can('grade-list')
-
         <li class="nav-item"><a class="nav-link" href="{{ route('grade') }}">Grade</a></li>
         @endcan
         @can('suppliers-list')
-
         <li class="nav-item"><a class="nav-link" href="{{ route('supplier') }}">Supplier</a></li>
         @endcan
         @can('modedispatch-list')
