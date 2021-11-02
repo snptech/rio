@@ -115,7 +115,7 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="BatchSize" class="active">Batch Size</label>
-										<input type="number" class="form-control" name="BatchSize" id="BatchSize" placeholder="batch size" min="12" maxlength="12" onkeypress="return /[0-9-zA-Z]/i.test(event.key)">
+										<input type="text" class="form-control" name="BatchSize" id="BatchSize" placeholder="batch size" min="12" maxlength="12"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">

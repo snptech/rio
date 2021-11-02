@@ -17,7 +17,9 @@ class InwardPackingMaterialController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
+        $this->middleware('permission:inward-packing-raw-material-list|inward-packing-raw-material-add|inward-packing-raw-material-edit', ['only' => ['index','store']]);
+        $this->middleware('permission:inward-packing-raw-material-add', ['only' => ['add','store']]);
+        $this->middleware('permission:inward-packing-raw-material-edit', ['only' => ['edit','update']]);
 
     }
     public function index(){

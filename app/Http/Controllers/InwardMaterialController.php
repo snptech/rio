@@ -17,7 +17,9 @@ class InwardMaterialController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
+        $this->middleware('permission:inward-rawmaterials-list|inward-rawmaterials-add', ['only' => ['index','store']]);
+        $this->middleware('permission:inward-rawmaterials-add', ['only' => ['create','store']]);
+      
 
     }
     public function index()

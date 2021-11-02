@@ -13,6 +13,10 @@ class DepartmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:department-list|department-add|department-edit|department-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:department-add', ['only' => ['create','store']]);
+        $this->middleware('permission:department-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:department-delete', ['only' => ['destroy']]);
 
 
     }

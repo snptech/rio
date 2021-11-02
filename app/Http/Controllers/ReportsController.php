@@ -19,8 +19,20 @@ use Auth;
 
 class ReportsController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:annexure-i-list', ['only' => ['annexure_i']]);
+        $this->middleware('permission:annexure-ii-list', ['only' => ['annexure_ii']]);
+        $this->middleware('permission:annexure-iii-list', ['only' => ['annexure_iii']]);
+        $this->middleware('permission:annexure-iv-list', ['only' => ['annexure_iv']]);
+        $this->middleware('permission:packing-annexure-list', ['only' => ['packing_annexure']]);
+        $this->middleware('permission:annexure-vi-list', ['only' => ['annexure_vi']]);
+        $this->middleware('permission:annexure-vii-list', ['only' => ['annexure_vii']]);
+        
+    }
     public function annexure_i()
     {
+     
 
         $data['inward_material']=Rawmaterialitems::select(
             "inward_raw_materials.*"

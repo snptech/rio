@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class QualityControlController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:quality-control-list|quality-control-check', ['only' => ['quality_control','quality_control_insert']]);
+         $this->middleware('permission:quality-control-check', ['only' => ['qty_control','quality_control_insert']]);
+     }
     public function quality_control()
     {
         $data['quality_control']=Rawmaterialitems::select(
@@ -122,8 +127,8 @@ class QualityControlController extends Controller
         ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
         ->where("inward_raw_materials_items.id",$request->quality_id)->first();
          $view = view('qty_control_view',['qty_control_view'=> $qty_control_view])->render();
-
-         return response()->json(['html'=>$view]);
+         $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
+         return response()->json(['html'=>$view ,'message'=>$sms]);
 
     }
     public function view_quality(Request $request)

@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\DB;
 class InwardFinishedController extends Controller
 {
 
+    function __construct()
+    {
+         $this->middleware('permission:inward-finished-goods-new-stock-list|inward-finished-goods-new-stock-add', ['only' => ['new_stock','inward_finished_insert']]);
+         $this->middleware('permission:inward-finished-goods-new-stock-add', ['only' => ['new_stock_add','inward_finished_insert']]);
+      }
+
     public function new_stock()
     {
 

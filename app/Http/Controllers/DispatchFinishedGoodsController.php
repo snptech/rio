@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class DispatchFinishedGoodsController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:dispatch-finished-goods-list|dispatch-finished-goods-add|dispatch-finished-goods-edit|dispatch_finished-goods-delete', ['only' => ['dispatch_finished_goods','dispatch_finished_good_insert']]);
+         $this->middleware('permission:dispatch-finished-goods-add', ['only' => ['add_dispatch_finished_goods','dispatch_finished_good_insert']]);
+         $this->middleware('permission:dispatch_finished-goods-edit', ['only' => ['edit_dispatch_finished','update_dispatch_finished']]);
+         $this->middleware('permission:dispatch_finished-goods-delete', ['only' => ['delete_dispatch_finished']]);
+         $this->middleware('permission:add-dispatch-finished-goods', ['only' => ['add_dispatch_finished_goods']]);
+    }
     public function dispatch_finished_goods()
     {
         $data['finished_good'] = FinishedGoodsDispatch::select(

@@ -19,6 +19,14 @@ use App\Models\Stock;
 
 class MaterialForProductionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:issue-material-for-production-list|issue-material-for-production-add|issue-material-for-production-edit', ['only' => ['issue_material_for_production_new','issue_material_insert']]);
+        $this->middleware('permission:issue-material-for-production-add', ['only' => ['issue_material_for_production_add','issue_material_insert']]);
+      
+
+    }
     public function issue_material_for_production()
     {
 
@@ -37,8 +45,7 @@ class MaterialForProductionController extends Controller
         $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
         ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
         ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
-
-        ->get();
+      ->get();
 
 
 

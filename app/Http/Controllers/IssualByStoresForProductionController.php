@@ -8,6 +8,11 @@ use App\Models\IssualStoresForProduction;
 use Auth;
 class IssualByStoresForProductionController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:issual-by-stores-for-production-list|issual-by-stores-for-production-add', ['only' => ['issual_by_stores_for_production','issue_by_stores_insert']]);
+         $this->middleware('permission:issual-by-stores-for-production-list', ['only' => ['issual_by_stores_for_production_add','issue_by_stores_insert']]);
+     }
     public function issual_by_stores_for_production()
     {
         

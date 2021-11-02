@@ -35,6 +35,12 @@ use PDF;
 
 class ManufactureProcessController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:batch-manufacture-list|batch-manufacturing-add|batch-manufacturing-edit', ['only' => ['add_batch_manufacture','add_batch_manufacturing_recorde_insert']]);
+         $this->middleware('permission:batch-manufacturing-add', ['only' => ['add_batch_manufacturing_record','add_batch_manufacturing_recorde_insert']]);
+         $this->middleware('permission:batch-manufacturing-edit', ['only' => ['add_manufacturing_edit','add_manufacturing_update']]);
+     }
     public function add_batch_manufacture(Request $request)
     {
     

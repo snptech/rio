@@ -70,8 +70,14 @@
                                     @endif
                                     <td><small>{{$temp->remark}}</small></td>
                                     <td>
+                                      
                                         @if(!$temp->quality_id)
+                                        @can('quality-control-check')
                                         <a href="#" data-toggle="modal" title="View" data-target="#checkquality" id="qty_control" data-id="{{ $temp->itemid }}"  onclick="qualitycontrol('{{$temp->itemid}}')"class="btn btn-primary btn-sm">&nbsp;&nbsp;&nbsp;Check&nbsp;&nbsp;&nbsp;</a>
+                                       @else
+                                       <p> No Permision</p>
+                                        @endcan
+                                       
                                         @else
                                         <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewquality" title="View" onclick="viewquality({{$temp->itemid}})"><i data-feather="eye"></i></a>
                                         @endif
