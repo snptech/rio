@@ -39,7 +39,7 @@
     <span class="menu-title">Issue Packing Material </span>
     </a>
     </li> --}}
-
+    @canany(["batch-manufacture-list"])
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#ui-manufacture" aria-expanded="false" aria-controls="ui-manufacture"><i class="menu-icon" data-feather="tool"></i>
         <span class="menu-title">Manufacture Process</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
@@ -47,9 +47,10 @@
         <ul class="nav flex-column sub-menu">
           @can('batch-manufacture-list')
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch</a>
+            </li>
+          @endcan
           {{-- <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a>
     </li>
     <li class="nav-item"><a class="nav-link" href="{{route('list-of-equipment')}}">List of Equipment</a></li>
@@ -60,7 +61,7 @@
   </ul>
   </div>
   </li>
-  @endcan
+  @endcanany
   @can('inward-finished-goods-new-stock-list')
   <li class="nav-item">
     <a class="nav-link" href="{{ route('new_stock') }}">
@@ -95,43 +96,47 @@
     </a>
   </li>
   @endcan
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-      <i class="menu-icon" data-feather="pie-chart"></i>
-      <span class="menu-title">Reports</span>
-      <i class="icon-layout menu-arrow" data-feather="chevron-down"></i>
-    </a>
-    <div class="collapse" id="ui-basic">
-      <ul class="nav flex-column sub-menu">
+  @canany(["annexure-i-list","annexure-ii-list","annexure-iii-list","annexure-iv-list","packing-annexure-list","annexure-vi-list","annexure-vii-list"])
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <i class="menu-icon" data-feather="pie-chart"></i>
+        <span class="menu-title">Reports</span>
+        <i class="icon-layout menu-arrow" data-feather="chevron-down"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
 
-        @can('annexure-i-list')
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_i') }}">Finished Goods Inward (Annexure - I)</a></li>
-        @endcan
-        @can('annexure-ii-list')
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_ii') }}">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
-        @endcan
-        @can('annexure-iii-list')
+          @can('annexure-i-list')
+          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_i') }}">Finished Goods Inward (Annexure - I)</a></li>
+          @endcan
+          @can('annexure-ii-list')
+          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_ii') }}">Issual by stores for production for captive consumption-simethicone (Annexure - II)</a></li>
+          @endcan
+          @can('annexure-iii-list')
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iii') }}">Issed by Stores for Production (Annexure - III)</a></li>
-        @endcan
-        @can('annexure-iv-list')
+          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iii') }}">Issed by Stores for Production (Annexure - III)</a></li>
+          @endcan
+          @can('annexure-iv-list')
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iv') }}">Finished Goods Inward (Annexure - I) - New Stock</a></li>
-        @endcan
-        @can('packing-annexure-list')
+          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_iv') }}">Finished Goods Inward (Annexure - I) - New Stock</a></li>
+          @endcan
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('packing_annexure') }}">Packing Material Inward (Annexure - IV)</a></li>
-        @endcan
-        @can('annexure-vi-list')
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vi') }}">Quality Control Approval/Rejection (Annexure -VI)</a></li>
-        @endcan
-        @can('annexure-vii-list')
+          @can('packing-annexure-list')
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}">Finished Goods Dispatch (Annexure -VII)</a></li>
-        @endcan
-      </ul>
-    </div>
-  </li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('packing_annexure') }}">Packing Material Inward (Annexure - IV)</a></li>
+          @endcan
+          @can('annexure-vi-list')
+          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vi') }}">Quality Control Approval/Rejection (Annexure -VI)</a></li>
+          @endcan
+
+          @can('annexure-vii-list')
+
+          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}">Finished Goods Dispatch (Annexure -VII)</a></li>
+          @endcan
+        </ul>
+      </div>
+    </li>
+  @endcanany
   <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('comingsoon') }}">
           <i class="menu-icon" data-feather="shopping-bag"></i>
@@ -151,13 +156,15 @@
       <ul class="nav flex-column sub-menu">
         @can('department-list')
         <li class="nav-item"><a class="nav-link" href="{{ route('department') }}">Department</a></li>
-        @encan
+        @endcan
         @can("role-list")
         <li class="nav-item"><a class="nav-link" href="{{ route('roles.index') }}">Role</a></li>
         @endcan
+
         @can('designation-list')
         <li class="nav-item"><a class="nav-link" href="{{ route('designation') }}">Designation</a></li>
-        @encan
+        @endcan
+
         @can('grade-list')
 
         <li class="nav-item"><a class="nav-link" href="{{ route('grade') }}">Grade</a></li>
@@ -191,8 +198,9 @@
           </a>
         </li>
         @endcan
+
         @can("activitylog-list")
-        <li class="nav-item"><a class="nav-link" href="{{url('activitylog')}}">Activity Log</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{url('activitylog')}}">Activity Log</a></li>
         @endcan
       </ul>
     </div>
