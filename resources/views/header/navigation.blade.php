@@ -46,15 +46,9 @@
         <ul class="nav flex-column sub-menu">
           @can('batch-manufacture-list')
 
-<<<<<<< HEAD
           <li class="nav-item">
             <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch</a>
           </li>
-=======
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('add-batch-manufacture') }}">Batch</a>
-            </li>
->>>>>>> 1d053c0ce792f8b3239aeb8a9e3bf3049619d874
           @endcan
           {{-- <li class="nav-item"><a class="nav-link" href="{{ route('bill-of-raw-material')}}">Bill of Raw Material detail and Weighing Record</a>
     </li>
@@ -66,11 +60,7 @@
   </ul>
   </div>
   </li>
-<<<<<<< HEAD
   
-=======
-  @endcanany
->>>>>>> 1d053c0ce792f8b3239aeb8a9e3bf3049619d874
   @can('inward-finished-goods-new-stock-list')
   <li class="nav-item">
     <a class="nav-link" href="{{ route('new_stock') }}">
@@ -132,27 +122,11 @@
 
           @can('packing-annexure-list')
 
-<<<<<<< HEAD
         <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}">Finished Goods Dispatch (Annexure -VII)</a></li>
         @endcan
       </ul>
     </div>
   </li>
-=======
-          <li class="nav-item"><a class="nav-link" href="{{ route('packing_annexure') }}">Packing Material Inward (Annexure - IV)</a></li>
-          @endcan
-          @can('annexure-vi-list')
-          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vi') }}">Quality Control Approval/Rejection (Annexure -VI)</a></li>
-          @endcan
-
-          @can('annexure-vii-list')
-
-          <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}">Finished Goods Dispatch (Annexure -VII)</a></li>
-          @endcan
-        </ul>
-      </div>
-    </li>
->>>>>>> 1d053c0ce792f8b3239aeb8a9e3bf3049619d874
   @endcanany
   <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('comingsoon') }}">
