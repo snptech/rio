@@ -11,7 +11,10 @@ class SupplierController extends Controller
     {
         $this->middleware('auth');
 
-
+        $this->middleware('permission:suppliers-list|suppliers-add|suppliers-edit|suppliers-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:suppliers-add', ['only' => ['create','store']]);
+        $this->middleware('permission:suppliers-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:suppliers-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.

@@ -7,6 +7,20 @@ use App\Models\PartyMaster;
 
 class PartyController extends Controller
 {
+     //
+     public function __construct()
+     {
+         {
+             $this->middleware('auth');
+             $this->middleware('permission:party-master-list|party-master-add|party-master-edit|party-master-delete', ['only' => ['party_master','party_master_insert']]);
+             $this->middleware('permission:party-master-add', ['only' => ['new_party_master','party_master_insert']]);
+             $this->middleware('permission:party-master-edit', ['only' => ['edit_party_master','update_party_master']]);
+             $this->middleware('permission:party-master-delete', ['only' => ['delete_party_master']]);
+     
+         }
+ 
+ 
+     }
     public function party_master()
     {
         $data['party_master']=PartyMaster::all();

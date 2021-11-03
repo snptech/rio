@@ -10,7 +10,10 @@ class GradeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
+        $this->middleware('permission:grade-list|grade-add|grade-edit|grade-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:grade-add', ['only' => ['create','store']]);
+        $this->middleware('permission:grade-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:grade-delete', ['only' => ['destroy']]);
 
     }
     /**

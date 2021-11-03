@@ -9,7 +9,14 @@ class ManufacturerController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth');
+        {
+            $this->middleware('auth');
+            $this->middleware('permission:manufacturer-list|manufacturer-add|manufacturer-edit|manufacturer-delete', ['only' => ['index','store']]);
+            $this->middleware('permission:manufacturer-add', ['only' => ['create','store']]);
+            $this->middleware('permission:manufacturer-edit', ['only' => ['edit','update']]);
+            $this->middleware('permission:manufacturer-delete', ['only' => ['destroy']]);
+    
+        }
 
 
     }

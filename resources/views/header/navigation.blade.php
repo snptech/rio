@@ -60,7 +60,7 @@
   </ul>
   </div>
   </li>
-  
+  @endcanany
   @can('inward-finished-goods-new-stock-list')
   <li class="nav-item">
     <a class="nav-link" href="{{ route('new_stock') }}">

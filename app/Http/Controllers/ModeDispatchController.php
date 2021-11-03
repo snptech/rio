@@ -10,7 +10,10 @@ class ModedispatchController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
+        $this->middleware('permission:modedispatch-list|modedispatch-add|modedispatch-edit|modedispatch-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:modedispatch-add', ['only' => ['create','store']]);
+        $this->middleware('permission:modedispatch-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:modedispatch-delete', ['only' => ['destroy']]);
 
     }
     /**

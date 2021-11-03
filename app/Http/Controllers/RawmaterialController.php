@@ -10,7 +10,14 @@ class RawmaterialController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth');
+        {
+            $this->middleware('auth');
+            $this->middleware('permission:rawmaterial-list|rawmaterial-add|rawmaterial-edit|rawmaterial-delete', ['only' => ['index','store']]);
+            $this->middleware('permission:rawmaterial-add', ['only' => ['create','store']]);
+            $this->middleware('permission:rawmaterial-edit', ['only' => ['edit','update']]);
+            $this->middleware('permission:rawmaterial-delete', ['only' => ['destroy']]);
+    
+        }
 
 
     }
