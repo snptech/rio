@@ -35,7 +35,7 @@
                       <div class="form-group">
                         <label for="rno">Permission:</label> <br>
                           @foreach($permission as $value)
-                          <div class="custom-control custom-switch custom-control-inline mb-2">
+                          <div class="custom-control custom-switch custom-control-inline mb-2 col-md-2">
                             
                               {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions), array('class' => 'custom-control-input',"id"=>"per".$value->id)) }}
                               <label class="custom-control-label" for="per{{$value->id}}">{{ $value->name }}</label>
