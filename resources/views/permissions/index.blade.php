@@ -49,10 +49,10 @@
                 </thead>
                 <tbody>
                   @if(count($data))
-                 
+                   @php $i=1;@endphp
                   @foreach ($data as $key => $permission)
                   <tr>
-                    <td>{{ ($data->currentpage()-1) * $data->perpage() + $key + 1 }} </td>
+                    <td>{{$i}}</td>
                     <td>{{ $permission->name }}</td>
                     <td>
                         
@@ -66,12 +66,12 @@
                         @endcan
                     </td>
                   </tr>
-                    
+                      @php $i++; @endphp
                   @endforeach
                   @endif
                 </tbody>
               </table>
-              {{ $data->appends($_GET)->links() }}
+              
             </div>
 
           </div>

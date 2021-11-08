@@ -68,7 +68,7 @@
         </tbody>
     </table> 
               
-              {{ $data->appends($_GET)->links() }}
+             
             </div>
 
           </div>

@@ -35,12 +35,21 @@
                       <div class="form-group">
                         <label for="rno">Permission:</label> <br>
                           @foreach($permission as $value)
-                          <div class="custom-control custom-switch custom-control-inline mb-2 col-md-2">
-                            
-                              {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions), array('class' => 'custom-control-input',"id"=>"per".$value->id)) }}
-                              <label class="custom-control-label" for="per{{$value->id}}">{{ $value->name }}</label>
-                            </div>
-                            
+                          <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                            <fieldset class="border p-2 mb-2">
+                              <legend class="w-auto" style="font-size: 14px;">{{$value->module_name}}</legend>
+                                @php
+                                    $permissions = \Spatie\Permission\Models\Permission::where("module_name",$value->module_name)->get();
+                                @endphp
+                                @foreach($permissions as $v)
+                                  <div class="custom-control custom-switch custom-control-inline mb-2 col-md-2">
+                                    
+                                      {{ Form::checkbox('permission[]', $v->id, in_array($v->id, $rolePermissions), array('class' => 'custom-control-input',"id"=>"per".$v->id)) }}
+                                      <label class="custom-control-label" for="per{{$v->id}}">{{ $v->name }}</label>
+                                  </div>
+                                @endforeach
+                            </fieldset>
+                          </div>
                               
                         
                           @endforeach
