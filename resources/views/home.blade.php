@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <div class="row orders">
+        {{--<div class="row orders">
             <div class="col-12 col-lg-6">
                 <div class="card">
                     <div class="card-body pr-0">
@@ -94,11 +94,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="col-12 col-lg-4">
         <div class="card bg-primary text-white low-stock">
-            <div class="card-heading">Low inventory products</div>
+            <div class="card-heading">Inventory products</div>
             <div class="card-body">
                 <table cellpadding="0" cellspacing="0" border="0" class="table">
                     <thead>
@@ -107,44 +107,18 @@
                             <th>Quantity</th>
                         </tr>
                     </thead>
+                    @if(isset($stock) && $stock)
+                       
                     <tbody>
+                        @foreach($stock as $st)
                         <tr>
-                            <td>Product name 1</td>
-                            <td>50</td>
+                            <td>{{$st->material_name}}</td>
+                            <td>{{$st->qty_rem}}</td>
                         </tr>
-                        <tr>
-                            <td>Product name 2</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 3</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 4</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 5</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 6</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 7</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 8</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Product name 9</td>
-                            <td>50</td>
-                        </tr>
+                        @endforeach
+                       
                     </tbody>
+                    @endif
                 </table>
             </div>
         </div>
