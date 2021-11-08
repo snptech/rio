@@ -136,7 +136,7 @@
       </li> -->
 
 
-
+@canany(['department-list','role-list','designation-list','grade-list','suppliers-list','modedispatch-list','manufacturer-list','rawmaterial-list','party-master-list','permission-list','user-list','activitylog-list'])
   <li class="nav-item">
     <a class="nav-link" data-toggle="collapse" href="#ui-master" aria-expanded="false" aria-controls="ui-master">
       <i class="menu-icon" data-feather="pie-chart"></i>
@@ -193,6 +193,7 @@
       </ul>
     </div>
   </li>
+  @endcanany
   <li class="nav-item">
     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">

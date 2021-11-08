@@ -32,9 +32,9 @@ class Adminmaster
 
             if(Auth::guard($guard)->check())
             {
-                if (Auth::guard($guard)->user()->role_id != 1) {
+                /*if (Auth::guard($guard)->user()->role_id != 1) {
                     return redirect(RouteServiceProvider::HOME);
-                    }
+                }*/
             }
 
         }

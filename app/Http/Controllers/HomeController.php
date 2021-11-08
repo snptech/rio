@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $stock = Stock::select(DB::raw("(qty-used_qty) as qty_rem"),"raw_materials.material_name")->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type","R")->get();
+        $stock = Stock::select(DB::raw("(sum(qty)-sum(used_qty)) as qty_rem"),"raw_materials.material_name")->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type","R")->groupBy("raw_materials.id")->get();
         return view('home',compact('stock'));
     }
     public function comingsoon()
