@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+USE Request;
 
 class Inwardfinishedgoods extends Model
 {
@@ -38,4 +39,54 @@ class Inwardfinishedgoods extends Model
         'total_no_of_fiber_board_drums_bal',
         'total_quantity_bal',
     ];
+    protected static function boot()
+    {
+      
+        parent::boot();
+
+        static::creating(function ($user) {
+           
+        activity('Inward Finished Goods - New Stock')
+            ->performedOn($user)
+            ->causedBy(auth()->user())
+            /*->event('created')*/
+            ->withProperties([
+                    'user_id'    =>auth()->user()->id,
+                    'first_name' => auth()->user()->name,
+                    'ip'=>\Request::ip(),
+                    "event"=> "Created"         
+                ])
+            ->log('Inward Finished Goods - New Stock Created');
+        });
+
+        static::updating(function ($user) {
+           
+            activity('Inward Finished Goods - New Stock')
+                ->performedOn($user)
+                ->causedBy(auth()->user())
+                /*->event('updated')*/
+                ->withProperties([
+                        'user_id'    =>auth()->user()->id,
+                        'first_name' => auth()->user()->name,
+                        'ip'=>\Request::ip(),   
+                        "event"=> "updated" 
+                    ])
+                ->log('Inward Finished Goods - New Stock Updated');
+            });
+        static::deleting(function ($user) {
+        activity('Inward Finished Goods - New Stock')
+            ->performedOn($user)
+            /*->event('deleted')*/
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'user_id'    =>auth()->user()->id,
+                'first_name' => auth()->user()->name,
+                'ip'=>Request::ip(),
+                "event"=> "deleted" 
+                ])
+            ->log('Inward Finished Goods - New Stock Deleted');
+        });
+
+
+    }
 }
