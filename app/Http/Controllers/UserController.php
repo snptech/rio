@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name','id')->all();
         $designation = Designation::where("publish",1)->pluck('designation','id')->all();
         $department = Department::where("publish",1)->pluck('department','id')->all();
         return view('users.create', compact('roles',"designation","department"));
@@ -67,7 +67,7 @@ class UserController extends Controller
     
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-    
+        $input['role_id'] = $request->input('roles');
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
         $activity = Activity::all()->last();
@@ -102,7 +102,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
+        $roles = Role::pluck('name', 'id')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
         $designation = Designation::where("publish",1)->pluck('designation','id')->all();
         $department = Department::where("publish",1)->pluck('department','id')->all();
@@ -134,7 +134,7 @@ class UserController extends Controller
         } else {
             $input = Arr::except($input, array('password'));    
         }
-    
+        $input['role_id'] = $request->input('roles');
         $user = User::find($id);
         $user->update($input);
 

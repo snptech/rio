@@ -53,8 +53,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="roles[]">Role:</label>
-                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                            <label for="roles">Role:</label>
+                            {!! Form::select('roles', $roles,[], array('class' => 'form-control','multiple')) !!}
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
