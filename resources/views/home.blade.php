@@ -43,7 +43,7 @@
                         <div class="con-wrap">
                             <p>Total Raw Material</p>
                             <h2>10 Ton</h2>
-                            <span class="situation"><i class="text-success" data-feather="trending-up"></i>15% more than the previous month</span>
+                            {{--<span class="situation"><i class="text-success" data-feather="trending-up"></i>15% more than the previous month</span>--}}
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         <div class="con-wrap">
                             <p>Total Quantity</p>
                             <h2>10 Ton</h2>
-                            <span class="situation"><i class="text-danger" data-feather="trending-down"></i>5% Less than the previous month</span>
+                            {{--<span class="situation"><i class="text-danger" data-feather="trending-down"></i>5% Less than the previous month</span> --}}
                         </div>
                     </div>
                 </div>
