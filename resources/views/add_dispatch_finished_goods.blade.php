@@ -208,7 +208,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="Quantity">Total Quantity (Kg)</label>
-						  <input type="text" class="form-control" name="total_no_qty" id="total_no_qty" placeholder="Quantity">
+						  <input type="number" class="form-control" name="total_no_qty" id="total_no_qty" placeholder="Quantity">
                           @if ($errors->has('total_no_qty'))
                           <span class="text-danger">{{ $errors->first('total_no_qty') }}</span>
                         @endif

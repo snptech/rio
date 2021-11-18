@@ -9,13 +9,13 @@
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
               <div class="form-group">
                   <label for="QuantityApproved">Quantity Approved</label>
-                  <input type="text" class="form-control" name="quantity_approved" id="quantity_approved" placeholder="Quantity Approved" value="{{ $qty_control_view->qty_received_kg }}">
+                  <input type="number" class="form-control" name="quantity_approved" id="quantity_approved" placeholder="Quantity Approved" value="{{ $qty_control_view->qty_received_kg }}">
               </div>
           </div>
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
               <div class="form-group">
                   <label for="QuantityRejected">Quantity Rejected</label>
-                  <input type="text" class="form-control" name="quantity_rejected" id="quantity_rejected" placeholder="Quantity Rejected">
+                  <input type="number" class="form-control" name="quantity_rejected" id="quantity_rejected" placeholder="Quantity Rejected">
               </div>
           </div>
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">

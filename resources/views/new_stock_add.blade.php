@@ -120,7 +120,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Quantity">Total Quantity (Kg)</label>
-                            <input type="text" class="form-control" name="total_quantity" id="total_quantity" placeholder="Quantity">
+                            <input type="number" class="form-control" name="total_quantity" id="total_quantity" placeholder="Quantity">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">

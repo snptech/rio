@@ -258,7 +258,7 @@
 												<div class="col-12 col-md-6 col-lg-4">
 													<div class="form-group">
 														<label for="Quantity" class="active">Quantity (Kg.)</label>
-														<input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{isset($rd->requesist_qty)?$rd->requesist_qty:('Quantity[]')}}" readonly>
+														<input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder="" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'') value="{{isset($rd->requesist_qty)?$rd->requesist_qty:('Quantity[]')}}" readonly>
 													</div>
 												</div>
 												<div class="col-12 col-md-6 col-lg-4">
@@ -374,7 +374,7 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="Quantity" class="active">Quantity (Kg.)</label>
-													<input type="text" class="form-control" name="Quantity[]" id="Quantity1" placeholder="">
+													<input type="number" class="form-control" name="Quantity[]" id="Quantity1" placeholder="">
 												</div>
 											</div>
 										</div>
@@ -500,7 +500,7 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="Quantity" class="active">Quantity (Kg.)</label>
-													<input type="text" class="form-control" value="{{isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]')}}" readonly name="Quantity[]" id="Quantity" placeholder="">
+													<input type="number" class="form-control" value="{{isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]')}}" readonly name="Quantity[]" id="Quantity" placeholder="">
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -620,7 +620,7 @@
 											<div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="Quantity" class="active">Quantity</label>
-													<input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
+													<input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder="">
 												</div>
 											</div>
 										</div>
@@ -1062,7 +1062,7 @@
 												<div class="col-12 col-md-4">
 													<div class="form-group">
 														<label for="Quantity" class="active">Quantity (Kg.)</label>
-														<input type="text" class="form-control" name="Quantity[]" id="Quantity{{ $lm }}" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}">
+														<input type="number" class="form-control" name="Quantity[]" id="Quantity{{ $lm }}" placeholder="" value="{{ isset($rd->requesist_qty)?$rd->requesist_qty:old('Quantity[]') }}">
 													</div>
 												</div>
 											</div>
@@ -1483,7 +1483,7 @@
 			e.preventDefault();
 			if (x < max_fields) { //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="rawMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="rawMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
 			}
 			feather.replace()
 		});
@@ -1498,7 +1498,7 @@
 			e.preventDefault();
 			if (x < max_fields) { //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="PackingMaterialName[]" id="packingmaterials[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="PackingMaterialName[]" id="packingmaterials[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="batchNo[' + x + ']" class="active">Batch No.</label><select class="form-control select" name="batchNo[]" id="batchNo[' + x + ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
 			}
 			feather.replace()
 		});
@@ -1595,7 +1595,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="MaterialName' + x + '" class="active">Raw Material</label><select class="form-control select" id="MaterialName' + x + '" onchange="getbatchlot($(this).val(),'+x+')"><option>Select Raw Material</option>@if(isset($stock)) @foreach($stock as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' + x + '" class="active">Batch No.</label><select name="rmbatchno[]" class="form-control" id="rmbatchno' + x + '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' + x + '" class="active">Quantity (Kg.)</label><input type="text" class="form-control" id="Quantity' + x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="MaterialName' + x + '" class="active">Raw Material</label><select class="form-control select" id="MaterialName' + x + '" onchange="getbatchlot($(this).val(),'+x+')"><option>Select Raw Material</option>@if(isset($stock)) @foreach($stock as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' + x + '" class="active">Batch No.</label><select name="rmbatchno[]" class="form-control" id="rmbatchno' + x + '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' + x + '" class="active">Quantity (Kg.)</label><input type="number" class="form-control" id="Quantity' + x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1649,7 +1649,7 @@
 			e.preventDefault();
 			if (x < max_fields) { //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity' + x + '" placeholder=""></div></div></div></div>'); //add input box
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select("rawMaterialName[]",$rawmaterials,old("rawMaterialName"),array("id"=>"rawMaterialName","class"=>"form-control","placeholder"=>"Raw Material Name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity' + x + '" placeholder=""></div></div></div></div>'); //add input box
 			}
 			feather.replace()
 		});
@@ -2030,7 +2030,7 @@
 			e.preventDefault();
 			if (x < max_fields) { //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label>{{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"> <div class="form-group">  <label for="Capacity" class="active">Capacity (Kg.)</label> <input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder=""> </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity' + x + '" placeholder=""></div></div></div></div>'); //add input box
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label>{{ Form::select("PackingMaterialName[]",$packingmaterials,old(),array("class"=>"form-control select","id"=>"material_name")) }}</div></div><div class="col-12 col-md-6 col-lg-4"> <div class="form-group">  <label for="Capacity" class="active">Capacity (Kg.)</label> <input type="text" class="form-control" name="Capacity[]" id="Capacity" placeholder=""> </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity' + x + '" placeholder=""></div></div></div></div>'); //add input box
 			}
 			feather.replace()
 		});
