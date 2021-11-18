@@ -105,7 +105,7 @@
                                     <div class="form-group">
                                         <input type="hidden" name="type{{ $mat->details_id }}" value="{{$mat->type}}">
                                             <label for="rBatch" class="active">{{$material_type}} Batch</label>
-                                        @if(! empty($$batch))
+                                        @if(! empty($batch))
                                         {{ Form::select("rBatch".$mat->details_id."[]",$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type", "required"=>"true")) }}
                                        @else
                                        <select class="form-control" required>
