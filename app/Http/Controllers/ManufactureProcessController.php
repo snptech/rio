@@ -396,22 +396,25 @@ class ManufactureProcessController extends Controller
 
                     
             }
+            if(isset($data['edit_batchmanufacturing']))
+            {
+                $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$data['edit_batchmanufacturing']->batchNo)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
 
+               
 
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batch_id",$id)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+                if (isset($lotsdetails) && $lotsdetails) {
+                    $data["lotsdetails"] = $lotsdetails;
+                    $lot_id = AddLotsl::select('id')->where("batch_id",$id)->first();
 
-            if (isset($lotsdetails) && $lotsdetails) {
-                $data["lotsdetails"] = $lotsdetails;
-                $lot_id = AddLotsl::select('id')->where("batch_id",$id)->first();
+                    $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batch_id",$id)
+                    ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
+                    ->get();
 
-                $processlots = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*','add_lotsl.*')->where("batch_id",$id)
-                ->leftJoin('add_lotsl','add_lotsl.id','=','add_lots_raw_material_detail.add_lots_id')
-                ->get();
+                    
 
-                
-
-                if (isset($processlots) && $processlots)
-                    $data["processlots"] = $processlots;
+                    if (isset($processlots) && $processlots)
+                        $data["processlots"] = $processlots;
+                }
             }
 
             $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
@@ -436,10 +439,13 @@ class ManufactureProcessController extends Controller
                 $data["batchdetails"] = $batchdetails;
             }
             
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batch_id",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();      
+            if(isset($data['edit_batchmanufacturing']))
+            {
+                $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$data['edit_batchmanufacturing']->batchNo)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();     
            
-            if (isset($lotsdetails) && $lotsdetails) {
-                $data["lotsdetails"] = $lotsdetails;
+                if (isset($lotsdetails) && $lotsdetails) {
+                    $data["lotsdetails"] = $lotsdetails;
+                }
             }
 
             if(isset($batchdetails->id))
@@ -477,8 +483,8 @@ class ManufactureProcessController extends Controller
 
         $data['addlots'] = AddLotsl::where('id', '=', $id)
             ->first();
-        $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->join("raw_materials","raw_materials.id","add_lotsl.proName")
-            ->get();
+       /* $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->join("raw_materials","raw_materials.id","add_lotsl.proName")
+            ->get();*/
 
 
 
@@ -1657,7 +1663,7 @@ class ManufactureProcessController extends Controller
 
     public function add_batch_lots(Request $request)
     {
-
+        
         $prvCount = AddLotsl::where('batchNo', $request->batchNo)->count('id');
         if ($prvCount > 10) {
             return ['message' => 'Already Have 10 lots Records'];       }
@@ -1977,12 +1983,36 @@ class ManufactureProcessController extends Controller
 
         if ($result) {
 
+            $batch = BatchManufacture::find($request->batch_id);
+
+            
+             $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
+             
+             $datastock = array();
+             $datastock["matarial_id"] = $batch->proName;
+             $datastock["material_type"] = "F";
+             $datastock["department"] = 2;
+             $datastock["qty"] = $batch->BatchSize;
+             $datastock["batch_no"] = $batch->batchNo;
+             $datastock["process_batch_id"] = $batch->batchNo;
+             $datastock["type"] = "F";
+
+             if(isset($stock) && $stock->id)
+             {
+                 Stock::where("id",$stock->id)->update($datastock);    
+             }
+             else
+             {
+                Stock::create($datastock);   
+             }  
             return redirect("add-batch-manufacture")->with('success', "Data Batch Manufacturing  Generate Lable  successfully");
         }
 
     }
     public function add_manufacturing_generate_update(Request $request)
     {
+
+        
         $arrRules = [
             "simethicone"=> "required",
             "batch_no_I"=> "required",
@@ -2019,11 +2049,59 @@ class ManufactureProcessController extends Controller
         if(isset($request->id) && $request->id)
         {
             $result = GanerateLable::where('id', $request->id)->update($data);
+
+             $batch = BatchManufacture::find($request->batch_id);
+
+            
+             $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
+             
+             $datastock = array();
+             $datastock["matarial_id"] = $batch->proName;
+             $datastock["material_type"] = "F";
+             $datastock["department"] = 2;
+             $datastock["qty"] = $batch->BatchSize;
+             $datastock["batch_no"] = $batch->batchNo;
+             $datastock["process_batch_id"] = $batch->batchNo;
+             $datastock["type"] = "F";
+
+             if(isset($stock) && $stock->id)
+             {
+                 Stock::where("id",$stock->id)->update($datastock);    
+             }
+             else
+             {
+                Stock::create($datastock);   
+             }  
         }
         else
         {
             $result = GanerateLable::create($data);
+
+            $batch = BatchManufacture::find($request->batch_id);
+
+            
+             $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
+             
+             $datastock = array();
+             $datastock["matarial_id"] = $batch->proName;
+             $datastock["material_type"] = "F";
+             $datastock["department"] = 2;
+             $datastock["qty"] = $batch->BatchSize;
+             $datastock["batch_no"] = $batch->batchNo;
+             $datastock["process_batch_id"] = $batch->batchNo;
+             $datastock["type"] = "F";
+
+             if(isset($stock) && $stock->id)
+             {
+                 Stock::where("id",$stock->id)->update($datastock);    
+             }
+             else
+             {
+                Stock::create($datastock);   
+             }  
         }
+
+         
 
 
         if ($result) {

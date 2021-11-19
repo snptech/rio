@@ -84,7 +84,9 @@
   $("#userForm").validate({
     rules: {
       name : {
-        required: true       
+        required: true,
+        maxlength:150,
+
       },
       email:{required:true,email:true },
       password:true,

@@ -18,17 +18,17 @@
                     <div class="col-12 col-lg-4">
                         <i class="icon manufacture"></i>
                         <p>Today's Production</p>
-                        <h2>50</h2>
+                        <h2>{{$stocktoday->qty_rem?$stocktoday->qty_rem:0}} KG</h2>
                     </div>
                     <div class="col-12 col-lg-4">
                         <i class="icon supplier"></i>
                         <p>Total Production</p>
-                        <h2>100</h2>
+                        <h2>{{$stocktall->qty_rem?$stocktall->qty_rem:0}} KG</h2>
                     </div>
                     <div class="col-12 col-lg-4">
                         <i class="icon customers"></i>
                         <p>Average Yield/ (Production Loss)</p>
-                        <h2>20K</h2>
+                        <h2>0</h2>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="con-wrap">
                             <p>Total Raw Material</p>
-                            <h2>10 Ton</h2>
+                            <h2>{{$stocktotalRaw->qty_rem?$stocktotalRaw->qty_rem:0}} KG</h2>
                             {{--<span class="situation"><i class="text-success" data-feather="trending-up"></i>15% more than the previous month</span>--}}
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="con-wrap">
                             <p>Total Quantity</p>
-                            <h2>10 Ton</h2>
+                            <h2>{{$stocktotalRaw->qty_rem?$stocktotalRaw->qty_rem:0}} KG</h2>
                             {{--<span class="situation"><i class="text-danger" data-feather="trending-down"></i>5% Less than the previous month</span> --}}
                         </div>
                     </div>
@@ -143,16 +143,21 @@
   <!-- End custom js for this page-->
   <script src="{{ asset('assets/js/feather.min.js')  }}"></script>
   <script>
-    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var MONTHS = [];
+    var data = new Array();
+    @foreach ($stockmonthaly as $val)
+            MONTHS.push('{{$val->month}}');
+            data.push('{{$val->qty_rem}}');
+    @endforeach
 		var color = Chart.helpers.color;
 		var barChartData = {
-			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			labels: MONTHS,
 			datasets: [{
 				label: 'Final Production',
 				backgroundColor: "#ec1616",
 				borderColor: "#ff0000",
 				borderWidth: 1,
-				data: [2500, 4000,3200,100,500,900,70,2400,4000,3050,1100,600]
+				data: data
 			}]
 
 		};
