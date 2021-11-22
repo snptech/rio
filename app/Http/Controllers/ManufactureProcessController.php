@@ -144,7 +144,7 @@ class ManufactureProcessController extends Controller
                 $nestedData["retest_date"] = $post->RetestDate;
                 $nestedData["status"] = ($post->approval=='1'?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Not Approved</span>');
                
-                $nestedData['action'] = '<div class="actions"> <a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" title="View" onclick="view('.$post->id.')"><i data-feather="eye"></i></a>
+                $nestedData['action'] = '<div class="actions"> <!--<a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" title="View" onclick="view('.$post->id.')"><i data-feather="eye"></i></a> -->
                 <a href="'.$edit.'" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
 
                 <a href="'.$print.'" class="btn action-btn" data-tooltip="tooltip" title="Print" target="_blank"><i data-feather="printer"></i></a></div>';
@@ -347,7 +347,7 @@ class ManufactureProcessController extends Controller
             "doneBy" => Auth::user()->id,
             "checkedBy" => Auth::user()->id,
             "inlineRadioOptions" =>  $request['inlineRadioOptions'],
-            "approval" =>  Auth::user()->id,
+            "approval" =>  $request['grade'],
             "approvalDate" =>  $request['approvalDate'],
             "checkedByI" => Auth::user()->id,
             "Remark" =>  $request['Remark'],
@@ -1379,7 +1379,7 @@ class ManufactureProcessController extends Controller
     }
     public function packing_material_requisition_slip_update(Request $request)
     {
-
+        
         //$request->PackingMaterialName = (int)$request->PackingMaterialName;
         $arr['from'] = $request->from;
         $arr['to'] = $request->to;
@@ -1419,7 +1419,7 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 1;
                 }
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    return redirect("add_manufacturing_edit/" . $request->mainid . "/6")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
             return redirect('add_manufacturing_edit#issualofrequisition')->with('error', "Invalid Data");
@@ -1512,7 +1512,7 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    return redirect("add_manufacturing_edit/" . $request->id . "/6")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }

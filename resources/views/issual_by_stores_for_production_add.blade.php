@@ -27,7 +27,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Requisition">Requisition No.</label>
-                            <input type="text" class="form-control" name="requisition_no" id="requisition_no" placeholder="Requisition">
+                            <input type="text" class="form-control" name="requisition_no" id="requisition_no" placeholder="Requisition" maxlength="50">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -148,7 +148,7 @@
      })
         $("#vali_issue_material").validate({
             rules: {
-                requisition_no: "required",
+                requisition_no:{ required:true,maxlength:50 },
                 opening_balance: "required",
                 issual_date: "required",
                 product_name: "required",

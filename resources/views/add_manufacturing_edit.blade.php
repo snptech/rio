@@ -87,14 +87,14 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
 >
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
 >
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
+                                                <input type="number" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
                                             </div>
                                         </div>
                                     </div>
@@ -269,7 +269,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="">
+                                                <input type="number" class="form-control" name="Quantity[]" id="Quantity" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -377,7 +377,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$res_data->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$res_data->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -391,7 +391,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$res_data->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$res_data->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
 >
                                 </div>
                             </div>
@@ -419,7 +419,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
+                                                <input type="number" class="form-control" name="Quantity[]" id="Quantity" value="{{$temp->Quantity}}">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -535,7 +535,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{$temp->Quantity}}">
+                                                <input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="{{$temp->Quantity}}">
                                             </div>
                                         </div>
                                     </div>
@@ -560,7 +560,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Quantity</label>
-                                                <input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="">
+                                                <input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder="" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -786,13 +786,13 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -933,20 +933,20 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
                                     <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}"
-                                    pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1179,19 +1179,19 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1290,19 +1290,19 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No." pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No." pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1508,19 +1508,19 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="bmrNo" class="active">BMR No.</label>
-										<input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($edit_batchmanufacturing->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+										<input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($edit_batchmanufacturing->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="batchNo">Batch No.</label>
-									<input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($edit_batchmanufacturing->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+									<input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($edit_batchmanufacturing->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="refMfrNo">Ref. MFR No.</label>
-									<input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($edit_batchmanufacturing->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+									<input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($edit_batchmanufacturing->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
 									</div>
 								</div>
 
@@ -1540,7 +1540,7 @@
                                             <div class="col-12 col-md-6 col-lg-4">
 												<div class="form-group">
 													<label for="batch_no_I" class="active">Batch No</label>
-													<input type="text" class="form-control" name="batch_no_I"value="{{isset($edit_ganerat_lable->batch_no_I)?$edit_ganerat_lable->batch_no_I:$edit_batchmanufacturing->batchNo}}" id="batch_no_I" placeholder="">
+													<input type="text" class="form-control" name="batch_no_I"value="{{isset($edit_ganerat_lable->batch_no_I)?$edit_ganerat_lable->batch_no_I:$edit_batchmanufacturing->batchNo}}" id="batch_no_I" placeholder="" readonly>
 												</div>
 											</div>
 											<div class="col-12 col-md-6 col-lg-4">
@@ -1611,7 +1611,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="rawMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="rawMaterialName[' + x + ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' + x + ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="date[' + x + ']" class="active">Date</label><input type="date" class="form-control calendar" name="date[]" id="date[' + x + ']" value={{ date("Y-m-d") }}></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1702,7 +1702,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="MaterialName' + x + '" class="active">Raw Material</label><select class="form-control select" id="MaterialName' + x + '" onchange="getbatchlot($(this).val(),'+x+')"><option>Select Raw Material</option>@if(isset($stock)) @foreach($stock as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' + x + '" class="active">Batch No.</label><select name="rmbatchno[]" class="form-control" id="rmbatchno' + x + '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' + x + '" class="active">Quantity (Kg.)</label><input type="text" class="form-control" id="Quantity' + x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-4"><div class="form-group"><label for="MaterialName' + x + '" class="active">Raw Material</label><select class="form-control select" id="MaterialName' + x + '" onchange="getbatchlot($(this).val(),'+x+')"><option>Select Raw Material</option>@if(isset($stock)) @foreach($stock as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' + x + '" class="active">Batch No.</label><select name="rmbatchno[]" class="form-control" id="rmbatchno' + x + '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' + x + '" class="active">Quantity (Kg.)</label><input type="number" class="form-control" id="Quantity' + x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1723,7 +1723,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName[' + x + ']" class="active">Packing Material Name</label><input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName[' + x + ']" placeholder="" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity[' + x + ']" class="active">Capacity(Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (No)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]"id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="ARDate[' + x + ']" class="active">Date</label><input type="date" class="form-control" name="ARDate[]" id="ARDate[' + x + ']" value={{ date("Y-m-d") }}></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName[' + x + ']" class="active">Packing Material Name</label><input type="text" class="form-control" name="PackingMaterialName[]" id="PackingMaterialName[' + x + ']" placeholder="" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity[' + x + ']" class="active">Capacity(Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' + x + ']" class="active">Quantity (No)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' + x + ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]"id="arNo[' + x + ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="ARDate[' + x + ']" class="active">Date</label><input type="date" class="form-control" name="ARDate[]" id="ARDate[' + x + ']" value={{ date("Y-m-d") }}></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1756,7 +1756,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName' + x + '" class="active">Packing Material Name</label><select class="form-control select" name="PackingMaterialName[]" id="PackingMaterialName' + x + '" onchange="getcapacity($(this).val(),'+x+')"><option>Select Packing Raw Material</option>@if(isset($packingmaterials)) @foreach($packingmaterials as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Capacity (Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity'+x+'" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName' + x + '" class="active">Packing Material Name</label><select class="form-control select" name="PackingMaterialName[]" id="PackingMaterialName' + x + '" onchange="getcapacity($(this).val(),'+x+')"><option>Select Packing Raw Material</option>@if(isset($packingmaterials)) @foreach($packingmaterials as $key=>$value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Capacity" class="active">Capacity (Kg.)</label><input type="text" class="form-control" name="Capacity[]" id="Capacity'+x+'" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -1777,7 +1777,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label>        {{ Form::select("PackingMaterialName[]",$rawmaterials,old(),array("class"=>"form-control select","id"=>"material_name")) }} </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label>        {{ Form::select("PackingMaterialName[]",$rawmaterials,old(),array("class"=>"form-control select","id"=>"material_name")) }} </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'); //add input box
             }
             feather.replace()
         });
