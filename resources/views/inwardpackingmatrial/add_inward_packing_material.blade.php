@@ -218,7 +218,7 @@
         });
         $(function() {
         $('input:text').keydown(function(e) {
-        if(e.keyCode==65)
+        if(e.keyCode==1)
             return false;
 
         });

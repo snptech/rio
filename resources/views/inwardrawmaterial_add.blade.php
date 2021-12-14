@@ -393,13 +393,7 @@
           }
         }
       });
-      $(function() {
-$('input:text').keydown(function(e) {
-if(e.keyCode==65)
-    return false;
-
-});
-});
+      
    
     });
     // function AvoidSpace(event) {
