@@ -109,7 +109,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="invoice">Invoice No.</label>
-						  <input type="text" class="form-control" name="invoice_no" id="invoice_no" placeholder="Invoice No." pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+						  <input type="text" class="form-control" name="invoice_no" id="invoice_no" placeholder="Invoice No." pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
 >
                           @if ($errors->has('invoice_no'))
                           <span class="text-danger">{{ $errors->first('invoice_no') }}</span>
@@ -139,7 +139,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="Viscosity">Viscosity</label>
-						  <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+						  <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">

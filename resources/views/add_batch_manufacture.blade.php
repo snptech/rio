@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="batchno" pattern="\d*" maxlength="12" name="batchno" placeholder="Batch No." onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                            <input type="text" class="form-control" id="batchno" pattern="\d*" maxlength="12" name="batchno" placeholder="Batch No." onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">

@@ -80,28 +80,28 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
 >
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
 >
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
 >
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="grade" class="active">Grade</label>
-                                    <input type="text" class="form-control" name="grade" value="{{$edit_batchmanufacturing->grade}}" id="grade" placeholder="" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="grade" value="{{$edit_batchmanufacturing->grade}}" id="grade" placeholder="" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -113,7 +113,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="Viscosity" class="active">Viscosity</label>
-                                    <input type="text" class="form-control" name="Viscosity" value="{{$edit_batchmanufacturing->Viscosity}}" id="Viscosity" placeholder="" value="2000-2500 cSt" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="Viscosity" value="{{$edit_batchmanufacturing->Viscosity}}" id="Viscosity" placeholder="" value="2000-2500 cSt" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
                                 </div>
                             </div>
                             <div class="row">
@@ -377,13 +377,13 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$res_data->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$res_data->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNoI">Batch No.</label>
-                                    <input type="text" class="form-control valid" name="batchNoI" id="batchNoI" value="{{$res_data->batchNoI}}" readonly="" aria-invalid="false" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+                                    <input type="text" class="form-control valid" name="batchNoI" id="batchNoI" value="{{$res_data->batchNoI}}" readonly="" aria-invalid="false" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
 >
                                 </div>
                             </div>
@@ -391,7 +391,7 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$res_data->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$res_data->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
 >
                                 </div>
                             </div>
@@ -780,19 +780,19 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{isset($res_data_1->bmrNo)?$res_data_1->bmrNo:$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{isset($res_data_1->bmrNo)?$res_data_1->bmrNo:$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -933,20 +933,20 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
                                     <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}"
-                                    pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1179,19 +1179,19 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="batchNo" id="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1290,19 +1290,19 @@
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="bmrNo" class="active">BMR No.</label>
-                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="bmrNo" value="{{$edit_batchmanufacturing->bmrNo}}" id="bmrNo" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="batchNo">Batch No.</label>
-                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="batchNo" value="{{$edit_batchmanufacturing->batchNo}}" id="batchNo" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="refMfrNo">Ref. MFR No.</label>
-                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No." pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+                                    <input type="text" class="form-control" name="refMfrNo" value="{{$edit_batchmanufacturing->refMfrNo}}" id="refMfrNo" placeholder="Ref. MFR No." pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -1508,19 +1508,19 @@
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="bmrNo" class="active">BMR No.</label>
-										<input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($edit_batchmanufacturing->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+										<input type="text" class="form-control" name="bmrNo" id="bmrNo" value="{{ isset($edit_batchmanufacturing->bmrNo)?$batchdetails->bmrNo:old("bmrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="batchNo">Batch No.</label>
-									<input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($edit_batchmanufacturing->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+									<input type="text" class="form-control" name="batchNo" id="batchNo" value="{{ isset($edit_batchmanufacturing->batchNo)?$batchdetails->batchNo:old("batchNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 									<div class="form-group">
 										<label for="refMfrNo">Ref. MFR No.</label>
-									<input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($edit_batchmanufacturing->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" readonly>
+									<input type="text" class="form-control" name="refMfrNo" id="refMfrNo" value="{{ isset($edit_batchmanufacturing->refMfrNo)?$batchdetails->refMfrNo:old("refMfrNo") }}" readonly pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
 									</div>
 								</div>
 

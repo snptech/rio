@@ -52,7 +52,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="BatchNo">Batch No.</label>
-                            <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                            <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -72,7 +72,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity (Optional)</label>
-                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -126,7 +126,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">AR No</label>
-                            <input type="text" class="form-control" name="ar_no" id="ar_no" placeholder="AR.No" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"/>
+                            <input type="text" class="form-control" name="ar_no" id="ar_no" placeholder="AR.No" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"/>
 
 
                             <!-- <select class="form-control select" name="ar_no" id="ar_no">

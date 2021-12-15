@@ -19,7 +19,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="rno">Manufacturer</label>
-                            <input type="text" class="form-control" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+                            <input type="text" class="form-control" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
  name="manufacturer" id="manufacturer" placeholder="Manufacturer" value="{{ old("manufacturer")?old("manufacturer"):$manufacturer->manufacturer }}">
                             @if ($errors->has('manufacturer'))
                                     <span class="text-danger">{{ $errors->first('manufacturer') }}</span>
