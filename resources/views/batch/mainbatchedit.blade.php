@@ -135,9 +135,9 @@
                             approved</label>
                         <select class="form-control select" name="approval" id="approval">
                             
-                                <option value="1" @if ($edit_batchmanufacturing->approval == 1) selected='selected'>Approved</option>
+                                <option value="1" @if ($edit_batchmanufacturing->approval == 1) selected='selected' @endif>Approved</option>
                             
-                                <option value="0" @if ($edit_batchmanufacturing->approval != 1) selected='selected'>Not Approved</option>
+                                <option value="0" @if ($edit_batchmanufacturing->approval != 1) selected='selected' @endif>Not Approved</option>
                            
                         </select>
                     </div>
