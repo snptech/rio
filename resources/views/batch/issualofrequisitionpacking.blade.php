@@ -19,7 +19,7 @@
 
                                 @if (isset($requestion_packing) && $requestion_packing)
                                     @foreach ($requestion_packing as $req)
-                                        @php$requestion_details_packing = \App\Models\DetailsRequisition::select('detail_packing_material_requisition.*', 'raw_materials.material_name')
+                                        @php $requestion_details_packing = \App\Models\DetailsRequisition::select('detail_packing_material_requisition.*', 'raw_materials.material_name')
                                                 ->where('requisition_id', $req->id)
                                                 ->join('raw_materials', 'raw_materials.id', 'detail_packing_material_requisition.PackingMaterialName')
                                                 ->get();
