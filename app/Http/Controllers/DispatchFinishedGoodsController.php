@@ -49,7 +49,7 @@ class DispatchFinishedGoodsController extends Controller
     {
         $data['supplier_master'] = Supplier::all();
         $data['mode'] = Modedispatch::all();
-        $data["product"] = Rawmeterial::where("material_type","F")->where("material_preorder_stock",">",0)->pluck("material_name","id");
+        $data["product"] = Rawmeterial::where("material_type","F")->where("material_stock",">",0)->pluck("material_name","id");
         $data["department"] = Department::where("publish",1)->pluck("department","id");
         $data["partyname"] = PartyMaster::pluck("company_name","id");
         $data['grade'] = Grade::all();
