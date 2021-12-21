@@ -142,10 +142,18 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="50KgDrums">Total No. of 200Kg Drums</label>
+                        <input type="number" class="form-control qty-group" name="total_no_of_200kg_drums" value="{{$finished->total_no_of_200kg_drums}}" id="total_no_of_200kg_drums" placeholder="200Kg Drums" onkeyup="sub()">
+                        @if ($errors->has('total_no_of_200kg_drums'))
+                        <span class="text-danger">{{ $errors->first('total_no_of_200kg_drums') }}</span>
+                      @endif
+                      </div>
+                  </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="50KgDrums">Total No. of 50Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_50kg_drums" value="{{$finished->total_no_of_50kg_drums}}" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_50kg_drums" value="{{$finished->total_no_of_50kg_drums}}" id="total_no_of_50kg_drums" placeholder="50Kg Drums" onkeyup="sub()">
                             @if ($errors->has('total_no_of_50kg_drums'))
                             <span class="text-danger">{{ $errors->first('total_no_of_50kg_drums') }}</span>
                             @endif
@@ -154,7 +162,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="30KgDrums">Total No. of 30Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_30kg_drums" value="{{$finished->total_no_of_30kg_drums}}" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_30kg_drums" value="{{$finished->total_no_of_30kg_drums}}" id="total_no_of_30kg_drums" placeholder="30Kg Drums" onkeyup="sub()">
                             @if ($errors->has('total_no_of_30kg_drums'))
                             <span class="text-danger">{{ $errors->first('total_no_of_30kg_drums') }}</span>
                             @endif
@@ -163,9 +171,21 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="5KgDrums">Total No. of 5Kg Drums</label>
-                            <input type="number" class="form-control" name="total_no_of_5kg_drums" value="{{$finished->total_no_of_5kg_drums}}" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_5kg_drums" value="{{$finished->total_no_of_5kg_drums}}" id="total_no_of_5kg_drums" placeholder="5Kg Drums" onkeyup="sub()">
                             @if ($errors->has('total_no_of_30kg_drums'))
                             <span class="text-danger">{{ $errors->first('total_no_of_5kg_drums') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="5KgDrums">Total No. of Fiber Board Drums</label>
+                            <input type="number" class="form-control qty-group" name="total_no_of_fiber_board_drums"
+                                id="total_no_of_fiber_board_drums" placeholder="Total No. of Fiber Board Drums" value="{{$finished->total_no_of_fiber_board_drums}}"
+                                onkeyup="sub()">
+                            @if ($errors->has('total_no_of_fiber_board_drums'))
+                                <span
+                                    class="text-danger">{{ $errors->first('total_no_of_fiber_board_drums') }}</span>
                             @endif
                         </div>
                     </div>
@@ -228,6 +248,7 @@
 @endsection
 @push("scripts")
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
     $(document).ready(function() {
         $("#add_dispatch_finished_goods_vali").validate({
@@ -245,15 +266,28 @@
                 viscosity: "required",
                 mfg_date: "required",
                 expiry_ratest_date: "required",
-                total_no_of_50kg_drums: "required",
-                total_no_of_30kg_drums: "required",
-                total_no_of_5kg_drums: "required",
-                total_no_qty: "required",
-                seal_no: "required",
-                dispatch_date: "required",
-                dispatch_by: "required",
+                total_no_of_200kg_drums: {
+                require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_50kg_drums: {
+                    require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_30kg_drums: {
+                    require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_5kg_drums: {
+                    require_from_group: [1, ".qty-group"]
+                },
+                total_no_of_fiber_board_drums: {
+                    require_from_group: [1, ".qty-group"]
+                },
 
-            },
+                    total_no_qty: "required",
+                    seal_no: "required",
+                    dispatch_date: "required",
+                    dispatch_by: "required",
+
+                },
             messages: {
                 dispath_no: "Please  Enter The Name dispath_no",
                 dispatch_form: "Please  Enter The Name dispatch_form",
@@ -304,6 +338,21 @@
 
         });
     });
+    function sub() {
+            var total_no_of_200kg_drums = $('#total_no_of_200kg_drums').val();
+            var total_no_of_50kg_drums = $('#total_no_of_50kg_drums').val();
+            var total_no_of_30kg_drums = $('#total_no_of_30kg_drums').val();
+            var total_no_of_5kg_drums = $('#total_no_of_5kg_drums').val();
+            var total_no_of_fiber_board_drums = $('#total_no_of_fiber_board_drums').val();
+
+            /* if(batch_quantity > 0){*/
+            var result = parseInt(total_no_of_200kg_drums) + parseInt(total_no_of_50kg_drums) + parseInt(
+                total_no_of_30kg_drums) + parseInt(total_no_of_5kg_drums) + parseInt(total_no_of_fiber_board_drums);
+            if (!isNaN(result)) {
+                $('#total_no_qty').val(result);
+            }
+            /*}*/
+        }
 </script>
 
 @endpush
