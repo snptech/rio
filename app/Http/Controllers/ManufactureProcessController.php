@@ -368,6 +368,7 @@ class ManufactureProcessController extends Controller
     {
         $data['edit_batchmanufacturing'] = BatchManufacture::select('add_batch_manufacture.*')
             ->where('add_batch_manufacture.id', '=', $id)->first();
+        //session
             $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.id', '=', $id)->first();
 
 
@@ -1996,14 +1997,21 @@ class ManufactureProcessController extends Controller
              $datastock["batch_no"] = $batch->batchNo;
              $datastock["process_batch_id"] = $batch->batchNo;
              $datastock["type"] = "F";
-
+             $materialdata = array();
              if(isset($stock) && $stock->id)
              {
-                 Stock::where("id",$stock->id)->update($datastock);    
+                 Stock::where("id",$stock->id)->update($datastock); 
+                 $material  = Rawmeterial::where("id",$batch->proName)->first();                
+                 $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                 $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
              }
              else
              {
-                Stock::create($datastock);   
+
+                Stock::create($datastock);  
+                $material  = Rawmeterial::where("id",$batch->proName)->first();        
+                $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata); 
              }  
             return redirect("add-batch-manufacture")->with('success', "Data Batch Manufacturing  Generate Lable  successfully");
         }
@@ -2066,10 +2074,16 @@ class ManufactureProcessController extends Controller
 
              if(isset($stock) && $stock->id)
              {
+                $material  = Rawmeterial::where("id",$batch->proName)->first();        
+                $materialdata["material_stock"]  =  (($material->material_stock-$stock->qty)+$batch->BatchSize);
+                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata); 
                  Stock::where("id",$stock->id)->update($datastock);    
              }
              else
              {
+                $material  = Rawmeterial::where("id",$batch->proName)->first();        
+                $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata); 
                 Stock::create($datastock);   
              }  
         }
@@ -2093,10 +2107,16 @@ class ManufactureProcessController extends Controller
 
              if(isset($stock) && $stock->id)
              {
+                $material  = Rawmeterial::where("id",$batch->proName)->first();        
+                $materialdata["material_stock"]  =  (($material->material_stock-$stock->qty)+$batch->BatchSize);
+                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata); 
                  Stock::where("id",$stock->id)->update($datastock);    
              }
              else
              {
+                $material  = Rawmeterial::where("id",$batch->proName)->first();        
+                $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata); 
                 Stock::create($datastock);   
              }  
         }

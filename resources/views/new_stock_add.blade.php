@@ -52,7 +52,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="BatchNo">Batch No.</label>
-                            <input type="text" class="form-control alphanumeric" name="batch_no" id="batch_no" placeholder="Batch"  maxlength="12">
+                            <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch"  maxlength="12">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -72,7 +72,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity (Optional)</label>
-                            <input type="text" class="form-control alphanumeric" name="viscosity" id="viscosity" placeholder="Viscosity" maxlength="12">
+                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" maxlength="12">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -126,7 +126,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">AR No</label>
-                            <input type="text" class="form-control alphanumeric" name="ar_no" id="ar_no" placeholder="AR.No" pattern="\d*" maxlength="12" />
+                            <input type="text" class="form-control alphanumeric" name="ar_no" id="ar_no" placeholder="AR.No"  maxlength="50" />
 
 
                             <!-- <select class="form-control select" name="ar_no" id="ar_no">
@@ -255,13 +255,7 @@
             $('#received_by').val('');
             $('#remark').val('');
         });
-        $(function() {
-$('input:text').keydown(function(e) {
-if(e.keyCode==1)
-    return false;
-
+        
 });
-});
-          });
 </script>
 @endpush
