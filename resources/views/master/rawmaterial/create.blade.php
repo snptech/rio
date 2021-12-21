@@ -29,6 +29,16 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
+                            <label for="rno">Material Code</label>
+                            <input type="text" class="form-control" name="rawmeterial_code" id="rawmeterial_code" placeholder="Material Code" value="{{ old("rawmeterial_code") }}">
+                            @if ($errors->has('rawmeterial_code'))
+                                    <span class="text-danger">{{ $errors->first('rawmeterial_code') }}</span>
+                            @endif
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
                             <label for="controller_id">Material Mesurment</label>
                             {{ Form::select("mesurment",$mesurments,old("mesurment"),array("id"=>"mesurment","class"=>"form-control","placeholder"=>"Material Mesurment")) }}
                             @if ($errors->has('mesurment'))

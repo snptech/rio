@@ -267,6 +267,7 @@
 @endsection
 @push("scripts")
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
     $(document).ready(function() {
         $("#product").change(function(){
@@ -327,7 +328,7 @@
             invoice_no:"required",
             batch_no:"required",
             grade:"required",
-            /*viscosity:"required",*/
+           
             mfg_date:"required",
             expiry_ratest_date:"required",
             total_no_of_200kg_drums: {
@@ -375,7 +376,7 @@
             dispatch_by:"Please  Enter The Name dispatch_by",
             remark:"Please  Enter The Name remark",
 
-            },
+            }
         });
         $('.clear_submit').click(function() {
             $('#dispath_no').val('');
@@ -401,14 +402,9 @@
             $('#remark').val('');
 
         });
-        $(function() {
-$('input:text').keydown(function(e) {
-if(e.keyCode==1)
-    return false;
-
+        
 });
-});
-    });
+    
     function sub() {
         var total_no_of_200kg_drums = $('#total_no_of_200kg_drums').val();
         var total_no_of_50kg_drums = $('#total_no_of_50kg_drums').val();
@@ -416,12 +412,12 @@ if(e.keyCode==1)
         var total_no_of_5kg_drums = $('#total_no_of_5kg_drums').val();
         var total_no_of_fiber_board_drums = $('#total_no_of_fiber_board_drums').val();
 
-        if(batch_quantity > 0){
+       /* if(batch_quantity > 0){*/
             var result = parseInt(total_no_of_200kg_drums) + parseInt(total_no_of_50kg_drums) + parseInt(total_no_of_30kg_drums) + parseInt(total_no_of_5kg_drums) + parseInt(total_no_of_fiber_board_drums);
             if (!isNaN(result)) {
                 $('#total_no_qty').val(result);
             }
-        }
+        /*}*/
     }
 </script>
 

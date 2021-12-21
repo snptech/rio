@@ -288,6 +288,7 @@ class ManufactureProcessController extends Controller
 
     public function add_manufacturing_insert(Request $request)
     {
+       
        $alreadyBatchYN = BatchManufacture::get()->where("batchNo", $request['batchNo'])->count();
        if(0 < $alreadyBatchYN)
             return redirect("add-batch-manufacturing-record")->with('error', "Batch No. already Used");
@@ -360,7 +361,12 @@ class ManufactureProcessController extends Controller
         if ($result) {
             // Session::put('batch',$request['batchNo']);
             $request->session()->put('batch', $request['batchNo']);
-            return redirect("add-batch-manufacturing-record#requisition")->with('success', "Batch created successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch created successfully");
+            }
+            else
+                return redirect("add-batch-manufacturing-record#requisition")->with('success', "Batch created successfully");
         }
     }
 
@@ -549,7 +555,12 @@ class ManufactureProcessController extends Controller
         }
         if ($result) {
             $request->session()->put('batch', $request['batchNo']);
-            return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+            }
+            else
+                return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
     }
 
@@ -632,8 +643,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['bill_of_raw_material_id'] = $BillOfRwaMaterial_id->id;
                 BillOfRawMaterialsDetails::Create($arr_data);
             }
-
-            return redirect('add-batch-manufacturing-record#listOfEquipment')->with('success', "Data Bill Of Raw Materrila successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Data Bill Of Raw Materrila successfully");
+            }
+            else
+                return redirect('add-batch-manufacturing-record#listOfEquipment')->with('success', "Data Bill Of Raw Materrila successfully");
         } else {
             return redirect('add-batch-manufacturing-record#requisition')->with('error', "Something went wrong");
         }
@@ -695,8 +710,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['bill_of_raw_material_id'] = $BillOfRwaMaterial_id->id;
                 BillOfRawMaterialsDetails::Create($arr_data);
             }
-
-            return redirect('add-batch-manufacturing-record'.$request->nextForm)->with('success', "Data Bill Of Raw Materrila successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Data Bill Of Raw Materrila successfully");
+            }
+            else
+                return redirect('add-batch-manufacturing-record'.$request->nextForm)->with('success', "Data Bill Of Raw Materrila successfully");
         } else {
             return redirect('add-batch-manufacturing-record'.$request->currentForm)->with('error', "Something went wrong");
         }
@@ -743,7 +762,12 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', " Batch  Data Update successfully");
+                    }
+                    else
+                        return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
             return redirect('bill-of-raw-material')->with('error', "Invalid Data");
@@ -888,8 +912,12 @@ class ManufactureProcessController extends Controller
         $result = BatchManufacturingPacking::create($data);
 
         if ($result) {
-
-            return redirect("add-batch-manufacturing-record#generate_label")->with('success', "Data Batch Manufacturing Packing successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', " Data Batch Manufacturing Packing created successfully");
+            }
+            else
+                return redirect("add-batch-manufacturing-record#generate_label")->with('success', "Data Batch Manufacturing Packing created successfully");
         }
     }
 
@@ -940,8 +968,12 @@ class ManufactureProcessController extends Controller
                 ListOfEquipmentManufacturing::Create($a_data);
             }
 
-
-            return redirect("add-batch-manufacturing-record#addLots_listing")->with('success', "Data List Of Equipment Successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', " Data List Of Equipment created Successfully");
+            }
+            else
+                return redirect("add-batch-manufacturing-record#addLots_listing")->with('success', "Data List Of Equipment created Successfully");
         } else {
             return redirect("add-batch-manufacturing-record#listOfEquipment")->with('error', " Something went wrong");
         }
@@ -1000,7 +1032,12 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 2;
                 }
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" .$request->mainid. "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', "  Batch  Data Update successfully");
+                    }
+                    else
+                     return redirect("add_manufacturing_edit/" .$request->mainid. "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }
@@ -1077,7 +1114,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['line_clearance_id'] = $BatchManufacturing_id->id;
                 LineClearance::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record')->with('success', "Data Line Clearance successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "  Data Line Clearance created successfully");
+            }
+            else
+                return redirect('add-batch-manufacturing-record')->with('success', "Data Line Clearance created successfully");
         } else {
             return redirect('add-batch-manufacturing-record')->with('error', " Something went wrong");
         }
@@ -1116,7 +1158,12 @@ class ManufactureProcessController extends Controller
                     $arr_data['line_clearance_id'] = $request->id;
                     LineClearance::Create($arr_data);
                 }
-                return redirect('line-clearance')->with('message', "Data update successfully");
+                if(isset($request->save_q))
+                {
+                    return redirect("add-batch-manufacture")->with('success', " Data update successfully");
+                }
+                else
+                    return redirect('line-clearance')->with('message', "Data update successfully");
             }
             return redirect('line-clearance')->with('error', "Invalid Data");
         } else {
@@ -1147,55 +1194,7 @@ class ManufactureProcessController extends Controller
         return (['status' => true, 'res' => $res, 'res_data' => $res_data]);
     }
 
-    public function generate_label()
-
-    {
-        return view('generate_label');
-    }
-    public function add_manufacturing_record_label()
-
-    {
-        return view('add_manufacturing_record_label');
-    }
-    public function add_lots()
-
-    {
-        return view('add_lots');
-    }
-    public function add_batch_manufacturing_record_add_lot()
-
-    {
-        return view('add_batch_manufacturing_record_add_lot');
-    }
-    public function add_batch_manufacturing_record_add_lot2()
-
-    {
-        return view('add_batch_manufacturing_record_add_lot2');
-    }
-    public function add_batch_manufacturing_record_add_lot3()
-
-    {
-        return view('add_batch_manufacturing_record_add_lot3');
-    }
-    public function add_batch_manufacturing_record_add_lot4()
-
-    {
-        return view('add_batch_manufacturing_record_add_lot4');
-    }
-    public function add_batch_manufacturing_record_add_lot5()
-
-    {
-        return view('add_batch_manufacturing_record_add_lot5');
-    }
-    public function add_batch_manufacturing_record_process_chec_5()
-
-    {
-        return view('add_batch_manufacturing_record_process_chec_5');
-    }
-    public function add_packing_material_issual_slip()
-    {
-        return view('add_packing_material_issual_slip');
-    }
+   
     public function packing_material_issuel_insert(Request $request)
     {
         if (isset($request->from)) {
@@ -1248,7 +1247,12 @@ class ManufactureProcessController extends Controller
                 $a_data['packingmaterial_id'] = $packingmaterial_id->id;
                 MaterialDetails::Create($a_data);
             }
-            return redirect("add-batch-manufacturing-record#billOfRawMaterialpacking")->with('success', "Packing Material Successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Packing Material created Successfully");
+            }
+            else
+                return redirect("add-batch-manufacturing-record#billOfRawMaterialpacking")->with('success', "Packing Material created Successfully");
         } else {
             return redirect("add-batch-manufacturing-record#issualofrequisitionpacking")->with('error', " Something went wrong");
         }
@@ -1311,7 +1315,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['type'] = "P";
                 DetailsRequisition::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record#issualofrequisitionpacking')->with('success', "Raw Materrila Of Requisition done successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Raw Matrial Of Requisition done successfully");
+            }
+            else
+                return redirect('add-batch-manufacturing-record#issualofrequisitionpacking')->with('success', "Raw Matrial Of Requisition done successfully");
         } else {
             return redirect('add-batch-manufacturing-record#requisitionpacking')->with('error', "Something went wrong");
         }
@@ -1373,7 +1382,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['type'] = "R";
                 DetailsRequisition::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record#issualofrequisition')->with('success', "Raw Material Of Requisition done successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Raw Matrial Of Requisition done successfully");
+            }
+            else
+                return redirect('add-batch-manufacturing-record#issualofrequisition')->with('success', "Raw Material Of Requisition done successfully");
         } else {
             return redirect('add-batch-manufacturing-record#requisition')->with('error', "Something went wrong");
         }
@@ -1420,7 +1434,12 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 1;
                 }
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->mainid . "/6")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                    }
+                    else
+                        return redirect("add_manufacturing_edit/" . $request->mainid . "/6")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
             return redirect('add_manufacturing_edit#issualofrequisition')->with('error', "Invalid Data");
@@ -1463,7 +1482,12 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 2;
                 }
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                    }
+                    else
+                        return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }
@@ -1513,7 +1537,12 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->id . "/6")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                    }
+                    else
+                        return redirect("add_manufacturing_edit/" . $request->id . "/6")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }
@@ -1553,8 +1582,12 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 2;
                 }
                 if ($result) {
-
-                    return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                    }
+                    else
+                        return redirect("add_manufacturing_edit/" . $request->id . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }
@@ -1609,7 +1642,12 @@ class ManufactureProcessController extends Controller
             $sequenceId = (int)$request->sequenceId + 1;
         }
         if ($result) {
-            return redirect("add_manufacturing_edit/" . $request['mainid'] . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+            }
+            else
+                return redirect("add_manufacturing_edit/" . $request['mainid'] . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
     }
     public function add_manufacturing_packing_ganerate_update(Request $request)
@@ -1658,7 +1696,12 @@ class ManufactureProcessController extends Controller
 
 
         if ($result) {
-            return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+            }
+            else
+                return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
         }
     }
 
@@ -1710,9 +1753,19 @@ class ManufactureProcessController extends Controller
                                 $result = Processlots::Create($arr_data);
                             }if ($result) {
                                 if ($prvCount == 10) {
-                                    return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
+                                    if(isset($request->save_q))
+                                    {
+                                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                                    }
+                                    else
+                                        return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
                                 } else {
-                                    return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
+                                    if(isset($request->save_q))
+                                    {
+                                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                                    }
+                                    else
+                                        return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
                                 }
                             }
                         }
@@ -1802,7 +1855,12 @@ class ManufactureProcessController extends Controller
                                 $sequenceId = (int)$request->sequenceId + 1;
                             }
                             if ($result) {
-                                return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                                if(isset($request->save_q))
+                                {
+                                    return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                                }
+                                else
+                                    return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                             }
                         }
                     }
@@ -1862,7 +1920,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['homogenizing_id'] = $Homogenizing_id->id;
                 HomogenizingList::Create($arr_data);
             }
-            return redirect('add-batch-manufacturing-record#Packing')->with('success', "Raw Materrila Of Requisition done successfully");
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+            }
+            else
+                return redirect('add-batch-manufacturing-record#Packing')->with('success', "Raw Materrila Of Requisition done successfully");
         } else {
             return redirect('add-batch-manufacturing-record')->with('error', "Something went wrong");
         }
@@ -1921,7 +1984,12 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
-                    return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                    if(isset($request->save_q))
+                    {
+                        return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                    }
+                    else
+                        return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
                 }
             }
         }
@@ -2013,7 +2081,12 @@ class ManufactureProcessController extends Controller
                 $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
                 $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata); 
              }  
-            return redirect("add-batch-manufacture")->with('success', "Data Batch Manufacturing  Generate Lable  successfully");
+             if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+            }
+            else
+                return redirect("add-batch-manufacture")->with('success', "Data Batch Manufacturing  Generate Lable  successfully");
         }
 
     }
@@ -2125,7 +2198,12 @@ class ManufactureProcessController extends Controller
 
 
         if ($result) {
-            return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully"]);
+            if(isset($request->save_q))
+            {
+                return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+            }
+            else
+                return redirect("add-batch-manufacture")->with(['success' => " Batch  Data Update successfully"]);
         }
 
     }

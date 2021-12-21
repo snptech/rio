@@ -1,5 +1,5 @@
 <div id="requisition" class="tab-pane fade {{ $sequenceId == '2' ? 'in active show' : '' }}">
-    <form id="packing_material_requisition_slip" method="post"
+    <form id="material_requisition_slip" method="post"
         action="{{ route('packing_material_requisition_slip_update') }}">
         <input type="hidden" value="2" name="sequenceId">
         <input type="hidden" value="{{ isset($requestion->id) ? $requestion->id : '' }}" name="id">
@@ -122,9 +122,9 @@
             <div class="col-12">
                 <div class="form-group">
                     <button type="submit"
-                        class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light">Submit &
-                        Next</button><button type="clear"
-                        class="btn btn-light btn-md form-btn waves-effect waves-light">Save &
+                        class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light" name="submit" value="submit">Submit
+                        & Next</button><button type="clear"
+                        class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save &
                         Quite</button>
                 </div>
             </div>

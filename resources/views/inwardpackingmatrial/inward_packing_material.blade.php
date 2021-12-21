@@ -27,12 +27,12 @@
 
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-3">
+                            {{-- <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="ReceiptNo" id="ReceiptNo" placeholder="Receipt No.">
 
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group">

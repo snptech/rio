@@ -86,6 +86,7 @@ class RawmaterialController extends Controller
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
         $data["material_type"] = $request->type?$request->type:"";
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
+        $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
 
 
         /*if($request->expierydat)
@@ -187,6 +188,7 @@ class RawmaterialController extends Controller
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
         $data["material_type"] = $request->type?$request->type:"";
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
+        $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
         /*if($request->expierydat)
         {
             $expdate = explode("/",$request->expierydate);

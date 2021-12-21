@@ -83,7 +83,7 @@
                 @endif
 
                 <div class="tab-content">
-                   
+                    
                     @if (isset($edit_batchmanufacturing))
                         @include("batch.mainbatchedit")
                     @endif
@@ -645,15 +645,40 @@
 
                 },
             });
+            $("#material_requisition_slip").validate({
+                rules: {
+                    from: "required",
+                    to: "required",
+                    batchNo: "required",
+                    Date: "required",
+                    "PackingMaterialName[]": "required",                   
+                    "Quantity[]": "required",
+                    checkedBy: "required",
+                    ApprovedBy: "required",
+                },
+                messages: {
+                    from: "Please  Enter The from Name",
+                    to: "Please  Enter The to Name",
+                    batchNo: "Please  Enter The batchNo Name",
+                    Date: "Please  Enter The Date Name",
+                    PackingMaterialName: "Please  Enter The PackingMaterialName Name",
+                    Capacity: "Please  Enter The Capacity Name",
+                    Quantity: "Please  Enter The Quantity Name",
+                    checkedBy: "Please  Enter The checkedBy Name",
+                    ApprovedBy: "Please  Enter The ApprovedBy Name",
+
+                },
+            });
+            
             $("#packing_material_requisition_slip").validate({
                 rules: {
                     from: "required",
                     to: "required",
                     batchNo: "required",
                     Date: "required",
-                    PackingMaterialName: "required",
-                    Capacity: "required",
-                    Quantity: "required",
+                    "PackingMaterialName[]": "required",
+                    "Capacity[]": "required",
+                    "Quantity[]": "required",
                     checkedBy: "required",
                     ApprovedBy: "required",
                 },

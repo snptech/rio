@@ -22,6 +22,7 @@ class Rawmeterial extends Model
         "man_date",
         "material_type",
         "capacity",
+        "material_code"
 
     ];
     protected static function boot()
