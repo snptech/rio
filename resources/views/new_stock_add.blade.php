@@ -52,7 +52,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="BatchNo">Batch No.</label>
-                            <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                            <input type="text" class="form-control alphanumeric" name="batch_no" id="batch_no" placeholder="Batch"  maxlength="12">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -72,7 +72,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity (Optional)</label>
-                            <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                            <input type="text" class="form-control alphanumeric" name="viscosity" id="viscosity" placeholder="Viscosity" maxlength="12">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -90,31 +90,31 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="200KgDrums">Total No. of 200Kg Drums</label>
-                            <input type="text" class="form-control qty-group" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_200kg_drums" id="total_no_of_200kg_drums" placeholder="200Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="50KgDrums">Total No. of 50Kg Drums</label>
-                            <input type="text" class="form-control qty-group" name="total_no_of_50kg_drums" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_50kg_drums" id="total_no_of_50kg_drums" placeholder="50Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="30KgDrums">Total No. of 30Kg Drums</label>
-                            <input type="text" class="form-control qty-group" name="total_no_of_30kg_drums" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_30kg_drums" id="total_no_of_30kg_drums" placeholder="30Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="5KgDrums">Total No. of 5Kg Drums</label>
-                            <input type="text" class="form-control qty-group" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_5kg_drums" id="total_no_of_5kg_drums" placeholder="5Kg Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="FiberboardDrums">Total No. of Fiber board Drums</label>
-                            <input type="text" class="form-control qty-group" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Fiber board Drums">
+                            <input type="number" class="form-control qty-group" name="total_no_of_fiber_board_drums" id="total_no_of_fiber_board_drums" placeholder="Fiber board Drums">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -126,7 +126,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">AR No</label>
-                            <input type="text" class="form-control" name="ar_no" id="ar_no" placeholder="AR.No" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"/>
+                            <input type="text" class="form-control alphanumeric" name="ar_no" id="ar_no" placeholder="AR.No" pattern="\d*" maxlength="12" />
 
 
                             <!-- <select class="form-control select" name="ar_no" id="ar_no">
@@ -179,6 +179,7 @@
 <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
 <script>
 
     $(document).ready(function() {

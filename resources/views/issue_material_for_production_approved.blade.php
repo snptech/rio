@@ -249,10 +249,10 @@
                 @if(isset($material_details) && $material_details)
                 @foreach ($material_details as $mat)
                 "material_name{{ $mat->details_id }}":"required",
-                "rBatch{{ $mat->details_id }}":"required",
-                "arno{{ $mat->details_id }}":"required",
-                "Quantity_app{{ $mat->details_id }}": "required",
-                "details_id{{ $mat->details_id }}":"required",
+                "rBatch{{ $mat->details_id }}[]":"required",
+                "arno{{ $mat->details_id }}[]":"required",
+                "Quantity_app{{ $mat->details_id }}[]": "required",
+                "details_id{{ $mat->details_id }}[]":"required",
                 @endforeach
                 @endif
                 checkedBy: "required",
