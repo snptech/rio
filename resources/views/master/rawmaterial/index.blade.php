@@ -37,7 +37,7 @@
                         <th>Rio Exp. Date</th> -->
                         <th>Created At</th>
                         <th>Updated At</th>
-                        <!--<th>Action</th>-->
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@
 
                         <td>{{ date("d/m/Y H:i",strtotime($val->created_at)) }}</td>
 
-                         {{--  <td class="actions"><a href="{{ route("edit-rawmaterial",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-rawmaterial",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a></td>--}}
+                         <td class="actions">@if(Auth::user()->role_id==1) <a href="{{ route("edit-rawmaterial",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-rawmaterial",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a> @endif</td>
                     </tr>
                         @php($i++)
                         @endforeach
