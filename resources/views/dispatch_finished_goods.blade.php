@@ -15,7 +15,7 @@
     </div>
     <div class="card main-card">
         <div class="card-body">
-            <div class="filter">
+            {{-- <div class="filter">
                 <h3>Filter</h3>
                 <div class="form-row">
                     <div class="col-12 col-md-6 col-lg-3">
@@ -37,7 +37,7 @@
                         <button type="search" class="btn btn-primary">Search</button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="tbl-sticky">
             <div class="table-responsive">
 

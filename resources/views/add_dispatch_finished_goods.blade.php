@@ -217,7 +217,7 @@
                                     <label for="5KgDrums">Total No. of Fiber Board Drums</label>
                                     <input type="number" class="form-control qty-group" name="total_no_of_fiber_board_drums"
                                         id="total_no_of_fiber_board_drums" placeholder="Total No. of Fiber Board Drums"
-                                        onkeyup="sub()">
+                                        onkeyup="sub()" value="0">
                                     @if ($errors->has('total_no_of_fiber_board_drums'))
                                         <span
                                             class="text-danger">{{ $errors->first('total_no_of_fiber_board_drums') }}</span>
