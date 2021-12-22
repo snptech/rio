@@ -62,7 +62,7 @@
                                 <div class="row add-more-wrap after-add-more m-0 mb-4">
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-group">
-                                            @php$rw = [$rd->material_id => $rawmaterials[$rd->material_id]];
+                                            @php $rw = [$rd->material_id => $rawmaterials[$rd->material_id]];
                                             @endphp
                                             <label for="rawMaterialName" class="active">Raw
                                                 Material</label>
