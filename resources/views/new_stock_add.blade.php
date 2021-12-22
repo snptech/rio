@@ -126,7 +126,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">AR No</label>
-                            <input type="text" class="form-control alphanumeric" name="ar_no" id="ar_no" placeholder="AR.No"  maxlength="50" />
+                            <input type="text" class="form-control" name="ar_no" id="ar_no" placeholder="AR.No"  maxlength="50" />
 
 
                             <!-- <select class="form-control select" name="ar_no" id="ar_no">
