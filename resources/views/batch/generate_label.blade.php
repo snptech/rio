@@ -27,8 +27,8 @@
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo" id="bmrNo"
                         value="{{ isset($edit_batchmanufacturing->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
-                        readonly pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        readonly pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -36,8 +36,8 @@
                     <label for="batchNo">Batch No.</label>
                     <input type="text" class="form-control" name="batchNo" id="batchNo"
                         value="{{ isset($edit_batchmanufacturing->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                        readonly pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        readonly pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -45,8 +45,8 @@
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
                         value="{{ isset($edit_batchmanufacturing->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
-                        readonly pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        readonly pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                 </div>
             </div>
 

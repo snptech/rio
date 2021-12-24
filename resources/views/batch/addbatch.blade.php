@@ -15,7 +15,7 @@
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo" id="bmrNo"
                         placeholder="BMR No." pattern="\d*" maxlength="50"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                        >
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -23,7 +23,7 @@
                     <label for="batchNo">Batch No.</label>
                     <input type="text" class="form-control" name="batchNo" id="batchNo"
                         placeholder="Batch No." pattern="\d*" maxlength="50"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                        >
                 </div>
                 @if ($errors->has('proName'))
                     <span class="text-danger">{{ $errors->first('proName') }}</span>
@@ -34,7 +34,7 @@
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
                         placeholder="Ref. MFR No." pattern="\d*" maxlength="50"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                        >
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -42,7 +42,7 @@
                     <label for="grade" class="active">Grade</label>
                     <input type="text" class="form-control" name="grade" id="grade"
                         placeholder="Grade" pattern="\d*" maxlength="50"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                        >
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -58,7 +58,7 @@
                     <label for="Viscosity" class="active">Viscosity</label>
                     <input type="text" class="form-control" name="Viscosity" id="Viscosity"
                         placeholder="Viscosity" pattern="\d*" maxlength="50"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                        >
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6"> &nbsp; </div>

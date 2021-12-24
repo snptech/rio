@@ -24,8 +24,8 @@
                 <div class="form-group">
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo" id="bmrNo"
-                        value="{{ $res_data->bmrNo }}" pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        value="{{ $res_data->bmrNo }}" pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -33,8 +33,8 @@
                     <label for="batchNoI">Batch No.</label>
                     <input type="text" class="form-control valid" name="batchNoI" id="batchNoI"
                         value="{{ $res_data->batchNoI }}" readonly="" aria-invalid="false"
-                        pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                        pattern="\d*" maxlength="120"
+                        onkeypress="">
                 </div>
             </div>
 
@@ -42,8 +42,8 @@
                 <div class="form-group">
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
-                        value="{{ $res_data->refMfrNo }}" pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        value="{{ $res_data->refMfrNo }}" pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                     >
                 </div>
             </div>

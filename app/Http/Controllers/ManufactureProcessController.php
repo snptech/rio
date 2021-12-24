@@ -259,6 +259,7 @@ class ManufactureProcessController extends Controller
         }
             $data["department"] = Department::where("department_type","W")->get();
             $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
+            $data["packingmaterialsarr"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->select("material_name", "id")->get();
             $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
             $data["batchName"] = array();
 

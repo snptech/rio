@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
-                        maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        maxlength="12" onkeypress=""
                         value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
                         readonly>
                 </div>
@@ -35,7 +35,7 @@
                     <label for="batchNo">Batch No.</label>
                     <input type="text" class="form-control" name="batchNo" id="batchNo"
                         pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        onkeypress=""
                         value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
                         readonly>
                 </div>
@@ -45,7 +45,7 @@
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
                         pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        onkeypress=""
                         value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
                         readonly>
                 </div>

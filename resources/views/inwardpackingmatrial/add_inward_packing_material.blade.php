@@ -80,7 +80,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="receiptNo">Goods Receipt No.</label>
-                            <input type="text" class="form-control" name="goods_receipt_no" id="goods_receipt_no" value="{{ old("goods_receipt_no") }}"placeholder="GRM/RM/Receipt No." pattern="\d*" maxlength="50" onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                            <input type="text" class="form-control" name="goods_receipt_no" id="goods_receipt_no" value="{{ old("goods_receipt_no") }}"placeholder="GRM/RM/Receipt No." pattern="\d*" maxlength="50">
                             @if ($errors->has('goods_receipt_no'))
                           <span class="text-danger">{{ $errors->first('goods_receipt_no') }}</span>
                           @endif
@@ -117,7 +117,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="ARNo">AR No. / Date</label>
-                                        <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value="{{ old("ar_no_date") }}" pattern="\d*" maxlength="120" onkeypress="return /[0-9a-zA-Z\s\\/-/_/@]/i.test(event.key)">
+                                        <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value="{{ old("ar_no_date") }}" pattern="\d*" maxlength="120">
                                         @if ($errors->has('ar_no_date'))
                                         <span class="text-danger">{{ $errors->first('ar_no_date') }}</span>
                                         @endif

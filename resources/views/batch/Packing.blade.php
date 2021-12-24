@@ -27,7 +27,7 @@
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo"
                         value="{{ $edit_batchmanufacturing->bmrNo }}" id="bmrNo" pattern="\d*"
-                        maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        maxlength="120" onkeypress=""
                         readonly>
                 </div>
             </div>
@@ -36,8 +36,8 @@
                     <label for="batchNo">Batch No.</label>
                     <input type="text" class="form-control" name="batchNo"
                         value="{{ $edit_batchmanufacturing->batchNo }}" id="batchNo" readonly
-                        pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -45,8 +45,8 @@
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo"
                         value="{{ $edit_batchmanufacturing->refMfrNo }}" id="refMfrNo"
-                        placeholder="Ref. MFR No." pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)" readonly>
+                        placeholder="Ref. MFR No." pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">

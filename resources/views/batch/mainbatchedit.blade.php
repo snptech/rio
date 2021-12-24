@@ -20,7 +20,7 @@
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo"
                         value="{{ $edit_batchmanufacturing->bmrNo }}" id="bmrNo" pattern="\d*"
-                        maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                        maxlength="120" onkeypress="">
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -28,7 +28,7 @@
                     <label for="batchNo">Batch No.</label>
                     <input type="text" class="form-control" name="batchNo"
                         value="{{ $edit_batchmanufacturing->batchNo }}" id="batchNo" pattern="\d*"
-                        maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                        maxlength="120" onkeypress="">
                     
                 </div>
             </div>
@@ -37,8 +37,8 @@
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo"
                         value="{{ $edit_batchmanufacturing->refMfrNo }}" id="refMfrNo"
-                        pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                        pattern="\d*" maxlength="120"
+                        onkeypress="">
                     
                 </div>
             </div>
@@ -47,8 +47,8 @@
                     <label for="grade" class="active">Grade</label>
                     <input type="text" class="form-control" name="grade"
                         value="{{ $edit_batchmanufacturing->grade }}" id="grade" placeholder=""
-                        pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                        pattern="\d*" maxlength="120"
+                        onkeypress="">
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -56,7 +56,7 @@
                     <label for="BatchSize" class="active">Batch Size</label>
                     <input type="text" class="form-control" name="BatchSize"
                         value="{{ $edit_batchmanufacturing->BatchSize }}" id="BatchSize"
-                        placeholder="" pattern="\d*" maxlength="12"
+                        placeholder="" pattern="\d*" maxlength="120"
                         onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                 </div>
             </div>
@@ -65,8 +65,8 @@
                     <label for="Viscosity" class="active">Viscosity</label>
                     <input type="text" class="form-control" name="Viscosity"
                         value="{{ $edit_batchmanufacturing->Viscosity }}" id="Viscosity"
-                        placeholder="" value="2000-2500 cSt" pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)">
+                        placeholder="" value="2000-2500 cSt" pattern="\d*" maxlength="120"
+                        onkeypress="">
                 </div>
             </div>
             <div class="row">

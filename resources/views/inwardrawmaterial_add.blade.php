@@ -112,14 +112,14 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity <span class="text-danger">(Only for certain Products)</span></label>
-                            <input type="text" class="form-control"  pattern="\d*" maxlength="50" name="viscosity" id="viscosity" placeholder="Viscosity"   value="{{ old("viscosity") }}" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)">
+                            <input type="text" class="form-control"  pattern="\d*" maxlength="50" name="viscosity" id="viscosity" placeholder="Viscosity"   value="{{ old("viscosity") }}">
                         </div>
                     </div>
                   
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="invoiceNo">Invoice No.</label>
-						  <input type="text" class="form-control" id="invoiceNo" name="invoiceNo"   pattern="^[a-zA-Z0-9]" / maxlength="120" placeholder="Invoice No" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)">
+						  <input type="text" class="form-control" id="invoiceNo" name="invoiceNo"   pattern="^[a-zA-Z0-9]" / maxlength="120" placeholder="Invoice No" >
                           @if ($errors->has('invoiceNo'))
                           <span class="text-danger">{{ $errors->first('invoiceNo') }}</span>
                         @endif
@@ -128,7 +128,7 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="receiptNo">Goods Receipt No.</label>
-						  <input type="text" class="form-control" id="receiptNo" pattern="\d*" maxlength="30"  name="receiptNo" placeholder="GRM/RM/Receipt No." onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)">
+						  <input type="text" class="form-control" id="receiptNo" pattern="\d*" maxlength="30"  name="receiptNo" placeholder="GRM/RM/Receipt No." >
                           @if ($errors->has('receiptNo'))
                           <span class="text-danger">{{ $errors->first('receiptNo') }}</span>
                         @endif
@@ -152,8 +152,7 @@
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="batch">Batch No.</label>
-									  <input type="text" class="form-control" name="batch[]" id="batch" placeholder="Batch" pattern="\d*" maxlength="50" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"
->
+									  <input type="text" class="form-control" name="batch[]" id="batch" placeholder="Batch" pattern="\d*" maxlength="150">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
@@ -191,7 +190,7 @@
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="ARNo">AR No. / Date</label>
-									  <input type="text" class="form-control" id="ARNo" placeholder="AR No. / Date" name="ARNo[]" value=""  maxlength="120" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)">
+									  <input type="text" class="form-control" id="ARNo" placeholder="AR No. / Date" name="ARNo[]" value=""  maxlength="120">
 									</div>
 								</div>
 							</div>

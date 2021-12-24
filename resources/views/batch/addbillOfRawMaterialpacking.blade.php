@@ -20,7 +20,7 @@
                     <label for="bmrNo" class="active">BMR No.</label>
                     <input type="text" class="form-control" name="bmrNo" id="bmrNo"
                         placeholder="BMR No." pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        onkeypress=""
                         value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
                         readonly>
                 </div>
@@ -30,7 +30,7 @@
                     <label for="batchNoI">Batch No.</label>
                     <input type="text" class="form-control" name="batchNoI" id="batchNoI"
                         placeholder="Batch No." pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        onkeypress=""
                         value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNoI') }}"
                         readonly>
                 </div>
@@ -40,7 +40,7 @@
                     <label for="refMfrNo">Ref. MFR No.</label>
                     <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
                         placeholder="Ref. MFR No." pattern="\d*" maxlength="12"
-                        onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"
+                        onkeypress=""
                         value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
                         readonly>
                 </div>
