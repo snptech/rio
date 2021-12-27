@@ -391,7 +391,7 @@ class MaterialForProductionController extends Controller
                                 $stocka["material_type"] =  $type;
                                 $stocka["department"] =  $materialreq->to;
                                 $stocka["qty"] =  $qty;
-                                $stocka["batch_no"] =  0;
+                                $stocka["batch_no"] =  $materialreq->batchNo;
                                 $stocka["process_batch_id"] =  $request->batch_id;
                                 $stocka["ar_no_date"] =  "";
                                 $stocka["type"] =  $type;
