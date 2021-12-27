@@ -101,7 +101,7 @@ class DesignationController extends Controller
         if($id)
         {
             $designation = Designation::where("id",$id)->first();
-            return view("master.Designation.edit")->with(["designation"=>$designation]);
+            return view("master.designation.edit")->with(["designation"=>$designation]);
         }
         else
             redirect(404);
