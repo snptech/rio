@@ -12,7 +12,7 @@ class IssualStoresForProduction extends Model
     protected $table = 'issual_by_stores_for_production';
     protected $fillable = [
         "id",
-        "requisition_no	",
+        "requisition_no",
         "opening_balance",
         "issual_date",
         "product_name",
