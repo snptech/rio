@@ -2008,7 +2008,7 @@ class ManufactureProcessController extends Controller
     {
         if($request->id)
         {
-            $batchstock = Stock::select("inward_raw_materials_items.batch_no","inward_raw_materials_items.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.process_batch_id")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
+            $batchstock = Stock::select("inward_raw_materials_items.batch_no","inward_raw_materials_items.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
 
             $data["batch"] = $batchstock;
 

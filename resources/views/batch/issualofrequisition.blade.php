@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th>Requestion No</th>
-                <th>Batch No</th>
+                <th>Process Batch No</th>
                 <th>Date</th>
 
                 <th>Requestion Raw Material Name</th>
@@ -21,9 +21,11 @@
 
             @if ($requestion)
                 @foreach ($requestion as $req)
-                    @php $requestion_details = \App\Models\DetailsRequisition::select('detail_packing_material_requisition.*', 'raw_materials.material_name')
+                    @php $requestion_details = \App\Models\DetailsRequisition::select('detail_packing_material_requisition.*', 'raw_materials.material_name',"inward_raw_materials_items.batch_no")
                             ->where('requisition_id', $req->id)
                             ->join('raw_materials', 'raw_materials.id', 'detail_packing_material_requisition.PackingMaterialName')
+                            ->join('issue_material_production_requestion_details', 'issue_material_production_requestion_details.main_details_id', 'detail_packing_material_requisition.requisition_id')
+                            ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'issue_material_production_requestion_details.batch_id')
                             ->orderBy('id', 'desc')
                             ->get();
                     @endphp
@@ -31,7 +33,7 @@
                         @foreach ($requestion_details as $temp)
                             <tr>
                                 <td>{{ $req->id }}</td>
-                                <td>{{ $req->batchNo }}</td>
+                                <td>{{ $temp->batch_no }}</td>
                                 <td>{{ $req->created_at ? date('d/m/Y', strtotime($req->created_at)) : '' }}
                                 </td>
                                 <td>{{ $temp->material_name }}</td>

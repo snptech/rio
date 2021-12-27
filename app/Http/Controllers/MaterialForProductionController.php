@@ -275,7 +275,7 @@ class MaterialForProductionController extends Controller
         if($request->id)
         {
             $material_details = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$request->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
-
+            
 
             $arrRules = [
                 "from"=>"required",
@@ -339,7 +339,9 @@ class MaterialForProductionController extends Controller
                    foreach($material_details as $material)
                    {
                         $batch = "rBatch".$material->id;
+                       
                         $batches = $request->$batch;
+                       
                         $qty = 0;
                        if(count($batches) >0)
                         {
@@ -391,7 +393,7 @@ class MaterialForProductionController extends Controller
                                 $stocka["material_type"] =  $type;
                                 $stocka["department"] =  $materialreq->to;
                                 $stocka["qty"] =  $qty;
-                                $stocka["batch_no"] =  $materialreq->batchNo;
+                                $stocka["batch_no"] =  $v;
                                 $stocka["process_batch_id"] =  $request->batch_id;
                                 $stocka["ar_no_date"] =  "";
                                 $stocka["type"] =  $type;

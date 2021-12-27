@@ -145,7 +145,7 @@
                                 <div class="form-group">
                                     <label for="Viscosity">Viscosity</label>
                                     <input type="text" class="form-control" name="viscosity" id="viscosity"
-                                        placeholder="Viscosity" pattern="\d*" maxlength="120"
+                                        placeholder="Viscosity"  maxlength="120"
                                         onkeypress="">
                                 </div>
                             </div>
