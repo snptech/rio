@@ -141,7 +141,7 @@
                                         ->where('department', 3)
                                         ->where(DB::raw('qty-stock.used_qty'), '>', 0)
                                         ->join('raw_materials', 'raw_materials.id', 'stock.matarial_id')
-                                        ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'stock.batch_no')
+                                        ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'stock.process_batch_id')
                                         ->where('stock.material_type', 'R')
                                         ->where('stock.matarial_id', $rd->material_id)
                                         ->pluck('batch_no', 'id');
