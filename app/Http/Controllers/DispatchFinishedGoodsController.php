@@ -48,7 +48,7 @@ class DispatchFinishedGoodsController extends Controller
     public function add_dispatch_finished_goods()
     {
         $data['supplier_master'] = Supplier::all();
-        $data['mode'] = Modedispatch::all();
+        $data['mode'] = Modedispatch::where("publish",1)->get();
         $data["product"] = Rawmeterial::where("material_type","F")->where("material_stock",">",0)->pluck("material_name","id");
         $data["department"] = Department::where("publish",1)->pluck("department","id");
         $data["partyname"] = PartyMaster::pluck("company_name","id");
@@ -167,7 +167,7 @@ class DispatchFinishedGoodsController extends Controller
     public function edit_dispatch_finished($id)
     {
         $supplier_master = Supplier::all();
-        $mode = Modedispatch::all();
+        $mode = Modedispatch::where("publish",1)->get();
         $grade = Grade::all();
         $finished = FinishedGoodsDispatch::where("id", $id)->first();
         return view("edit_dispatch_finished")->with(["finished" => $finished, "supplier_master" => $supplier_master, "mode" => $mode, "grade" => $grade]);
