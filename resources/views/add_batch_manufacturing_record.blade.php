@@ -83,10 +83,8 @@
 						?>
 						
 						@include("batch.addbatch")
-                        @include("batch.addbillOfRawMaterial")
                         @include("batch.addrequisition")
-                        @include("batch.addbillOfRawMaterialpacking")
-						@include("batch.addrequisitionpacking")
+                        @include("batch.addrequisitionpacking")
 						@include("batch.addlistOfEquipment")
 						@include("batch.addhomogenizing")
 						@include("batch.addaddLots_listing")

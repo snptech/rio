@@ -1,4 +1,4 @@
-<div id="homogenizing" class="tab-pane fade {{ $sequenceId == '1' ? 'in active show' : '' }}">
+<div id="homogenizing" class="tab-pane fade {{ $sequenceId == '11' ? 'in active show' : '' }}">
     <div class="form-group">
         <input type="hidden" value="9" name="sequenceId">
 
@@ -42,10 +42,8 @@
         </tbody>
     </table>
 
-
-
 </div>
-<div id="addhomogenizing" class="tab-pane fade {{ $sequenceId == '11' ? 'in active show' : '' }}">
+<div id="addhomogenizing" class="tab-pane fade {{ $sequenceId == 11 ? 'in active show' : '' }}">
     <form id="add_homogninge" method="post" action="{{ route('homogenizing_update') }}">
         <input type="hidden" value="11" name="sequenceId">
         <input type="hidden" value="{{ isset($Homogenizing->id) ? $Homogenizing->id : '' }}" name="id">

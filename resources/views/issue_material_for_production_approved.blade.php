@@ -124,7 +124,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="Quantity" class="active">Issued Quantity (Kg.)</label>
+                                        <label for="Quantity" class="active">Approved Quantity (Kg.)</label>
                                         <input type="text" class="form-control Quantity_app{{ $mat->details_id }}" name="Quantity_app{{ $mat->details_id }}[]" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="">
                                         <input type="hidden" name="details_id{{ $mat->details_id }}" value="{{ $mat->details_id }}">
                                     </div>
