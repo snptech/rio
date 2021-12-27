@@ -15,11 +15,11 @@
         </div>
         <div class="card main-card">
             <div class="card-body">
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs tablist" role="tablist">
                     <li><a role="tab" class="{{ $sequenceId == '1' ? 'active' : '' }}"
                             area-selected="{{ $sequenceId == '1' ? 'true' : 'false' }}" data-toggle="tab"
                             href="#batch">Batch</a></li>
-                    <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Raw
+                    <li class="dropdown"><a role="tab" class="dropdown-toggle {{ in_array($sequenceId,array(2,3)) ? 'active' : '' }}" data-toggle="dropdown" href="#">Raw
                             Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a role="tab" class="{{ $sequenceId == '2' ? 'active' : '' }}"
@@ -32,7 +32,7 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a role="tab" class="dropdown-toggle" data-toggle="dropdown" href="#">Packing
+                    <li class="dropdown"><a role="tab" class="dropdown-toggle {{ in_array($sequenceId,array(5,6)) ? 'active' : '' }}" data-toggle="dropdown" href="#">Packing
                             Material<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a role="tab" class="{{ $sequenceId == '5' ? 'active' : '' }}"
@@ -48,11 +48,11 @@
                     <li><a role="tab" class="{{ $sequenceId == '8' ? 'active' : '' }}"
                             area-selected="{{ $sequenceId == '8' ? 'true' : 'false' }}" data-toggle="tab"
                             href="#listOfEquipment">List of Equipment</a></li>
-                    <li><a role="tab" class="{{ $sequenceId == '9' ? 'active' : '' }}"
-                            area-selected="{{ $sequenceId == '9' ? 'true' : 'false' }}" data-toggle="tab"
+                    <li><a role="tab" class="{{ in_array($sequenceId,array(9,10)) ? 'active' : '' }} lots"
+                            area-selected="{{ in_array($sequenceId,array(9,10)) ? 'true' : 'false' }}" data-toggle="tab"
                             href="#addLots_listing">Lots</a></li>
-                    <li><a role="tab" class="{{ $sequenceId == '10' ? 'active' : '' }}"
-                            area-selected="{{ $sequenceId == '10' ? 'true' : 'false' }}" data-toggle="tab" href="#addLots"
+                    <li><a role="tab" class="{{ in_array($sequenceId,array(9,10)) ? 'active' : '' }}"
+                            area-selected="{{ in_array($sequenceId,array(9,10)) ? 'true' : 'false' }}" data-toggle="tab" href="#addLots"
                             hidden="hidden">Lots</a></li>
                     <li><a role="tab" class="{{ $sequenceId == '11' ? 'active' : '' }}"
                             area-selected="{{ $sequenceId == '11' ? 'true' : 'false' }}" data-toggle="tab"
@@ -887,6 +887,9 @@
 
                 });
             });
+
+          
         });
+        
     </script>
 @endpush

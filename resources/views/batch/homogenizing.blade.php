@@ -1,4 +1,4 @@
-<div id="homogenizing" class="tab-pane fade {{ $sequenceId == '10' ? 'in active show' : '' }}">
+<div id="homogenizing" class="tab-pane fade {{ $sequenceId == '1' ? 'in active show' : '' }}">
     <div class="form-group">
         <input type="hidden" value="9" name="sequenceId">
 

@@ -1,11 +1,11 @@
-<div id="addLots_listing" class="tab-pane fade {{ $sequenceId == '9' ? 'in active show' : '' }}">
+<div id="addLots_listing" class="tab-pane fade {{ in_array($sequenceId,array(9,10)) ? 'in active show' : '' }}">
     @php $doneBy = [\Auth::user()->id => \Auth::user()->name];
     @endphp
     <div class="form-group">
         <input type="hidden" value="9" name="sequenceId">
 
         <a role="tab" data-toggle="tab" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light "
-            href="#addLots">Add
+            href="#addLots" onclick="">Add
             Lot</a>
     </div>
 
@@ -48,7 +48,7 @@
 
 </div>
 
-<div id="addLots" class="tab-pane fade {{ $sequenceId == '10' ? 'in active show' : '' }}">
+<div id="addLots" class="tab-pane fade">
 
     <form method="post" action="{{ route('add_lots_update') }}" id="add_lots_process" name="add_lots_process">
         <div class="form-row">
@@ -297,6 +297,8 @@
                 </div>
 
             </div>
+        </div>
     </form>
 </div>
-</div>
+
+
