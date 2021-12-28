@@ -24,8 +24,8 @@
                     @php $requestion_details = \App\Models\DetailsRequisition::select('detail_packing_material_requisition.*', 'raw_materials.material_name',"inward_raw_materials_items.batch_no")
                             ->where('requisition_id', $req->id)
                             ->join('raw_materials', 'raw_materials.id', 'detail_packing_material_requisition.PackingMaterialName')
-                            ->join('issue_material_production_requestion_details', 'issue_material_production_requestion_details.main_details_id', 'detail_packing_material_requisition.requisition_id')
-                            ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'issue_material_production_requestion_details.batch_id')
+                            ->leftJoin('issue_material_production_requestion_details', 'issue_material_production_requestion_details.main_details_id', 'detail_packing_material_requisition.requisition_id')
+                            ->leftJoin('inward_raw_materials_items', 'inward_raw_materials_items.id', 'issue_material_production_requestion_details.batch_id')
                             ->orderBy('id', 'desc')
                             ->get();
                     @endphp
