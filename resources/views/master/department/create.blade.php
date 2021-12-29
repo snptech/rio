@@ -39,7 +39,7 @@
                                       type="radio"
                                       name="dep_type"
                                       id="inlineRadio1"
-                                      value="1"
+                                      value="W"
                                       @if(old('dep_type') == 'W') checked @endif
                                     />
                                     <label class="form-check-label" for="inlineRadio1"> Warehouse</label>
@@ -51,7 +51,7 @@
                                       type="radio"
                                       name="dep_type"
                                       id="inlineRadio2"
-                                      value="0"
+                                      value="D"
                                       @if(old('dep_type') == "D") checked @endif
                                     />
                                     <label class="form-check-label" for="inlineRadio2">Department</label>
