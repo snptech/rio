@@ -193,7 +193,7 @@
                 @php
                 $material_type = isset($material_type)? $material_type: "Raw Material";
                 $details_id    = isset($mat->details_id) ?$mat->details_id: 3;
-                $batch_new     = isset($batch)?$batch:'';
+                $batch_new     = isset($batch)?$batch:array();
                 $material_name_2 = isset($mat->PackingMaterialName)? $mat->PackingMaterialName:'';
                 @endphp
                 $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
