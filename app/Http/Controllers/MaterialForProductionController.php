@@ -221,7 +221,7 @@ class MaterialForProductionController extends Controller
             //
             ->where("packing_material_requisition_slip.id",$request->id)
             ->first();
-
+dd($data['issue_material']);
             $data["material_details"] = DetailsRequisition::select("detail_packing_material_requisition.*",
             "raw_materials.material_name","detail_packing_material_requisition.id as details_id")
             ->where("requisition_id",$data["issue_material"]->id)
