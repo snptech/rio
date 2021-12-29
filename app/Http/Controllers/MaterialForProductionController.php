@@ -227,7 +227,7 @@ class MaterialForProductionController extends Controller
             ->where("requisition_id",$data["issue_material"]->id)
             ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
             ->get();
-            dd($data['material_details']);
+           
             return view('issue_material_for_production_approved',$data);
         }
         else    
