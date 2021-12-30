@@ -79,7 +79,7 @@
 
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                   {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Material Expiery Date</label>
                             <input type="date" class="form-control calendar"  name="expierydate" id="expierydate" placeholder="Material Expiery Date" value="{{ old("expierydate")?old("expierydate"):($rawmaterial->expiry_date?date("Y-m-d",$rawmaterial->expiry_date):'')}}">
@@ -111,8 +111,8 @@
                             @endif
 
                         </div>
-                    </div>
-                </div>
+                    </div> --}}
+                </div> 
 
 
                 <div class="form-row">
