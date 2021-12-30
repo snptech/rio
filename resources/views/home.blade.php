@@ -18,12 +18,12 @@
                     <div class="col-12 col-lg-4">
                         <i class="icon manufacture"></i>
                         <p>Today's Production</p>
-                        <h2>{{$stocktoday->qty_rem?$stocktoday->qty_rem:0}} KG</h2>
+                        <h2>{{$stocktoday->qty_rem >0?$stocktoday->qty_rem:0}} KG</h2>
                     </div>
                     <div class="col-12 col-lg-4">
                         <i class="icon supplier"></i>
                         <p>Total Production</p>
-                        <h2>{{$stocktall->qty_rem?$stocktall->qty_rem:0}} KG</h2>
+                        <h2>{{$stocktall->qty_rem >0?$stocktall->qty_rem:0}} KG</h2>
                     </div>
                     <div class="col-12 col-lg-4">
                         <i class="icon customers"></i>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="con-wrap">
                             <p>Total Raw Material</p>
-                            <h2>{{$stocktotalRaw->qty_rem?$stocktotalRaw->qty_rem:0}} KG</h2>
+                            <h2>{{$stocktotalRaw->qty_rem >0?$stocktotalRaw->qty_rem:0}} KG</h2>
                             {{--<span class="situation"><i class="text-success" data-feather="trending-up"></i>15% more than the previous month</span>--}}
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="con-wrap">
                             <p>Total Quantity</p>
-                            <h2>{{$stocktotalRaw->qty_rem?$stocktotalRaw->qty_rem:0}} KG</h2>
+                            <h2>{{$stocktotalRaw->qty_rem>0?$stocktotalRaw->qty_rem:0}} KG</h2>
                             {{--<span class="situation"><i class="text-danger" data-feather="trending-down"></i>5% Less than the previous month</span> --}}
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                         @foreach($stock as $st)
                         <tr>
                             <td>{{$st->material_name}}</td>
-                            <td>{{$st->qty_rem}}</td>
+                            <td>{{$st->qty_rem>0?$st->qty_rem:0}}</td>
                         </tr>
                         @endforeach
                        

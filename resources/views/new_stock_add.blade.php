@@ -216,7 +216,7 @@
                 /*remark: "required",*/
             },
             messages: {
-                inward_date: "Please  Enter The Name Inward No",
+                inward_date: "Please  Enter The date of Inward No",
                 product_name: "Please  Enter The Product Name",
                 batch_no: "Please  Enter The Name Batch No",
                 grade: "Please  Enter The Name Ggrad",
