@@ -239,7 +239,15 @@ class RawmaterialController extends Controller
             $stockarr["ar_no_date"] =  $request->rawmeterial_code?($request->rawmeterial_code):'';
             $stockarr["type"] = $request->type?$request->type:"";
             
-            $stockins = $stockitem->update($stockarr);
+            if(isset($stockitem))
+            {
+                $stockins = $stockitem->update($stockarr);
+            }
+            else
+            {
+                $cr = Stock::create($stockarr);
+            }
+                
 
             return redirect("rawmaterial")->with('message', "Raw Material updated successfully");
         }
