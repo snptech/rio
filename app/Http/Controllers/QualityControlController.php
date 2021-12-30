@@ -7,6 +7,7 @@ use App\Models\Qualitycontroll;
 use App\Models\Rawmeterial;
 use App\Models\InwardMaterial;
 use App\Models\Rawmaterialitems;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 
 class QualityControlController extends Controller
@@ -100,6 +101,22 @@ class QualityControlController extends Controller
                 $datas = array();
                 $datas["ar_no_date"] = $request['ar_number'];
                 $rowmeterial->update($datas);
+
+                $stockarr = array();
+
+                $stockarr["matarial_id"] = $result->raw_material_id;
+                $stockarr["material_type"] = "R";
+                $stockarr["department"] = 3;
+                $stockarr["qty"] = $request['quantity_approved'];
+                $stockarr["batch_no"] = $request['inward_item_id'];
+                $stockarr["process_batch_id"] = $request['inward_item_id'];
+                $stockarr["ar_no_date"] = $request['ar_number'];
+                $stockarr["type"] = "R";
+
+
+                $stid = Stock::create($stockarr);
+
+
             }
             return redirect("quality_control")->with('success', "Item checked successfully.");
          }

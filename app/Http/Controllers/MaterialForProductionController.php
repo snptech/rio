@@ -390,7 +390,7 @@ class MaterialForProductionController extends Controller
                                 $detailsred->update($issualdata);
                                 $stocka = array();
                                 $materialreq =  RequisitionSlip::where("batch_id",$request->batch_id)->first();
-                                $stocka["matarial_id"] =  $request->$matrail_id;
+                                /*$stocka["matarial_id"] =  $request->$matrail_id;
                                 $stocka["material_type"] =  $type;
                                 $stocka["department"] =  $materialreq->to;
                                 $stocka["qty"] =  $qty;
@@ -399,7 +399,7 @@ class MaterialForProductionController extends Controller
                                 $stocka["ar_no_date"] =  "";
                                 $stocka["type"] =  $type;
                                
-                                $resstock = Stock::create($stocka);
+                                $resstock = Stock::create($stocka);*/
                         }
 
 

@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Supplier;
 use App\Models\Manufacturer;
 use App\Models\Rawmeterial;
+use App\Models\Stock;
 use Auth;
 use DB;
 class InwardPackingMaterialController extends Controller
@@ -228,6 +229,22 @@ class InwardPackingMaterialController extends Controller
                     $datas["material_stock"] = ($stock->material_stock+$request->total_qty[$i]);
 
                     $stock->update($datas);
+
+
+                    //stock update on Stock table
+                    $stockarr = array();
+
+                    $stockarr["matarial_id"] = $value;
+                    $stockarr["material_type"] = "P";
+                    $stockarr["department"] = 3;
+                    $stockarr["qty"] = $request->total_qty[$i];
+                    $stockarr["batch_no"] = $request->ar_no_date[$i];
+                    $stockarr["process_batch_id"] = $result->id;
+                    $stockarr["ar_no_date"] = $request->ar_no_date[$i];
+                    $stockarr["type"] = "P";
+
+
+                    $stid = Stock::create($stockarr);
                     $i++;
                 }
 
@@ -331,6 +348,22 @@ class InwardPackingMaterialController extends Controller
                         $datas["total_qty"] = $request->total_qty[$i];
                         $datas["ar_no_date"] = $request->ar_no_date[$i];
                         $result = InwardPackingMaterialItems::create($datas);
+
+
+                        $stockarr = array();
+                        $stockitem = Stock::where("material_id",$value)->where("material_type","P")->where("process_batch_id",$id)->first();
+                        $stockarr["matarial_id"] = $value;
+                        $stockarr["material_type"] = "P";
+                        $stockarr["department"] = 3;
+                        $stockarr["qty"] = $request->total_qty[$i];
+                        $stockarr["batch_no"] = $request->ar_no_date[$i];
+                        $stockarr["process_batch_id"] = $id;
+                        $stockarr["ar_no_date"] = $request->ar_no_date[$i];
+                        $stockarr["type"] = "P";
+
+
+                        $stid = $stockitem->update($stockarr);
+
                         $i++;
                     }
 

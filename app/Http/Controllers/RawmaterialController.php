@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rawmeterial;
+use App\Models\Stock;
 use DB;
 class RawmaterialController extends Controller
 {
@@ -89,6 +90,8 @@ class RawmaterialController extends Controller
         $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
 
 
+        
+
         /*if($request->expierydat)
         {
             $expdate = explode("/",$request->expierydate);
@@ -108,8 +111,23 @@ class RawmaterialController extends Controller
 
         $result = Rawmeterial::create($data);
 
+        
+
+
         if($result->id)
         {
+            $stockarr = array();
+            //$stockitem = Stock::where("material_id",$value)->where("material_type","P")->where("process_batch_id",$id)->first();
+            $stockarr["matarial_id"] = $result->id;
+            $stockarr["material_type"] = $request->type?$request->type:"";;
+            $stockarr["department"] = 3;
+            $stockarr["qty"] = $request->stock;
+            $stockarr["batch_no"] = 0;
+            $stockarr["process_batch_id"] = $result->id;
+            $stockarr["ar_no_date"] =  $request->rawmeterial_code?($request->rawmeterial_code):'';
+            $stockarr["type"] = $request->type?$request->type:"";
+            
+            $stockins = Stock::create($stockarr);
             return redirect("rawmaterial")->with('message', "Raw Material created successfully");
         }
         else
@@ -209,6 +227,20 @@ class RawmaterialController extends Controller
 
         if($result)
         {
+
+            $stockarr = array();
+            $stockitem = Stock::where("material_id",$id)->where("material_type",$request->type)->where("process_batch_id",$id)->first();
+            $stockarr["matarial_id"] = $id;
+            $stockarr["material_type"] = $request->type?$request->type:"";;
+            $stockarr["department"] = 3;
+            $stockarr["qty"] = $request->stock;
+            $stockarr["batch_no"] = 0;
+            $stockarr["process_batch_id"] = $id;
+            $stockarr["ar_no_date"] =  $request->rawmeterial_code?($request->rawmeterial_code):'';
+            $stockarr["type"] = $request->type?$request->type:"";
+            
+            $stockins = $stockitem->update($stockarr);
+
             return redirect("rawmaterial")->with('message', "Raw Material updated successfully");
         }
         else
@@ -227,7 +259,9 @@ class RawmaterialController extends Controller
         $rawmaterial = Rawmeterial::findOrFail($id);
         if($rawmaterial)
         {
+            $stockitem = Stock::where("material_id",$id)->where("material_type",$rawmaterial->material_type)->where("process_batch_id",$id)->first();
             $result = $rawmaterial->delete();
+            $res = $stockitem->delete();
             if($result)
             {
                 return redirect("rawmaterial")->with('message', "Raw Material deleted successfully");
