@@ -351,7 +351,7 @@ class InwardPackingMaterialController extends Controller
 
 
                         $stockarr = array();
-                        $stockitem = Stock::where("material_id",$value)->where("material_type","P")->where("process_batch_id",$id)->first();
+                        $stockitem = Stock::where("matarial_id",$value)->where("material_type","P")->where("process_batch_id",$id)->first();
                         $stockarr["matarial_id"] = $value;
                         $stockarr["material_type"] = "P";
                         $stockarr["department"] = 3;

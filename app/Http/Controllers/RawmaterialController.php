@@ -229,7 +229,7 @@ class RawmaterialController extends Controller
         {
 
             $stockarr = array();
-            $stockitem = Stock::where("material_id",$id)->where("material_type",$request->type)->where("process_batch_id",$id)->first();
+            $stockitem = Stock::where("matarial_id",$id)->where("material_type",$request->type)->where("process_batch_id",$id)->first();
             $stockarr["matarial_id"] = $id;
             $stockarr["material_type"] = $request->type?$request->type:"";;
             $stockarr["department"] = 3;
@@ -259,7 +259,7 @@ class RawmaterialController extends Controller
         $rawmaterial = Rawmeterial::findOrFail($id);
         if($rawmaterial)
         {
-            $stockitem = Stock::where("material_id",$id)->where("material_type",$rawmaterial->material_type)->where("process_batch_id",$id)->first();
+            $stockitem = Stock::where("matarial_id",$id)->where("material_type",$rawmaterial->material_type)->where("process_batch_id",$id)->first();
             $result = $rawmaterial->delete();
             $res = $stockitem->delete();
             if($result)
