@@ -57,7 +57,7 @@
 
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                   {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Material Opening Stock</label>
                             <input type="number" class="form-control" name="stock" id="stock" placeholder="Material Opening Stock" value="{{ old("stock")?old("stock"):$rawmaterial->material_stock }}">
@@ -67,7 +67,7 @@
                             @endif
 
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Material Preorder Stock</label>

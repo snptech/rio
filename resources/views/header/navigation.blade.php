@@ -6,32 +6,77 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
-    @can('inward-rawmaterials-list')
+    @canany('inward-rawmaterials-list','inward-packing-raw-material-list','issue-material-for-production-list','inward-finished-goods-new-stock-list','dispatch-finished-goods-list','quality-control-list','issual-by-stores-for-production-list')
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('inward-rawmaterials') }}">
-        <i class="menu-icon" data-feather="layers"></i>
-        <span class="menu-title">Inward Raw Material</span>
-      </a>
-    </li>
-    @endcan
-    @can('inward-packing-raw-material-list')
-    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-warehouse" aria-expanded="false" aria-controls="ui-manufacture"><i class="menu-icon" data-feather="tool"></i>
+        <span class="menu-title">Warehouse</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
+      <div class="collapse" id="ui-warehouse">
+        <ul class="nav flex-column sub-menu">
+        
+          @can('inward-rawmaterials-list')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('inward-rawmaterials') }}">
+              
+              Inward Raw Material
+            </a>
+          </li>
+          @endcan
+          @can('inward-packing-raw-material-list')
+          <li class="nav-item">
 
-      <a class="nav-link" href="{{ route('inwardpackingrawmaterial-list') }}">
+            <a class="nav-link" href="{{ route('inwardpackingrawmaterial-list') }}">
 
-        <i class="menu-icon" data-feather="package"></i>
-        <span class="menu-title">Inward Packing Material</span>
-      </a>
+             
+              Inward Packing Material
+            </a>
+          </li>
+          @endcan
+          @can('issue-material-for-production-list')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('issue_material_for_production') }}">
+             
+              Issue Material For Production
+            </a>
+          </li>
+          @endcan
+          @can('inward-finished-goods-new-stock-list')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('new_stock') }}">
+              
+              Inward Finished Goods -<br />New Stock
+            </a>
+          </li>
+          @endcan
+          @can('dispatch-finished-goods-list')
+        
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('dispatch_finished_goods') }}">
+             
+              Dispatch Finished Goods
+            </a>
+          </li>
+          @endcan
+          @can('quality-control-list')
+        
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('quality_control') }}">
+              
+              Quality Control
+            </a>
+          </li>
+          @endcan
+          @can('issual-by-stores-for-production-list')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('issual_by_stores_for_production') }}">
+              
+              Issual By Stores For Production
+            </a>
+          </li>
+          @endcan
+        </ul>
+      </div>
     </li>
-    @endcan
-    @can('issue-material-for-production-list')
-     <li class="nav-item">
-      <a class="nav-link" href="{{ route('issue_material_for_production') }}">
-        <i class="menu-icon" data-feather="hard-drive"></i>
-        <span class="menu-title">Issue Material For Production</span>
-      </a>
-    </li>
-    @endcan
+    @endcanany
     {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('issue_packing_material') }}">
     <i class="menu-icon" data-feather="hard-drive"></i>
@@ -61,40 +106,7 @@
   </div>
   </li>
   @endcanany
-  @can('inward-finished-goods-new-stock-list')
-  <li class="nav-item">
-    <a class="nav-link" href="{{ route('new_stock') }}">
-      <i class="menu-icon" data-feather="shopping-cart"></i>
-      <span class="menu-title">Inward Finished Goods -<br />New Stock</span>
-    </a>
-  </li>
-  @endcan
-  @can('dispatch-finished-goods-list')
-
-  <li class="nav-item">
-    <a class="nav-link" href="{{ route('dispatch_finished_goods') }}">
-      <i class="menu-icon" data-feather="truck"></i>
-      <span class="menu-title">Dispatch Finished Goods</span>
-    </a>
-  </li>
-  @endcan
-  @can('quality-control-list')
-
-  <li class="nav-item">
-    <a class="nav-link" href="{{ route('quality_control') }}">
-      <i class="menu-icon" data-feather="check-square"></i>
-      <span class="menu-title">Quality Control</span>
-    </a>
-  </li>
-  @endcan
-  @can('issual-by-stores-for-production-list')
-  <li class="nav-item">
-    <a class="nav-link" href="{{ route('issual_by_stores_for_production') }}">
-      <i class="menu-icon" data-feather="check-square"></i>
-      <span class="menu-title">Issual By Stores For Production</span>
-    </a>
-  </li>
-  @endcan
+ 
   @canany(['annexure-i-list','annexure-ii-list','annexure-iii-list','annexure-iv-list','packing-annexure-list','annexure-iv-list','packing-annexure-list','annexure-vi-list','annexure-vii-list'])
   <li class="nav-item">
     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

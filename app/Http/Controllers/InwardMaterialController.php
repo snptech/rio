@@ -121,6 +121,7 @@ class InwardMaterialController extends Controller
         $data["created_by"] = Auth::user()->id;
         $data["remark"] = $request->remark;
         $data["viscosity"] =$request->viscosity;
+        $data["is_opening"] = $request->openingstock?$request->openingstock:0;
 
         $result = InwardMaterial::create($data);
 
@@ -142,6 +143,7 @@ class InwardMaterialController extends Controller
                     $itemdata["mfg_expiry_date"] = $request->ExpiryDate[$i]!=""?strtotime($request->ExpiryDate[$i]):"";
                     $itemdata["rio_care_expiry_date"] = $request->RIOExpiryDate[$i]!=""?strtotime($request->RIOExpiryDate[$i]):"";
                     $itemdata["ar_no_date"] = $request->ARNo[$i]?($request->ARNo[$i]):"";
+                    $itemdata["is_opening_stock"] = $request->openingstock?$request->openingstock:0;
 
                     $itemdata["opening_stock"] = $stock->material_stock;
 

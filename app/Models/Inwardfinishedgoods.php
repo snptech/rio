@@ -38,6 +38,7 @@ class Inwardfinishedgoods extends Model
         'total_no_of_5kg_drums_bal',
         'total_no_of_fiber_board_drums_bal',
         'total_quantity_bal',
+        'is_opening_stock'
     ];
     protected static function boot()
     {

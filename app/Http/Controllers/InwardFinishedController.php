@@ -8,6 +8,7 @@ use App\Models\Grade;
 use App\Models\Arnomaster;
 use App\Models\Supplier;
 use App\Models\Rawmeterial;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class InwardFinishedController extends Controller
@@ -137,6 +138,7 @@ class InwardFinishedController extends Controller
             'approval_data' => $request['approval_data'],
             'received_by' => Auth::user()->id,
             'remark' => $request['remark'],
+            'is_opening_stock'=> ($request['openingstock']?$request['openingstock']:0)
 
         ];
 
@@ -144,6 +146,20 @@ class InwardFinishedController extends Controller
 
         if($result)
         {
+            $stockarr = array();
+
+            $stockarr["matarial_id"] = $value;
+            $stockarr["material_type"] = "F";
+            $stockarr["department"] = 3;
+            $stockarr["qty"] = $request['total_quantity'];
+            $stockarr["batch_no"] = $request['batch_no'];
+            $stockarr["process_batch_id"] = $result->id;
+            $stockarr["ar_no_date"] = $request['ar_no'];
+            $stockarr["type"] = "F";
+
+
+            $stid = Stock::create($stockarr);
+
             $stock = Rawmeterial::find($request['product_name']);
             if($stock)
             {

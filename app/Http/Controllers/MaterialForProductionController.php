@@ -155,24 +155,36 @@ class MaterialForProductionController extends Controller
         'dispensed_by'=> Auth::user()->id,
         'remark'=> $request['remark'],
         ];
-        $result= Issuematerialproduction::create($data);
-        if($result)
-        {
-            $rawmaterial = Rawmeterial::find($request["matetial"]);
-            if(isset($rawmaterial))
-            {
-                //update rawmaterial main stock
-                $rdata["material_stock"] = ($rawmaterial->material_stock-$request['issued_quantity']);
-                $rawmaterial->update($rdata["material_stock"]);
+        DB::beginTransaction();
 
-                //update rawmaterial batch quantity
-                $batch = Rawmaterialitems::find($request["batch_no"]);
-                if(isset($batch)){
-                    $bdata["used_qty"] = ($batch->used_qty-$request['issued_quantity']);
-                    $batch->update($batch);
+
+   
+    // all good
+
+    try {
+            $result= Issuematerialproduction::create($data);
+            if($result)
+            {
+                $rawmaterial = Rawmeterial::find($request["matetial"]);
+                if(isset($rawmaterial))
+                {
+                    //update rawmaterial main stock
+                    $rdata["material_stock"] = ($rawmaterial->material_stock-$request['issued_quantity']);
+                    $rawmaterial->update($rdata["material_stock"]);
+
+                    //update rawmaterial batch quantity
+                    $batch = Rawmaterialitems::find($request["batch_no"]);
+                    if(isset($batch)){
+                        $bdata["used_qty"] = ($batch->used_qty-$request['issued_quantity']);
+                        $batch->update($batch);
+                    }
                 }
+                DB::commit();
+                return redirect("issue_material_for_production")->with('message', "Data created successfully");
             }
-            return redirect("issue_material_for_production")->with('message', "Data created successfully");
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
         }
     }
     public function getmatarialqtyandbatch(Request $request){
@@ -227,6 +239,8 @@ class MaterialForProductionController extends Controller
             ->where("requisition_id",$data["issue_material"]->id)
             ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
             ->get();
+
+           
            
             return view('issue_material_for_production_approved',$data);
         }
@@ -240,10 +254,10 @@ class MaterialForProductionController extends Controller
         if($request->id && $request->rawmaterial)
         {
             if($request->mat_type == 'P'){
-                $items = InwardPackingMaterialItems::where("material",$request->rawmaterial)->where("id",$request->id)->first();
+                $items = Stock::where("matarial_id",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty-used_qty)"),">",0)->where("material_type","P")->first();
                 if($items)
                 {
-                    $data["qty"] = ($items->total_qty-$items->used_qty);
+                    $data["qty"] = ($items->qty-$items->used_qty);
                     $data["arno"] = ($items->ar_no_date);
                     return response()->json($data);
 
@@ -252,10 +266,10 @@ class MaterialForProductionController extends Controller
                     return response()->json(['qty'=>'Not Available','arno'=>'']);
                 }
             else{
-                $items = Rawmaterialitems::where("material",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty_received_kg-used_qty)"),">",0)->first();
+                $items = Stock::where("matarial_id",$request->rawmaterial)->where("id",$request->id)->where(DB::raw("(qty-used_qty)"),">",0)->where("material_type","R")->first();
                 if($items)
                 {
-                    $data["qty"] = ($items->qty_received_kg-$items->used_qty);
+                    $data["qty"] = ($items->qty-$items->used_qty);
                     $data["arno"] = ($items->ar_no_date);
                     return response()->json($data);
 
@@ -327,87 +341,120 @@ class MaterialForProductionController extends Controller
                $data["ApprovedBy"] = Auth::user()->id;
                $data["batch_id"] = $request->batch_id;
                $data["type"] = $request->type;
+               DB::beginTransaction();   
+               // all good
+           
+               try {
+                    $result = Requisitionissuedmaterial::create($data);
+                    if($result)
+                    {
+                        $requesetion = RequisitionSlip::find($request->id);
 
-               $result = Requisitionissuedmaterial::create($data);
-               if($result)
-               {
-                   $requesetion = RequisitionSlip::find($request->id);
-
-                   if(isset($requesetion) && $requesetion)
-                   {
-                       $requesetion->update(array("status"=>1));
-                   }
-                   foreach($material_details as $material)
-                   {
-                        $batch = "rBatch".$material->id;
-                       
-                        $batches = $request->$batch;
-                       
-                        $qty = 0;
-                       if(count($batches) >0)
+                        if(isset($requesetion) && $requesetion)
                         {
-                            foreach($batches as $k=>$v)
-                            {
-                                $detailsdata["issual_material_id"] = $result->id;
-                                $matrail_id = "material_name_id".$material->id;
-                                $detailsdata["material_id"] = $request->$matrail_id;
-                                $rqty = "Quantity".$material->id;
-                                $detailsdata["requesist_qty"] = $request->$rqty;
-                                
-                                $detailsdata["batch_id"] = $v;
-                                $arno = "arno".$material->id;
-                                $detailsdata["ar_no_date"] = $request->$arno[$k];
-                                $appqty = "Quantity_app".$material->id;
-                                $detailsdata["approved_qty"] = $request->$appqty[$k];
-                                // dd( $request->id);
-                                $detailsdata["main_details_id"] = $request->id;
-                                
-                                $res = Requisitionissuedmaterialdetails::create($detailsdata);
-
-                              
-                                $type = "type".$material->id;
-                                $type = $request->$type;
-                                if($type == 'P'){
-                                    $rawmeterial = InwardPackingMaterialItems::find($request->$batch[$k]);
-
-                                    $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
-                                }
-                                else
-                                    {
-                                        $rawmeterial = Rawmaterialitems::find($request->$batch[$k]);
-                                        $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
-                                    }
-
-
-                                
-                                $qty = $qty+$request->$appqty[$k];
-                                
-                            }
-                                $detailsid = "details_id".$material->id;
-                                $issualdata = array();
-                                $issualdata["approved_qty"] = $qty;
-                                $detailsred = DetailsRequisition::find($request->$detailsid);
-                                $detailsred->update($issualdata);
-                                $stocka = array();
-                                $materialreq =  RequisitionSlip::where("batch_id",$request->batch_id)->first();
-                                /*$stocka["matarial_id"] =  $request->$matrail_id;
-                                $stocka["material_type"] =  $type;
-                                $stocka["department"] =  $materialreq->to;
-                                $stocka["qty"] =  $qty;
-                                $stocka["batch_no"] =  $v;
-                                $stocka["process_batch_id"] =  $request->batch_id;
-                                $stocka["ar_no_date"] =  "";
-                                $stocka["type"] =  $type;
-                               
-                                $resstock = Stock::create($stocka);*/
+                            $requesetion->update(array("status"=>1));
                         }
+                        foreach($material_details as $material)
+                        {
+                                $batch = "rBatch".$material->id;
+                            
+                                $batches = $request->$batch;
+                            
+                                $qty = 0;
+                            if(count($batches) >0)
+                            {
+                                    foreach($batches as $k=>$v)
+                                    {
+
+                                        $stock =  Stock::where("id",$request->$batch[$k])->first();
+                                        
+                                        $detailsdata["issual_material_id"] = $result->id;
+                                        $matrail_id = "material_name_id".$material->id;
+                                        $detailsdata["material_id"] = $request->$matrail_id;
+                                        $rqty = "Quantity".$material->id;
+                                        $detailsdata["requesist_qty"] = $request->$rqty;
+                                        
+                                        $detailsdata["batch_id"] = $v;
+                                        $arno = "arno".$material->id;
+                                        $detailsdata["ar_no_date"] = $request->$arno[$k];
+                                        $appqty = "Quantity_app".$material->id;
+                                        $detailsdata["approved_qty"] = $request->$appqty[$k];
+                                        // dd( $request->id);
+                                        $detailsdata["main_details_id"] = $request->id;
+                                        
+                                        if($stock->qty >= $request->$appqty[$k])
+                                        {
+                                                $res = Requisitionissuedmaterialdetails::create($detailsdata);
+                                                
+                                            
+                                                $type = "type".$material->id;
+                                                $type = $request->$type;
+                                                if($stock->qty >= $request->$appqty[$k])
+                                                if($type == 'P'){
+                                                   
+                                                    $rawmeterial = InwardPackingMaterialItems::find($stock->batch_no);
+
+                                                    $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
+                                                }
+                                                else
+                                                    {
+                                                        $rawmeterial = Rawmaterialitems::find($stock->batch_no);
+                                                        $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
+                                                    }
+
+
+                                                
+                                                $qty = $qty+$request->$appqty[$k];
+                                                
+                                                $stockupd = $stock->update(array("used_qty"=>($stock->used_qty+$request->$appqty[$k])));
+
+                                               
+                                        }
+                                        else
+                                        {
+                                            
+                                            DB::rollback();
+                                            return redirect("issue_material_for_production")->with('danger',"Data not created successfully or quantity is greater than avialable quantity");
+                                        }
+                                        
+                                    }//foreach
+                                        $detailsid = "details_id".$material->id;
+                                        $issualdata = array();
+                                        $issualdata["approved_qty"] = $qty;
+                                        $detailsred = DetailsRequisition::find($request->$detailsid);
+                                        $detailsred->update($issualdata);
+                                        $stocka = array();
+                                        $materialreq =  RequisitionSlip::where("batch_id",$request->batch_id)->first();
+
+                                        /*$stocka["matarial_id"] =  $request->$matrail_id;
+                                        $stocka["material_type"] =  $type;
+                                        $stocka["department"] =  $materialreq->to;
+                                        $stocka["qty"] =  $qty;
+                                        $stocka["batch_no"] =  $v;
+                                        $stocka["process_batch_id"] =  $request->batch_id;
+                                        $stocka["ar_no_date"] =  "";
+                                        $stocka["type"] =  $type;
+                                        
+                                        $resstock = Stock::create($stocka);*/
+
+                                        DB::commit();
+                                }
 
 
 
 
-                   }
-                   return redirect("issue_material_for_production")->with('success_msg',"Data created successfully");
-               }
+                        }
+                        return redirect("issue_material_for_production")->with('massage',"Data created successfully");
+                    }
+               
+               
+               
+            } catch (\Exception $e) {
+                    DB::rollback();
+                    // something went wrong
+
+                    dd($e);
+                }
 
 
         }

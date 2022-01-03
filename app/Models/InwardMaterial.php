@@ -24,7 +24,8 @@ class InwardMaterial extends Model
         "goods_receipt_no",
         "created_by",
         "remark",
-        "viscosity"
+        "viscosity",
+        "is_opening"
     ];
 
     protected static function boot()

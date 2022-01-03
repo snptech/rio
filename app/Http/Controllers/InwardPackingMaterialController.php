@@ -208,6 +208,7 @@ class InwardPackingMaterialController extends Controller
         $data["goods_receipt_no"]=$request->goods_receipt_no;
         $data["created_by"]=Auth::user()->id;
         $data["remark"]= $request->remark?$request->remark:"";
+        $data['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
 
         $result = InwardPackingMaterial::create($data);
 
@@ -223,6 +224,7 @@ class InwardPackingMaterialController extends Controller
                     $datas["material"] = $value;
                     $datas["total_qty"] = $request->total_qty[$i];
                     $datas["ar_no_date"] = $request->ar_no_date[$i];
+                    $datas['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
                     $result = InwardPackingMaterialItems::create($datas);
 
                     $stock = Rawmeterial::find($value);
@@ -238,7 +240,7 @@ class InwardPackingMaterialController extends Controller
                     $stockarr["material_type"] = "P";
                     $stockarr["department"] = 3;
                     $stockarr["qty"] = $request->total_qty[$i];
-                    $stockarr["batch_no"] = $request->ar_no_date[$i];
+                    $stockarr["batch_no"] = $result->id;
                     $stockarr["process_batch_id"] = $result->id;
                     $stockarr["ar_no_date"] = $request->ar_no_date[$i];
                     $stockarr["type"] = "P";
@@ -323,6 +325,7 @@ class InwardPackingMaterialController extends Controller
             $data["goods_receipt_no"]=$request->goods_receipt_no;
             $data["created_by"]=Auth::user()->id;
             $data["remark"]= $request->remark?$request->remark:"";
+            $data['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
             $InwardPackingMaterial = InwardPackingMaterial::find($id);
             $result = $InwardPackingMaterial->update($data);
 
@@ -347,6 +350,7 @@ class InwardPackingMaterialController extends Controller
                         $datas["material"] = $value;
                         $datas["total_qty"] = $request->total_qty[$i];
                         $datas["ar_no_date"] = $request->ar_no_date[$i];
+                        $datas['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
                         $result = InwardPackingMaterialItems::create($datas);
 
 
@@ -356,7 +360,7 @@ class InwardPackingMaterialController extends Controller
                         $stockarr["material_type"] = "P";
                         $stockarr["department"] = 3;
                         $stockarr["qty"] = $request->total_qty[$i];
-                        $stockarr["batch_no"] = $request->ar_no_date[$i];
+                        $stockarr["batch_no"] = $id;
                         $stockarr["process_batch_id"] = $id;
                         $stockarr["ar_no_date"] = $request->ar_no_date[$i];
                         $stockarr["type"] = "P";

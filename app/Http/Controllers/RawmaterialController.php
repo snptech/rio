@@ -59,7 +59,7 @@ class RawmaterialController extends Controller
         //
         $arrRules = ["rawmeterial"=>"required|unique:raw_materials,material_name",
                      "mesurment"=>"required",
-                     "stock"=>"required",
+                     
                      "type"=>"required"];
 
 
@@ -80,7 +80,7 @@ class RawmaterialController extends Controller
         $data = array();
         $data["material_name"] = $request->rawmeterial;
         $data["material_mesurment"] = $request->mesurment;
-        $data["material_stock"] = $request->stock;
+       /* $data["material_stock"] = $request->stock;*/
         $data["capacity"] = $request->capacity;
         $data["material_preorder_stock"] = $request->prestock?$request->prestock:0;
         $data["expiry_date"] = $request->expierydate?strtotime($request->expierydate):'';
@@ -116,7 +116,7 @@ class RawmaterialController extends Controller
 
         if($result->id)
         {
-            $stockarr = array();
+            /*$stockarr = array();
             //$stockitem = Stock::where("material_id",$value)->where("material_type","P")->where("process_batch_id",$id)->first();
             $stockarr["matarial_id"] = $result->id;
             $stockarr["material_type"] = $request->type?$request->type:"";;
@@ -127,7 +127,7 @@ class RawmaterialController extends Controller
             $stockarr["ar_no_date"] =  $request->rawmeterial_code?($request->rawmeterial_code):'';
             $stockarr["type"] = $request->type?$request->type:"";
             
-            $stockins = Stock::create($stockarr);
+            $stockins = Stock::create($stockarr);*/
             return redirect("rawmaterial")->with('message', "Raw Material created successfully");
         }
         else
@@ -179,7 +179,7 @@ class RawmaterialController extends Controller
         //
         $arrRules = ["rawmeterial"=>"required|unique:raw_materials,material_name,".$id,
         "mesurment"=>"required",
-        "stock"=>"required",
+       
         "type"=>"required"];
 
 
@@ -200,7 +200,7 @@ class RawmaterialController extends Controller
         $data = array();
         $data["material_name"] = $request->rawmeterial;
         $data["material_mesurment"] = $request->mesurment;
-        $data["material_stock"] = $request->stock;
+        /*$data["material_stock"] = $request->stock;*/
         $data["material_preorder_stock"] = $request->prestock?$request->prestock:0;
         $data["expiry_date"] = $request->expierydate?strtotime($request->expierydate):'';
         $data["rio_expiry_date"] = $request->rioexpierydate?strtotime($request->rioexpierydate):'';
@@ -228,7 +228,7 @@ class RawmaterialController extends Controller
         if($result)
         {
 
-            $stockarr = array();
+            /*$stockarr = array();
             $stockitem = Stock::where("matarial_id",$id)->where("material_type",$request->type)->where("process_batch_id",$id)->first();
             $stockarr["matarial_id"] = $id;
             $stockarr["material_type"] = $request->type?$request->type:"";;
@@ -246,7 +246,7 @@ class RawmaterialController extends Controller
             else
             {
                 $cr = Stock::create($stockarr);
-            }
+            }*/
                 
 
             return redirect("rawmaterial")->with('message', "Raw Material updated successfully");
@@ -267,9 +267,9 @@ class RawmaterialController extends Controller
         $rawmaterial = Rawmeterial::findOrFail($id);
         if($rawmaterial)
         {
-            $stockitem = Stock::where("matarial_id",$id)->where("material_type",$rawmaterial->material_type)->where("process_batch_id",$id)->first();
+           /* $stockitem = Stock::where("matarial_id",$id)->where("material_type",$rawmaterial->material_type)->where("process_batch_id",$id)->first();*/
             $result = $rawmaterial->delete();
-            $res = $stockitem->delete();
+            /*$res = $stockitem->delete();*/
             if($result)
             {
                 return redirect("rawmaterial")->with('message', "Raw Material deleted successfully");

@@ -77,6 +77,11 @@
                 <th>Received by</th>
                 <td>{{$inward_goods->name}}</td>
             </tr>
+            <tr>
+                <th>Is Opening Stock</th>
+                <td>{{$inward_goods->is_opening_stock?"Opening Stock":""}}</td>
+
+            </tr>
 
         </table>
     </div>

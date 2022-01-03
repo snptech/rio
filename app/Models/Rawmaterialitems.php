@@ -21,6 +21,7 @@ class Rawmaterialitems extends Model
         "rio_care_expiry_date",
         "ar_no_date",
         "opening_stock",
-        "used_qty"
+        "used_qty",
+        "is_opening_stock"
     ];
 }

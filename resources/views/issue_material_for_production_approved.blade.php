@@ -66,13 +66,15 @@
                                 @php
                                     $batch  = "";
                                     if ($mat->type == 'P') {
-                                    $batch = App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
+                                    $batch =  $batch = App\Models\Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("Qty","id");
+                                    
+                                   /* App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
                                         ->select(DB::raw("concat(DATE_FORMAT(created_at,\"%d-%m-%Y\"),'-',(total_qty-used_qty)) as Qty"),"id")
                                         ->pluck("Qty","id");
-                                        //->pluck("id","id");
+                                        //->pluck("id","id");*/
                                     }
                                     else
-                                        $batch = App\Models\Rawmaterialitems::where("material",$mat->PackingMaterialName)->pluck("batch_no","id");
+                                        $batch = App\Models\Stock::select("inward_raw_materials_items.batch_no","stock.id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("batch_no","id");
                                 @endphp
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
                                 {{-- <span class="add-count">{{ $i }}</span> --}}

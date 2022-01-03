@@ -75,6 +75,7 @@
                             <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" maxlength="120">
                         </div>
                     </div>
+                    
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="mfgDate">Mfg. Date</label>
@@ -155,6 +156,12 @@
 
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+						<div class="form-check" style="margin-top:30px;">
+                            <input type="checkbox" class="form-check-input" id="openingstockcheck" name="openingstock" id="openingstock" value="1">
+                            <label class="form-check-label" for="openingstockcheck">Is Opening Stock?</label>
+						</div>
+					</div>
                     <div class="col-12">
                         <div class="form-group">
                             <label for="Remark">Note / Remark</label>

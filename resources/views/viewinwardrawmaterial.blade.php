@@ -54,6 +54,10 @@
                             <td>{{ $inward_material->batch_no }}</td>
                         </tr>
                         <tr>
+                            <th>Is Opening Stock</th>
+                            <td>{{ $inward_material->is_opening?"Yes":"No" }}</td>
+                        </tr>
+                        <tr>
                             <th>MFG. DATE</th>
                             <td>{{ $inward_material->mfg_date!=""?date("d/m/Y",($inward_material->mfg_date)):""}}</td>
                         </tr>

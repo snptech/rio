@@ -164,7 +164,7 @@
                                         <div class="form-group">
                                             <label for="rmbatchno" class="active">Batch
                                                 No.</label>
-                                            {{ Form::select('rmbatchno[]', $batchstock, old('rmbatchno[]') ? old('rmbatchno[]') : $mat->batch_id, ['id' => 'rmbatchno' . $lm, 'class' => 'form-control select', 'selected' => 'selected', 'placeholder' => 'Batch No.']) }}
+                                            {{ Form::select('rmbatchno[]', $batchstock, old('rmbatchno[]') ? old('rmbatchno[]') : $mat->id, ['id' => 'rmbatchno' . $lm, 'class' => 'form-control select', 'selected' => 'selected', 'placeholder' => 'Batch No.']) }}
 
                                         </div>
                                     </div>

@@ -1,0 +1,1 @@
+ALTER TABLE `inward_raw_materials` ADD `is_opening` TINYINT NULL DEFAULT '0' AFTER `viscosity`;

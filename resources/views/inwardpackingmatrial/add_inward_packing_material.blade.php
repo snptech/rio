@@ -86,6 +86,12 @@
                           @endif
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+						<div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="openingstockcheck" name="openingstock" id="openingstock" value="1">
+                            <label class="form-check-label" for="openingstockcheck">Is Opening Stock?</label>
+						</div>
+					</div>
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group input_fields_wrap" id="MaterialReceived">
                             <label class="control-label d-flex">Details of Material Received

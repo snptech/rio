@@ -10,7 +10,7 @@ class InwardPackingMaterialItems extends Model
 {
     use HasFactory;
     protected $table = 'goods_receipt_note_items';
-    protected $fillable = ["id", "good_receipt_id", "material", "total_qty", "ar_no_date","used_qty"];
+    protected $fillable = ["id", "good_receipt_id", "material", "total_qty", "ar_no_date","used_qty","is_opening_stock"];
     protected static function boot()
     {
       

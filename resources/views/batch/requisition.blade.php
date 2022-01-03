@@ -79,7 +79,7 @@
                                     <label for="PackingMaterialName" class="active">Raw
                                         Material Name</label>
 
-                                    {{ Form::select('PackingMaterialName[]', $rawmaterials, old(), ['class' => 'form-control select', 'id' => 'material_name']) }}
+                                    {{ Form::select('PackingMaterialName[]', $rawmaterials, old(), ['class' => 'form-control select', 'id' => 'material_name',"placeholder"=>"Raw Material"]) }}
 
                                 </div>
                             </div>

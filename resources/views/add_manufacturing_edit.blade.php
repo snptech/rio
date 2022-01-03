@@ -143,7 +143,7 @@
                         x +
                         ']" class="active">Raw Material</label><select class="form-control select" name="rawMaterialName[]" id="rawMaterialName[' +
                         x +
-                        ']"><option>Select</option><option>Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' +
+                        ']"><option>Select</option><option value="">Material Name</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' +
                         x +
                         ']" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' +
                         x +
@@ -395,7 +395,7 @@
                     $(wrapper).append(
                         '<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' +
                         x +
-                        '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label>        {{ Form::select('PackingMaterialName[]', $rawmaterials, old(), ['class' => 'form-control select', 'id' => 'material_name']) }} </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'
+                        '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label>        {{ Form::select('PackingMaterialName[]', $rawmaterials, old(), ['class' => 'form-control select', 'id' => 'material_name','placeholder'=>'Raw Meterial']) }} </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity" placeholder=""></div></div></div></div>'
                         ); //add input box
                 }
                 feather.replace()

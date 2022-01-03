@@ -206,9 +206,11 @@ class ManufactureProcessController extends Controller
                    
                         foreach($Requisitionissuedmaterial as $mat)
                         {
-                            $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name")
+                            $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","inward_raw_materials_items.id")
                             ->where("issue_material_production_requestion_details.issual_material_id", $mat->id)
                             ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                            ->join("stock", "stock.id", "issue_material_production_requestion_details.batch_id")
+                            ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "stock.batch_no")
                             ->get();
                         }
 
@@ -394,10 +396,11 @@ class ManufactureProcessController extends Controller
                    
                         foreach($Requisitionissuedmaterial as $mat)
                         {
-                            $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","inward_raw_materials_items.batch_no")
+                            $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","inward_raw_materials_items.id")
                             ->where("issue_material_production_requestion_details.issual_material_id", $mat->id)
                             ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
-                            ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "issue_material_production_requestion_details.batch_id")
+                            ->join("stock", "stock.id", "issue_material_production_requestion_details.batch_id")
+                            ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "stock.batch_no")
                             ->get();
                         }
                        
@@ -2008,7 +2011,7 @@ class ManufactureProcessController extends Controller
     {
         if($request->id)
         {
-            $batchstock = Stock::select("inward_raw_materials_items.batch_no","inward_raw_materials_items.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
+            $batchstock = Stock::select("inward_raw_materials_items.batch_no","stock.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
 
             $data["batch"] = $batchstock;
 
