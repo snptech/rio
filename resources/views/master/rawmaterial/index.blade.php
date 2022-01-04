@@ -42,8 +42,11 @@
                 </thead>
                 <tbody>
                     @if(isset($rawmaterials))
-                        @php($i=1)
+                        @php ($i=1) @endphp
                         @foreach($rawmaterials as $val)
+                        @php 
+                                $stock = App\Models\Stock::where("matarial_id",$val->id)->select(DB::raw("(sum(qty)-sum(used_qty)) as qty"))->first();
+                        @endphp
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{{ $val->material_name	 }}</td>
@@ -56,7 +59,7 @@
                                 Raw Material
                             @endif
                         </td>
-                        <td>{{ $val->material_stock	}}</td>
+                        <td>{{ $stock->qty	}}</td>
                         <td>{{ $val->material_preorder_stock }}</td>
                        {{--   <td>{{ $val->expiry_date?date("d/m/Y",$val->expiry_date):""}}</td>
                         <td>{{ $val->rio_expiry_date?date("d/m/Y",$val->rio_expiry_date):""}}</td> --}}
@@ -67,7 +70,7 @@
 
                          <td class="actions">@if(Auth::user()->role_id==1) <a href="{{ route("edit-rawmaterial",["id"=>$val->id]) }}" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a><a href="#" class="btn action-btn" data-toggle="tooltip" class="remove" data-href="" title="Delete" onclick="remove('{{ route("delete-rawmaterial",["id"=>$val->id]) }}')"><i data-feather="trash"></i></a> @endif</td>
                     </tr>
-                        @php($i++)
+                        @php ($i++) @endphp
                         @endforeach
                     @endif
 

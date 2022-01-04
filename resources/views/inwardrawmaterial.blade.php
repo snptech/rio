@@ -41,7 +41,7 @@
                         <tr>
                             <th rowspan="2">Inward No</th>
                             <th rowspan="2">Date of Receipt</th>
-                            <th rowspan="2">Opening Balance</th>
+                            <!--<th rowspan="2">Opening Balance</th> -->
                             <th rowspan="2">Name of Manufacturer</th>
                             <th rowspan="2">Name of Supplier</th>
                             <th rowspan="2">Raw Material Name</th>
@@ -69,7 +69,7 @@
 
                         <td>{{$temp->inward_no}}</td>
                         <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
-                        <td>{{$temp->opening_stock}}</td>
+                        <!--<td>{{$temp->opening_stock}}</td> -->
                         <td>{{$temp->man_name}}</td>
                         <td>{{$temp->name}}</td>
                         <td>{{$temp->material_name}}</td>
