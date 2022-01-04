@@ -65,9 +65,7 @@
                                     @foreach ($material_details as $mat)
                                     @php
                                         $batch  = "";
-                                        $batch = App\Models\InwardPackingMaterialItems::join("stock","stock.batch_no","goods_receipt_note_items.id")->where("stock.id",$mat->batch_id)
-                                        ->select(DB::raw("concat(DATE_FORMAT(created_at,\"%d-%m-%Y\"),'-',(total_qty-used_qty)) as Qty"),"id")
-                                        ->pluck("Qty","id");
+                                        $batch =  $batch = App\Models\Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("Qty","id");
 
                                     @endphp
                                     <div class="row add-more-wrap after-add-more m-0 mb-4">
