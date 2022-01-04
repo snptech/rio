@@ -103,18 +103,20 @@ class QualityControlController extends Controller
                 $rowmeterial->update($datas);
 
                 $stockarr = array();
+                if($request['quantity_status'] == 'Approved')
+                {
+                    $stockarr["matarial_id"] = $result->raw_material_id;
+                    $stockarr["material_type"] = "R";
+                    $stockarr["department"] = 3;
+                    $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                    $stockarr["batch_no"] = $request['inward_item_id'];
+                    $stockarr["process_batch_id"] = $request['inward_item_id'];
+                    $stockarr["ar_no_date"] = $request['ar_number'];
+                    $stockarr["type"] = "R";
 
-                $stockarr["matarial_id"] = $result->raw_material_id;
-                $stockarr["material_type"] = "R";
-                $stockarr["department"] = 3;
-                $stockarr["qty"] = $request['quantity_approved'];
-                $stockarr["batch_no"] = $request['inward_item_id'];
-                $stockarr["process_batch_id"] = $request['inward_item_id'];
-                $stockarr["ar_no_date"] = $request['ar_number'];
-                $stockarr["type"] = "R";
 
-
-                $stid = Stock::create($stockarr);
+                    $stid = Stock::create($stockarr);
+                }
 
 
             }
