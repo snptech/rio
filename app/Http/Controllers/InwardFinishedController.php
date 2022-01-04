@@ -148,7 +148,7 @@ class InwardFinishedController extends Controller
         {
             $stockarr = array();
 
-            $stockarr["matarial_id"] = $value;
+            $stockarr["matarial_id"] = $request['product_name'];
             $stockarr["material_type"] = "F";
             $stockarr["department"] = 3;
             $stockarr["qty"] = $request['total_quantity'];
