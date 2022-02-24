@@ -114,7 +114,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="Quantity">Total Quantity Received (Nos.)</label>
-                                        <input type="number" class="form-control" name="total_qty[]" id="total_qty" placeholder="Quantity" value="{{ old("total_qty") }}" pattern="\d*" maxlength="12" onkeypress="return /[0-9]/i.test(event.key)">
+                                        <input type="number" class="form-control" name="total_qty[]" id="total_qty" placeholder="Quantity" value="{{ old("total_qty") }}" pattern="\d*" maxlength="12" onkeypress="return /[0-9.]/i.test(event.key)">
                                         @if ($errors->has('total_qty'))
                                         <span class="text-danger">{{ $errors->first('total_qty') }}</span>
                                         @endif

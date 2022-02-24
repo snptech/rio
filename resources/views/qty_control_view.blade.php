@@ -20,12 +20,16 @@
           </div>
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
               <div class="form-group">
-                  <label for="Status">Status</label>
-                  <select class="form-control select" name="quantity_status" id="quantity_status">
-                      <option>Select</option>
-                      <option value="Approved">Approved</option>
-                      <option Rejected="Rejected">Rejected</option>
-                  </select>
+                  <label for="Status">Status</label> <br>
+                  <div class="form-check-inline">
+                    <input type="radio" class="form-check-input" name="quantity_status" id="materialChecked2" checked value="Approved">
+                    <label class="form-check-label" for="materialChecked2">Approved</label>
+                  </div>
+                  <div class="form-check-inline">
+                    <input type="radio" class="form-check-input" name="quantity_status" id="materialChecked3" value="Rejected">
+                    <label class="form-check-label" for="materialChecked3">Rejected</label>
+                  </div>
+                  
               </div>
           </div>
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -37,7 +41,7 @@
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
                 <label for="QuantityRejected">Ar Number</label>
-                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date"  maxlength="120" onkeypress="">
+                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date"  maxlength="120" onkeypress="" value="{{$qty_control_view->ar_no_date}}">
             </div>
         </div>
 
@@ -88,20 +92,26 @@
 <script>
 
     $(document).ready(function() {
-
+        
         $("#checkQuantity").validate({
             rules: {
                 quantity_approved: "required",
                 quantity_status: "required",
                 date_of_approval: "required",
-                ar_number:"required"
-
+                ar_number:"required",
+                remark:"required",
+                "quantity_rejected": {
+                    required: function(element) {
+                        return ($('input[name="quantity_status"]:checked').val() === "Rejected");
+                    }
+                }
             },
             messages: {
                 quantity_approved: "Please  Enter quantity approved",
                 quantity_status: "Please select check status",
                 date_of_approval: "Please  Enter date of approval",
-                ar_number:"Please Enter ar number/date"
+                ar_number:"Please Enter ar number/date",
+                remark:"Please enter remark"
 
             },
         });

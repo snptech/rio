@@ -171,7 +171,7 @@
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 									  <label for="Quantity">Quantity Received (Kg)</label>
-									  <input type="text" class="form-control" id="Quantity" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[0-9]/i.test(event.key)"
+									  <input type="text" class="form-control" id="Quantity" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[0-9.]/i.test(event.key)"
 >
 									</div>
 								</div>

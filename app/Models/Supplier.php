@@ -11,7 +11,7 @@ class Supplier extends Model
     use HasFactory;
     protected $table = 'suppliers';
     protected $fillable = [
-        "id", "name", "city", "state", "address", "contact_no", "gst_no", "pan_no", "contact_per_name", "company_name", "publish"
+        "id", "name", "city", "state", "address", "contact_no", "gst_no", "pan_no", "contact_per_name", "company_name", "publish","phone_number"
     ];
     protected static function boot()
     {

@@ -14,7 +14,7 @@
                         </tr>
                         <tr>
                             <th>State</th>
-                            <td>{{ $supllier->state }}</td>
+                            <td>{{ $supllier->state_name }}</td>
                         </tr>
                         <tr>
                             <th>Address</th>
@@ -30,8 +30,12 @@
                         </tr>
 
                         <tr>
-                            <th>Contact Number</th>
+                            <th>Mobile Number</th>
                             <td>{{ $supllier->contact_no }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td>{{ $supllier->phone_number }}</td>
                         </tr>
                         <tr>
                             <th>GST Number</th>

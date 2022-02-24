@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use DB;
 class SupplierController extends Controller
 {
     //
@@ -25,7 +26,7 @@ class SupplierController extends Controller
     {
         //LISTING THE Departments
         $suppliers = Supplier::get();
-
+        
         return view("master.supplier.index")->with(["suppliers"=>$suppliers]);
 
     }
@@ -37,7 +38,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view("master.supplier.create");
+        $states = DB::table("state")->orderBy("state","asc")->pluck("state","id");
+        return view("master.supplier.create")->with(["state"=>$states]);
     }
 
     /**
@@ -88,6 +90,7 @@ class SupplierController extends Controller
         $data["pan_no"] = $request->gst;
         $data["contact_per_name"] = $request->contact_per_name;
         $data["company_name"] = $request->company_name;
+        $data["phone_number"] = $request->phone_number;
         $data["publish"] = $request->publish;
 
 
@@ -113,7 +116,7 @@ class SupplierController extends Controller
         //
         if($request->id)
         {
-            $supplier = Supplier::where("id",$request->id)->first();
+            $supplier = Supplier::select("suppliers.*","state.state as state_name")->where("suppliers.id",$request->id)->leftJoin("state","state.id","suppliers.state")->first();
              $view = view('master.supplier.view', ['supllier'=> $supplier])->render();
              return response()->json(['html'=>$view]);
 
@@ -136,8 +139,8 @@ class SupplierController extends Controller
         if($id)
         {
             $supplier = Supplier::where("id",$id)->first();
-
-            return view("master.supplier.edit")->with(["supplier"=>$supplier]);
+            $states = DB::table("state")->orderBy("state","asc")->pluck("state","id");
+            return view("master.supplier.edit")->with(["supplier"=>$supplier,"state"=>$states]);
         }
         else
             redirect(404);
@@ -192,6 +195,7 @@ class SupplierController extends Controller
         $data["pan_no"] = $request->gst;
         $data["contact_per_name"] = $request->contact_per_name;
         $data["company_name"] = $request->company_name;
+        $data["phone_number"] = $request->phone_number;
         $data["publish"] = $request->publish;
         $supplier = Supplier::find($id);
         $result = $supplier->update($data);

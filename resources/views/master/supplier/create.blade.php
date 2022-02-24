@@ -40,7 +40,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="rno">State</label>
-                            <input type="text" class="form-control" name="state" id="state" placeholder="State" value="{{ old("state") }}">
+                            {{Form::select("state",$state,old("state"),array("class"=>"form-control","placeholder"=>"---Select State-----"))}}                            
                             @if ($errors->has('state'))
                                     <span class="text-danger">{{ $errors->first('state') }}</span>
                             @endif
@@ -79,14 +79,24 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="rno">Contact Number</label>
-                            <input type="text" class="form-control" name="contact_number" id="contact_number" placeholder="Contact Number" value="{{ old("contact_number") }}">
+                            <label for="rno">Mobile Number</label>
+                            <input type="text" class="form-control" name="contact_number" id="contact_number" placeholder="Mobile Number" value="{{ old("contact_number") }}">
                             @if ($errors->has('contact_number'))
                                     <span class="text-danger">{{ $errors->first('contact_number') }}</span>
                             @endif
 
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="form-group">
+                          <label for="rno">Phone Number</label>
+                          <input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="Phone Number" value="{{ old("phone_number") }}">
+                          @if ($errors->has('phone_number'))
+                                  <span class="text-danger">{{ $errors->first('phone_number') }}</span>
+                          @endif
+
+                      </div>
+                  </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="rno">GST Number</label>
