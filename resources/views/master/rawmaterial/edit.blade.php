@@ -79,6 +79,16 @@
 
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
+                        <div class="form-group ">
+                            <label for="controller_id">Grade</label>
+                            {{ Form::select("grade",$group,old("grade")?old("grade"):$rawmaterial->grade,array("id"=>"type","class"=>"form-control  grade","placeholder"=>"Grade")) }}
+                            @if ($errors->has('grade'))
+                                    <span class="text-danger">{{ $errors->first('grade') }}</span>
+                            @endif
+
+                        </div>
+                    </div>
                    {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Material Expiery Date</label>
@@ -112,7 +122,7 @@
 
                         </div>
                     </div> --}}
-                </div> 
+                </div>
 
 
                 <div class="form-row">

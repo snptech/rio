@@ -23,16 +23,17 @@ class Rawmeterial extends Model
         "material_type",
         "capacity",
         "material_code",
-        "is_opening"
+        "is_opening",
+        "grade"
 
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Inward Raw Materials')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -41,13 +42,13 @@ class Rawmeterial extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Raw Material Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Raw Material')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -55,8 +56,8 @@ class Rawmeterial extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Raw Material Updated');
             });
@@ -69,7 +70,7 @@ class Rawmeterial extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Raw Material Deleted');
         });

@@ -87,6 +87,7 @@ class QualityControlController extends Controller
             'total_qty' => $request['total_qty'],
             'raw_material_id' => $request['rawmaterial_id'],
             'ar_no' => $request['ar_number'],
+            'ar_no_date_date' => $request['ar_date']?$request['ar_date']:"",
             'checked_by' => Auth::user()->id,
         ];
 
@@ -112,6 +113,7 @@ class QualityControlController extends Controller
                     $stockarr["batch_no"] = $request['inward_item_id'];
                     $stockarr["process_batch_id"] = $request['inward_item_id'];
                     $stockarr["ar_no_date"] = $request['ar_number'];
+                    $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
                     $stockarr["type"] = "R";
 
 

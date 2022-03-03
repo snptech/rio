@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
+    <title>{{ config('app.name', 'Rio Care Inventory and Stock Management') }} - @yield('title')</title>
 
 
     <link rel="stylesheet" href="{{ asset('assets/mdbootstrap4/bootstrap.min.css') }}">

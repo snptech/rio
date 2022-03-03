@@ -22,6 +22,7 @@ class Rawmaterialitems extends Model
         "ar_no_date",
         "opening_stock",
         "used_qty",
-        "is_opening_stock"
+        "is_opening_stock",
+        "ar_no_date_date"
     ];
 }

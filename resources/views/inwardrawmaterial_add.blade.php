@@ -115,7 +115,7 @@
                             <input type="text" class="form-control"  pattern="\d*" maxlength="50" name="viscosity" id="viscosity" placeholder="Viscosity"   value="{{ old("viscosity") }}">
                         </div>
                     </div>
-                  
+
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="invoiceNo">Invoice No.</label>
@@ -199,6 +199,12 @@
 									  <input type="text" class="form-control" id="ARNo" placeholder="AR No. / Date" name="ARNo[]" value=""  maxlength="120">
 									</div>
 								</div>
+                                <div class="col-12 col-md-6">
+									<div class="form-group">
+									  <label for="ARNo">AR Date</label>
+									  <input type="date" class="form-control" id="ARdate" placeholder="AR Date" name="ARNodate[]" value="">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -255,7 +261,7 @@
 			e.preventDefault();
 			if(x < max_fields){ //max input box allowed
 				x++; //text box increment
-				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">'+x+'</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="rawMaterialName['+x+']">Raw Material Name</label> {{ Form::select("materialnames[]",$rawmaterial,old("materialnames[]"),array("class"=>"form-control select","id"=>"materialname1","placeholder"=>"Choose Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="batch['+x+']">Batch No.</label><input type="text" class="form-control" id="batch['+x+']" name="batch[]" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Containers['+x+']">Total no of Containers / Bags</label><input type="text" class="form-control" id="Containers['+x+']" name="Containers[]" placeholder="No of Containers / Bags" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity['+x+']">Quantity Received (Kg)</label><input type="text" class="form-control" id="Quantity['+x+']" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="mfgDate['+x+']">Manufacturer’s Mfg. Date</label><input type="date" name="mfgDate[]" class="form-control calendar" id="mfgDate['+x+']" placeholder="Mfg. Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ExpiryDate['+x+']">Manufacturer’s Expiry Date</label><input type="date" class="form-control calendar" name="ExpiryDate[]" id="ExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group">'+x+'<label for="RIOExpiryDate['+x+']">RIO Care Expiry Date</label><input type="date" class="form-control calendar" name="RIOExpiryDate[]" id="RIOExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo['+x+']">AR No. / Date</label><input type="text" class="form-control" name="ARNo[]" id="ARNo['+x+']" placeholder="AR No. / Date" pattern="\d*" maxlength="120" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div></div>');
+				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">'+x+'</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="rawMaterialName['+x+']">Raw Material Name</label> {{ Form::select("materialnames[]",$rawmaterial,old("materialnames[]"),array("class"=>"form-control select","id"=>"materialname1","placeholder"=>"Choose Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="batch['+x+']">Batch No.</label><input type="text" class="form-control" id="batch['+x+']" name="batch[]" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Containers['+x+']">Total no of Containers / Bags</label><input type="text" class="form-control" id="Containers['+x+']" name="Containers[]" placeholder="No of Containers / Bags" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity['+x+']">Quantity Received (Kg)</label><input type="text" class="form-control" id="Quantity['+x+']" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="mfgDate['+x+']">Manufacturer’s Mfg. Date</label><input type="date" name="mfgDate[]" class="form-control calendar" id="mfgDate['+x+']" placeholder="Mfg. Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ExpiryDate['+x+']">Manufacturer’s Expiry Date</label><input type="date" class="form-control calendar" name="ExpiryDate[]" id="ExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group">'+x+'<label for="RIOExpiryDate['+x+']">RIO Care Expiry Date</label><input type="date" class="form-control calendar" name="RIOExpiryDate[]" id="RIOExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo['+x+']">AR No. / Date</label><input type="text" class="form-control" name="ARNo[]" id="ARNo['+x+']" placeholder="AR No. / Date" pattern="\d*" maxlength="120" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNodate['+x+']">AR Date</label><input type="date" class="form-control" name="ARNodate[]" id="ARNodate['+x+']" placeholder="AR Date"></div></div></div>');
 			}
 			feather.replace()
 		});
@@ -268,7 +274,7 @@
 	});
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-    
+
     <script>
         $(document).ready(function() {
            /* $("#suppliername").change(function(){
@@ -398,8 +404,8 @@
           }
         }
       });
-      
-   
+
+
     });
     // function AvoidSpace(event) {
     // var k = event ? event.which : window.event.keyCode;

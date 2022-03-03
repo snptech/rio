@@ -18,28 +18,43 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo"
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">RCIPL/BMR/</span>
+                        </div>
+                        <input type="text" class="form-control" name="bmrNo"
                         value="{{ $edit_batchmanufacturing->bmrNo }}" id="bmrNo" pattern="\d*"
                         maxlength="120" onkeypress="">
+                    </div>
+
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+
                 <div class="form-group">
                     <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo"
+
+                        <input type="text" class="form-control" name="batchNo"
                         value="{{ $edit_batchmanufacturing->batchNo }}" id="batchNo" pattern="\d*"
                         maxlength="120" onkeypress="">
-                    
+
+
+
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="refMfrNo">Ref. MFR No.</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">RCIPL/MFR/</span>
+                        </div>
                     <input type="text" class="form-control" name="refMfrNo"
                         value="{{ $edit_batchmanufacturing->refMfrNo }}" id="refMfrNo"
                         pattern="\d*" maxlength="120"
                         onkeypress="">
-                    
+                    </div>
+
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -134,11 +149,11 @@
                         <label for="approval" class="active">This Batch is approved/not
                             approved</label>
                         <select class="form-control select" name="approval" id="approval">
-                            
+
                                 <option value="1" @if ($edit_batchmanufacturing->approval == 1) selected='selected' @endif>Approved</option>
-                            
+
                                 <option value="0" @if ($edit_batchmanufacturing->approval != 1) selected='selected' @endif>Not Approved</option>
-                           
+
                         </select>
                     </div>
                 </div>

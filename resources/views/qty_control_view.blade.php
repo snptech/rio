@@ -29,7 +29,7 @@
                     <input type="radio" class="form-check-input" name="quantity_status" id="materialChecked3" value="Rejected">
                     <label class="form-check-label" for="materialChecked3">Rejected</label>
                   </div>
-                  
+
               </div>
           </div>
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -41,7 +41,13 @@
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
                 <label for="QuantityRejected">Ar Number</label>
-                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No. / Date"  maxlength="120" onkeypress="" value="{{$qty_control_view->ar_no_date}}">
+                <input type="text" class="form-control" name="ar_number" id="ar_number" placeholder="AR No."  maxlength="120" onkeypress="" value="{{$qty_control_view->ar_no_date}}">
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <label for="ar_date">Ar Date</label>
+                <input type="date" class="form-control" name="ar_date" id="ar_date" placeholder="AR Date"  value="{{$qty_control_view->ar_no_date_date}}">
             </div>
         </div>
 
@@ -92,7 +98,7 @@
 <script>
 
     $(document).ready(function() {
-        
+
         $("#checkQuantity").validate({
             rules: {
                 quantity_approved: "required",

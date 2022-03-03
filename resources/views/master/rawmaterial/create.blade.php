@@ -83,6 +83,16 @@
 
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
+                        <div class="form-group ">
+                            <label for="controller_id">Grade</label>
+                            {{ Form::select("grade",$group,old("grade"),array("id"=>"type","class"=>"form-control  grade","placeholder"=>"Grade")) }}
+                            @if ($errors->has('grade'))
+                                    <span class="text-danger">{{ $errors->first('grade') }}</span>
+                            @endif
+
+                        </div>
+                    </div>
                    {{--  <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Material Expiery Date</label>
@@ -183,7 +193,7 @@
     var id = $('.material_type').val();
 
  if(id=='P'){
-  
+
   var capacity ='<div class="form-group"> <label for="controller_id">Capacity</label><input type="number" class="form-control" name="capacity" id="capacity" placeholder="Capacity Opening Stock" value="{{ old("stock") }}"></div>';
   $('.material_type_div').css('display','block');
   $('.material_type_div').html(capacity);

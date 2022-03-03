@@ -24,7 +24,7 @@ class MaterialForProductionController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:issue-material-for-production-list|issue-material-for-production-add|issue-material-for-production-edit', ['only' => ['issue_material_for_production_new','issue_material_insert']]);
         $this->middleware('permission:issue-material-for-production-add', ['only' => ['issue_material_for_production_add','issue_material_insert']]);
-      
+
 
     }
     public function issue_material_for_production()
@@ -158,7 +158,7 @@ class MaterialForProductionController extends Controller
         DB::beginTransaction();
 
 
-   
+
     // all good
 
     try {
@@ -220,7 +220,7 @@ class MaterialForProductionController extends Controller
     }
     public function issue_material(Request $request)
     {
-        
+
         if($request->id)
         {
             $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name",
@@ -240,11 +240,11 @@ class MaterialForProductionController extends Controller
             ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
             ->get();
 
-           
-           
+
+
             return view('issue_material_for_production_approved',$data);
         }
-        else    
+        else
         {
             redirect(404);
         }
@@ -290,7 +290,7 @@ class MaterialForProductionController extends Controller
         if($request->id)
         {
             $material_details = DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name","detail_packing_material_requisition.id as details_id")->where("requisition_id",$request->id)->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")->get();
-            
+
 
             $arrRules = [
                 "from"=>"required",
@@ -341,9 +341,9 @@ class MaterialForProductionController extends Controller
                $data["ApprovedBy"] = Auth::user()->id;
                $data["batch_id"] = $request->batch_id;
                $data["type"] = $request->type;
-               DB::beginTransaction();   
+               DB::beginTransaction();
                // all good
-           
+
                try {
                     $result = Requisitionissuedmaterial::create($data);
                     if($result)
@@ -357,9 +357,9 @@ class MaterialForProductionController extends Controller
                         foreach($material_details as $material)
                         {
                                 $batch = "rBatch".$material->id;
-                            
+
                                 $batches = $request->$batch;
-                            
+
                                 $qty = 0;
                             if(count($batches) >0)
                             {
@@ -367,31 +367,35 @@ class MaterialForProductionController extends Controller
                                     {
 
                                         $stock =  Stock::where("id",$request->$batch[$k])->first();
-                                        
+
                                         $detailsdata["issual_material_id"] = $result->id;
                                         $matrail_id = "material_name_id".$material->id;
                                         $detailsdata["material_id"] = $request->$matrail_id;
                                         $rqty = "Quantity".$material->id;
                                         $detailsdata["requesist_qty"] = $request->$rqty;
-                                        
+
                                         $detailsdata["batch_id"] = $v;
                                         $arno = "arno".$material->id;
                                         $detailsdata["ar_no_date"] = $request->$arno[$k];
+
+                                        $arnodate = "arnodate".$material->id;
+                                        $detailsdata["ar_no_date_date"] = $request->$arnodate[$k];
+
                                         $appqty = "Quantity_app".$material->id;
                                         $detailsdata["approved_qty"] = $request->$appqty[$k];
                                         // dd( $request->id);
                                         $detailsdata["main_details_id"] = $request->id;
-                                        
+
                                         if($stock->qty >= $request->$appqty[$k])
                                         {
                                                 $res = Requisitionissuedmaterialdetails::create($detailsdata);
-                                                
-                                            
+
+
                                                 $type = "type".$material->id;
                                                 $type = $request->$type;
                                                 if($stock->qty >= $request->$appqty[$k])
                                                 if($type == 'P'){
-                                                   
+
                                                     $rawmeterial = InwardPackingMaterialItems::find($stock->batch_no);
 
                                                     $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
@@ -403,20 +407,20 @@ class MaterialForProductionController extends Controller
                                                     }
 
 
-                                                
+
                                                 $qty = $qty+$request->$appqty[$k];
-                                                
+
                                                 $stockupd = $stock->update(array("used_qty"=>($stock->used_qty+$request->$appqty[$k])));
 
-                                               
+
                                         }
                                         else
                                         {
-                                            
+
                                             DB::rollback();
                                             return redirect("issue_material_for_production")->with('danger',"Data not created successfully or quantity is greater than avialable quantity");
                                         }
-                                        
+
                                     }//foreach
                                         $detailsid = "details_id".$material->id;
                                         $issualdata = array();
@@ -434,7 +438,7 @@ class MaterialForProductionController extends Controller
                                         $stocka["process_batch_id"] =  $request->batch_id;
                                         $stocka["ar_no_date"] =  "";
                                         $stocka["type"] =  $type;
-                                        
+
                                         $resstock = Stock::create($stocka);*/
 
                                         DB::commit();
@@ -446,9 +450,9 @@ class MaterialForProductionController extends Controller
                         }
                         return redirect("issue_material_for_production")->with('massage',"Data created successfully");
                     }
-               
-               
-               
+
+
+
             } catch (\Exception $e) {
                     DB::rollback();
                     // something went wrong

@@ -17,7 +17,7 @@ class RawmaterialController extends Controller
             $this->middleware('permission:rawmaterial-add', ['only' => ['create','store']]);
             $this->middleware('permission:rawmaterial-edit', ['only' => ['edit','update']]);
             $this->middleware('permission:rawmaterial-delete', ['only' => ['destroy']]);
-    
+
         }
 
 
@@ -44,8 +44,9 @@ class RawmaterialController extends Controller
     public function create()
     {
         $mesurments = DB::table('mesurments')->pluck("mesurment","id");
+        $groups = DB::table('grades')->pluck("grade","id");
         $type = array("P"=>"Packing Material","F"=>"Finished Goods","R"=>"Raw Material");
-        return view("master.rawmaterial.create")->with(["mesurments"=>$mesurments,"type"=>$type]);
+        return view("master.rawmaterial.create")->with(["mesurments"=>$mesurments,"type"=>$type,"group"=>$groups]);
     }
 
     /**
@@ -59,7 +60,7 @@ class RawmaterialController extends Controller
         //
         $arrRules = ["rawmeterial"=>"required|unique:raw_materials,material_name",
                      "mesurment"=>"required",
-                     
+
                      "type"=>"required"];
 
 
@@ -88,9 +89,10 @@ class RawmaterialController extends Controller
         $data["material_type"] = $request->type?$request->type:"";
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
         $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
+        $data["grade"] = $request->grade?($request->grade):'';
 
 
-        
+
 
         /*if($request->expierydat)
         {
@@ -111,7 +113,7 @@ class RawmaterialController extends Controller
 
         $result = Rawmeterial::create($data);
 
-        
+
 
 
         if($result->id)
@@ -126,7 +128,7 @@ class RawmaterialController extends Controller
             $stockarr["process_batch_id"] = $result->id;
             $stockarr["ar_no_date"] =  $request->rawmeterial_code?($request->rawmeterial_code):'';
             $stockarr["type"] = $request->type?$request->type:"";
-            
+
             $stockins = Stock::create($stockarr);*/
             return redirect("rawmaterial")->with('message', "Raw Material created successfully");
         }
@@ -160,8 +162,9 @@ class RawmaterialController extends Controller
         {
             $rawmaterial = Rawmeterial::where("id",$id)->first();
             $mesurments = DB::table('mesurments')->pluck("mesurment","id");
+            $groups = DB::table('grades')->pluck("grade","id");
             $type = array("P"=>"Packing Material","F"=>"Finished Goods","R"=>"Raw Material");
-            return view("master.rawmaterial.edit")->with(["rawmaterial"=>$rawmaterial,"mesurments"=>$mesurments,"type"=>$type]);
+            return view("master.rawmaterial.edit")->with(["rawmaterial"=>$rawmaterial,"mesurments"=>$mesurments,"type"=>$type,"group"=>$groups]);
         }
         else
             redirect(404);
@@ -179,7 +182,7 @@ class RawmaterialController extends Controller
         //
         $arrRules = ["rawmeterial"=>"required|unique:raw_materials,material_name,".$id,
         "mesurment"=>"required",
-       
+
         "type"=>"required"];
 
 
@@ -207,6 +210,7 @@ class RawmaterialController extends Controller
         $data["material_type"] = $request->type?$request->type:"";
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
         $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
+        $data["grade"] = $request->grade?($request->grade):'';
         /*if($request->expierydat)
         {
             $expdate = explode("/",$request->expierydate);
@@ -238,7 +242,7 @@ class RawmaterialController extends Controller
             $stockarr["process_batch_id"] = $id;
             $stockarr["ar_no_date"] =  $request->rawmeterial_code?($request->rawmeterial_code):'';
             $stockarr["type"] = $request->type?$request->type:"";
-            
+
             if(isset($stockitem))
             {
                 $stockins = $stockitem->update($stockarr);
@@ -247,7 +251,7 @@ class RawmaterialController extends Controller
             {
                 $cr = Stock::create($stockarr);
             }*/
-                
+
 
             return redirect("rawmaterial")->with('message', "Raw Material updated successfully");
         }

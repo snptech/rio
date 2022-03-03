@@ -18,6 +18,7 @@ class Qualitycontroll extends Model
         'raw_material_id',
         'total_qty',
         'ar_no',
+        "ar_no_date_date",
         'quantity_rejected',
         'quantity_status',
         'date_of_approval',
@@ -27,11 +28,11 @@ class Qualitycontroll extends Model
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Quality Control')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -40,13 +41,13 @@ class Qualitycontroll extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Quality Control Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Quality Control')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -54,8 +55,8 @@ class Qualitycontroll extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Quality Control Updated');
             });
@@ -68,7 +69,7 @@ class Qualitycontroll extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Quality Control Deleted');
         });
