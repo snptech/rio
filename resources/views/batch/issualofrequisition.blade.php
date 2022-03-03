@@ -27,6 +27,7 @@
                             ->leftJoin('issue_material_production_requestion_details', 'issue_material_production_requestion_details.main_details_id', 'detail_packing_material_requisition.requisition_id')
                             ->leftJoin('inward_raw_materials_items', 'inward_raw_materials_items.id', 'issue_material_production_requestion_details.batch_id')
                             ->orderBy('id', 'desc')
+                            ->groupBy("detail_packing_material_requisition.id")
                             ->get();
                     @endphp
                     @if (isset($requestion_details) && $requestion_details)
@@ -34,7 +35,7 @@
                             <tr>
                                 <td>{{ $req->id }}</td>
                                 <td>{{ $temp->batch_no }}</td>
-                                <td>{{ $req->created_at ? date('d/m/Y', strtotime($req->created_at)) : '' }}
+                                <td>{{ $req->Date ? $req->Date : '' }}
                                 </td>
                                 <td>{{ $temp->material_name }}</td>
                                 <td>{{ $temp->Quantity }}</td>
