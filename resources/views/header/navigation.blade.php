@@ -12,11 +12,11 @@
         <span class="menu-title">Warehouse</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
       <div class="collapse" id="ui-warehouse">
         <ul class="nav flex-column sub-menu">
-        
+
           @can('inward-rawmaterials-list')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('inward-rawmaterials') }}">
-              
+
               Inward Raw Material
             </a>
           </li>
@@ -26,7 +26,7 @@
 
             <a class="nav-link" href="{{ route('inwardpackingrawmaterial-list') }}">
 
-             
+
               Inward Packing Material
             </a>
           </li>
@@ -34,7 +34,7 @@
           @can('issue-material-for-production-list')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('issue_material_for_production') }}">
-             
+
               Issue Material For Production
             </a>
           </li>
@@ -42,33 +42,25 @@
           @can('inward-finished-goods-new-stock-list')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('new_stock') }}">
-              
+
               Inward Finished Goods -<br />New Stock
             </a>
           </li>
           @endcan
           @can('dispatch-finished-goods-list')
-        
+
           <li class="nav-item">
             <a class="nav-link" href="{{ route('dispatch_finished_goods') }}">
-             
+
               Dispatch Finished Goods
             </a>
           </li>
           @endcan
-          @can('quality-control-list')
-        
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('quality_control') }}">
-              
-              Quality Control
-            </a>
-          </li>
-          @endcan
+
           @can('issual-by-stores-for-production-list')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('issual_by_stores_for_production') }}">
-              
+
               Issual By Stores For Production
             </a>
           </li>
@@ -77,6 +69,54 @@
       </div>
     </li>
     @endcanany
+    @canany(["quality_control","quality_control_packing","quality_control_finishgood","quality_control_batch","quality-control-list"])
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-qc" aria-expanded="false" aria-controls="ui-qc"><i class="menu-icon" data-feather="tool"></i>
+        <span class="menu-title">Quality Control</span><i class="icon-layout menu-arrow" data-feather="chevron-down"></i></a>
+      <div class="collapse" id="ui-qc">
+        <ul class="nav flex-column sub-menu">
+          @can('quality_control')
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('quality_control') }}">
+                Quality Control Raw Material
+
+            </a>
+          </li>
+          @endcan
+          @can('quality_control_packing')
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('quality_control_packing') }}">
+                Quality Control Packing Material
+
+            </a>
+          </li>
+          @endcan
+          @can('quality_control_finishgood')
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('quality_control_finishgood') }}">
+                Quality Control Finish Good
+
+            </a>
+          </li>
+          @endcan
+          @can('quality_control_batch')
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('quality_control_batch') }}">
+                Quality Control Batch Process
+
+            </a>
+          </li>
+          @endcan
+
+  </ul>
+  </div>
+  </li>
+  @endcanany
+
     {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('issue_packing_material') }}">
     <i class="menu-icon" data-feather="hard-drive"></i>
@@ -106,7 +146,7 @@
   </div>
   </li>
   @endcanany
- 
+
   @canany(['annexure-i-list','annexure-ii-list','annexure-iii-list','annexure-iv-list','packing-annexure-list','annexure-iv-list','packing-annexure-list','annexure-vi-list','annexure-vii-list'])
   <li class="nav-item">
     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

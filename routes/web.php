@@ -187,7 +187,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::post('/quality_control_insert', [App\Http\Controllers\QualityControlController::class, 'quality_control_insert'])->name("quality_control_insert");
          Route::post('/qty_control', [App\Http\Controllers\QualityControlController::class, 'qty_control'])->name('qty_control');
          Route::post('/view_quality', [App\Http\Controllers\QualityControlController::class, 'view_quality'])->name('view_quality');
-
+         Route::get("/quality_control_packing",[App\Http\Controllers\QualityControlController::class, 'quality_control_packing'])->name('quality_control_packing');
+         Route::get("/quality_control_finishgood",[App\Http\Controllers\QualityControlController::class, 'quality_control_finishgood'])->name('quality_control_finishgood');
+         Route::get("/quality_control_batch",[App\Http\Controllers\QualityControlController::class, 'quality_control_batch'])->name('quality_control_batch');
 
          //dispath finshed googds
         Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
@@ -220,7 +222,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/add_manufacturing_edit/{id}/{any?}', [App\Http\Controllers\ManufactureProcessController::class,'add_manufacturing_edit'])->name("add_manufacturing_edit");
         Route::post('/add_btch_manufacture_view', [App\Http\Controllers\ManufactureProcessController::class,'add_btch_manufacture_view'])->name("add_btch_manufacture_view");
         Route::get('/add_btch_manufacture_delete/{id}', [App\Http\Controllers\ManufactureProcessController::class,'add_btch_manufacture_delete'])->name("add_btch_manufacture_delete");
-
+        Route::post("checkbatchnoexits",[App\Http\Controllers\ManufactureProcessController::class,'checkbatchnoexits'])->name("checkbatchnoexits");
         //bill-of-raw-materia
         Route::get('/bill-of-raw-material', [App\Http\Controllers\ManufactureProcessController::class,'bill_of_raw_material'])->name("bill-of-raw-material");
         Route::get('/add-batch-manufacturing-record-bill-of-raw-material', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacturing_record_bill'])->name("add-batch-manufacturing-record-bill-of-raw-material");
@@ -301,10 +303,10 @@ $router->group(['middleware' => ['auth']], function ($router) {
          //permission
           Route::resource('permissions', App\Http\Controllers\PermissionController::class);
 
-         //user Controller 
+         //user Controller
          Route::resource('users', App\Http\Controllers\UserController::class);
          Route::resource('activitylog', App\Http\Controllers\ActivitylogController::class);
-         
+
 
 
 

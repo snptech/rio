@@ -145,7 +145,7 @@
                                 <tr>
                                     <td>{{ $req->id }}</td>
                                     <td>{{ $req->batchNo }}</td>
-                                    <td>{{ $req->created_at ? date('d/m/Y', strtotime($req->created_at)) : '' }}
+                                    <td>{{ $req->Date ? date('d/m/Y', strtotime($req->Date)) : '' }}
                                     </td>
                                     <td>{{ $temp->material_name }}</td>
                                     <td>{{ $temp->Quantity }}</td>

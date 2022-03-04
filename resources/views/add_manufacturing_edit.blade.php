@@ -83,34 +83,34 @@
                 @endif
 
                 <div class="tab-content">
-                    
+
                     @if (isset($edit_batchmanufacturing))
                         @include("batch.mainbatchedit")
                     @endif
 
                     @include("batch.requisition")
-                    
+
                     @include("batch.issualofrequisition")
-                    
+
                     @include("batch.billOfRawMaterial")
-                    
+
                     @include("batch.requisitionpacking")
 
-                    
+
                     @include("batch.issualofrequisitionpacking")
-                    
+
                     @include("batch.listOfEquipment")
-                   
+
                     @include("batch.addLots_listing")
 
                     @include("batch.homogenizing")
-                   
+
                     @include("batch.Packing")
 
-                    
+
                     @include("batch.generate_label")
 
-                   
+
 
 
                 </div>
@@ -651,7 +651,7 @@
                     to: "required",
                     batchNo: "required",
                     Date: "required",
-                    "PackingMaterialName[]": "required",                   
+                    "PackingMaterialName[]": "required",
                     "Quantity[]": "required",
                     checkedBy: "required",
                     ApprovedBy: "required",
@@ -669,7 +669,7 @@
 
                 },
             });
-            
+
             $("#packing_material_requisition_slip").validate({
                 rules: {
                     from: "required",
@@ -758,6 +758,28 @@
                 });
             });
         }
+        $("#batchNo").change(function(){
+
+
+            $.ajax({
+                url: '{{ route('checkbatchnoexits') }}',
+                method: 'POST',
+                data: {
+                    "id": '{{ $edit_batchmanufacturing->id }}',
+                    "batch":$(this).val(),
+                    "_token": '{{ csrf_token() }}'
+                }
+            }).success(function(data) {
+                if(data.status == 0)
+                {
+                    $("#batchNo").val("");
+                    $("#batchNo").focus();
+                    swal("Exits !","This batch number already exists. Please check","warning");
+
+                }
+            });
+        });
+
 
         function getbatchlot(val, pos) {
             $.ajax({
@@ -888,8 +910,8 @@
                 });
             });
 
-          
+
         });
-        
+
     </script>
 @endpush

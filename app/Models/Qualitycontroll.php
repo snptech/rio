@@ -25,6 +25,7 @@ class Qualitycontroll extends Model
         'remark',
         'created_at',
         'updated_at',
+        'material_type'
     ];
     protected static function boot()
     {

@@ -227,7 +227,7 @@ class InwardPackingMaterialController extends Controller
                     $datas['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
                     $result = InwardPackingMaterialItems::create($datas);
 
-                    $stock = Rawmeterial::find($value);
+                   /* $stock = Rawmeterial::find($value);
                     $datas["material_stock"] = ($stock->material_stock+$request->total_qty[$i]);
 
                     $stock->update($datas);
@@ -246,7 +246,7 @@ class InwardPackingMaterialController extends Controller
                     $stockarr["type"] = "P";
 
 
-                    $stid = Stock::create($stockarr);
+                    $stid = Stock::create($stockarr);*/
                     $i++;
                 }
 
@@ -354,7 +354,7 @@ class InwardPackingMaterialController extends Controller
                         $result = InwardPackingMaterialItems::create($datas);
 
 
-                        $stockarr = array();
+                        /*$stockarr = array();
                         $stockitem = Stock::where("matarial_id",$value)->where("material_type","P")->where("process_batch_id",$id)->first();
                         $stockarr["matarial_id"] = $value;
                         $stockarr["material_type"] = "P";
@@ -366,7 +366,7 @@ class InwardPackingMaterialController extends Controller
                         $stockarr["type"] = "P";
 
 
-                        $stid = $stockitem->update($stockarr);
+                        $stid = $stockitem->update($stockarr);*/
 
                         $i++;
                     }

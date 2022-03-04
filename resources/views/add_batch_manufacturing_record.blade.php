@@ -81,7 +81,7 @@
 						$proId = isset($batchdetails['proName']) ? $batchdetails['proName'] : '';
 						$proName = isset($product[$proId]) ? $product[$proId] : 'Choose Product Name';
 						?>
-						
+
 						@include("batch.addbatch")
                         @include("batch.addrequisition")
                         @include("batch.addrequisitionpacking")
@@ -90,7 +90,7 @@
 						@include("batch.addaddLots_listing")
 						@include("batch.addPacking")
 						@include("batch.addgenerate_label")
-                        
+
                     </div>
                 </div>
             </div>
@@ -747,6 +747,27 @@
                 });
             });
         }
+
+        $("#batchNo").change(function(){
+
+
+            $.ajax({
+                url: '{{ route('checkbatchnoexits') }}',
+                method: 'POST',
+                data: {
+                    "batch":$(this).val(),
+                    "_token": '{{ csrf_token() }}'
+                }
+            }).success(function(data) {
+                if(data.status == 0)
+                {
+                    $("#batchNo").val("");
+                    $("#batchNo").focus();
+                    swal("Exits !","This batch number already exists. Please check","warning");
+
+                }
+            });
+        });
 
         function getcodes(val, pos) {
             $.ajax({

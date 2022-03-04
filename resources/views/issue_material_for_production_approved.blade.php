@@ -250,7 +250,10 @@
             $("#Quantity_app"+postion).attr("data-stock",data.qty); //val(data.qty);
             ph_arno = (data.arno=='')? data.arno+"Not Available":'A.R.N. Number/Date';
             $("#arno"+postion).attr("placeholder",ph_arno);
+
             $("#arno"+postion).val(data.arno);
+            $("#arnodate"+postion).val(data.arno_date);
+
          })
     }
     {{-- console.log($('.Quantity_app{{ $mat->details_id }}').data('stock')) --}}

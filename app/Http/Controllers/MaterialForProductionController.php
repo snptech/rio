@@ -259,6 +259,7 @@ class MaterialForProductionController extends Controller
                 {
                     $data["qty"] = ($items->qty-$items->used_qty);
                     $data["arno"] = ($items->ar_no_date);
+                    $data["arno_date"] = ($items->ar_no_date_date);
                     return response()->json($data);
 
                 }
@@ -271,6 +272,7 @@ class MaterialForProductionController extends Controller
                 {
                     $data["qty"] = ($items->qty-$items->used_qty);
                     $data["arno"] = ($items->ar_no_date);
+                    $data["arno_date"] = ($items->ar_no_date_date);
                     return response()->json($data);
 
                 }

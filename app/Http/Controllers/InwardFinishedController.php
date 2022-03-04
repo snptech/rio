@@ -158,14 +158,14 @@ class InwardFinishedController extends Controller
             $stockarr["type"] = "F";
 
 
-            $stid = Stock::create($stockarr);
+           /* $stid = Stock::create($stockarr);
 
             $stock = Rawmeterial::find($request['product_name']);
             if($stock)
             {
                 $sdata["material_stock"] = $stock->material_stock+$request['total_quantity'];
                 $stock->update($sdata);
-            }
+            }*/
             return redirect("new_stock")->with('success', "Data created successfully");
         }
     }
