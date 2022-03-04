@@ -13,11 +13,11 @@ class InwardPackingMaterialItems extends Model
     protected $fillable = ["id", "good_receipt_id", "material", "total_qty", "ar_no_date","used_qty","is_opening_stock"];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Inward Packing Material')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -26,13 +26,13 @@ class InwardPackingMaterialItems extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Inward Packing Material Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Inward Packing Material')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -40,8 +40,8 @@ class InwardPackingMaterialItems extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Inward Packing Material Updated');
             });
@@ -54,7 +54,7 @@ class InwardPackingMaterialItems extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Inward Packing Material Deleted');
         });

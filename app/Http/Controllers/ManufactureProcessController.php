@@ -111,7 +111,7 @@ class ManufactureProcessController extends Controller
         $totalFiltered = $listquery->count();
         $listquery->offset($start)
                 ->limit($limit)
-                ->orderBy($order, $dir);
+                ->orderBy("add_batch_manufacture.created_at", "desc");
 
         $data = $listquery->get();
 
@@ -2094,6 +2094,8 @@ class ManufactureProcessController extends Controller
              $datastock["process_batch_id"] = $batch->batchNo;
              $datastock["type"] = "F";
              $materialdata = array();
+
+             
              /*if(isset($stock) && $stock->id)
              {
                  Stock::where("id",$stock->id)->update($datastock);

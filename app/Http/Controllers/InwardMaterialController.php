@@ -9,6 +9,7 @@ use App\Models\Manufacturer;
 use App\Models\Rawmeterial;
 use App\Models\Rawmaterialitems;
 use App\Models\Department;
+use App\Models\Stock;
 use DB;
 use Auth;
 class InwardMaterialController extends Controller
@@ -149,11 +150,29 @@ class InwardMaterialController extends Controller
                     $itemdata["opening_stock"] = $stock->material_stock;
 
                     $resultsItem = Rawmaterialitems::create($itemdata);
-                    $datas = array();
+                    $stockarr = array();
 
-                    $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
+                    if($stock->qc_applicable !=1 && $resultsItem)
+                    {
+                        $stockarr["matarial_id"] = $value;
+                        $stockarr["material_type"] = "R";
+                        $stockarr["department"] = 3;
+                        $stockarr["qty"] = ($request->Quantity[$i]);
+                        $stockarr["batch_no"] = $request->batch[$i];
+                        $stockarr["process_batch_id"] = $resultsItem->id;
+                        $stockarr["ar_no_date"] = $request->ARNo[$i]?($request->ARNo[$i]):"";
+                        $stockarr["ar_no_date_date"] = $request->ARNodate[$i]?($request->ARNodate[$i]):"";
+                        $stockarr["type"] = "R";
 
-                    $stock->update($datas);
+
+                        $stid = Stock::create($stockarr);
+                    }
+
+                   /*if $datas["material_stock"] = ($stock->material_stock+$request->Quantity[$i]);
+
+                    $stock->update($datas);*/
+
+
 
                     $i++;
                 }

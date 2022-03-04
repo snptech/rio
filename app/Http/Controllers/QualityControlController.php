@@ -93,7 +93,7 @@ class QualityControlController extends Controller
             'ar_no' => $request['ar_number'],
             'ar_no_date_date' => $request['ar_date']?$request['ar_date']:"",
             'checked_by' => Auth::user()->id,
-            'material_type' =>
+            'material_type' =>"R"
         ];
 
         $result =Qualitycontroll::create($data);

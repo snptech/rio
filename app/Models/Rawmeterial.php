@@ -24,7 +24,8 @@ class Rawmeterial extends Model
         "capacity",
         "material_code",
         "is_opening",
-        "grade"
+        "grade",
+        "qc_applicable"
 
     ];
     protected static function boot()

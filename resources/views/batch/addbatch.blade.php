@@ -13,14 +13,11 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="bmrNo" class="active">BMR No.</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">RCIPL/BMR/</span>
-                        </div>
+
                     <input type="text" class="form-control" name="bmrNo" id="bmrNo"
-                        placeholder="BMR No." pattern="\d*" maxlength="50"
+                        placeholder="BMR No." pattern="\d*" maxlength="50" value="RCIPL/BMR/"
                         >
-                    </div>
+
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -37,14 +34,11 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="refMfrNo">Ref. MFR No.</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">RCIPL/MFR/</span>
-                        </div>
+
+
                         <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
-                            placeholder="Ref. MFR No." pattern="\d*" maxlength="50"
-                            >
-                    </div>
+                            placeholder="Ref. MFR No." pattern="\d*" maxlength="50" value="RCIPL/MFR/">
+
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">

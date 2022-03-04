@@ -90,6 +90,7 @@ class RawmaterialController extends Controller
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
         $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
         $data["grade"] = $request->grade?($request->grade):'';
+        $data["qc_applicable"] = $request->qc_status?($request->qc_status):0;
 
 
 
@@ -211,6 +212,7 @@ class RawmaterialController extends Controller
         $data["man_date"] = $request->manufacturingdate?strtotime($request->manufacturingdate):'';
         $data["material_code"] = $request->rawmeterial_code?($request->rawmeterial_code):'';
         $data["grade"] = $request->grade?($request->grade):'';
+        $data["qc_applicable"] = $request->qc_status?($request->qc_status):0;
         /*if($request->expierydat)
         {
             $expdate = explode("/",$request->expierydate);

@@ -146,26 +146,30 @@ class InwardFinishedController extends Controller
 
         if($result)
         {
-            $stockarr = array();
-
-            $stockarr["matarial_id"] = $request['product_name'];
-            $stockarr["material_type"] = "F";
-            $stockarr["department"] = 3;
-            $stockarr["qty"] = $request['total_quantity'];
-            $stockarr["batch_no"] = $request['batch_no'];
-            $stockarr["process_batch_id"] = $result->id;
-            $stockarr["ar_no_date"] = $request['ar_no'];
-            $stockarr["type"] = "F";
-
-
-           /* $stid = Stock::create($stockarr);
-
-            $stock = Rawmeterial::find($request['product_name']);
-            if($stock)
+            $mat = Rawmeterial::where("id",$request['product_name']);
+            if(isset($mat) && !$mat->qc_applicable)
             {
-                $sdata["material_stock"] = $stock->material_stock+$request['total_quantity'];
-                $stock->update($sdata);
-            }*/
+                $stockarr = array();
+
+                $stockarr["matarial_id"] = $request['product_name'];
+                $stockarr["material_type"] = "F";
+                $stockarr["department"] = 3;
+                $stockarr["qty"] = $request['total_quantity'];
+                $stockarr["batch_no"] = $request['batch_no'];
+                $stockarr["process_batch_id"] = $result->id;
+                $stockarr["ar_no_date"] = $request['ar_no'];
+                $stockarr["type"] = "F";
+
+
+                $stid = Stock::create($stockarr);
+
+                $stock = Rawmeterial::find($request['product_name']);
+                if($stock)
+                {
+                    $sdata["material_stock"] = $stock->material_stock+$request['total_quantity'];
+                    $stock->update($sdata);
+                }
+            }
             return redirect("new_stock")->with('success', "Data created successfully");
         }
     }

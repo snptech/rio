@@ -93,6 +93,16 @@
 
                         </div>
                     </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="Status">QC Status</label> <br>
+                            <div class="form-check-inline">
+                              <input type="checkbox" class="form-check-input" name="qc_status" id="qc_status"  value="1" checked="checked">
+                              <label class="form-check-label" for="qc_status">Yes</label>
+                            </div>
+
+                        </div>
+                    </div>
                    {{--  <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="controller_id">Material Expiery Date</label>

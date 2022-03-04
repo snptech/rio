@@ -18,14 +18,10 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="bmrNo" class="active">BMR No.</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">RCIPL/BMR/</span>
-                        </div>
+
                         <input type="text" class="form-control" name="bmrNo"
-                        value="{{ $edit_batchmanufacturing->bmrNo }}" id="bmrNo" pattern="\d*"
+                        value="{{ $edit_batchmanufacturing->bmrNo?$edit_batchmanufacturing->bmrNo:"RCIPL/BMR/" }}" id="bmrNo" pattern="\d*"
                         maxlength="120" onkeypress="">
-                    </div>
 
                 </div>
             </div>
@@ -45,15 +41,12 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="refMfrNo">Ref. MFR No.</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">RCIPL/MFR/</span>
-                        </div>
+
                     <input type="text" class="form-control" name="refMfrNo"
-                        value="{{ $edit_batchmanufacturing->refMfrNo }}" id="refMfrNo"
+                        value="{{ $edit_batchmanufacturing->refMfrNo?$edit_batchmanufacturing->refMfrNo:"RCIPL/MFR/" }}" id="refMfrNo"
                         pattern="\d*" maxlength="120"
                         onkeypress="">
-                    </div>
+
 
                 </div>
             </div>

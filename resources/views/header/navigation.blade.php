@@ -229,7 +229,7 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('party_master') }}">Party Master</a></li>
         @endcan
         @can("permission-list")
-        <li class="nav-item"><a class="nav-link" href="{{url('permissions')}}">Permisition</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{url('permissions')}}">Permission</a></li>
         @endcan
         @can('user-list')
         <li class="nav-item">

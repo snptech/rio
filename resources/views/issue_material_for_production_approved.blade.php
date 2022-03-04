@@ -68,6 +68,7 @@
                                 @php
                                     $batch  = "";
                                     if ($mat->type == 'P') {
+
                                     $batch =  $batch = App\Models\Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("Qty","id");
 
                                    /* App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
@@ -76,7 +77,10 @@
                                         //->pluck("id","id");*/
                                     }
                                     else
+                                    {
                                         $batch = App\Models\Stock::select("inward_raw_materials_items.batch_no","stock.id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("batch_no","id");
+
+                                    }
                                 @endphp
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
                                 {{-- <span class="add-count">{{ $i }}</span> --}}
@@ -213,7 +217,7 @@
                 $material_name_2 = isset($mat->PackingMaterialName)? $mat->PackingMaterialName:'';
                 @endphp
                 $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
-                 '{{Form::select("rBatch".$details_id."[]", $batch_new, old("rBatch".$details_id), array("id" =>"rBatch$i","placeholder" => "Choose Batch number", "class"=>"form-control","onchange"=>'getarnoandqty($(this).val(),'.$material_name_2.",$i)")) }}'+
+                 '{{Form::select("rBatch".$details_id."[]", $batch_new, old("rBatch".$details_id), array("id" =>"rBatch$i","placeholder" => "Choose Batch number", "data-id"=>$type,"class"=>"form-control","onchange"=>'getarnoandqty($(this).val(),'.$material_name_2.",$i)")) }}'+
                  '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number</label><input type="text" class="form-control" name="arno{{ $details_id  }}[]" id="arno{{$i}}" placeholder="A.R.N. Number" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Date</label><input type="date" class="form-control" name="arnodate{{ $details_id  }}[]" id="arnodate{{$i}}" placeholder="A.R.N. Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app{{ $details_id  }}[]" id="Quantity_app{{$i}}" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
                 @php  $details_id++ @endphp
             } //add mulptple raw material
