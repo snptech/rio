@@ -2081,36 +2081,40 @@ class ManufactureProcessController extends Controller
         if ($result) {
 
             $batch = BatchManufacture::find($request->batch_id);
+            $rawmeterial = Rawmeterial::find($batch->proName);
+
+            if(isset($rawmeterial) && !$rawmeterial->qc_applicable) {
 
 
-             $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
+                $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
 
-             $datastock = array();
-             $datastock["matarial_id"] = $batch->proName;
-             $datastock["material_type"] = "F";
-             $datastock["department"] = 2;
-             $datastock["qty"] = $batch->BatchSize;
-             $datastock["batch_no"] = $batch->batchNo;
-             $datastock["process_batch_id"] = $batch->batchNo;
-             $datastock["type"] = "F";
-             $materialdata = array();
+                $datastock = array();
+                $datastock["matarial_id"] = $batch->proName;
+                $datastock["material_type"] = "F";
+                $datastock["department"] = 2;
+                $datastock["qty"] = $batch->BatchSize;
+                $datastock["batch_no"] = $batch->batchNo;
+                $datastock["process_batch_id"] = $batch->batchNo;
+                $datastock["type"] = "F";
+                $materialdata = array();
 
-             
-             /*if(isset($stock) && $stock->id)
-             {
-                 Stock::where("id",$stock->id)->update($datastock);
-                 $material  = Rawmeterial::where("id",$batch->proName)->first();
-                 $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
-                 $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
-             }
-             else
-             {
 
-                Stock::create($datastock);
-                $material  = Rawmeterial::where("id",$batch->proName)->first();
-                $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
-                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
-             }*/
+                if(isset($stock) && $stock->id)
+                {
+                    Stock::where("id",$stock->id)->update($datastock);
+                    $material  = Rawmeterial::where("id",$batch->proName)->first();
+                    $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                    $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
+                }
+                else
+                {
+
+                    Stock::create($datastock);
+                    $material  = Rawmeterial::where("id",$batch->proName)->first();
+                    $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                    $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
+                }
+            }
              if(isset($request->save_q))
             {
                 return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
@@ -2163,31 +2167,35 @@ class ManufactureProcessController extends Controller
 
              $batch = BatchManufacture::find($request->batch_id);
 
+             $rawmeterial = Rawmeterial::find($batch->proName);
 
-             $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
+             if(isset($rawmeterial) && !$rawmeterial->qc_applicable) {
 
-             $datastock = array();
-             $datastock["matarial_id"] = $batch->proName;
-             $datastock["material_type"] = "F";
-             $datastock["department"] = 2;
-             $datastock["qty"] = $batch->BatchSize;
-             $datastock["batch_no"] = $batch->batchNo;
-             $datastock["process_batch_id"] = $batch->batchNo;
-             $datastock["type"] = "F";
+                $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
 
-             if(isset($stock) && $stock->id)
-             {
-                $material  = Rawmeterial::where("id",$batch->proName)->first();
-                $materialdata["material_stock"]  =  (($material->material_stock-$stock->qty)+$batch->BatchSize);
-                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
-                 Stock::where("id",$stock->id)->update($datastock);
-             }
-             else
-             {
-                $material  = Rawmeterial::where("id",$batch->proName)->first();
-                $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
-                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
-                Stock::create($datastock);
+                $datastock = array();
+                $datastock["matarial_id"] = $batch->proName;
+                $datastock["material_type"] = "F";
+                $datastock["department"] = 2;
+                $datastock["qty"] = $batch->BatchSize;
+                $datastock["batch_no"] = $batch->batchNo;
+                $datastock["process_batch_id"] = $batch->batchNo;
+                $datastock["type"] = "F";
+
+                if(isset($stock) && $stock->id)
+                {
+                    $material  = Rawmeterial::where("id",$batch->proName)->first();
+                    $materialdata["material_stock"]  =  (($material->material_stock-$stock->qty)+$batch->BatchSize);
+                    $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
+                    Stock::where("id",$stock->id)->update($datastock);
+                }
+                else
+                {
+                    $material  = Rawmeterial::where("id",$batch->proName)->first();
+                    $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                    $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
+                    Stock::create($datastock);
+                }
              }
         }
         else
@@ -2196,32 +2204,36 @@ class ManufactureProcessController extends Controller
 
             $batch = BatchManufacture::find($request->batch_id);
 
+            $rawmeterial = Rawmeterial::find($batch->proName);
 
-             $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
+            if(isset($rawmeterial) && !$rawmeterial->qc_applicable) {
 
-             $datastock = array();
-             $datastock["matarial_id"] = $batch->proName;
-             $datastock["material_type"] = "F";
-             $datastock["department"] = 2;
-             $datastock["qty"] = $batch->BatchSize;
-             $datastock["batch_no"] = $batch->batchNo;
-             $datastock["process_batch_id"] = $batch->batchNo;
-             $datastock["type"] = "F";
+                $stock = Stock::where("matarial_id",$batch->proName)->where("material_type","F")->where("batch_no",$batch->batchNo)->first();
 
-           /*  if(isset($stock) && $stock->id)
-             {
-                $material  = Rawmeterial::where("id",$batch->proName)->first();
-                $materialdata["material_stock"]  =  (($material->material_stock-$stock->qty)+$batch->BatchSize);
-                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
-                 Stock::where("id",$stock->id)->update($datastock);
-             }
-             else
-             {
-                $material  = Rawmeterial::where("id",$batch->proName)->first();
-                $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
-                $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
-                Stock::create($datastock);
-             }*/
+                $datastock = array();
+                $datastock["matarial_id"] = $batch->proName;
+                $datastock["material_type"] = "F";
+                $datastock["department"] = 2;
+                $datastock["qty"] = $batch->BatchSize;
+                $datastock["batch_no"] = $batch->batchNo;
+                $datastock["process_batch_id"] = $batch->batchNo;
+                $datastock["type"] = "F";
+
+                if(isset($stock) && $stock->id)
+                {
+                    $material  = Rawmeterial::where("id",$batch->proName)->first();
+                    $materialdata["material_stock"]  =  (($material->material_stock-$stock->qty)+$batch->BatchSize);
+                    $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
+                    Stock::where("id",$stock->id)->update($datastock);
+                }
+                else
+                {
+                    $material  = Rawmeterial::where("id",$batch->proName)->first();
+                    $materialdata["material_stock"]  =  ($material->material_stock+$batch->BatchSize);
+                    $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
+                    Stock::create($datastock);
+                }
+            }
         }
 
 
@@ -2237,26 +2249,26 @@ class ManufactureProcessController extends Controller
         }
 
     }
- public function material_name_get(Request $request)
- {
+    public function material_name_get(Request $request)
+    {
 
-    if($request->id){
+                if($request->id){
 
-        $data=Rawmeterial::select('raw_materials.*')->where('raw_materials.id',$request->id)->first();
+                    $data=Rawmeterial::select('raw_materials.*')->where('raw_materials.id',$request->id)->first();
 
-       if($data){
-            return ['status' =>'success','capacity'=>$data->capacity];
-        }
-
-
-  }
-    return ['status'=>'error','message'=>'Invalid Order ID'];
+                if($data){
+                        return ['status' =>'success','capacity'=>$data->capacity];
+                    }
 
 
+            }
+                return ['status'=>'error','message'=>'Invalid Order ID'];
 
- }
 
-  public function pdfview(Request $request,$id)
+
+    }
+
+    public function pdfview(Request $request,$id)
     {
 
         $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name',"userdone.name as doneby","usercheck.name as usercheck")

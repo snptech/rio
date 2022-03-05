@@ -434,6 +434,7 @@
                     approval: "required",
                     approvalDate: "required",
                     checkedByI: "required",
+                    remark: "required",
 
                 },
                 messages: {

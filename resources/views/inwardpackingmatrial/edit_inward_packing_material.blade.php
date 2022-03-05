@@ -161,10 +161,19 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="ARNo">AR No. / Date</label>
-                                            <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value=""{{ isset(old("ar_no_date")[0])?old("ar_no_date")[0]:'' }}">
+                                            <label for="ARNo">AR No. </label>
+                                            <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No." value=""{{ isset(old("ar_no_date")[0])?old("ar_no_date")[0]:'' }}">
                                             @if ($errors->has('ar_no_date'))
                                             <span class="text-danger">{{ $errors->first('ar_no_date') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="ARNo">AR  Date</label>
+                                            <input type="text" class="form-control" name="ar_no_datedate[]" id="ar_no_date" placeholder="AR Date" value=""{{ isset(old("ar_no_datedate")[0])?old("ar_no_datedate")[0]:'' }}">
+                                            @if ($errors->has('ar_no_datedate'))
+                                            <span class="text-danger">{{ $errors->first('ar_no_datedate') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -218,7 +227,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="MaterialName[' + x + ']">Raw Material Name</label>{{ Form::select("material[]",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"material'+x+'","placeholder"=>"Name of Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity[' + x + ']">Quantity Received (Kg)</label><input type="text" class="form-control" name="total_qty[]" id="total_qty[' + x + ']" placeholder="Quantity"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo[' + x + ']">AR No. / Date</label><input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date[' + x + ']" placeholder="AR No. / Date"></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="MaterialName[' + x + ']">Raw Material Name</label>{{ Form::select("material[]",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"material'+x+'","placeholder"=>"Name of Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity[' + x + ']">Quantity Received (Kg)</label><input type="text" class="form-control" name="total_qty[]" id="total_qty[' + x + ']" placeholder="Quantity"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo[' + x + ']">AR No. / Date</label><input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date[' + x + ']" placeholder="AR No. / Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNodate[' + x + ']">AR Date</label><input type="text" class="form-control" name="ar_no_datedate[]" id="ar_no_datedate[' + x + ']" placeholder="AR  Date"></div></div></div>'); //add input box
             }
             feather.replace()
         });
@@ -247,6 +256,7 @@
                 "total_qty[]": "required",
                 /*"ar_no_date[]": "required",*/
                 "material[]": "required",
+                remark: "required",
 
             },
             messages: {
@@ -261,6 +271,7 @@
                 "total_qty[]": "Please  Enter The total qty",
                 "material[]": "Please  select The Material",
                 "ar_no_date": "Please  Enter The Ar No Date",
+                remark:"Please enter remark"
 
             },
         });
