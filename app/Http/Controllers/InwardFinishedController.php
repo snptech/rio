@@ -135,6 +135,7 @@ class InwardFinishedController extends Controller
             'total_no_of_fiber_board_drums_bal' => $request['total_no_of_fiber_board_drums'],
             'total_quantity_bal' => $request['total_quantity'],
             'ar_no' => $request['ar_no'],
+            'ar_no_date' => $request['ar_no_date']?$request['ar_no_date']:"",
             'approval_data' => $request['approval_data'],
             'received_by' => Auth::user()->id,
             'remark' => $request['remark'],

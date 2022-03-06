@@ -89,6 +89,7 @@
 
                   <input type="hidden" name="rawmaterial_id" value="{{ $qty_control_view->r_m_id }}" />
                   <input type="hidden" name="total_qty" value="{{ $qty_control_view->qty_received_kg }}" />
+                  <input type="hidden" name="mat_type" value="{{ $mat_type }}" />
                   <button type="submit" class="btn btn-primary btn-md m-0 submit_data">Submit</button>
               </div>
           </div>

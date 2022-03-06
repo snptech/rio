@@ -191,6 +191,13 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::get("/quality_control_finishgood",[App\Http\Controllers\QualityControlController::class, 'quality_control_finishgood'])->name('quality_control_finishgood');
          Route::get("/quality_control_batch",[App\Http\Controllers\QualityControlController::class, 'quality_control_batch'])->name('quality_control_batch');
 
+         Route::post("/qty_control_packing",[App\Http\Controllers\QualityControlController::class, 'qty_control_packing_approved'])->name("qty_control_packing");
+         Route::post("/qty_control_finishgoods",[App\Http\Controllers\QualityControlController::class, 'qty_control_finishgoods_approved'])->name("qty_control_finishgoods");
+         Route::post("/qty_control_batch_approved",[App\Http\Controllers\QualityControlController::class, 'qty_control_batch_approved'])->name("qty_control_batch_approved");
+
+
+
+
          //dispath finshed googds
         Route::get('/dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'dispatch_finished_goods'])->name("dispatch_finished_goods");
         Route::get('/add_dispatch_finished_goods', [App\Http\Controllers\DispatchFinishedGoodsController::class, 'add_dispatch_finished_goods'])->name("add_dispatch_finished_goods");

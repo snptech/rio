@@ -27,6 +27,7 @@ class Inwardfinishedgoods extends Model
         "total_no_of_fiber_board_drums" ,
         "total_quantity" ,
         "ar_no" ,
+        "ar_no_date",
         "approval_data" ,
         "received_by" ,
         "remark" ,
@@ -42,11 +43,11 @@ class Inwardfinishedgoods extends Model
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Inward Finished Goods - New Stock')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -55,13 +56,13 @@ class Inwardfinishedgoods extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Inward Finished Goods - New Stock Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Inward Finished Goods - New Stock')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -69,8 +70,8 @@ class Inwardfinishedgoods extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Inward Finished Goods - New Stock Updated');
             });
@@ -83,7 +84,7 @@ class Inwardfinishedgoods extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Inward Finished Goods - New Stock Deleted');
         });

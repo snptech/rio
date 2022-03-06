@@ -11,9 +11,10 @@ use App\Models\InwardPackingMaterial;
 use App\Models\InwardPackingMaterialItems;
 use App\Models\Inwardfinishedgoods;
 use App\Models\BatchManufacture;
+use App\Models\FinishedGoodsDispatch;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
 class QualityControlController extends Controller
 {
     function __construct()
@@ -47,7 +48,11 @@ class QualityControlController extends Controller
         ->join('raw_materials','raw_materials.id','=','inward_raw_materials_items.material')
         ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
         ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
-        ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
+                ->on("quality_controll_check.material_type",DB::raw('"R"'));
+        })
+        ->groupBy("inward_raw_materials_items.id")
         ->orderBy('inward_raw_materials.created_at', 'desc')
        ->get();
         return view('quality_control',$data);
@@ -93,7 +98,7 @@ class QualityControlController extends Controller
             'ar_no' => $request['ar_number'],
             'ar_no_date_date' => $request['ar_date']?$request['ar_date']:"",
             'checked_by' => Auth::user()->id,
-            'material_type' =>"R"
+            'material_type' =>$request['mat_type']
         ];
 
         $result =Qualitycontroll::create($data);
@@ -101,33 +106,131 @@ class QualityControlController extends Controller
 
          if($result)
          {
-            $rowmeterial = Rawmaterialitems::find($request['inward_item_id']);
-            if($rowmeterial)
-            {
-                $datas = array();
-                $datas["ar_no_date"] = $request['ar_number'];
-                $rowmeterial->update($datas);
-
-                $stockarr = array();
-                if($request['quantity_status'] == 'Approved')
+             if($request->mat_type == "R")
+             {
+                $rowmeterial = Rawmaterialitems::find($request['inward_item_id']);
+                if($rowmeterial)
                 {
-                    $stockarr["matarial_id"] = $result->raw_material_id;
-                    $stockarr["material_type"] = "R";
-                    $stockarr["department"] = 3;
-                    $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
-                    $stockarr["batch_no"] = $request['inward_item_id'];
-                    $stockarr["process_batch_id"] = $request['inward_item_id'];
-                    $stockarr["ar_no_date"] = $request['ar_number'];
-                    $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
-                    $stockarr["type"] = "R";
+                    $datas = array();
+                    $datas["ar_no_date"] = $request['ar_number'];
+                    $datas["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
+                    $rowmeterial->update($datas);
+
+                    $stockarr = array();
+                    if($request['quantity_status'] == 'Approved')
+                    {
+                        $stockarr["matarial_id"] = $result->raw_material_id;
+                        $stockarr["material_type"] = $request['mat_type'];
+                        $stockarr["department"] = 3;
+                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["batch_no"] = $request['inward_item_id'];
+                        $stockarr["process_batch_id"] = $request['inward_item_id'];
+                        $stockarr["ar_no_date"] = $request['ar_number'];
+                        $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
+                        $stockarr["type"] = $request['mat_type'];
 
 
-                    $stid = Stock::create($stockarr);
+                        $stid = Stock::create($stockarr);
+                    }
+
+
                 }
+                return redirect("quality_control")->with('success', "Item checked successfully.");
+             }
+             elseif($request->mat_type == "P")
+             {
+                $rowmeterial = InwardPackingMaterialItems::find($request['inward_item_id']);
+                if($rowmeterial)
+                {
+                    $datas = array();
+                    $datas["ar_no_date"] = $request['ar_number'];
+                    $datas["ar_no_datedate"] = $request['ar_date']?$request['ar_date']:"";
+                    $rowmeterial->update($datas);
+
+                    $stockarr = array();
+                    if($request['quantity_status'] == 'Approved')
+                    {
+                        $stockarr["matarial_id"] = $result->raw_material_id;
+                        $stockarr["material_type"] = $request['mat_type'];
+                        $stockarr["department"] = 3;
+                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["batch_no"] = $request['inward_item_id'];
+                        $stockarr["process_batch_id"] = $request['inward_item_id'];
+                        $stockarr["ar_no_date"] = $request['ar_number'];
+                        $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
+                        $stockarr["type"] = $request['mat_type'];
 
 
-            }
-            return redirect("quality_control")->with('success', "Item checked successfully.");
+                        $stid = Stock::create($stockarr);
+                    }
+
+
+                }
+                return redirect("quality_control_packing")->with('success', "Item checked successfully.");
+             }
+             elseif($request->mat_type == "F")
+             {
+                $rowmeterial = Inwardfinishedgoods::find($request['inward_item_id']);
+                if($rowmeterial)
+                {
+                    $datas = array();
+                    $datas["ar_no"] = $request['ar_number'];
+                    $datas["ar_no_date"] = $request['ar_date']?$request['ar_date']:"";
+                    $rowmeterial->update($datas);
+
+                    $stockarr = array();
+                    if($request['quantity_status'] == 'Approved')
+                    {
+                        $stockarr["matarial_id"] = $result->raw_material_id;
+                        $stockarr["material_type"] = $request['mat_type'];
+                        $stockarr["department"] = 3;
+                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["batch_no"] = $request['inward_item_id'];
+                        $stockarr["process_batch_id"] = $request['inward_item_id'];
+                        $stockarr["ar_no_date"] = $request['ar_number'];
+                        $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
+                        $stockarr["type"] = $request['mat_type'];
+
+
+                        $stid = Stock::create($stockarr);
+                    }
+
+
+                }
+                return redirect("quality_control_finishgood")->with('success', "Item checked successfully.");
+             }
+             elseif($request->mat_type == "B")
+             {
+                $rowmeterial = BatchManufacture::find($request['inward_item_id']);
+                if($rowmeterial)
+                {
+                    $datas = array();
+                    $datas["ar_no"] = $request['ar_number'];
+                    $datas["ar_no_date"] = $request['ar_date']?$request['ar_date']:"";
+                    $rowmeterial->update($datas);
+
+                    $stockarr = array();
+                    if($request['quantity_status'] == 'Approved')
+                    {
+                        $stockarr["matarial_id"] = $result->raw_material_id;
+                        $stockarr["material_type"] = $request['mat_type'];
+                        $stockarr["department"] = 3;
+                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["batch_no"] = $request['inward_item_id'];
+                        $stockarr["process_batch_id"] = $request['inward_item_id'];
+                        $stockarr["ar_no_date"] = $request['ar_number'];
+                        $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
+                        $stockarr["type"] = $request['mat_type'];
+
+
+                        $stid = Stock::create($stockarr);
+                    }
+
+
+                }
+                return redirect("quality_control_batch")->with('success', "Item checked successfully.");
+             }
+
          }
     }
     public function qty_control(Request $request)
@@ -150,9 +253,12 @@ class QualityControlController extends Controller
         ->join('raw_materials','raw_materials.id','=','inward_raw_materials_items.material')
         ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
         ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
-        ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
+                ->on("quality_controll_check.material_type",DB::raw('"R"'));
+        })
         ->where("inward_raw_materials_items.id",$request->quality_id)->first();
-         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view])->render();
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"R"])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
 
@@ -205,7 +311,7 @@ class QualityControlController extends Controller
             'quality_controll_check.*','quality_controll_check.id as quality_id',
             'goods_receipt_note_items.material as raw_material_name',
             'goods_receipt_note_items.id as inward_r_m_id',
-            'goods_receipt_notes.manufacturer as name_manufacturer',
+            'manufacturers.manufacturer as name_manufacturer',
             'goods_receipt_notes.supplier as name_supplier',
             'goods_receipt_notes.id as inward_r_m_t_id',
             'goods_receipt_note_items.total_qty',
@@ -215,17 +321,162 @@ class QualityControlController extends Controller
             "suppliers.name",
             "manufacturers.manufacturer",
             "raw_materials.created_at",
+            "goods_receipt_note_items.id as itemid",
+            "goods_receipt_note_items.ar_no_date"
+            )
+
+        ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
+        ->join('raw_materials','raw_materials.id','=','goods_receipt_note_items.material')
+        ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
+        ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','goods_receipt_note_items.id' );
+            $join->on("quality_controll_check.material_type",DB::raw('"P"'));
+        })
+        ->groupBy("goods_receipt_note_items.id")
+        ->orderBy('goods_receipt_notes.created_at', 'desc')
+       ->get();
+        return view('quality_control_packing',$data);
+
+    }
+    public function qty_control_packing_approved(Request $request) {
+
+        $qty_control_view = InwardPackingMaterialItems::select(
+            'quality_controll_check.*','quality_controll_check.id as quality_id',
+            'goods_receipt_note_items.material as raw_material_name',
+            'goods_receipt_notes.id as inward_id',
+            'goods_receipt_note_items.total_qty as qty_received_kg',
+            'goods_receipt_note_items.ar_no_date',
+            'goods_receipt_notes.goods_receipt_no',
+            'raw_materials.id as r_m_id',
+            'goods_receipt_notes.created_at as batch_no',
+            'raw_materials.material_name',
             "goods_receipt_note_items.id as itemid"
             )
 
         ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
         ->join('raw_materials','raw_materials.id','=','goods_receipt_note_items.material')
         ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
-        ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacturer")
-        ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','goods_receipt_note_items.id' )
-        ->orderBy('goods_receipt_notes.created_at', 'desc')
-       ->get();
-        return view('quality_control_packing',$data);
+        ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','goods_receipt_note_items.id' );
+            $join->on("quality_controll_check.material_type",DB::raw('"P"'));
+        })
+        ->where("goods_receipt_note_items.id",$request->quality_id)->first();
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"P"])->render();
+         $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
+         return response()->json(['html'=>$view ,'message'=>$sms]);
+    }
+    public function quality_control_finishgood(Request $request)
+    {
+        $data['quality_control']= Inwardfinishedgoods::select(
+            'quality_controll_check.*','quality_controll_check.id as quality_id',
+            'inward_finished_goods.*',
+            'raw_materials.material_name as material_name',
+            'inward_finished_goods.batch_no as batch_no',
+            "inward_finished_goods.created_at",
+            "inward_finished_goods.total_quantity_bal as total_quantity_bal",
+            "inward_finished_goods.ar_no",
+            "inward_finished_goods.ar_no_date",
+            "inward_finished_goods.id as itemid"
+            )
 
+
+        ->join('raw_materials','raw_materials.id','=','inward_finished_goods.product_name')
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','inward_finished_goods.id' );
+            $join->on("quality_controll_check.material_type",DB::raw('"F"'));
+        })
+        ->groupBy("inward_finished_goods.id")
+        ->orderBy('inward_finished_goods.created_at', 'desc')
+       ->get();
+
+
+        return view('quality_control_finishgood',$data);
+    }
+    public function qty_control_finishgoods_approved(Request $request)
+    {
+        $qty_control_view = Inwardfinishedgoods::select(
+            'inward_finished_goods.*','quality_controll_check.id as quality_id',
+            'raw_materials.material_name as material_name',
+            'inward_finished_goods.batch_no as batch_no',
+            "inward_finished_goods.created_at",
+            "inward_finished_goods.total_quantity_bal as qty_received_kg",
+            "inward_finished_goods.ar_no as ar_no_date",
+            "inward_finished_goods.ar_no_date as ar_no_date_date",
+            "inward_finished_goods.id as itemid",
+            "raw_materials.id as r_m_id",
+            "inward_finished_goods.created_at as batch_no",
+            "inward_finished_goods.id as inward_id"
+            )
+
+
+        ->join('raw_materials','raw_materials.id','=','inward_finished_goods.product_name')
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','inward_finished_goods.id' );
+            $join->on("quality_controll_check.material_type",DB::raw('"F"'));
+        })
+        ->where("inward_finished_goods.id",$request->quality_id)->first();
+
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"F"])->render();
+         $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
+         return response()->json(['html'=>$view ,'message'=>$sms]);
+    }
+
+    public function quality_control_batch(Request $request)
+    {
+        $data['quality_control']= BatchManufacture::select(
+            'quality_controll_check.*','quality_controll_check.id as quality_id',
+            'add_batch_manufacture.*',
+            'raw_materials.material_name as material_name',
+            'add_batch_manufacture.batchNo as batch_no',
+            "add_batch_manufacture.created_at",
+            "add_batch_manufacture.BatchSize as total_quantity_bal",
+            "add_batch_manufacture.ar_no",
+            "add_batch_manufacture.ar_no_date",
+            "add_batch_manufacture.id as itemid"
+            )
+
+
+        ->join('raw_materials','raw_materials.id','=','add_batch_manufacture.proName')
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','add_batch_manufacture.id' );
+            $join->on("quality_controll_check.material_type",DB::raw('"B"'));
+        })
+        ->groupBy("add_batch_manufacture.id")
+        ->orderBy('add_batch_manufacture.created_at', 'desc')
+       ->get();
+
+
+        return view('quality_control_batchgood',$data);
+    }
+    public function qty_control_batch_approved(Request $request)
+    {
+        $qty_control_view= BatchManufacture::select(
+            'quality_controll_check.*','quality_controll_check.id as quality_id',
+            'add_batch_manufacture.*',
+            'raw_materials.material_name as material_name',
+            'add_batch_manufacture.batchNo as batch_no',
+            "add_batch_manufacture.created_at",
+            "add_batch_manufacture.BatchSize as qty_received_kg",
+            "add_batch_manufacture.ar_no",
+            "add_batch_manufacture.ar_no_date",
+            "add_batch_manufacture.id as itemid",
+            "raw_materials.id as r_m_id",
+            "add_batch_manufacture.created_at as batch_no",
+            "add_batch_manufacture.id as inward_id"
+            )
+
+
+        ->join('raw_materials','raw_materials.id','=','add_batch_manufacture.proName')
+        ->leftjoin('quality_controll_check',function($join){
+            $join->on('quality_controll_check.inward_material_item_id','=','add_batch_manufacture.id' );
+            $join->on("quality_controll_check.material_type",DB::raw('"B"'));
+        })
+        ->where("add_batch_manufacture.id",$request->quality_id)->first();
+
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"B"])->render();
+         $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
+         return response()->json(['html'=>$view ,'message'=>$sms]);
     }
 }

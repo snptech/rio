@@ -34,14 +34,16 @@ class BatchManufacture extends Model
         'is_delete',
         'created_at',
         'updated_at',
+        "ar_no",
+        "ar_no_date"
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Manufacture Process')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -50,13 +52,13 @@ class BatchManufacture extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Manufacture Process Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Manufacture Process')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -64,8 +66,8 @@ class BatchManufacture extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Manufacture Process Updated');
             });
@@ -78,7 +80,7 @@ class BatchManufacture extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Manufacture Process Deleted');
         });

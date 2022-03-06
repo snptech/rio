@@ -507,7 +507,7 @@
                     batchNo: "required",
                     refMfrNo: "required",
                     ManufacturerDate: "required",
-                    Observation: "required",
+                    /*Observation: "required",
                     Temperature: "required",
                     Humidity: "required",
                     TemperatureP: "required",
@@ -526,7 +526,7 @@
                     WorkingSlandered: "required",
                     ValidationSample: "required",
                     CustomerSample: "required",
-                    ActualYield: "required",
+                    ActualYield: "required",*/
                     checkedBy: "required",
                     ApprovedBy: "required",
 
