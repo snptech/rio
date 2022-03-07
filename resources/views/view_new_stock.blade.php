@@ -10,7 +10,7 @@
             </tr>
             <tr>
                 <th >Product Name</th>
-                <td>{{$inward_goods->product_name}}</td>
+                <td>{{$inward_goods->material_name}}</td>
             </tr>
 
             <tr>
