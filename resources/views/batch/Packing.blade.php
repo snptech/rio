@@ -144,7 +144,7 @@
                                 <label for="areaCleanliness">Done By</label>
                                 <input type="text" class="form-control" name="areaCleanliness"
                                     value="{{ Auth::user()->name }}" id="areaCleanliness"
-                                    value="{{ \Auth::user()->name }}" readonly>
+                                    value="{{ \Auth::user()->name }}">
 
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                 <label for="CareaCleanliness">Checked By</label>
                                 <input class="form-control" type="text" name="CareaCleanliness"
                                     value="{{ Auth::user()->name }}" id="CareaCleanliness"
-                                    value="{{ \Auth::user()->name }}" readonly>
+                                    value="{{ \Auth::user()->name }}">
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                                 <label for="checkedBy">Checked By</label>
                                 <input type="text" class="form-control" name="checkedBy"
                                     value="{{ Auth::user()->name }}" id="checkedBy"
-                                    value="{{ \Auth::user()->name }}" readonly>
+                                    value="{{ \Auth::user()->name }}">
 
                             </div>
                         </div>
@@ -272,7 +272,7 @@
                                 <label for="ApprovedBy">Approved By</label>
                                 <input type="text" class="form-control" name="ApprovedBy"
                                     value="{{ Auth::user()->name }}" id="ApprovedBy"
-                                    value="{{ \Auth::user()->name }}" readonly>
+                                    value="{{ \Auth::user()->name }}" >
                             </div>
                         </div>
                     </div>

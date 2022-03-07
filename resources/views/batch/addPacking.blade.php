@@ -136,7 +136,7 @@
                                 <label for="areaCleanliness">Done By</label>
                                 <input type="text" class="form-control" name="areaCleanliness"
                                     id="areaCleanliness" value="{{ \Auth::user()->name }}"
-                                    readonly>
+                                    >
 
                             </div>
                         </div>
@@ -145,7 +145,7 @@
                                 <label for="CareaCleanliness">Checked By</label>
                                 <input class="form-control" type="text" name="CareaCleanliness"
                                     id="CareaCleanliness" value="{{ \Auth::user()->name }}"
-                                    readonly>
+                                    >
                             </div>
                         </div>
                     </div>
@@ -242,7 +242,7 @@
                             <div class="form-group">
                                 <label for="checkedBy">Checked By</label>
                                 <input type="text" class="form-control" name="checkedBy"
-                                    id="checkedBy" value="{{ \Auth::user()->name }}" readonly>
+                                    id="checkedBy" value="{{ \Auth::user()->name }}">
 
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                             <div class="form-group">
                                 <label for="ApprovedBy">Approved By</label>
                                 <input type="text" class="form-control" name="ApprovedBy"
-                                    id="ApprovedBy" value="{{ \Auth::user()->name }}" readonly>
+                                    id="ApprovedBy" value="{{ \Auth::user()->name }}">
                             </div>
                         </div>
                     </div>
