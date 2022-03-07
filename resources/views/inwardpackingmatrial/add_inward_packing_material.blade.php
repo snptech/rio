@@ -122,10 +122,19 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="ARNo">AR No. / Date</label>
-                                        <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No. / Date" value="{{ old("ar_no_date") }}" pattern="\d*" maxlength="120">
+                                        <label for="ARNo">AR No.</label>
+                                        <input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date" placeholder="AR No." value="{{ old("ar_no_date") }}" pattern="\d*" maxlength="150">
                                         @if ($errors->has('ar_no_date'))
                                         <span class="text-danger">{{ $errors->first('ar_no_date') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="ARNo">AR  Date</label>
+                                        <input type="date" class="form-control" name="ar_no_datedate[]" id="ar_no_datedate" placeholder="AR Date" value="{{ old("ar_no_datedate") }}" >
+                                        @if ($errors->has('ar_no_datedate'))
+                                        <span class="text-danger">{{ $errors->first('ar_no_datedate') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -176,7 +185,7 @@
             e.preventDefault();
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="MaterialName[' + x + ']">Raw Material Name</label>{{ Form::select("material[]",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"material'+x+'","placeholder"=>"Name of Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity[' + x + ']">Quantity Received (Kg)</label><input type="number" class="form-control" name="total_qty[]" id="total_qty[' + x + ']" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo[' + x + ']">AR No. / Date</label><input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date[' + x + ']" placeholder="AR No. / Date" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"></div></div></div>'); //add input box
+                $(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' + x + '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="MaterialName[' + x + ']">Packing Material Name</label>{{ Form::select("material[]",$rawmaterial,old("material"),array("class"=>"form-control select","id"=>"material'+x+'","placeholder"=>"Name of Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity[' + x + ']">Quantity Received (Kg)</label><input type="number" class="form-control" name="total_qty[]" id="total_qty[' + x + ']" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo[' + x + ']">AR No. / Date</label><input type="text" class="form-control" name="ar_no_date[]" id="ar_no_date[' + x + ']" placeholder="AR No. / Date" pattern="\d*" maxlength="12" onkeypress="return /[0-9a-zA-Z\s\\/-]/i.test(event.key)"></div></div></div>'); //add input box
             }
             feather.replace()
         });

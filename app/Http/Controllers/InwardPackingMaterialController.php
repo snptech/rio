@@ -216,11 +216,12 @@ class InwardPackingMaterialController extends Controller
         {
             if($request->material)
             {
-                $materialdata = Rawmeterial::find($request->material);
+
 
                 $i=0;
                 foreach($request->material as $key=>$value)
                 {
+                    $materialdata = Rawmeterial::find($value);
                     $datas = array();
                     $datas["good_receipt_id"] = $result->id;
                     $datas["material"] = $value;
@@ -339,7 +340,7 @@ class InwardPackingMaterialController extends Controller
             {
                 if($request->material)
                 {
-                    $materialdata = Rawmeterial::find($request->material);
+
                     $olddata = InwardPackingMaterialItems::where("good_receipt_id",$id)->get();
                     if(isset($olddata) && count($olddata) >0)
                     {
@@ -352,6 +353,7 @@ class InwardPackingMaterialController extends Controller
                     $i=0;
                     foreach($request->material as $key=>$value)
                     {
+                        $materialdata = Rawmeterial::find($value);
                         $datas = array();
                         $datas["good_receipt_id"] = $id;
                         $datas["material"] = $value;

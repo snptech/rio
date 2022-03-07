@@ -28,11 +28,11 @@ class ReportsController extends Controller
         $this->middleware('permission:packing-annexure-list', ['only' => ['packing_annexure']]);
         $this->middleware('permission:annexure-vi-list', ['only' => ['annexure_vi']]);
         $this->middleware('permission:annexure-vii-list', ['only' => ['annexure_vii']]);
-        
+
     }
     public function annexure_i()
     {
-     
+
 
         $data['inward_material']=Rawmaterialitems::select(
             "inward_raw_materials.*"
@@ -151,6 +151,26 @@ class ReportsController extends Controller
             ->get();
 
         return view('reports.annexure_vii',$data);
+    }
+
+    public function material_report(Request $request)
+    {
+        $data['inward_material']=Rawmaterialitems::select(
+            "inward_raw_materials.*"
+            ,"inward_raw_materials_items.*",
+            "suppliers.name",
+            "manufacturers.manufacturer as man_name",
+            "raw_materials.material_name",
+            "raw_materials.material_stock",
+            "mesurments.mesurment",
+            "inward_raw_materials_items.id as itemid")
+            ->join("inward_raw_materials","inward_raw_materials.id","inward_raw_materials_items.inward_raw_material_id")
+            ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
+            ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
+            ->join("raw_materials","raw_materials.id","inward_raw_materials_items.material")
+            ->join("mesurments","mesurments.id","raw_materials.material_mesurment")
+            ->get();
+        return view('reports.material_report',$data);
     }
 
 }

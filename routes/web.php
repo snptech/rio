@@ -220,6 +220,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::get('/packing_annexure', [App\Http\Controllers\ReportsController::class, 'packing_annexure'])->name("packing_annexure");
         Route::get('/annexure_vi', [App\Http\Controllers\ReportsController::class, 'annexure_vi'])->name("annexure_vi");
         Route::get('/annexure_vii', [App\Http\Controllers\ReportsController::class, 'annexure_vii'])->name("annexure_vii");
+        Route::get("/material_report",[App\Http\Controllers\ReportsController::class, 'material_report'])->name("material_report");
         //Manufacture Process
         Route::get('/add-batch-manufacture', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufacture'])->name("add-batch-manufacture");
         Route::post("/manufacturing-listAjax",[App\Http\Controllers\ManufactureProcessController::class,'add_batch_manufactureAjax'])->name("manufacturing-listAjax");

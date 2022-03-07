@@ -147,7 +147,7 @@ class InwardFinishedController extends Controller
 
         if($result)
         {
-            $mat = Rawmeterial::where("id",$request['product_name']);
+            $mat = Rawmeterial::where("id",$request['product_name'])->first();
             if(isset($mat) && !$mat->qc_applicable)
             {
                 $stockarr = array();

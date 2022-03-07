@@ -45,13 +45,17 @@ class QualityControlController extends Controller
             )
 
         ->join('inward_raw_materials','inward_raw_materials.id','=','inward_raw_materials_items.inward_raw_material_id' )
-        ->join('raw_materials','raw_materials.id','=','inward_raw_materials_items.material')
+        ->join('raw_materials',function($join){
+            $join->on('raw_materials.id','=','inward_raw_materials_items.material' )
+                ->on("raw_materials.qc_applicable",DB::raw('1'));
+        })
         ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
         ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
         ->leftjoin('quality_controll_check',function($join){
             $join->on('quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
                 ->on("quality_controll_check.material_type",DB::raw('"R"'));
         })
+
         ->groupBy("inward_raw_materials_items.id")
         ->orderBy('inward_raw_materials.created_at', 'desc')
        ->get();
@@ -416,7 +420,11 @@ class QualityControlController extends Controller
             )
 
         ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
-        ->join('raw_materials','raw_materials.id','=','goods_receipt_note_items.material')
+        ->join('raw_materials',function($join){
+            $join->on('raw_materials.id','=','goods_receipt_note_items.material' )
+                ->on("raw_materials.qc_applicable",DB::raw('1'));
+        })
+
         ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
         ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
         ->leftjoin('quality_controll_check',function($join){
@@ -445,7 +453,11 @@ class QualityControlController extends Controller
             )
 
         ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
-        ->join('raw_materials','raw_materials.id','=','goods_receipt_note_items.material')
+        ->join('raw_materials',function($join){
+            $join->on('raw_materials.id','=','goods_receipt_note_items.material' )
+                ->on("raw_materials.qc_applicable",DB::raw('1'));
+        })
+
         ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
         ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
         ->leftjoin('quality_controll_check',function($join){
@@ -472,7 +484,11 @@ class QualityControlController extends Controller
             )
 
 
-        ->join('raw_materials','raw_materials.id','=','inward_finished_goods.product_name')
+
+        ->join('raw_materials',function($join){
+            $join->on('raw_materials.id','=','inward_finished_goods.product_name' )
+                ->on("raw_materials.qc_applicable",DB::raw('1'));
+        })
         ->leftjoin('quality_controll_check',function($join){
             $join->on('quality_controll_check.inward_material_item_id','=','inward_finished_goods.id' );
             $join->on("quality_controll_check.material_type",DB::raw('"F"'));
@@ -528,7 +544,11 @@ class QualityControlController extends Controller
             )
 
 
-        ->join('raw_materials','raw_materials.id','=','add_batch_manufacture.proName')
+
+        ->join('raw_materials',function($join){
+            $join->on('raw_materials.id','=','add_batch_manufacture.proName' )
+                ->on("raw_materials.qc_applicable",DB::raw('1'));
+        })
         ->leftjoin('quality_controll_check',function($join){
             $join->on('quality_controll_check.inward_material_item_id','=','add_batch_manufacture.id' );
             $join->on("quality_controll_check.material_type",DB::raw('"B"'));

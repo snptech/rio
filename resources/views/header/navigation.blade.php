@@ -176,9 +176,9 @@
 
         <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}">Finished Goods Dispatch (Annexure -VII)</a></li>
         @endcan
-        @can('packing-annexure-list')
+        @can('material_report-list')
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('annexure_vii') }}"> Raw Material Report</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('material_report') }}"> Raw Material Report</a></li>
         @endcan
 
       </ul>
