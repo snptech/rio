@@ -138,7 +138,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="ARNo">AR  Date</label>
-                                            <input type="date" class="form-control" name="ar_no_datedate[]" id="ar_no_datedate" placeholder="AR Date" value=""{{ isset(old("ar_no_datedate")[0])?old("ar_no_datedate")[0]:'' }}">
+                                            <input type="date" class="form-control" name="ar_no_datedate[]" id="ar_no_datedate" placeholder="AR Date" value=""{{ isset(old("ar_no_datedate")[0])?old("ar_no_datedate")[0]:$val->ar_no_datedate }}">
                                             @if ($errors->has('ar_no_datedate'))
                                             <span class="text-danger">{{ $errors->first('ar_no_datedate') }}</span>
                                             @endif
