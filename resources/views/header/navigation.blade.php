@@ -223,7 +223,7 @@
         @endcan
         @can('rawmaterial-list')
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('rawmaterial') }}">Matrials Master</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('rawmaterial') }}">Materials Master</a></li>
         @endcan
         @can('party-master-list')
         <li class="nav-item"><a class="nav-link" href="{{ route('party_master') }}">Party Master</a></li>
