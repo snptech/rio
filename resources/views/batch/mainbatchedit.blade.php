@@ -117,7 +117,7 @@
                     <div class="form-group">
                         <label for="doneBy">Prepared by</label>
                         <input type="text" class="form-control select" name="doneBy"
-                            value="{{ Auth::user()->name }}" id="doneBy" readonly>
+                            value="{{ Auth::user()->name }}" id="doneBy">
 
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                     <div class="form-group">
                         <label for="checkedBy">Checked by</label>
                         <input type="text" class="form-control select" name="checkedBy"
-                            value="{{ Auth::user()->name }}" id="checkedBy" readonly>
+                            value="{{ Auth::user()->name }}" id="checkedBy">
 
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                     <div class="form-group">
                         <label for="checkedByI">Reviewed and Approved by</label>
                         <input type="text" class="form-control select" name="checkedByI"
-                            value="{{ Auth::user()->name }}" id="checkedByI" readonly>
+                            value="{{ Auth::user()->name }}" id="checkedByI">
 
                     </div>
                 </div>
