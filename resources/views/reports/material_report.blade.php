@@ -53,9 +53,10 @@
                             <td>{{$temp->material_name}}</td>
                             <td>{{$temp->invoice_no}}</td>
                             <td>{{$temp->goods_receipt_no}}</td>
-                            <td>{{$temp->viscosity}}</td>
+
                             <td>{{$temp->qty_received_kg}}</td>
                             <td>{{$temp->mesurment}}</td>
+                            <td>{{$temp->viscosity}}</td>
                             <td>{{$temp->batch_no}}</td>
                             <td>{{$temp->mfg_date!=""?date("d/m/Y",($temp->mfg_date)):""}}</td>
                             <td>{{$temp->mfg_expiry_date!=""?date("d/m/Y",($temp->mfg_expiry_date)):""}}</td>
