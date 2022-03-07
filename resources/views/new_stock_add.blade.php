@@ -55,10 +55,11 @@
                             <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch"  maxlength="12">
                         </div>
                     </div>
-                    {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">Grade</label>
-                            <select class="form-control select" name="grade" id="grade">
+                            <input type="text" class="form-control" name="grade" id="grade" placeholder="Grade"  maxlength="120">
+                           {{--  <select class="form-control select" name="grade" id="grade">
                                 <option value=""> Select</option>
                                 @if(count($grade_master))
                                 @foreach($grade_master as $temp)
@@ -66,9 +67,9 @@
                                 @endforeach
                                 @endif
 
-                            </select>
+                            </select> --}}
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity (Optional)</label>
