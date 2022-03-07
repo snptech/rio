@@ -62,7 +62,7 @@
 
             <tr>
                 <th>AR No.</th>
-                <td>{{$inward_goods->total_quantity}}</td>
+                <td>{{$inward_goods->ar_no}} {{$inward_goods->ar_no_date?date("d/m/Y",strtotime($inward_goods->ar_no_date)):""}}</td>
             </tr>
             <tr>
                 <th>Total Quantity (Kg.)</th>
