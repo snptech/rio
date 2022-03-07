@@ -269,33 +269,122 @@ class QualityControlController extends Controller
         if($request->quality_id)
         {
 
-            $view_quality =Rawmaterialitems::select(
-                'quality_controll_check.*','quality_controll_check.id as quality_id',
-                'inward_raw_materials_items.material as raw_material_name',
-                'inward_raw_materials_items.id as inward_r_m_id',
-                'inward_raw_materials.manufacturer as name_manufacturer',
-                'inward_raw_materials.supplier as name_supplier',
-                'inward_raw_materials.material as name_material',
-                'inward_raw_materials.id as inward_r_m_t_id',
-                'inward_raw_materials_items.batch_no',
-                'inward_raw_materials_items.qty_received_kg',
-                'inward_raw_materials_items.ar_no_date',
-                'inward_raw_materials.goods_receipt_no',
-                'raw_materials.id as r_m_id',
-                'raw_materials.material_name',
-                "suppliers.name",
-                "manufacturers.manufacturer",
-                "inward_raw_materials_items.id as itemid"
-                )
-            ->join('inward_raw_materials','inward_raw_materials.id','=','inward_raw_materials_items.inward_raw_material_id' )
-            ->join('raw_materials','raw_materials.id','=','inward_raw_materials_items.material')
-            ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
-            ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
-            ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
-            ->where("inward_raw_materials_items.id",$request->quality_id)->first();
-            $view = view('view_quality_control', ['view_quality'=> $view_quality])->render();
-            return response()->json(['html'=>$view]);
+            if($request->mat_type == "R")
+            {
+                $view_quality =Rawmaterialitems::select(
+                    'quality_controll_check.*','quality_controll_check.id as quality_id',
+                    'inward_raw_materials_items.material as raw_material_name',
+                    'inward_raw_materials_items.id as inward_r_m_id',
+                    'inward_raw_materials.manufacturer as name_manufacturer',
+                    'inward_raw_materials.supplier as name_supplier',
+                    'inward_raw_materials.material as name_material',
+                    'inward_raw_materials.id as inward_r_m_t_id',
+                    'inward_raw_materials_items.batch_no',
+                    'inward_raw_materials_items.qty_received_kg',
+                    'inward_raw_materials_items.ar_no_date',
+                    'inward_raw_materials.goods_receipt_no',
+                    'raw_materials.id as r_m_id',
+                    'raw_materials.material_name',
+                    "suppliers.name",
+                    "manufacturers.manufacturer",
+                    "inward_raw_materials_items.id as itemid"
+                    )
+                ->join('inward_raw_materials','inward_raw_materials.id','=','inward_raw_materials_items.inward_raw_material_id' )
+                ->join('raw_materials','raw_materials.id','=','inward_raw_materials_items.material')
+                ->join("suppliers","suppliers.id","inward_raw_materials.supplier")
+                ->join("manufacturers","manufacturers.id","inward_raw_materials.manufacturer")
+                ->leftjoin('quality_controll_check','quality_controll_check.inward_material_item_id','=','inward_raw_materials_items.id' )
+                ->where("inward_raw_materials_items.id",$request->quality_id)->first();
+                $view = view('view_quality_control', ['view_quality'=> $view_quality])->render();
+                return response()->json(['html'=>$view]);
+            }
+            elseif($request->mat_type == 'P')
+            {
+                $view_quality =InwardPackingMaterialItems::select(
+                    'quality_controll_check.*','quality_controll_check.id as quality_id',
+                    'goods_receipt_note_items.material as raw_material_name',
+                    'goods_receipt_note_items.id as inward_r_m_id',
+                    'manufacturers.manufacturer as name_manufacturer',
+                    'goods_receipt_notes.supplier as name_supplier',
+                    'goods_receipt_notes.id as inward_r_m_t_id',
+                    'goods_receipt_note_items.total_qty as qty_received_kg',
+                    'goods_receipt_notes.goods_receipt_no',
+                    'raw_materials.id as r_m_id',
+                    'raw_materials.material_name',
+                    "suppliers.name",
+                    "manufacturers.manufacturer",
+                    "raw_materials.created_at",
+                    "goods_receipt_note_items.id as itemid",
+                    "goods_receipt_note_items.ar_no_date"
+                    )
 
+                ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
+                ->join('raw_materials','raw_materials.id','=','goods_receipt_note_items.material')
+                ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
+                ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
+                ->leftjoin('quality_controll_check',function($join){
+                    $join->on('quality_controll_check.inward_material_item_id','=','goods_receipt_note_items.id' );
+                    $join->on("quality_controll_check.material_type",DB::raw('"P"'));
+                })
+                ->where("goods_receipt_note_items.id",$request->quality_id)->first();
+                $view = view('view_quality_control', ['view_quality'=> $view_quality])->render();
+                return response()->json(['html'=>$view]);
+            }
+            elseif($request->mat_type == 'F')
+            {
+                $view_quality =Inwardfinishedgoods::select(
+                    'inward_finished_goods.*','quality_controll_check.id as quality_id',
+                    'quality_controll_check.*',
+                    'raw_materials.material_name as material_name',
+                    'inward_finished_goods.batch_no as batch_no',
+                    "inward_finished_goods.created_at",
+                    "inward_finished_goods.total_quantity_bal as qty_received_kg",
+                    "inward_finished_goods.ar_no as ar_no_date",
+                    "inward_finished_goods.ar_no_date as ar_no_date_date",
+                    "inward_finished_goods.id as itemid",
+                    "raw_materials.id as r_m_id",
+                    "inward_finished_goods.created_at as batch_no",
+                    "inward_finished_goods.id as inward_id"
+                    )
+
+
+                ->join('raw_materials','raw_materials.id','=','inward_finished_goods.product_name')
+                ->leftjoin('quality_controll_check',function($join){
+                    $join->on('quality_controll_check.inward_material_item_id','=','inward_finished_goods.id' );
+                    $join->on("quality_controll_check.material_type",DB::raw('"F"'));
+                })
+                ->where("inward_finished_goods.id",$request->quality_id)->first();
+                $view = view('view_quality_control_finish', ['view_quality'=> $view_quality])->render();
+                return response()->json(['html'=>$view]);
+            }
+
+            elseif($request->mat_type == 'B')
+            {
+                $view_quality =BatchManufacture::select(
+                    'quality_controll_check.*','quality_controll_check.id as quality_id',
+                    'add_batch_manufacture.*',
+                    'raw_materials.material_name as material_name',
+                    'add_batch_manufacture.batchNo as batch_no',
+                    "add_batch_manufacture.created_at",
+                    "add_batch_manufacture.BatchSize as qty_received_kg",
+                    "add_batch_manufacture.ar_no",
+                    "add_batch_manufacture.ar_no_date",
+                    "add_batch_manufacture.id as itemid",
+                    "raw_materials.id as r_m_id",
+                    "add_batch_manufacture.created_at as batch_no",
+                    "add_batch_manufacture.id as inward_id"
+                    )
+
+
+                ->join('raw_materials','raw_materials.id','=','add_batch_manufacture.proName')
+                ->leftjoin('quality_controll_check',function($join){
+                    $join->on('quality_controll_check.inward_material_item_id','=','add_batch_manufacture.id' );
+                    $join->on("quality_controll_check.material_type",DB::raw('"B"'));
+                })
+                ->where("add_batch_manufacture.id",$request->quality_id)->first();
+                $view = view('view_quality_control_finish', ['view_quality'=> $view_quality])->render();
+                return response()->json(['html'=>$view]);
+            }
 
 
         }
@@ -305,6 +394,7 @@ class QualityControlController extends Controller
         redirect(404);
         }
     }
+
     public function quality_control_packing(Request $request)
     {
         $data['quality_control']=InwardPackingMaterialItems::select(

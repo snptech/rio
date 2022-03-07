@@ -171,7 +171,8 @@
             url:'{{ route("view_quality") }}',
             data:{
             "_token": "{{ csrf_token() }}",
-            "quality_id": quality_id
+            "quality_id": quality_id,
+            "mat_type":"F"
             },
             datatype:'json',
             method:"POST"
