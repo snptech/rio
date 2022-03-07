@@ -44,7 +44,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="productName">Product Name</label>
-                            
+
                             {{ Form::select("product_name",$product,old("product_name"),array("class"=>"form-control select","id"=>"product_name","placeholder"=>"Choose Product Name")) }}
 
                         </div>
@@ -55,7 +55,7 @@
                             <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch"  maxlength="12">
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="grade">Grade</label>
                             <select class="form-control select" name="grade" id="grade">
@@ -68,14 +68,14 @@
 
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="Viscosity">Viscosity (Optional)</label>
                             <input type="text" class="form-control" name="viscosity" id="viscosity" placeholder="Viscosity" maxlength="120">
                         </div>
                     </div>
-                    
+
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="mfgDate">Mfg. Date</label>
@@ -196,9 +196,9 @@
                 inward_date: "required",
                 product_name: "required",
                 batch_no: "required",
+               /* grade: "required",
                 grade: "required",
-                grade: "required",
-                /*viscosity: "required",*/
+                viscosity: "required",*/
                 mfg_date: "required",
                 expiry_ratest_date: "required",
                 total_no_of_200kg_drums: {
@@ -262,7 +262,7 @@
             $('#received_by').val('');
             $('#remark').val('');
         });
-        
+
 });
 </script>
 @endpush
