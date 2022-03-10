@@ -1,5 +1,5 @@
 <div class="container-scroller">
-    
+
     <div class="container-fluid p-3">
       <!-- Main Container -->
     <div style="display:block;padding:20px;border:1px solid #000;min-height:11.7in;">
@@ -73,7 +73,7 @@
 					<td>Checked by: <span style="display:inline-block;margin-left:2rem;min-width:60%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;margin-left:2rem;min-width:100%;margin-bottom:5px;">&nbsp;</span>({{$manufacture->usercheck}})</span></td>
 				</tr>
 			</table>
-			<div style="margin:1rem 0 3rem;font-weight:400;">This batch has / has not been produced according to instruction given in MFR No. RCIPL/MFR/01/01</div>
+			<div style="margin:1rem 0 3rem;font-weight:400;">This batch has / has not been produced according to instruction given in MFR No. {{$manufacture->refMfrNo}}</div>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:1rem;font-weight:bold;font-family:Georgia, serif;margin:0 1.2rem 1.5rem;line-height:1.5;">
 				<thead>
 					<tr>

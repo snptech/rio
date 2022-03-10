@@ -35,7 +35,17 @@ class BatchManufacture extends Model
         'created_at',
         'updated_at',
         "ar_no",
-        "ar_no_date"
+        "ar_no_date",
+        'stage_1',
+        'stage_2',
+        'stage_3',
+        'stage_4',
+        'stage_5',
+        'stage_6',
+        'stage_8',
+        'checked_time',
+        'is_checked',
+        'rejected_qty'
     ];
     protected static function boot()
     {

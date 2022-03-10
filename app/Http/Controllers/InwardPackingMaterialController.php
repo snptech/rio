@@ -229,7 +229,7 @@ class InwardPackingMaterialController extends Controller
                     $datas["ar_no_date"] = $request->ar_no_date[$i];
                     $datas['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
                     $datas["ar_no_datedate"] = $request->ar_no_datedate[$i]?$request->ar_no_datedate[$i]:"";
-                    $result = InwardPackingMaterialItems::create($datas);
+                    $results = InwardPackingMaterialItems::create($datas);
 
                     if(isset($materialdata) && !$materialdata->qc_applicable)
                     {
@@ -246,7 +246,7 @@ class InwardPackingMaterialController extends Controller
                             $stockarr["material_type"] = "P";
                             $stockarr["department"] = 3;
                             $stockarr["qty"] = $request->total_qty[$i];
-                            $stockarr["batch_no"] = $result->id;
+                            $stockarr["batch_no"] = $results->id;
                             $stockarr["process_batch_id"] = $result->id;
                             $stockarr["ar_no_date"] = $request->ar_no_date[$i];
                             $stockarr["type"] = "P";
@@ -362,7 +362,7 @@ class InwardPackingMaterialController extends Controller
                         $datas["ar_no_datedate"] = $request->ar_no_datedate[$i];
 
                         $datas['is_opening_stock'] = $request->openingstock?$request->openingstock:0;
-                        $result = InwardPackingMaterialItems::create($datas);
+                        $results = InwardPackingMaterialItems::create($datas);
 
 
                     if(isset($materialdata) && !$materialdata->qc_applicable)
@@ -373,7 +373,7 @@ class InwardPackingMaterialController extends Controller
                         $stockarr["material_type"] = "P";
                         $stockarr["department"] = 3;
                         $stockarr["qty"] = $request->total_qty[$i];
-                        $stockarr["batch_no"] = $id;
+                        $stockarr["batch_no"] = $results->id;
                         $stockarr["process_batch_id"] = $id;
                         $stockarr["ar_no_date"] = $request->ar_no_date[$i];
                         $stockarr["type"] = "P";

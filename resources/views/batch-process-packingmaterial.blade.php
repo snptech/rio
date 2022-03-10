@@ -1,5 +1,5 @@
 <div class="container-scroller">
-    
+
     <div class="container-fluid p-3">
       <!-- Main Container -->
     <div style="display:block;padding:20px;border:1px solid #000;min-height:11.7in;">
@@ -44,13 +44,13 @@
 					</td>
 				</tr>
 			</table>
-			<div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:1.2rem;font-weight:bold;color:#616161;">Bill of Raw Material Details and Weighing Record:</div>
+			<div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:1.2rem;font-weight:bold;color:#616161;">Bill of Packaging Material Details and Weighing Record:</div>
 			@if(isset($raw_material_bills_packing) && count($raw_material_bills_packing) >0)
 				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th>S. No.</th>
-							<th>Raw Material</th>
+							<th>Material</th>
 							<th>Quantity<br />(Kg.)</th>
 							<th>Batch No.</th>
 							<th width="20%">AR No. / Date</th>
@@ -73,13 +73,13 @@
 						@php $i++; @endphp
 						@endforeach
 					@endforeach
-						
+
 				</table>
 			@endif
-			
+
 			</div>
 		@endif
-		
+
 		</div>
 	</div>
 </div>

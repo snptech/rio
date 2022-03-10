@@ -14,6 +14,8 @@ use App\Models\BatchManufacture;
 use App\Models\FinishedGoodsDispatch;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 use DB;
 class QualityControlController extends Controller
 {
@@ -197,6 +199,7 @@ class QualityControlController extends Controller
 
 
                         $stid = Stock::create($stockarr);
+
                     }
 
 
@@ -211,6 +214,10 @@ class QualityControlController extends Controller
                     $datas = array();
                     $datas["ar_no"] = $request['ar_number'];
                     $datas["ar_no_date"] = $request['ar_date']?$request['ar_date']:"";
+                    $datas["is_checked"] =1;
+                    $datas["rejected_qty"] =$request['quantity_rejected'];
+                    $datas["approval"] =1;
+                    $datas["approvalDate"] =Carbon::now();;
                     $rowmeterial->update($datas);
 
                     $stockarr = array();
@@ -223,11 +230,17 @@ class QualityControlController extends Controller
                         $stockarr["batch_no"] = $request['inward_item_id'];
                         $stockarr["process_batch_id"] = $request['inward_item_id'];
                         $stockarr["ar_no_date"] = $request['ar_number'];
+
+
                         $stockarr["ar_no_date_date"] = $request['ar_date']?$request['ar_date']:"";
                         $stockarr["type"] = $request['mat_type'];
 
 
                         $stid = Stock::create($stockarr);
+
+
+
+
                     }
 
 
@@ -553,6 +566,7 @@ class QualityControlController extends Controller
             $join->on('quality_controll_check.inward_material_item_id','=','add_batch_manufacture.id' );
             $join->on("quality_controll_check.material_type",DB::raw('"B"'));
         })
+        ->where(["stage_1"=>1,"stage_2"=>1,"stage_3"=>1,"stage_4"=>1,"stage_5"=>1,"stage_6"=>1,"stage_7"=>1,"stage_8"=>1])
         ->groupBy("add_batch_manufacture.id")
         ->orderBy('add_batch_manufacture.created_at', 'desc')
        ->get();

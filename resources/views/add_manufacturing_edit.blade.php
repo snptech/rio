@@ -81,7 +81,7 @@
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
-
+                @php $lc=0; @endphp
                 <div class="tab-content">
 
                     @if (isset($edit_batchmanufacturing))
@@ -173,7 +173,7 @@
             var wrapper = $(".input_fields_wrap_1"); //Fields wrapper
             var add_button = $(".add_field_button_1"); //Add button ID
 
-            var x = 1; //initlal text box count
+            var x = @if (isset($res_1) && count($res_1) > 0) {{ count($res_1) }} @else 0 @endif//initlal text box count
             $(add_button).click(function(e) { //on add input button click
                 e.preventDefault();
                 if (x < max_fields) { //max input box allowed
@@ -262,8 +262,17 @@
             var wrapper = $(".input_fields_wrap_4"); //Fields wrapper
             var add_button = $(".add_field_button_4"); //Add button ID
 
-            var x =
-                '{{ isset($raw_material_bills) && count($raw_material_bills) > 0 ? count($raw_material_bills) : 1 }}'; //initlal text box count
+            @if (isset($raw_material_bills))
+                        @php $lm =0; @endphp
+
+                        @foreach ($raw_material_bills as $index => $rd)
+                            @foreach ($rd as $in => $mat)
+                                    @php $lm++; @endphp
+                            @endforeach
+                        @endforeach
+            @endif
+
+            var x =@if ($lm > 0) {{ $lm }} @else 0 @endif //initlal text box count
             $(add_button).click(function(e) { //on add input button click
                 e.preventDefault();
                 if (x < max_fields) { //max input box allowed

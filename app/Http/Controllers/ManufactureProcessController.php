@@ -357,6 +357,7 @@ class ManufactureProcessController extends Controller
             "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
+            "stage_1" => 1
         ];
 
         $result = BatchManufacture::create($data);
@@ -550,6 +551,7 @@ class ManufactureProcessController extends Controller
             "Remark" =>  $request->Remark,
             "is_active" => 1,
             "is_delete" => 1,
+            "stage_1" => 1
 
         ];
         $result = BatchManufacture::where('id', $request->id)->update($data);
@@ -671,8 +673,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['bill_of_raw_material_id'] = $BillOfRwaMaterial_id->id;
                 BillOfRawMaterialsDetails::Create($arr_data);
             }
+            $batch = BatchManufacture::find($request->batch_id);
+            $batch->stage_3=1;
+            $batch->save();
             if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', "Data Bill Of Raw Materrila successfully");
             }
             else
@@ -935,13 +941,18 @@ class ManufactureProcessController extends Controller
             "checkedBy" => Auth::user()->id,
             "ApprovedBy" => Auth::user()->id,
             "Remark" => $request['Remark'],
+            "batch_id"=>$request["batch_id"],
 
         ];
         $result = BatchManufacturingPacking::create($data);
 
         if ($result) {
+            $batch = BatchManufacture::find($request->batch_id);
+            $batch->stage_7=1;
+            $batch->save();
             if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', " Data Batch Manufacturing Packing created successfully");
             }
             else
@@ -996,8 +1007,12 @@ class ManufactureProcessController extends Controller
                 ListOfEquipmentManufacturing::Create($a_data);
             }
 
+            $batch = BatchManufacture::find($request->batch_id);
+            $batch->stage_4=1;
+            $batch->save();
             if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', " Data List Of Equipment created Successfully");
             }
             else
@@ -1060,6 +1075,9 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 2;
                 }
                 if ($result) {
+                    $batch = BatchManufacture::find($request->mainid);
+                    $batch->stage_4=1;
+                    $batch->save();
                     if(isset($request->save_q))
                     {
                         return redirect("add-batch-manufacture")->with('success', "  Batch  Data Update successfully");
@@ -1343,8 +1361,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['type'] = "P";
                 DetailsRequisition::Create($arr_data);
             }
+            $batch = BatchManufacture::find($request->batch_id);
+                $batch->stage_3=1;
+                $batch->save();
             if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', "Raw Matrial Of Requisition done successfully");
             }
             else
@@ -1410,8 +1432,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['type'] = "R";
                 DetailsRequisition::Create($arr_data);
             }
+            $batch = BatchManufacture::find($request->batch_id);
+                $batch->stage_2=1;
+                $batch->save();
             if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', "Raw Matrial Of Requisition done successfully");
             }
             else
@@ -1462,8 +1488,12 @@ class ManufactureProcessController extends Controller
                     $sequenceId = (int)$request->sequenceId + 1;
                 }
                 if ($result) {
+                    $batch = BatchManufacture::find($request->mainid);
+                    $batch->stage_2=1;
+                    $batch->save();
                     if(isset($request->save_q))
                     {
+
                         return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
                     }
                     else
@@ -1565,8 +1595,12 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
+                    $batch = BatchManufacture::find($request->id);
+                    $batch->stage_3=1;
+                    $batch->save();
                     if(isset($request->save_q))
                     {
+
                         return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
                     }
                     else
@@ -1670,6 +1704,9 @@ class ManufactureProcessController extends Controller
             $sequenceId = (int)$request->sequenceId + 1;
         }
         if ($result) {
+            $batch = BatchManufacture::find($request->mainid);
+            $batch->stage_7=1;
+            $batch->save();
             if(isset($request->save_q))
             {
                 return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
@@ -1751,9 +1788,12 @@ class ManufactureProcessController extends Controller
         $arr['Date'] = $request->Date;
         $arr['lotNo'] = $request->lotNo;
         $arr['ReactorNo'] = $request->ReactorNo;
+        $arr['batch_id'] = $request->mainid;
         $arr['Process_date'] = $request->Process_date;
         $AddLotsl = AddLotsl::Create($arr);
-
+        $batch = BatchManufacture::find($request->mainid);
+        $batch->stage_5=1;
+        $batch->save();
         if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
             $prvCount = ($prvCount == 0) ? 1 : $prvCount;
             (int)$prvCount++;
@@ -1883,6 +1923,10 @@ class ManufactureProcessController extends Controller
                                 $sequenceId = (int)$request->sequenceId + 1;
                             }
                             if ($result) {
+                                $batch = BatchManufacture::find($request->mainid);
+
+                                $batch->stage_5=1;
+                                $batch->save();
                                 if(isset($request->save_q))
                                 {
                                     return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
@@ -1948,8 +1992,12 @@ class ManufactureProcessController extends Controller
                 $arr_data['homogenizing_id'] = $Homogenizing_id->id;
                 HomogenizingList::Create($arr_data);
             }
+            $batch = BatchManufacture::find($request->batch_id);
+            $batch->stage_6=1;
+            $batch->save();
             if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
             }
             else
@@ -2012,8 +2060,14 @@ class ManufactureProcessController extends Controller
                 }
 
                 if ($result) {
+                    $batch = BatchManufacture::find($request->mainid);
+                    $batch->stage_6=1;
+                    $batch->save();
                     if(isset($request->save_q))
                     {
+                        $batch = BatchManufacture::find($request->mainid);
+                        $batch->stage_6=1;
+                        $batch->save();
                         return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
                     }
                     else
@@ -2115,8 +2169,12 @@ class ManufactureProcessController extends Controller
                     $upd = Rawmeterial::where("id",$batch->proName)->update($materialdata);
                 }
             }
+            $batch = BatchManufacture::find($request->batch_id);
+            $batch->stage_8=1;
+            $batch->save();
              if(isset($request->save_q))
             {
+
                 return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
             }
             else
@@ -2240,6 +2298,9 @@ class ManufactureProcessController extends Controller
 
 
         if ($result) {
+            $batch = BatchManufacture::find($request->batch_id);
+            $batch->stage_8=1;
+            $batch->save();
             if(isset($request->save_q))
             {
                 return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
@@ -2315,11 +2376,12 @@ class ManufactureProcessController extends Controller
             }
 
 
+
             // list of list_of_equipment
             $data["selected_equipment"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id","equipment_name.equipment")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->join("equipment_name","equipment_name.id","equipment_code.equipment_id")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=',  $batchid)->get();
 
             // get lots
-            $lotsdetails = AddLotsl::select('add_lotsl.*',"equipment_code.code")->join("equipment_code","equipment_code.id","add_lotsl.id")->where("batch_id",$batchid)->get();
+            $lotsdetails = AddLotsl::select('add_lotsl.*',"equipment_code.code")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.id","add_lotsl.ReactorNo")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where("batch_id",$batchid)->groupBy("add_lotsl.id")->get();
 
 
 

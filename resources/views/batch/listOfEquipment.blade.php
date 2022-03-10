@@ -59,18 +59,18 @@
                                 type="button">Add More +</button>
                         </div>
                     </label>
-                    @php $c =1; @endphp
+                    @php $lc =1; @endphp
                     @if (isset($res_1) && count($res_1) > 0)
 
                         @foreach ($res_1 as $temp)
 
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
-                                <span class="add-count">1</span>
+                                <span class="add-count">{{ $lc }}</span>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="EquipmentName" class="active">Equipment
                                             Name</label>
-                                        {{ Form::select('EquipmentName[]', $eqipment_name, old('eqipment_name') ? old('eqipment_name') : $temp->EquipmentName, ['class' => 'form-control select', 'id' => 'eqipment_name' . $c, 'Placeholder' => 'Equipment Name', 'onchange' => "getcodes($(this).val()," . $c . ')']) }}
+                                        {{ Form::select('EquipmentName[]', $eqipment_name, old('eqipment_name') ? old('eqipment_name') : $temp->EquipmentName, ['class' => 'form-control select', 'id' => 'eqipment_name' . $lc, 'Placeholder' => 'Equipment Name', 'onchange' => "getcodes($(this).val()," . $lc . ')']) }}
 
                                     </div>
                                 </div>
@@ -78,12 +78,13 @@
                                     <div class="form-group">
                                         <label for="EquipmentCode" class="active">Equipment
                                             Code</label>
-                                        {{ Form::select('EquipmentCode[]', $eqipment_code, old('EquipmentCode') ? old('EquipmentCode') : $temp->EquipmentCode, ['class' => 'form-control select', 'id' => 'eqipment_code' . $c, 'Placeholder' => 'Equipment Code']) }}
+                                        {{ Form::select('EquipmentCode[]', $eqipment_code, old('EquipmentCode') ? old('EquipmentCode') : $temp->EquipmentCode, ['class' => 'form-control select', 'id' => 'eqipment_code' . $lc, 'Placeholder' => 'Equipment Code']) }}
 
 
                                     </div>
                                 </div>
                             </div>
+                            @php $lc++; @endphp
                         @endforeach
                     @else
                         <div class="row add-more-wrap after-add-more m-0 mb-4">
@@ -92,7 +93,7 @@
                                 <div class="form-group">
                                     <label for="EquipmentName" class="active">Equipment
                                         Name</label>
-                                    {{ Form::select('EquipmentName[]', $eqipment_name, old('eqipment_name'), ['class' => 'form-control select', 'id' => 'eqipment_name1', 'Placeholder' => 'Equipment Name', 'onchange' => "getcodes($(this).val()," . $c . ')']) }}
+                                    {{ Form::select('EquipmentName[]', $eqipment_name, old('eqipment_name'), ['class' => 'form-control select', 'id' => 'eqipment_name1', 'Placeholder' => 'Equipment Name', 'onchange' => "getcodes($(this).val()," . $lc . ')']) }}
 
                                 </div>
                             </div>
@@ -122,3 +123,4 @@
         </div>
     </form>
 </div>
+
