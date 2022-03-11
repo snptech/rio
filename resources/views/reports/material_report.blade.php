@@ -21,7 +21,7 @@
                             <th rowspan="2">Date of Receipt</th>
                             <th rowspan="2">Opening Balance</th>
                             <th rowspan="2">Name of Manufacturer</th>
-                            <th rowspan="2">Name of Manufacturer</th>
+                            <th rowspan="2">Name of Supplier</th>
                             <th rowspan="2">Raw Material Name</th>
                             <th rowspan="2">Invoice No.</th>
                             <th rowspan="2">GRN No.</th>

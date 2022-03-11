@@ -173,7 +173,7 @@
             var wrapper = $(".input_fields_wrap_1"); //Fields wrapper
             var add_button = $(".add_field_button_1"); //Add button ID
 
-            var x = @if (isset($res_1) && count($res_1) > 0) {{ count($res_1) }} @else 0 @endif//initlal text box count
+            var x = @if (isset($res_1) && count($res_1) > 0) {{ count($res_1) }} @else 1 @endif//initlal text box count
             $(add_button).click(function(e) { //on add input button click
                 e.preventDefault();
                 if (x < max_fields) { //max input box allowed
@@ -261,9 +261,9 @@
             var max_fields = 15; //maximum input boxes allowed
             var wrapper = $(".input_fields_wrap_4"); //Fields wrapper
             var add_button = $(".add_field_button_4"); //Add button ID
-
+            @php $lm =0; @endphp
             @if (isset($raw_material_bills))
-                        @php $lm =0; @endphp
+
 
                         @foreach ($raw_material_bills as $index => $rd)
                             @foreach ($rd as $in => $mat)
@@ -272,7 +272,7 @@
                         @endforeach
             @endif
 
-            var x =@if ($lm > 0) {{ $lm }} @else 0 @endif //initlal text box count
+            var x =@if ($lm > 0) {{ $lm }} @else 1 @endif //initlal text box count
             $(add_button).click(function(e) { //on add input button click
                 e.preventDefault();
                 if (x < max_fields) { //max input box allowed

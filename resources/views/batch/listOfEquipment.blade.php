@@ -88,7 +88,7 @@
                         @endforeach
                     @else
                         <div class="row add-more-wrap after-add-more m-0 mb-4">
-                            <!-- <span class="add-count">1</span> -->
+                            <span class="add-count">1</span>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="EquipmentName" class="active">Equipment

@@ -112,7 +112,7 @@ class InwardPackingMaterialController extends Controller
         $totalFiltered = $listquery->count();
         $listquery->offset($start)
                 ->limit($limit)
-                ->orderBy($order, $dir);
+                ->orderBy("goods_receipt_notes.created_at", "desc");
 
         $data = $listquery->get();
 

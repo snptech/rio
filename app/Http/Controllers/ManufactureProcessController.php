@@ -144,11 +144,20 @@ class ManufactureProcessController extends Controller
                 $nestedData["retest_date"] = $post->RetestDate;
                 $nestedData["status"] = ($post->approval=='1'?'<span class="badge badge-success p-2">Approved</span>':'<span class="badge badge-warning p-2">Not Approved</span>');
 
-                $nestedData['action'] = '<div class="actions"> <!--<a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" title="View" onclick="view('.$post->id.')"><i data-feather="eye"></i></a> -->
-                <a href="'.$edit.'" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
+                if($post->approval!=1)
+                {
+                    $nestedData['action'] = '<div class="actions"> <!--<a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" title="View" onclick="view('.$post->id.')"><i data-feather="eye"></i></a> -->
+                    <a href="'.$edit.'" class="btn action-btn" data-tooltip="tooltip" title="Edit"><i data-feather="edit-3"></i></a>
 
-                <a href="'.$print.'" class="btn action-btn" data-tooltip="tooltip" title="Print" target="_blank"><i data-feather="printer"></i></a></div>';
+                    <a href="'.$print.'" class="btn action-btn" data-tooltip="tooltip" title="Print" target="_blank"><i data-feather="printer"></i></a></div>';
+                }
+                else
+                {
+                    $nestedData['action'] = '<div class="actions"> <!--<a href="#" class="btn action-btn view" id="myModal" data-tooltip="tooltip" title="View" onclick="view('.$post->id.')"><i data-feather="eye"></i></a> -->
 
+
+                    <a href="'.$print.'" class="btn action-btn" data-tooltip="tooltip" title="Print" target="_blank"><i data-feather="printer"></i></a></div>';
+                }
                 $datas[] = $nestedData;
 
                 $i++;
