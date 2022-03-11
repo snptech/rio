@@ -23,9 +23,9 @@ class InwardFinishedController extends Controller
     public function new_stock()
     {
 
-        $data['inward_goods']=Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","grades.grade","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")
-        ->join("grades","grades.id","inward_finished_goods.grade")
-        ->join("users","users.id","inward_finished_goods.received_by")->get();
+        $data['inward_goods']=Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")
+
+        ->join("users","users.id","inward_finished_goods.received_by")->orderBy("inward_finished_goods.created_at","desc")->get();
 
         return view('new_stock',$data);
     }
@@ -35,10 +35,10 @@ class InwardFinishedController extends Controller
         if($request->id)
         {
              $inward_goods = Inwardfinishedgoods::select("inward_finished_goods.*"
-             ,"raw_materials.material_name","grades.grade",
+             ,"raw_materials.material_name","grade",
              "users.name")->join("raw_materials","raw_materials.id",
              "inward_finished_goods.product_name")
-             ->join("grades","grades.id","inward_finished_goods.grade")
+
              ->join("users","users.id","inward_finished_goods.received_by")
              ->where("inward_finished_goods.id",$request->id)->first();
              $view = view('view_new_stock', ['inward_goods'=> $inward_goods])->render();
