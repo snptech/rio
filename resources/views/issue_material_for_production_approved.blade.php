@@ -66,7 +66,7 @@
                             <fieldset>
                                 <legend>Material {{ $i }}</legend>
                                 @php
-                                    $batch  = "";
+                                    $batch  = array();
                                     if ($mat->type == 'P') {
 
                                         $batch[$i] = App\Models\Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("Qty","id");
@@ -219,79 +219,79 @@
                 $batchid = 0
                 @endphp
 
-                     if(i==index && index == 1)
+                     if(index == 1)
                      {
                          @php
                              $batchid =1;
                          @endphp
                      }
-                     else if(i==index && index == 2)
+                     else if(index == 2)
                      {
                          @php
                              $batchid =2;
                          @endphp
                      }
-                     else if(i==index && index == 3)
+                     else if(index == 3)
                      {
                          @php
                              $batchid =3;
                          @endphp
                      }
-                     else if(i==index && index == 4)
+                     else if(index == 4)
                      {
                          @php
                              $batchid =4;
                          @endphp
                      }
-                     else if(i==index && index == 5)
+                     else if(index == 5)
                      {
                          @php
                              $batchid =5;
                          @endphp
                      }
-                     else if(i==index && index == 6)
+                     else if(index == 6)
                      {
                          @php
                              $batchid =6;
                          @endphp
                      }
-                     else if(i==index && index == 7)
+                     else if(index == 7)
                      {
                          @php
                              $batchid =7;
                          @endphp
                      }
-                     else if(i==index && index == 8)
+                     else if(index == 8)
                      {
                          @php
                              $batchid =8;
                          @endphp
                      }
-                     else if(i==index && index == 9)
+                     else if(index == 9)
                      {
                          @php
                              $batchid =9;
                          @endphp
                      }
-                     else if(i==index && index == 10)
+                     else if(index == 10)
                      {
                          @php
                              $batchid =10;
                          @endphp
                      }
-                     else if(i==index && index == 11)
+                     else if(index == 11)
                      {
                          @php
                              $batchid =11;
                          @endphp
                      }
-                     else if(i==index && index == 12)
+                     else if(index == 12)
                      {
                          @php
                              $batchid =12;
                          @endphp
                      }
-                     else if(i==index && index == 13)
+                     else if(index == 13)
                      {
                          @php
                              $batchid =13;
