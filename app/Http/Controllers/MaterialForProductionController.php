@@ -492,7 +492,7 @@ class MaterialForProductionController extends Controller
     public function assingindex(Request $request)
     {
         Session::forget('batchid');
-        session('batchid', $request->id);
-
+        session()->put('batchid', $request->id);
+        echo Session::get('batchid');
     }
 }
