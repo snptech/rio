@@ -69,7 +69,7 @@
                                     $batch  = "";
                                     if ($mat->type == 'P') {
 
-                                    $batch =  $batch = App\Models\Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("Qty","id");
+                                        $batch[$i] = App\Models\Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("Qty","id");
 
                                    /* App\Models\InwardPackingMaterialItems::where("material",$mat->PackingMaterialName)
                                         ->select(DB::raw("concat(DATE_FORMAT(created_at,\"%d-%m-%Y\"),'-',(total_qty-used_qty)) as Qty"),"id")
@@ -78,7 +78,7 @@
                                     }
                                     else
                                     {
-                                        $batch = App\Models\Stock::select("inward_raw_materials_items.batch_no","stock.id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("batch_no","id");
+                                        $batch[$i] = App\Models\Stock::select("inward_raw_materials_items.batch_no","stock.id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.matarial_id",$mat->PackingMaterialName)->pluck("batch_no","id");
 
                                     }
                                 @endphp
@@ -105,7 +105,7 @@
                             </div>
                             <section class="input_fields_wrap_4{{$i}}">
                             <div class="text-right m-0 mb-4">
-                                <button type="button" class="btn-primary add_field_button" data-id="input_fields_wrap_4{{$i}}">+ Add More</button>
+                                <button type="button" class="btn-primary add_field_button" data-id="input_fields_wrap_4{{$i}}" data-material="{{$i}}">+ Add More</button>
                             </div>
                             <div class="row add-more-wrap after-add-more m-0 mb-4">
 
@@ -115,7 +115,7 @@
                                         <input type="hidden" name="type{{ $mat->details_id }}" value="{{$mat->type}}">
                                             <label for="rBatch" class="active">{{$material_type}} Batch</label>
                                         @if(! empty($batch))
-                                        {{ Form::select("rBatch".$mat->details_id."[]",$batch,old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type", "required"=>"true")) }}
+                                        {{ Form::select("rBatch".$mat->details_id."[]",$batch[$i],old("rBatch".$mat->details_id),array("id" =>"rBatch".$i,"placeholder"=>"Choose Batch number","class"=>"form-control","onchange"=>"getarnoandqty($(this).val(),".$mat->PackingMaterialName.",".$i.")","data-id"=>"$mat->type", "required"=>"true")) }}
                                        @else
                                        <select class="form-control" required>
                                            <option value="" selected disabled> No batch found for {{ $mat->material_name }} </option>
@@ -200,6 +200,7 @@
         var k=1;
         var max_fields      = 16; //maximum input boxes allowed
         var wrapper         =  '.'+ $(".add_field_button").data('id');// $(".input_fields_wrap_4"); //Fields wrapper
+        var index         =  '.'+ $(".add_field_button").data('material');
         var add_button      = $(".add_field_button"); //Add button ID
         var idFromButton ;
 
@@ -213,9 +214,94 @@
                 @php
                 $material_type = isset($material_type)? $material_type: "Raw Material";
                 $details_id    = isset($mat->details_id) ?$mat->details_id: 3;
-                $batch_new     = isset($batch)?$batch:array();
+
                 $material_name_2 = isset($mat->PackingMaterialName)? $mat->PackingMaterialName:'';
+                $batchid = 0
                 @endphp
+
+                     if(i==index && index == 1)
+                     {
+                         @php
+                             $batchid =1;
+                         @endphp
+                     }
+                     else if(i==index && index == 2)
+                     {
+                         @php
+                             $batchid =2;
+                         @endphp
+                     }
+                     else if(i==index && index == 3)
+                     {
+                         @php
+                             $batchid =3;
+                         @endphp
+                     }
+                     else if(i==index && index == 4)
+                     {
+                         @php
+                             $batchid =4;
+                         @endphp
+                     }
+                     else if(i==index && index == 5)
+                     {
+                         @php
+                             $batchid =5;
+                         @endphp
+                     }
+                     else if(i==index && index == 6)
+                     {
+                         @php
+                             $batchid =6;
+                         @endphp
+                     }
+                     else if(i==index && index == 7)
+                     {
+                         @php
+                             $batchid =7;
+                         @endphp
+                     }
+                     else if(i==index && index == 8)
+                     {
+                         @php
+                             $batchid =8;
+                         @endphp
+                     }
+                     else if(i==index && index == 9)
+                     {
+                         @php
+                             $batchid =9;
+                         @endphp
+                     }
+                     else if(i==index && index == 10)
+                     {
+                         @php
+                             $batchid =10;
+                         @endphp
+                     }
+                     else if(i==index && index == 11)
+                     {
+                         @php
+                             $batchid =11;
+                         @endphp
+                     }
+                     else if(i==index && index == 12)
+                     {
+                         @php
+                             $batchid =12;
+                         @endphp
+                     }
+                     else if(i==index && index == 13)
+                     {
+                         @php
+                             $batchid =13;
+                         @endphp
+                     }
+
+                     @php
+                        $batch_new     = isset($batch[$batchid])?$batch[$batchid]:array();
+                     @endphp
+
                 $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
                  '<select name="rBatch{{$details_id}}[]" id="rBatch'+k+'" class="form-control" data-id="P" placeholder="Choose Batch number" onchange="getarnoandqty($(this).val(),{{$material_name_2}},'+k+')"><option>Choose Batch number</option>@if(isset($batch_new)) @foreach($batch_new as $key=>$val) <option value="{{ $key }}">{{ $val }}</option>@endforeach @endif </select>'+
                  '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number</label><input type="text" class="form-control" name="arno{{ $details_id  }}[]" id="arno'+k+'" placeholder="A.R.N. Number" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Date</label><input type="date" class="form-control" name="arnodate{{ $details_id  }}[]" id="arnodate'+k+'" placeholder="A.R.N. Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app{{ $details_id  }}[]" id="Quantity_app'+k+'" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
