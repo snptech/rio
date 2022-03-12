@@ -16,7 +16,7 @@ use App\Models\InwardPackingMaterialItems;
 use App\Models\PackingMaterialSlip;
 use App\Models\Requisition;
 use App\Models\Stock;
-
+use Session;
 class MaterialForProductionController extends Controller
 {
     public function __construct()
@@ -488,5 +488,11 @@ class MaterialForProductionController extends Controller
         {
             redirect(404);
         }
+    }
+    public function assingindex(Request $request)
+    {
+        Session::forget('batchid');
+        session('batchid', $request->id);
+
     }
 }

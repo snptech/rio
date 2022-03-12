@@ -200,7 +200,7 @@
         var k=1;
         var max_fields      = 16; //maximum input boxes allowed
         var wrapper         =  '.'+ $(".add_field_button").data('id');// $(".input_fields_wrap_4"); //Fields wrapper
-        var index         =  '.'+ $(".add_field_button").data('material');
+        var index         =  $(".add_field_button").data('material');
         var add_button      = $(".add_field_button"); //Add button ID
         var idFromButton ;
 
@@ -216,96 +216,38 @@
                 $details_id    = isset($mat->details_id) ?$mat->details_id: 3;
 
                 $material_name_2 = isset($mat->PackingMaterialName)? $mat->PackingMaterialName:'';
-                $batchid = 0
+                $batchid = 0;
                 @endphp
 
-                     if(index == 1)
-                     {
-                         @php
-                             $batchid =1;
-                         @endphp
-                     }
-                     else if(index == 2)
-                     {
-                         @php
-                             $batchid =2;
-                         @endphp
-                     }
-                     else if(index == 3)
-                     {
-                         @php
-                             $batchid =3;
-                         @endphp
-                     }
-                     else if(index == 4)
-                     {
-                         @php
-                             $batchid =4;
-                         @endphp
-                     }
-                     else if(index == 5)
-                     {
-                         @php
-                             $batchid =5;
-                         @endphp
-                     }
-                     else if(index == 6)
-                     {
-                         @php
-                             $batchid =6;
-                         @endphp
-                     }
-                     else if(index == 7)
-                     {
-                         @php
-                             $batchid =7;
-                         @endphp
-                     }
-                     else if(index == 8)
-                     {
-                         @php
-                             $batchid =8;
-                         @endphp
-                     }
-                     else if(index == 9)
-                     {
-                         @php
-                             $batchid =9;
-                         @endphp
-                     }
-                     else if(index == 10)
-                     {
-                         @php
-                             $batchid =10;
-                         @endphp
-                     }
-                     else if(index == 11)
-                     {
-                         @php
-                             $batchid =11;
-                         @endphp
-                     }
-                     else if(index == 12)
-                     {
-                         @php
-                             $batchid =12;
-                         @endphp
-                     }
-                     else if(index == 13)
-                     {
-                         @php
-                             $batchid =13;
-                         @endphp
-                     }
+                $.ajax({
+                    url:'{{ route('assingindex') }}',
+                    method:'POST',
+                    data:{
+                        "id":index,
+                        "_token":'{{ csrf_token() }}'
 
-                     @php
+                    }
+                }).success(function(data){
+                    @php
+                        $batchid =1;
+                        if(Session::has('batchid'))
+                            $batchid = Session::get('batchid');
+                        else
+                            $batchid = 1;
+
                         $batch_new     = isset($batch[$batchid])?$batch[$batchid]:array();
                      @endphp
 
-                $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
-                 '<select name="rBatch{{$details_id}}[]" id="rBatch'+k+'" class="form-control" data-id="P" placeholder="Choose Batch number" onchange="getarnoandqty($(this).val(),{{$material_name_2}},'+k+')"><option>Choose Batch number</option>@if(isset($batch_new)) @foreach($batch_new as $key=>$val) <option value="{{ $key }}">{{ $val }}</option>@endforeach @endif </select>'+
-                 '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number</label><input type="text" class="form-control" name="arno{{ $details_id  }}[]" id="arno'+k+'" placeholder="A.R.N. Number" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Date</label><input type="date" class="form-control" name="arnodate{{ $details_id  }}[]" id="arnodate'+k+'" placeholder="A.R.N. Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app{{ $details_id  }}[]" id="Quantity_app'+k+'" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
-                @php  $details_id++ @endphp
+                    $(wrapper).append('<div class="row add-more-wrap add-more-new input_fields_wrap_4{{$i}} m-0 mb-4 extraDiv_'+k+'">'+'<div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('+k+')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4{{$i}}"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity{{$i}}" class="active">{{$material_type}} Batch</label>'+
+                    '<select name="rBatch{{$details_id}}[]" id="rBatch'+k+'" class="form-control" data-id="P" placeholder="Choose Batch number" onchange="getarnoandqty($(this).val(),{{$material_name_2}},'+k+')"><option>Choose Batch number</option>@if(isset($batch_new)) @foreach($batch_new as $key=>$val) <option value="{{ $key }}">{{ $val }}</option>@endforeach @endif </select>'+
+                    '</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number</label><input type="text" class="form-control" name="arno{{ $details_id  }}[]" id="arno'+k+'" placeholder="A.R.N. Number" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Date</label><input type="date" class="form-control" name="arnodate{{ $details_id  }}[]" id="arnodate'+k+'" placeholder="A.R.N. Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app{{ $details_id  }}[]" id="Quantity_app'+k+'" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id[{{ $details_id  }}]" value="{{ $details_id  }}"></div></div></div>');
+                    @php  $details_id++ @endphp
+
+                })
+
+
+
+
             } //add mulptple raw material
             feather.replace()
             wrapper         =  '.'+ $(this).data('id');
