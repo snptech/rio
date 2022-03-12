@@ -200,7 +200,7 @@
         var k=1;
         var max_fields      = 16; //maximum input boxes allowed
         var wrapper         =  '.'+ $(".add_field_button").data('id');// $(".input_fields_wrap_4"); //Fields wrapper
-        var index         =  $(".add_field_button").data('material');
+
         var add_button      = $(".add_field_button"); //Add button ID
         var idFromButton ;
 
@@ -211,6 +211,7 @@
                 x++; //text box increment
                 k++;
                 wrapper         =  '.'+ $(this).data('id');
+                var index         =  $(this).data('material');
                 @php
                 $material_type = isset($material_type)? $material_type: "Raw Material";
                 $details_id    = isset($mat->details_id) ?$mat->details_id: 3;
