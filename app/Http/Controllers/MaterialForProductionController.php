@@ -491,8 +491,40 @@ class MaterialForProductionController extends Controller
     }
     public function assingindex(Request $request)
     {
-        Session::forget('batchid');
-        session()->put('batchid', $request->id);
-        echo Session::get('batchid');
+        if($request->id)
+        {
+
+            $batch  = "";
+            $matrialnme = "";
+            if ($request->mattype == 'P') {
+
+                $batch = Stock::select(DB::raw("concat(DATE_FORMAT(goods_receipt_note_items.created_at,\"%d-%m-%Y\"),'-',(goods_receipt_note_items.total_qty)) as Qty"),"stock.id")->join("goods_receipt_note_items","goods_receipt_note_items.id","stock.batch_no")->where("stock.matarial_id",$request->id)->pluck("Qty","id");
+
+                $matrialnme = "Packing Material ";
+            }
+            else
+            {
+                $batch = Stock::select("inward_raw_materials_items.batch_no","stock.id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
+
+                $matrialnme = "Raw Material ";
+
+            }
+            $index = $request->index;
+            $detailid = $request->detailsid;
+            $html = '<div class="row add-more-wrap add-more-new input_fields_wrap_4'.$index.' m-0 mb-4 extraDiv_'.$index.'"><div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('.$index.')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4'.$index.'"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity'.$index.'" class="active">'.$matrialnme.' Batch</label><select name="rBatch'.$detailid.'[]" id="rBatch'.$index.'" class="form-control" data-id="P" placeholder="Choose Batch number" onchange="getarnoandqty($(this).val(),'.$request->id.','.$index.')"><option>Choose Batch number</option>';
+
+            if(isset($batch))
+            {
+               foreach($batch as $key=>$val)
+               {
+                    $html .='<option value="'.$key.'">'. $val .'</option>';
+               }
+            }
+            $html .='</select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Number</label><input type="text" class="form-control" name="arno'.$detailid.'[]" id="arno'.$index.'" placeholder="A.R.N. Number" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">A.R.N. Date</label><input type="date" class="form-control" name="arnodate'.$detailid.'[]" id="arnodate'.$index.'" placeholder="A.R.N. Date" value=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Approved Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity_app'.$detailid.'[]" id="Quantity_app'.$index.'" placeholder="Enter Approved Qty" value=""><input type="hidden" name="details_id['.$detailid.']" value="'.$detailid.'"></div></div></div>';
+
+            return response()->json(['data'=>$html]);
+
+        }
+
     }
 }
