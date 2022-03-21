@@ -85,8 +85,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                            <label for="expiryDate">Expiry / Ratest Date</label>
-                            <input type="date" class="form-control" name="expiry_ratest_date" id="expiry_ratest_date" placeholder="Expiry / Ratest Date">
+                            <label for="expiryDate">Expiry / Retest Date</label>
+                            <input type="date" class="form-control" name="expiry_ratest_date" id="expiry_ratest_date" placeholder="Expiry / Retest Date">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">

@@ -29,7 +29,7 @@ use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Stock;
 use App\Models\GanerateLable;
-use App\Models\Users;
+use App\Models\User;
 use DB;
 use PDF;
 
@@ -277,7 +277,7 @@ class ManufactureProcessController extends Controller
             $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
             $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
 
-
+            $data["users"] = USER::pluck("name","id");
 
 
 
