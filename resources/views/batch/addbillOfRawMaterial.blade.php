@@ -6,7 +6,7 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="proName" class="active">Product Name</label>
-                   
+
                     <select name="proName" id="proName" readonly class="form-control select">
                         <option value="{{ $proId }}" class="form-control"
                             selected="selected">
@@ -135,7 +135,7 @@
                         class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light" name="submit" value="submit">Submit
                         & Next</button><button type="clear"
                         class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save &
-                        Quite</button>
+                        Quit</button>
                 </div>
             </div>
         </div>

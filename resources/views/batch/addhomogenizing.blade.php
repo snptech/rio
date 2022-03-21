@@ -126,7 +126,7 @@
                         <td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time" value="{{$p_lots->endTime}}" data-mask="00:00"></td>
                     </tr>
                     @endforeach
-                
+
                     <tr>
                         <td><input type="date" name="dateProcess[]" id="dateProcess[15]" class="form-control"></td>
                         <td>Homogenize the product generated.</td>
@@ -172,7 +172,7 @@
                         class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light" name="submit" value="submit">Submit
                         & Next</button><button type="clear"
                         class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save &
-                        Quite</button>
+                        Quit</button>
                 </div>
             </div>
         </div>

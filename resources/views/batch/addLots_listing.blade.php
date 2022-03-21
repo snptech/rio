@@ -293,7 +293,7 @@
                         & Next</button><button type="submit"
                         class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save
                         &
-                        Quite</button>
+                        Quit</button>
                 </div>
 
             </div>

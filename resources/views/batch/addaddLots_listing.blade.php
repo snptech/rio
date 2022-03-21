@@ -276,7 +276,7 @@
                         class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light" name="submit" value="submit">Submit
                         & Next</button><button type="submit"
                         class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save &
-                        Quite</button>
+                        Quit</button>
             </div>
         </div>
     </form>
