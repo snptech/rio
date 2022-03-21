@@ -258,8 +258,9 @@
                                 <div class="form-group">
                                     <label for="SupplierName">Dispatch by</label>
 
-                                    <input class="form-control select" name="dispatch_by" id="dispatch_by"
-                                        value="{{ \Auth::user()->name }}" readonly>
+                                    {{ Form::select('dispatch_by',$users,old("dispatch_by")?old("dispatch_by"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Dispatch by")) }}
+
+
                                     <!-- <option value=""> Select</option>
                                     @if (count($supplier_master))
                                     @foreach ($supplier_master as $temp)

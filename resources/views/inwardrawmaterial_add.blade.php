@@ -211,7 +211,8 @@
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="form-group">
 						  <label for="createdby">Created By</label>
-						  <input type="text" name="createdby" class="form-control" id="createdby" value="{{ \Auth::user()->name }}" readonly />
+                          {{ Form::select('createdby',$users,old("createdby")?old("createdby"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+
                           @if ($errors->has('createdby'))
                           <span class="text-danger">{{ $errors->first('createdby') }}</span>
                         @endif

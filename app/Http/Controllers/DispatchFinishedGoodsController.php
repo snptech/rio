@@ -10,6 +10,7 @@ use App\Models\Modedispatch;
 use App\Models\Rawmeterial;
 use App\Models\Department;
 use App\Models\PartyMaster;
+use App\Models\User;
 use App\Models\Inwardfinishedgoods;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,7 @@ class DispatchFinishedGoodsController extends Controller
         $data["department"] = Department::where("publish",1)->pluck("department","id");
         $data["partyname"] = PartyMaster::pluck("company_name","id");
         $data['grade'] = Grade::all();
+        $data["users"] = User::pluck("name","id");
         $maxid = FinishedGoodsDispatch::select(DB::Raw("max(dispath_no) as nextid"))->first();
 
         $nextid =1;
@@ -136,7 +138,7 @@ class DispatchFinishedGoodsController extends Controller
             'total_no_qty' => $request['total_no_qty'],
             'seal_no' => $request['seal_no'],
             'dispatch_date' => $request['dispatch_date'],
-            'dispatch_by' => Auth::user()->id,
+            'dispatch_by' => $request->dispatch_by,
             'remark' => $request['remark'],
 
         ];
@@ -169,8 +171,9 @@ class DispatchFinishedGoodsController extends Controller
         $supplier_master = Supplier::all();
         $mode = Modedispatch::where("publish",1)->get();
         $grade = Grade::all();
+        $users = User::pluck("name","id");
         $finished = FinishedGoodsDispatch::where("id", $id)->first();
-        return view("edit_dispatch_finished")->with(["finished" => $finished, "supplier_master" => $supplier_master, "mode" => $mode, "grade" => $grade]);
+        return view("edit_dispatch_finished")->with(["finished" => $finished, "supplier_master" => $supplier_master, "mode" => $mode, "grade" => $grade,"users"=>$users]);
     }
 
 
@@ -199,7 +202,7 @@ class DispatchFinishedGoodsController extends Controller
             'total_no_qty' => $request['total_no_qty'],
             'seal_no' => $request['seal_no'],
             'dispatch_date' => $request['dispatch_date'],
-            'dispatch_by' => Auth::user()->id,
+            'dispatch_by' => $request->dispatch_by,
             'remark' => $request['remark'],
         ];
         $finished = FinishedGoodsDispatch::find($id);

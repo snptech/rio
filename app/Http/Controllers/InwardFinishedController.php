@@ -9,6 +9,7 @@ use App\Models\Arnomaster;
 use App\Models\Supplier;
 use App\Models\Rawmeterial;
 use App\Models\Stock;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class InwardFinishedController extends Controller
@@ -23,9 +24,9 @@ class InwardFinishedController extends Controller
     public function new_stock()
     {
 
-        $data['inward_goods']=Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","users.name")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")
+        $data['inward_goods']=Inwardfinishedgoods::select("inward_finished_goods.*","raw_materials.material_name","users.name","inward_finished_goods.created_at as createdat")->join("raw_materials","raw_materials.id","inward_finished_goods.product_name")
 
-        ->join("users","users.id","inward_finished_goods.received_by")->orderBy("inward_finished_goods.created_at","desc")->get();
+        ->join("users","users.id","inward_finished_goods.received_by")->latest()->get();
 
         return view('new_stock',$data);
     }
@@ -58,7 +59,7 @@ class InwardFinishedController extends Controller
         $data['supplier_master']=Supplier::all();
         $data['arno_master']=Arnomaster::all();
         $maxid = Inwardfinishedgoods::select(DB::Raw("max(inward_no) as nextid"))->first();
-
+        $data['users'] = User::pluck("name","id");
         $nextid =1;
         if($maxid->nextid)
             $nextid = $maxid->nextid+1;

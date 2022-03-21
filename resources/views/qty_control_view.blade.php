@@ -60,7 +60,8 @@
         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
                 <label for="QuantityRejected">Check By</label>
-                <input type="text" class="form-control" name="checkby" id="checkby" placeholder="Check By" value="{{ Auth::user()->name }}">
+                {{ Form::select('checkby',$users,old("checkby")?old("checkby"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Check by","id"=>"checkby")) }}
+
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12 col-xl-12">

@@ -131,16 +131,16 @@
                             <input type="text" class="form-control" name="ar_no" id="ar_no" placeholder="AR.No"  maxlength="50" />
 
 
-                            <!-- <select class="form-control select" name="ar_no" id="ar_no">
-                                <option value=""> Select</option>
-                                @if(count($arno_master))
-                                @foreach($arno_master as $temp)
-                                <option value="{{$temp->id}}">{{$temp->name}}</option>
-                                @endforeach
-                                @endif
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="grade">AR Date</label>
+                            <input type="date" class="form-control" name="ar_no_date" id="ar_no_date" placeholder="AR. Date"/>
 
 
-                            </select> -->
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -153,7 +153,7 @@
                         <div class="form-group">
                             <label for="SupplierName">Received by</label>
 
-                                <input type="text" class="form-control" name="received_by" id="received_by" readonly value="{{ \Auth::user()->name }}" />
+                            {{ Form::select('received_by',$users,old("received_by")?old("received_by"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Received by")) }}
 
                         </div>
                     </div>

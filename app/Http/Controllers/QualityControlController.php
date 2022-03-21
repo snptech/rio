@@ -13,6 +13,7 @@ use App\Models\Inwardfinishedgoods;
 use App\Models\BatchManufacture;
 use App\Models\FinishedGoodsDispatch;
 use App\Models\Stock;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -103,7 +104,7 @@ class QualityControlController extends Controller
             'raw_material_id' => $request['rawmaterial_id'],
             'ar_no' => $request['ar_number'],
             'ar_no_date_date' => $request['ar_date']?$request['ar_date']:"",
-            'checked_by' => Auth::user()->id,
+            'checked_by' => $request['checkby'],
             'material_type' =>$request['mat_type']
         ];
 
@@ -275,7 +276,8 @@ class QualityControlController extends Controller
                 ->on("quality_controll_check.material_type",DB::raw('"R"'));
         })
         ->where("inward_raw_materials_items.id",$request->quality_id)->first();
-         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"R"])->render();
+        $users = User::pluck("name","id");
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"R","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
 
@@ -478,7 +480,8 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"P"'));
         })
         ->where("goods_receipt_note_items.id",$request->quality_id)->first();
-         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"P"])->render();
+        $users = User::pluck("name","id");
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"P","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
     }
@@ -511,6 +514,7 @@ class QualityControlController extends Controller
        ->get();
 
 
+
         return view('quality_control_finishgood',$data);
     }
     public function qty_control_finishgoods_approved(Request $request)
@@ -536,8 +540,8 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"F"'));
         })
         ->where("inward_finished_goods.id",$request->quality_id)->first();
-
-         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"F"])->render();
+        $users = User::pluck("name","id");
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"F","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
     }
@@ -598,8 +602,8 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"B"'));
         })
         ->where("add_batch_manufacture.id",$request->quality_id)->first();
-
-         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"B"])->render();
+        $users = User::pluck("name","id");
+         $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"B","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
     }

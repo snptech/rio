@@ -88,7 +88,9 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Dispensed by</label>
-                            <input readonly type="text" class="form-control" name="dispensed_by" id="dispensed_by" placeholder="Dispensed by" value="{{ \Auth::user()->name }}">
+                            {{ Form::select('dispensed_by',$users,old("dispensed_by")?old("dispensed_by"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Dispensed by","id"=>"dispensed_by")) }}
+
+
                         </div>
                     </div>
                     <div class="col-12">

@@ -10,6 +10,7 @@ use App\Models\Rawmeterial;
 use App\Models\Rawmaterialitems;
 use App\Models\Department;
 use App\Models\Stock;
+use App\Models\User;
 use DB;
 use Auth;
 class InwardMaterialController extends Controller
@@ -40,10 +41,11 @@ class InwardMaterialController extends Controller
         $manufacturer = Manufacturer::where("publish",1)->pluck("manufacturer","id");
         $maxid = InwardMaterial::select(DB::Raw("max(id) as nextid"))->first();
         $department = Department::where('publish',1)->pluck("department","id");
+        $users = User::pluck("name","id");
         $nextid =1;
         if($maxid->nextid)
             $nextid = $maxid->nextid+1;
-        return view("inwardrawmaterial_add")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"nextid"=>$nextid,"department"=>$department]);
+        return view("inwardrawmaterial_add")->with(["rawmaterial"=>$rawmaterial,"supplier"=>$supplier,"manufacturer"=>$manufacturer,"nextid"=>$nextid,"department"=>$department,'users'=>$users]);
     }
     public function store(Request $request)
     {
@@ -119,7 +121,7 @@ class InwardMaterialController extends Controller
         $data["supplier_gst"] = $request->supplierGST;
         $data["invoice_no"] = $request->invoiceNo;
         $data["goods_receipt_no"] = $request->receiptNo;
-        $data["created_by"] = Auth::user()->id;
+        $data["created_by"] = $request->createdby;
         $data["remark"] = $request->remark;
         $data["viscosity"] =$request->viscosity;
         $data["is_opening"] = $request->openingstock?$request->openingstock:0;

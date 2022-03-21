@@ -16,6 +16,7 @@ use App\Models\InwardPackingMaterialItems;
 use App\Models\PackingMaterialSlip;
 use App\Models\Requisition;
 use App\Models\Stock;
+use App\Models\User;
 use Session;
 class MaterialForProductionController extends Controller
 {
@@ -240,7 +241,7 @@ class MaterialForProductionController extends Controller
             ->join("raw_materials","raw_materials.id","detail_packing_material_requisition.PackingMaterialName")
             ->get();
 
-
+            $data["users"] = User::pluck("name","id");
 
             return view('issue_material_for_production_approved',$data);
         }
@@ -339,8 +340,8 @@ class MaterialForProductionController extends Controller
                $data["batch_no"] = $request->batchNo;
                $data["issed_date"] = $request->Date;
                $data["requestion_id"] = $request->id;
-               $data["checkedBy"] = Auth::user()->id;
-               $data["ApprovedBy"] = Auth::user()->id;
+               $data["checkedBy"] = $request->checkedBy;
+               $data["ApprovedBy"] = $request->ApprovedBy;
                $data["batch_id"] = $request->batch_id;
                $data["type"] = $request->type;
                DB::beginTransaction();

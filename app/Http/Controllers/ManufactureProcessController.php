@@ -29,7 +29,7 @@ use App\Models\Department;
 use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Stock;
 use App\Models\GanerateLable;
-
+use App\Models\Users;
 use DB;
 use PDF;
 

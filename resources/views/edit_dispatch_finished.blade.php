@@ -219,6 +219,7 @@
                     <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
                             <label for="SupplierName">Dispatch by</label>
+                            {{ Form::select('dispatch_by',$users,old("dispatch_by")?old("dispatch_by"):($finished->dispatch_by?$finished->dispatch_by:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Dispatch by","id"=>"dispatch_by")) }}
 
                             <select class="form-control" id="dispatch_by" name="dispatch_by">
                                 @foreach($supplier_master as $temp)

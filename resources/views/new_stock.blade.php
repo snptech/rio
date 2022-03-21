@@ -64,7 +64,7 @@
                             @if(count($inward_goods))
                             @foreach($inward_goods as $temp)
                             <tr>
-                                <td>{{$temp->inward_date}}</td>
+                                <td>{{$temp->createdat?date("d/m/Y",strtotime($temp->createdat)):""}}</td>
                                 <td>{{$temp->material_name}}</td>
                                 <td>{{$temp->batch_no}}</td>
                                 <td>{{$temp->grade}}</td>
