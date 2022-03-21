@@ -44,7 +44,7 @@
     @endif
 </div>
 <div id="addLots" class="tab-pane fade">
-    <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_lots') }}">
+    <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_lots') }}" onsubmit="return confirm('Do you really want to submit the form?');">
         @csrf
         <div class="form-row">
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -274,7 +274,7 @@
                         value="{{ isset($batchdetails->id) ? $batchdetails->id : old('batch_id') }}" />
                         <button type="submit"
                         class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light" name="submit" value="submit">Submit
-                        & Next</button><button type="clear"
+                        & Next</button><button type="submit"
                         class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save &
                         Quite</button>
             </div>

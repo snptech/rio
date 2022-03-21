@@ -44,7 +44,7 @@
 
 </div>
 <div id="addhomogenizing" class="tab-pane fade">
-    <form id="add_homogninge" method="post" action="{{ route('homogenizing_update') }}">
+    <form id="add_homogninge" method="post" action="{{ route('homogenizing_update') }}" onsubmit="return confirm('Do you really want to submit the form?');">
         <input type="hidden" value="11" name="sequenceId">
         <input type="hidden" value="{{ isset($Homogenizing->id) ? $Homogenizing->id : '' }}" name="id">
         <input type="hidden"

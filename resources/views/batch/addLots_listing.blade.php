@@ -50,7 +50,7 @@
 
 <div id="addLots" class="tab-pane fade">
 
-    <form method="post" action="{{ route('add_lots_update') }}" id="add_lots_process" name="add_lots_process">
+    <form method="post" action="{{ route('add_lots_update') }}" id="add_lots_process" name="add_lots_process" onsubmit="return confirm('Do you really want to submit the form?');">
         <div class="form-row">
             <input type="hidden" value="10" name="sequenceId">
             <input type="hidden" value="{{ isset($addlots->id) ? $addlots->id : '' }}" name="id">
@@ -290,7 +290,7 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-md ml-0 form-btn waves-effect waves-light"
                         name="submit" value="submit">Submit
-                        & Next</button><button type="clear"
+                        & Next</button><button type="submit"
                         class="btn btn-light btn-md form-btn waves-effect waves-light" name="save_q" value="save_q">Save
                         &
                         Quite</button>
