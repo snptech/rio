@@ -4,6 +4,7 @@
         @csrf
         <input type="hidden" value="issualofrequisition" name="nextForm">
         <div class="form-row">
+         <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="from" class="active">From</label>
@@ -43,6 +44,7 @@
                         readonly>
                 </div>
             </div>
+
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="Date" class="active">Date</label>
@@ -50,6 +52,7 @@
                         value="{{ date('Y-m-d') }}">
                 </div>
             </div>
+         </div>
 
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="form-group input_fields_wrap_6" id="MaterialReceived">
@@ -85,8 +88,8 @@
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="checkedBy">Checked By</label>
-                    <input type="text" class="form-control select" name="checkedBy" id="checkedBy"
-                        value="{{ \Auth::user()->name }}" readonly>
+                    {{ Form::select('checkedBy',$users,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
+
 
                 </div>
             </div>

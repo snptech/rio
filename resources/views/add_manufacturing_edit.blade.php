@@ -923,5 +923,67 @@
 
         });
 
+        function viewlots(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('lots-view') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.viewlotsdet').html(data.html)
+
+
+                }
+            })
+        }
+        function editslots(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('lots-edit') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.editlotsdet').html(data.html)
+
+
+                }
+            })
+        }
+        function getbatchlotedit(val, pos) {
+
+        $.ajax({
+            url: '{{ route('getbatchofmaterial') }}',
+            method: 'POST',
+            data: {
+                "id": val,
+                "_token": '{{ csrf_token() }}'
+            }
+        }).success(function(data) {
+
+            $("#rmbatchnoedit" + pos).empty();
+            var option = "<option value=''>Choose Batch No.</option>";
+            $("#rmbatchnoedit" + pos).append(option);
+
+            $.each(data.batch, function(key, val) {
+
+                var option = "<option value='" + key + "'>" + val + "</option>";
+                $("#rmbatchnoedit" + pos).append(option);
+            });
+        });
+}
     </script>
 @endpush

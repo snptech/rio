@@ -16,7 +16,7 @@
                     <th>batch.No</th>
                     <th>RefMfr.No</th>
                     <th>Date</th>
-
+                    <th>Action</th>
 
 
                 </tr>
@@ -34,6 +34,11 @@
                             <td>{{ $lots->refMfrNo }}</td>
                             <td>{{ $lots->Date ? date('d/m/Y', strtotime($lots->created_at)) : '' }}
                             </td>
+                            <td><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewlots" title="View" onclick="viewlots({{$lots->id}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#editslots" title="Edit" onclick="editslots({{$lots->id}})"><i data-feather="edit"></i></a>
+                            </td>
+
+
+
 
                         </tr>
                     @endforeach
@@ -43,58 +48,58 @@
         </table>
     @endif
 </div>
+
 <div id="addLots" class="tab-pane fade">
     <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_lots') }}" onsubmit="return confirm('Do you really want to submit the form?');">
         @csrf
         <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="proName" class="active">Product Name</label>
-                    <select name="proName" id="proName" readonly class="form-control select">
-                        <option value="{{ $proId }}" class="form-control"
-                            selected="selected">
-                            {{ $proName }}
-                        </option>
-                    </select>
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
+            <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="proName" class="active">Product Name</label>
+                        <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ $proName }}"/>
+
+                        @if ($errors->has('proName'))
+                            <span class="text-danger">{{ $errors->first('proName') }}</span>
+                        @endif
+                        <input type="hidden" name="proName" value="{{ $proId }}" />
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
-                        maxlength="120" onkeypress=""
-                        value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
-                        readonly>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="bmrNo" class="active">BMR No.</label>
+                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
+                            maxlength="120" onkeypress=""
+                            value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
+                            readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo" id="batchNo"
-                        pattern="\d*" maxlength="120"
-                        onkeypress=""
-                        value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                        readonly>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="batchNo">Batch No.</label>
+                        <input type="text" class="form-control" name="batchNo" id="batchNo"
+                            pattern="\d*" maxlength="120"
+                            onkeypress=""
+                            value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+                            readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
-                        pattern="\d*" maxlength="120"
-                        onkeypress=""
-                        value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
-                        readonly>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="refMfrNo">Ref. MFR No.</label>
+                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
+                            pattern="\d*" maxlength="120"
+                            onkeypress=""
+                            value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
+                            readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="Date">Date</label>
-                    <input type="date" class="form-control" name="Date" id="Date" placeholder=""
-                        value="{{ date('Y-m-d') }}">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="Date">Date</label>
+                        <input type="date" class="form-control" name="Date" id="Date" placeholder=""
+                            value="{{ date('Y-m-d') }}">
+                    </div>
                 </div>
             </div>
             <div class="col-12">
@@ -203,10 +208,10 @@
                             <td><input type="text" name="temp[]" id="temp[1]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[1]"
-                                    class="form-control time" data-mask="00:00"></td>
+                                    class="form-control time" data-mask="00:00" step="3600000"></td>
                             <td><input type="time" name="endTime[]" id="endTime[1]"
-                                    class="form-control time" data-mask="00:00"></td>
-                            <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[1]', 'class' => 'form-control select']) }}
+                                    class="form-control time" data-mask="00:00" step="3600000"></td>
+                            <td>{{ Form::select('doneby[]', $users, old('doneby')? old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                             </td>
                         </tr>
                         <tr>
@@ -219,7 +224,7 @@
                                     class="form-control time" data-mask="00:00"></td>
                             <td><input type="time" name="endTime[]" id="endTime[2]"
                                     class="form-control time" data-mask="00:00"></td>
-                            <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[2]', 'class' => 'form-control select']) }}
+                            <td>{{ Form::select('doneby[]', $users, old('doneby')? old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                             </td>
                         </tr>
                         <tr>
@@ -234,7 +239,7 @@
                                     class="form-control time" data-mask="00:00"></td>
                             <td><input type="time" name="endTime[]" id="endTime[3]"
                                     class="form-control time" data-mask="00:00"></td>
-                            <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[3]', 'class' => 'form-control select']) }}
+                            <td>{{ Form::select('doneby[]', $users, old('doneby')? old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                             </td>
                         </tr>
                         <tr>
@@ -248,7 +253,7 @@
                                     class="form-control time" data-mask="00:00"></td>
                             <td><input type="time" name="endTime[]" id="endTime[4]"
                                     class="form-control time" data-mask="00:00"></td>
-                            <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[4]', 'class' => 'form-control select']) }}
+                            <td>{{ Form::select('doneby[]', $users, old('doneby')? old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                             </td>
                         </tr>
                         <tr>
@@ -262,7 +267,7 @@
                                     class="form-control time" data-mask="00:00"></td>
                             <td><input type="time" name="endTime[]" id="endTime[5]"
                                     class="form-control time" data-mask="00:00"></td>
-                            <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
+                            <td>{{ Form::select('doneby[]', $users, old('doneby')? old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                             </td>
                         </tr>
                     </tbody>
@@ -282,3 +287,25 @@
     </form>
 </div>
 </div>
+@push("models")
+<div class="modal fade show" id="viewlots" tabindex="-1" aria-labelledby="checkllotsLabel" aria-modal="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="checkQuntityLabel">Lots Details</h5>
+      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+    </div>
+    <div class="modal-body viewlotsdet">
+
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade show" id="editslots" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content editlotsdet">
+
+      </div>
+    </div>
+    </div>
+@endpush

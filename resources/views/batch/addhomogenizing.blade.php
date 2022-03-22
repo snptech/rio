@@ -57,12 +57,12 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="proName" class="active">Product Name</label>
-                    <select name="proName" id="proName" readonly class="form-control select">
-                        <option value="{{ $proId }}" class="form-control"
-                            selected="selected">
-                            {{ $proName }}
-                        </option>
-                    </select>
+                    <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ isset($batchproduct->material_name)?$batchproduct->material_name:'' }}"/>
+
+                    @if ($errors->has('proName'))
+                        <span class="text-danger">{{ $errors->first('proName') }}</span>
+                    @endif
+                    <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">

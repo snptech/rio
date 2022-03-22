@@ -4,50 +4,52 @@
         @csrf
         <input type="hidden" value="issualofrequisitionpacking" name="nextForm">
         <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="from" class="active">From</label>
-                    <select name="from" id="from" class="form-control select">
-                        @if (count($department))
-                            @foreach ($department as $temp)
-                                @if ($temp->id == 2)
-                                    <option value="{{ $temp->id }}">{{ $temp->department }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        @endif
-                    </select>
+            <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="from" class="active">From</label>
+                        <select name="from" id="from" class="form-control select">
+                            @if (count($department))
+                                @foreach ($department as $temp)
+                                    @if ($temp->id == 2)
+                                        <option value="{{ $temp->id }}">{{ $temp->department }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="to" class="active">To</label>
-                    <select name="to" id="to" class="form-control select">
-                        @if (count($department))
-                            @foreach ($department as $temp)
-                                @if ($temp->id == 3)
-                                    <option value="{{ $temp->id }}">{{ $temp->department }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        @endif
-                    </select>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="to" class="active">To</label>
+                        <select name="to" id="to" class="form-control select">
+                            @if (count($department))
+                                @foreach ($department as $temp)
+                                    @if ($temp->id == 3)
+                                        <option value="{{ $temp->id }}">{{ $temp->department }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo" id="batchNo"
-                        placeholder="Batch No."
-                        value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                        readonly>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="batchNo">Batch No.</label>
+                        <input type="text" class="form-control" name="batchNo" id="batchNo"
+                            placeholder="Batch No."
+                            value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+                            readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="Date" class="active">Date</label>
-                    <input type="date" class="form-control calendar" name="Date" id="Date"
-                        value="{{ date('Y-m-d') }}">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <label for="Date" class="active">Date</label>
+                        <input type="date" class="form-control calendar" name="Date" id="Date"
+                            value="{{ date('Y-m-d') }}">
+                    </div>
                 </div>
             </div>
 
@@ -90,8 +92,8 @@
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="checkedBy">Checked By</label>
-                    <input type="text" class="form-control select" name="checkedBy" id="checkedBy"
-                        value="{{ \Auth::user()->name }}" readonly>
+                    {{ Form::select('checkedBy',$users,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
+
 
                 </div>
             </div>

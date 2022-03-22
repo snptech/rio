@@ -187,11 +187,14 @@ class ManufactureProcessController extends Controller
         $data["batch"] = $batch;
 
         if (isset($batch) && $batch) {
+
             $batchdetails =  BatchManufacture::select('add_batch_manufacture.*')->where("batchNo", $batch)->first();
             if (isset($batchdetails) && $batchdetails)
                 $data["batchdetails"] = $batchdetails;
 
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+                $data['batchproduct'] = Rawmeterial::where("material_type", "F")->where("id",$data['batchdetails']->proName)->first();
+
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*',"AddLotsl.id as lotid")->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
                 $lot_id = AddLotsl::select('id')->where("batchNo",$batch)->first();
@@ -357,12 +360,12 @@ class ManufactureProcessController extends Controller
             "ProductionCompletedon" =>  $request['ProductionCompletedon'],
             "ManufacturingDate" =>  $request['ManufacturingDate'],
             "RetestDate" =>  $request['RetestDate'],
-            "doneBy" => Auth::user()->id,
-            "checkedBy" => Auth::user()->id,
+            "doneBy" =>  $request['doneBy'],
+            "checkedBy" =>$request['checkedBy'],
             "inlineRadioOptions" =>  $request['inlineRadioOptions'],
             "approval" =>  $request['grade'],
             "approvalDate" =>  $request['approvalDate'],
-            "checkedByI" => Auth::user()->id,
+            "checkedByI" => $request['checkedByI'],
             "Remark" =>  $request['Remark'],
             "is_active" => 1,
             "is_delete" => 1,
@@ -393,6 +396,11 @@ class ManufactureProcessController extends Controller
 
         $data['product'] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
 
+
+        $data['batchproduct'] = Rawmeterial::where("material_type", "F")->where("id",$data['edit_batchmanufacturing']->proName)->first();
+
+
+
         $data["requestion"] = RequisitionSlip::where("batch_id", $id)->where("type","R")->orderBy('id', 'desc')->get();
         if (isset($data["requestion"]))
 
@@ -419,7 +427,7 @@ class ManufactureProcessController extends Controller
             }
             if(isset($data['edit_batchmanufacturing']))
             {
-                $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$data['edit_batchmanufacturing']->batchNo)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+                $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*',"add_lotsl.id as lotid")->where("batchNo",$data['edit_batchmanufacturing']->batchNo)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
 
 
 
@@ -462,7 +470,7 @@ class ManufactureProcessController extends Controller
 
             if(isset($data['edit_batchmanufacturing']))
             {
-                $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*')->where("batchNo",$data['edit_batchmanufacturing']->batchNo)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+                $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*',"add_lotsl.id as lotid")->where("batchNo",$data['edit_batchmanufacturing']->batchNo)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->latest("add_lotsl.created_at")->get();
 
                 if (isset($lotsdetails) && $lotsdetails) {
                     $data["lotsdetails"] = $lotsdetails;
@@ -531,7 +539,8 @@ class ManufactureProcessController extends Controller
 
         $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
 
-//dd($data["requestion_details"]);
+        $data["users"] = USER::pluck("name","id");
+
 
         //$data['sequenceId'] = '#requisition';
         return view('add_manufacturing_edit', $data);
@@ -556,7 +565,7 @@ class ManufactureProcessController extends Controller
             "inlineRadioOptions" =>  $request->inlineRadioOptions,
             "approval" =>  $request->approval,
             "approvalDate" =>  $request->approvalDate,
-            "checkedByI" => Auth::user()->id,
+            "checkedByI" => $request->checkedByI,
             "Remark" =>  $request->Remark,
             "is_active" => 1,
             "is_delete" => 1,
@@ -665,7 +674,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
-        $arr['checkedBy'] = Auth::user()->id;
+        $arr['checkedBy'] = $request->checkedBy;
         $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
@@ -736,7 +745,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
-        $arr['checkedBy'] = Auth::user()->id;
+        $arr['checkedBy'] = $request->checkedBy;
         $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
@@ -779,7 +788,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
-        $arr['checkedBy'] = Auth::user()->id;
+        $arr['checkedBy'] = $request->checkedBy;
         $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
@@ -947,8 +956,8 @@ class ManufactureProcessController extends Controller
             "ValidationSample" => $request['ValidationSample'],
             "CustomerSample" => $request['CustomerSample'],
             "ActualYield" => $request['ActualYield'],
-            "checkedBy" => Auth::user()->id,
-            "ApprovedBy" => Auth::user()->id,
+            "checkedBy" => $request['checkedBy'],
+            "ApprovedBy" => $request['ApprovedBy'],
             "Remark" => $request['Remark'],
             "batch_id"=>$request["batch_id"],
 
@@ -1353,8 +1362,8 @@ class ManufactureProcessController extends Controller
         $arr['Date'] = $request->Date;
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
-        $arr['checkedBy'] =  Auth::user()->id;
-        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['checkedBy'] =  $request->checkedBy;
+        $arr['ApprovedBy'] =  $request->ApprovedBy;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->batch_id;
         $arr['type'] = "P";
@@ -1424,8 +1433,8 @@ class ManufactureProcessController extends Controller
         $arr['Date'] = $request->Date;
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
-        $arr['checkedBy'] =  Auth::user()->id;
-        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['checkedBy'] =  $request->checkedBy;
+        $arr['ApprovedBy'] = $request->ApprovedBy;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->batch_id;
         $arr['type'] = "R";
@@ -1465,8 +1474,8 @@ class ManufactureProcessController extends Controller
         $arr['Date'] = $request->Date;
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
-        $arr['checkedBy'] =  Auth::user()->id;
-        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['checkedBy'] =  $request->checkedBy;
+        $arr['ApprovedBy'] =  $request->ApprovedBy;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->mainid;
         $arr['type'] = "R";
@@ -1523,7 +1532,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['doneBy'] = $request->doneBy;
-        $arr['checkedBy'] = Auth::user()->id;
+        $arr['checkedBy'] = $request->checkedBy;
         $arr['Remark'] = $request->Remark;
         $arr['is_active'] = 1;
         $arr['is_delete'] = 1;
@@ -1568,8 +1577,8 @@ class ManufactureProcessController extends Controller
         $arr['Date'] = $request->Date;
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
-        $arr['checkedBy'] =  Auth::user()->id;
-        $arr['ApprovedBy'] =  Auth::user()->id;
+        $arr['checkedBy'] =  $request->checkedBy;
+        $arr['ApprovedBy'] =  $request->ApprovedBy;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->id;
         $arr['type'] = "P";
@@ -1680,8 +1689,8 @@ class ManufactureProcessController extends Controller
             "20kgDrums" => $request['20kgDrums'],
             "startTime" => $request['startTime'],
             "EndstartTime" => $request['EndstartTime'],
-            "areaCleanliness" => Auth::user()->id,
-            "CareaCleanliness" => Auth::user()->id,
+            "areaCleanliness" => $request['areaCleanliness'],
+            "CareaCleanliness" => $request['CareaCleanliness'],
             "rmInput" => $request['rmInput'],
             "fgOutput" => $request['fgOutput'],
             "filledDrums" => $request['filledDrums'],
@@ -1692,8 +1701,8 @@ class ManufactureProcessController extends Controller
             "ValidationSample" => $request['ValidationSample'],
             "CustomerSample" => $request['CustomerSample'],
             "ActualYield" => $request['ActualYield'],
-            "checkedBy" => Auth::user()->id,
-            "ApprovedBy" => Auth::user()->id,
+            "checkedBy" =>  $request['checkedBy'],
+            "ApprovedBy" => $request['ApprovedBy'],
             "Remark" => $request['Remark'],
             "batch_id"=>$request['mainid']
 
@@ -1753,8 +1762,8 @@ class ManufactureProcessController extends Controller
             "ValidationSample" => $request['ValidationSample'],
             "CustomerSample" => $request['CustomerSample'],
             "ActualYield" => $request['ActualYield'],
-            "checkedBy" => Auth::user()->id,
-            "ApprovedBy" => Auth::user()->id,
+            "checkedBy" =>$request['checkedBy'],
+            "ApprovedBy" => $request['ApprovedBy'],
             "Remark" => $request['Remark'],
             "batch_id"=>$request['mainid']
 
@@ -1797,10 +1806,11 @@ class ManufactureProcessController extends Controller
         $arr['Date'] = $request->Date;
         $arr['lotNo'] = $request->lotNo;
         $arr['ReactorNo'] = $request->ReactorNo;
-        $arr['batch_id'] = $request->mainid;
+        $arr['batch_id'] = $request->batch_id;
         $arr['Process_date'] = $request->Process_date;
         $AddLotsl = AddLotsl::Create($arr);
-        $batch = BatchManufacture::find($request->mainid);
+        $batch = BatchManufacture::find($request->batch_id);
+
         $batch->stage_5=1;
         $batch->save();
         if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
@@ -1854,7 +1864,7 @@ class ManufactureProcessController extends Controller
     public function add_lots_update(Request $request)
     {
 
-       ;
+
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;
@@ -2455,5 +2465,195 @@ class ManufactureProcessController extends Controller
             return $pdf->download('pdfview.pdf');
         }
         return view('pdfview',$data,);
+    }
+    function viewLots(Request $request)
+    {
+        if($request->id)
+        {
+            $lotsdetails = AddLotsl::select('add_lotsl.*',"equipment_code.code")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.id","add_lotsl.ReactorNo")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where("add_lotsl.id",$request->id)->first();
+            $data = array();
+
+
+            if (isset($lotsdetails) && $lotsdetails) {
+                $data["lotsdetails"] = $lotsdetails;
+
+                $data["batchdetails"] = BatchManufacture::select("add_batch_manufacture.*","raw_materials.material_name as productname")->where("add_batch_manufacture.id",$lotsdetails->batch_id)->join("raw_materials","raw_materials.id","add_batch_manufacture.proName")->first();
+
+                    $data["lotsrawmaterials"] = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*',"raw_materials.material_name","inward_raw_materials_items.batch_no")->join("raw_materials","raw_materials.id","add_lots_raw_material_detail.MaterialName")->join("inward_raw_materials_items","inward_raw_materials_items.id","add_lots_raw_material_detail.rmbatchno")->where("add_lots_id",$lotsdetails->id)->get();
+
+
+
+                    $process  = Processlots::select("qty","temp","stratTime","endTime","users.name as doneby","process_id")->join("users","users.id","process_lots.doneby")->where("process_lots.lot_id",$lotsdetails->id)->get();
+
+                if(isset($process) && $process)
+                    $data["process"] = $process;
+
+
+
+            }
+
+            $view = view('batch.view_lot_details', $data)->render();
+            return response()->json(['html'=>$view]);
+        }
+    }
+    public function editLots(Request $request)
+    {
+        if($request->id)
+        {
+            $lotsdetails = AddLotsl::select('add_lotsl.*',"equipment_code.code")->leftJoin("list_of_equipment_in_manufacturin_process","list_of_equipment_in_manufacturin_process.id","add_lotsl.ReactorNo")->leftJoin("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where("add_lotsl.id",$request->id)->first();
+            $data = array();
+
+
+            if (isset($lotsdetails) && $lotsdetails) {
+                $data["lotsdetails"] = $lotsdetails;
+
+                $data["batchdetails"] = BatchManufacture::select("add_batch_manufacture.*","raw_materials.material_name as productname")->where("add_batch_manufacture.id",$lotsdetails->batch_id)->join("raw_materials","raw_materials.id","add_batch_manufacture.proName")->first();
+
+                $data["selected_crop"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $lotsdetails->batch_id)->where("equipment_code.equipment_id","<>",2)->pluck("code","id");
+
+
+                    $data["lotsrawmaterials"] = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*',"raw_materials.material_name","inward_raw_materials_items.batch_no")->join("raw_materials","raw_materials.id","add_lots_raw_material_detail.MaterialName")->join("inward_raw_materials_items","inward_raw_materials_items.id","add_lots_raw_material_detail.rmbatchno")->where("add_lots_id",$lotsdetails->id)->get();
+
+
+
+                    $process  = Processlots::select("qty","temp","stratTime","endTime","users.name as doneby","process_id")->join("users","users.id","process_lots.doneby")->where("process_lots.lot_id",$lotsdetails->id)->get();
+
+                if(isset($process) && $process)
+                    $data["process"] = $process;
+
+
+                    $Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $lotsdetails->batch_id)->where("type","R")->orderBy('id', 'desc')->get();
+
+                    if(isset($Requisitionissuedmaterial) && $Requisitionissuedmaterial)
+                    {
+
+
+
+                               foreach($Requisitionissuedmaterial as $mat)
+                               {
+                                   $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","inward_raw_materials_items.id")
+                                   ->where("issue_material_production_requestion_details.issual_material_id", $mat->id)
+                                   ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+                                   ->join("stock", "stock.id", "issue_material_production_requestion_details.batch_id")
+                                   ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "stock.batch_no")
+                                   ->get();
+                               }
+
+
+
+
+                   }
+                   $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
+
+                   $data["users"] = User::pluck("name","id");
+
+            $view = view('batch.lot_edit', $data)->render();
+            }
+            return response()->json(['html'=>$view]);
+        }
+        else
+        {
+            return response()->json(['status'=>0]);
+        }
+    }
+
+    public function lotseditupdate (Request $request)
+    {
+        if($request->id)
+        {
+            $lots = AddLotsl::find($request->id);
+            if(isset($lots))
+            {
+                $lots->proName = $request->proName;
+                $lots->bmrNo = $request->bmrNo;
+                $lots->batchNo = $request->batchNo;
+                $lots->refMfrNo = $request->refMfrNo;
+                $order_number = date('dyHs');
+                $lots->order_id = $order_number;
+                $lots->Date = $request->Date;
+                if($request->lotNo)
+                    $lots->lotNo = $request->lotNo;
+                else
+                {
+                    $lotno = AddLotsl::select(DB::raw("max(lotNo) as lotno"))->where('id', $request->id)->first();
+                    if(isset($lotno) && $lotno)
+                    {
+                        $lots->lotNo = $lotno->lotno+1;
+                    }
+                    else
+                    {
+                        $lots->lotNo = 1;
+                    }
+                }
+                $lots->ReactorNo = $request->ReactorNo;
+                $lots->Process_date = $request->Process_date;
+                $lots->batch_id = $request->mainid;
+                $lots->save();
+                $lotsid = 0;
+
+                $lotsid = $request->id;
+
+
+                if ((isset($lotsid)) && ($lotsid > 0)) {
+                    if (count($request->MaterialName)) {
+                        AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->delete();
+                        foreach ($request->MaterialName as $key => $value) {
+                            $arr_data['MaterialName'] = $value;
+                            $arr_data['rmbatchno'] = $request->rmbatchno[$key];
+                            $arr_data['Quantity'] = $request->Quantity[$key];
+                            $arr_data['add_lots_id'] = $lotsid;
+                            AddLotslRawMaterialDetails::Create($arr_data);
+
+                            $stockless = array();
+                            $stock = Stock::where("matarial_id",$value)->where("batch_no",$request->rmbatchno[$key])->first();
+                            if(isset($stock) && $stock)
+                            {
+                                $st = Stock::find($stock->id);
+                                $stockless["used_qty"] = $request->Quantity[$key];
+                                $st->update($stockless);
+                            }
+
+
+                        }
+
+                        if ((isset($lotsid)) && ($lotsid > 0)) {
+                            foreach ($request->qty as $key => $value) {
+                                Processlots::where('lot_id', $lotsid)->delete();
+
+                                if (count($request->qty)) {
+                                    foreach ($request->qty as $key => $value) {
+                                        $arr_data['qty'] = $value;
+                                        $arr_data['temp'] = $request->temp[$key];
+                                        $arr_data['stratTime'] = $request->stratTime[$key];
+                                        $arr_data['endTime'] = $request->endTime[$key];
+                                        $arr_data['doneby'] = $request->doneby[$key];
+                                        $arr_data['lot_id'] = $lotsid;
+                                        $arr_data['process_id'] = $key+1;
+                                        $result = Processlots::Create($arr_data);
+                                    }
+
+                                    $sequenceId = 1;
+                                    if (isset($request->sequenceId)) {
+                                        $sequenceId = (int)$request->sequenceId + 1;
+                                    }
+                                    if ($result) {
+                                        $batch = BatchManufacture::find($request->mainid);
+
+                                        $batch->stage_5=1;
+                                        $batch->save();
+                                        if(isset($request->save_q))
+                                        {
+                                            return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
+                                        }
+                                        else
+                                            return redirect("add_manufacturing_edit/" . $request->mainid . "/" . $sequenceId)->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 90]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

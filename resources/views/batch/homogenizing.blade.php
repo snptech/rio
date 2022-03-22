@@ -57,10 +57,12 @@
                 <div class="form-group">
                     <label for="proName" class="active">Product Name</label>
 
-                    {{ Form::select('proName', $product, old('proName') ? old('proName') : (isset($edit_batchmanufacturing->proName) ? $edit_batchmanufacturing->proName : ''), ['class' => 'form-control select', 'id' => 'proName']) }}
+                    <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ $batchproduct->material_name }}"/>
+
                     @if ($errors->has('proName'))
                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                     @endif
+                    <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
 
                 </div>
             </div>

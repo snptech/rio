@@ -929,6 +929,27 @@
                 });
             });
         });
+
+        function viewlots(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('lots-view') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('#viewlotsdet').val(data.html)
+
+
+                }
+            })
+        }
     </script>
 
 @endpush

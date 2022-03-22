@@ -20,7 +20,7 @@
                 <th>Main Batch.No</th>
                 <th>RefMfr.No</th>
                 <th>Date</th>
-
+                <th>Action</th>
 
 
             </tr>
@@ -37,6 +37,8 @@
                         <td>{{ $lots->batchNo }}</td>
                         <td>{{ $lots->refMfrNo }}</td>
                         <td>{{ $lots->Date ? date('d/m/Y', strtotime($lots->created_at)) : '' }}</td>
+                        <td><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewlots" title="View" onclick="viewlots({{$lots->lotid}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#editslots" title="Edit" onclick="editslots({{$lots->lotid}})"><i data-feather="edit"></i></a>
+                        </td>
 
                     </tr>
                 @endforeach
@@ -61,11 +63,12 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="proName" class="active">Product Name</label>
-                    {{ Form::select('proName', $product, old('proName'), ['class' => 'form-control select', 'id' => 'proName', 'value' => 'addlots->proName']) }}
+                    <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ $batchproduct->material_name }}"/>
 
                     @if ($errors->has('proName'))
                         <span class="text-danger">{{ $errors->first('proName') }}</span>
                     @endif
+                    <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -212,7 +215,8 @@
                                             id="stratTime" class="form-control time" data-mask="00:00"></td>
                                     <td><input type="time" value="{{ $v->endTime }}" name="endTime[]" id="endTime[1]"
                                             class="form-control time" data-mask="00:00"></td>
-                                    <td>{{ Form::select('doneby[]', $doneBy, old('doneby') ? old('doneby') : $v->doneby, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
+                                    <td>{{ Form::select('doneby[]', $users, old('doneby')?old('doneby'):(isset($v->doneby)?$v->doneby:Auth::user()->id), ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -228,7 +232,7 @@
                                         data-mask="00:00"></td>
                                 <td><input type="time" name="endTime[]" id="endTime[1]" class="form-control time"
                                         data-mask="00:00"></td>
-                                <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[1]', 'class' => 'form-control select']) }}
+                                <td>{{ Form::select('doneby[]', $users, old('doneby')?old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                                 </td>
                             </tr>
                             <tr>
@@ -239,7 +243,7 @@
                                         data-mask="00:00"></td>
                                 <td><input type="time" name="endTime[]" id="endTime[2]" class="form-control time"
                                         data-mask="00:00"></td>
-                                <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[2]', 'class' => 'form-control select']) }}
+                                <td>{{ Form::select('doneby[]', $users, old('doneby')?old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                                 </td>
                             </tr>
                             <tr>
@@ -252,7 +256,7 @@
                                         data-mask="00:00"></td>
                                 <td><input type="time" name="endTime[]" id="endTime[3]" class="form-control time"
                                         data-mask="00:00"></td>
-                                <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[3]', 'class' => 'form-control select']) }}
+                                <td>{{ Form::select('doneby[]', $users, old('doneby')?old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                                 </td>
                             </tr>
                             <tr>
@@ -264,7 +268,7 @@
                                         data-mask="00:00"></td>
                                 <td><input type="time" name="endTime[]" id="endTime4" class="form-control time"
                                         data-mask="00:00"></td>
-                                <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[4]', 'class' => 'form-control select']) }}
+                                <td>{{ Form::select('doneby[]', $users, old('doneby')?old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                                 </td>
                             </tr>
                             <tr>
@@ -276,7 +280,7 @@
                                         data-mask="00:00"></td>
                                 <td><input type="time" name="endTime[]" id="endTime5" class="form-control time"
                                         data-mask="00:00"></td>
-                                <td>{{ Form::select('doneby[]', $doneBy, old('doneby'), ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
+                                <td>{{ Form::select('doneby[]', $users, old('doneby')?old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                                 </td>
                             </tr>
 
@@ -300,5 +304,33 @@
         </div>
     </form>
 </div>
+@push("models")
+<div class="modal fade show" id="viewlots" tabindex="-1" aria-labelledby="checkllotsLabel" aria-modal="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="checkQuntityLabel">Lots Details</h5>
+      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+    </div>
+    <div class="modal-body viewlotsdet">
+
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade show" id="editslots" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="checkQuntityLabel">Lot Edit</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body editlotsdet">
+
+          </div>
+      </div>
+    </div>
+    </div>
+@endpush
 
 
