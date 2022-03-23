@@ -2108,7 +2108,7 @@ class ManufactureProcessController extends Controller
     {
         if($request->id)
         {
-            $batchstock = Stock::select("inward_raw_materials_items.batch_no","stock.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->pluck("batch_no","id");
+            $batchstock = Stock::select("inward_raw_materials_items.batch_no","stock.id")->where("department",3)->where(DB::raw("qty-stock.used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->join("inward_raw_materials_items","inward_raw_materials_items.id","stock.batch_no")->where("stock.material_type",'R')->where("stock.matarial_id",$request->id)->groupBy("stock.matarial_id")->pluck("batch_no","id");
 
             $data["batch"] = $batchstock;
 
@@ -2522,7 +2522,7 @@ class ManufactureProcessController extends Controller
                     $data["process"] = $process;
 
 
-                    $Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $lotsdetails->batch_id)->where("type","R")->orderBy('id', 'desc')->get();
+                    /*$Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $lotsdetails->batch_id)->where("type","R")->orderBy('id', 'desc')->get();
 
                     if(isset($Requisitionissuedmaterial) && $Requisitionissuedmaterial)
                     {
@@ -2542,7 +2542,10 @@ class ManufactureProcessController extends Controller
 
 
 
-                   }
+                   }*/
+                   $data["raw_material_bills"] = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*',"raw_materials.material_name","inward_raw_materials_items.batch_no")->join("raw_materials","raw_materials.id","add_lots_raw_material_detail.MaterialName")->join("inward_raw_materials_items","inward_raw_materials_items.id","add_lots_raw_material_detail.rmbatchno")->where("add_lots_id",$lotsdetails->id)->get();
+
+
                    $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
 
                     $data["users"] = User::pluck("name","id");
@@ -2597,6 +2600,7 @@ class ManufactureProcessController extends Controller
                 if ((isset($lotsid)) && ($lotsid > 0)) {
                     if (count($request->MaterialName)) {
                         $lotdetails = AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->get();
+
                         if(isset($lotdetails))
                         {
                             foreach ($lotdetails as $val)
@@ -2609,9 +2613,10 @@ class ManufactureProcessController extends Controller
                                     $stockless["used_qty"] = ($st->used_qty - $val->Quantity);
                                     $st->update($stockless);
                                 }
+                                AddLotslRawMaterialDetails::where('id', $val->id)->delete();
                             }
 
-                                AddLotslRawMaterialDetails::where('id', $val->id)->delete();
+
                         }
 
                         foreach ($request->MaterialName as $key => $value) {

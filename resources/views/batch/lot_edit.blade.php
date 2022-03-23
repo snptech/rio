@@ -91,8 +91,8 @@
                         @if (isset($raw_material_bills))
                             @php $lm =1; @endphp
 
-                            @foreach ($raw_material_bills as $index => $rd)
-                                @foreach ($rd as $in => $mat)
+                            @foreach ($raw_material_bills as $index => $mat)
+
                                     @php
                                         $batchstock = App\Models\Stock::select('inward_raw_materials_items.batch_no', 'inward_raw_materials_items.id')
                                             ->where('department', 3)
@@ -100,7 +100,7 @@
                                             ->join('raw_materials', 'raw_materials.id', 'stock.matarial_id')
                                             ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'stock.batch_no')
                                             ->where('stock.material_type', 'R')
-                                            ->where('stock.matarial_id', $mat->material_id)
+                                            ->where('stock.matarial_id', $mat->MaterialName)
                                             ->pluck('batch_no', 'id');
                                     @endphp
                                     <div class="row add-more-wrap5 after-add-more m-0 mb-4">
@@ -110,14 +110,14 @@
 
                                                 <label for="MaterialName[]" class="active">Raw
                                                     Material</label>
-                                                {{ Form::select('MaterialName[]', $stock, old('MaterialName[]') ? old('MaterialName[]') : $mat->material_id, ['id' => 'MaterialName[]', 'class' => 'form-control select', 'selected' => 'selected', 'onchange' => "getbatchlotedit($(this).val()," . $lm . ')']) }}
+                                                {{ Form::select('MaterialName[]', $stock, old('MaterialName[]') ? old('MaterialName[]') : $mat->MaterialName, ['id' => 'MaterialName[]', 'class' => 'form-control select', 'selected' => 'selected', 'onchange' => "getbatchlotedit($(this).val()," . $lm . ')']) }}
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="rmbatchno" class="active">Batch
                                                     No.</label>
-                                                {{ Form::select('rmbatchno[]', $batchstock, old('rmbatchno[]') ? old('rmbatchno[]') : $mat->id, ['id' => 'rmbatchnoedit' . $lm, 'class' => 'form-control select', 'selected' => 'selected', 'placeholder' => 'Batch No.']) }}
+                                                {{ Form::select('rmbatchno[]', $batchstock, old('rmbatchno[]') ? old('rmbatchno[]') : $mat->rmbatchno, ['id' => 'rmbatchnoedit' . $lm, 'class' => 'form-control select', 'selected' => 'selected', 'placeholder' => 'Batch No.']) }}
 
                                             </div>
                                         </div>
@@ -126,12 +126,12 @@
                                                 <label for="Quantity" class="active">Quantity</label>
                                                 <input type="text" class="form-control" name="Quantity[]"
                                                     id="Quantity{{ $lm }}" placeholder=""
-                                                    value="{{ isset($mat->requesist_qty) ? $mat->requesist_qty : old('Quantity[]') }}">
+                                                    value="{{ isset($mat->Quantity) ? $mat->Quantity : old('Quantity[]') }}">
                                             </div>
                                         </div>
                                     </div>
                                     @php $lm++; @endphp
-                                @endforeach
+
                             @endforeach
                         @endif
 
