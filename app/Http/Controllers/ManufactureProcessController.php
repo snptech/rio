@@ -2545,9 +2545,9 @@ class ManufactureProcessController extends Controller
                    }
                    $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
 
-                   $data["users"] = User::pluck("name","id");
+                    $data["users"] = User::pluck("name","id");
 
-            $view = view('batch.lot_edit', $data)->render();
+                    $view = view('batch.lot_edit', $data)->render();
             }
             return response()->json(['html'=>$view]);
         }
@@ -2596,7 +2596,24 @@ class ManufactureProcessController extends Controller
 
                 if ((isset($lotsid)) && ($lotsid > 0)) {
                     if (count($request->MaterialName)) {
-                        AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->delete();
+                        $lotdetails = AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->get();
+                        if(isset($lotdetails))
+                        {
+                            foreach ($lotdetails as $val)
+                            {
+                                $stockless = array();
+                                $stock = Stock::where("matarial_id",$val->MaterialName)->where("batch_no",$val->rmbatchno)->first();
+                                if(isset($stock) && $stock)
+                                {
+                                    $st = Stock::find($stock->id);
+                                    $stockless["used_qty"] = ($st->used_qty - $val->Quantity);
+                                    $st->update($stockless);
+                                }
+                            }
+
+                                AddLotslRawMaterialDetails::where('id', $val->id)->delete();
+                        }
+
                         foreach ($request->MaterialName as $key => $value) {
                             $arr_data['MaterialName'] = $value;
                             $arr_data['rmbatchno'] = $request->rmbatchno[$key];
@@ -2632,10 +2649,8 @@ class ManufactureProcessController extends Controller
                                         $result = Processlots::Create($arr_data);
                                     }
 
-                                    $sequenceId = 1;
-                                    if (isset($request->sequenceId)) {
-                                        $sequenceId = (int)$request->sequenceId + 1;
-                                    }
+                                    $sequenceId = 10;
+
                                     if ($result) {
                                         $batch = BatchManufacture::find($request->mainid);
 

@@ -319,7 +319,7 @@
 </div>
 </div>
 <div class="modal fade show" id="editslots" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="max-width:1000px;">
       <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="checkQuntityLabel">Lot Edit</h5>

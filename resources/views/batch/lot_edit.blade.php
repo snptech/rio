@@ -144,8 +144,8 @@
                                 <th>Process</th>
                                 <th>Qty. (Kg.)</th>
                                 <th>Temp (<sup>o</sup>C)</th>
-                                <th>Start Time (Hrs)</th>
-                                <th>End Time (Hrs)</th>
+                                <th>Start Time <br> (Hrs)</th>
+                                <th>End Time <br> (Hrs)</th>
                                 <th>Done by</th>
                             </tr>
                         </thead>
@@ -158,9 +158,9 @@
                                         <td>{{ $key == 0 ? 'Charge Polydimethylsiloxane in reactor.' : ($key == 1 ? 'Start heating the reactor and start stirring' : ($key == 2 ? 'Once the temperature is between 100 - 120oC start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.' : ($key == 3 ? 'When temperature reaches 180 - 190 oC stop heating the reactor.' : 'Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number'))) }}
                                         </td>
                                         <td><input type="number" value="{{ $v->qty }}" name="qty[]" id="qty"
-                                                class="form-control"></td>
+                                                class="form-control" size="20" maxlength="120"></td>
                                         <td><input type="text" value="{{ $v->temp }}" name="temp[]" id="temp"
-                                                class="form-control"></td>
+                                                class="form-control"  size="20" maxlength="120"></td>
                                         <td><input type="time" value="{{ $v->stratTime }}" name="stratTime[]"
                                                 id="stratTime" class="form-control time" data-mask="00:00"></td>
                                         <td><input type="time" value="{{ $v->endTime }}" name="endTime[]" id="endTime[1]"
@@ -279,7 +279,7 @@
                         x +
                         '" class="active">Raw Material</label><select class="form-control select" id="MaterialName' +
                         x + '" onchange="getbatchlotedit($(this).val(),' + x +
-                        ')"><option>Select Raw Material</option>@if (isset($stock)) @foreach ($stock as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' +
+                        ')"  name="MaterialName[]"><option>Select Raw Material</option>@if (isset($stock)) @foreach ($stock as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endforeach @endif</select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="rmbatchno' +
                         x +
                         '" class="active">Batch No.</label><select name="rmbatchno[]" class="form-control" id="rmbatchnoedit' +
                         x +
