@@ -2684,6 +2684,7 @@ class ManufactureProcessController extends Controller
             $data['Homogenizing'] = Homogenizing::select("homogenizing.*","raw_materials.material_name","equipment_code.code")->join('raw_materials', 'raw_materials.id','=','homogenizing.proName')->join('list_of_equipment_in_manufacturin_process', 'list_of_equipment_in_manufacturin_process.id','=','homogenizing.homoTank')->join('equipment_code', 'equipment_code.id','=','list_of_equipment_in_manufacturin_process.EquipmentCode')->where('homogenizing.id', '=', $request->id)
                 ->first();
 
+
            $homolist = array();
            if(isset($data['Homogenizing']) && $data['Homogenizing'])
            {
@@ -2691,12 +2692,11 @@ class ManufactureProcessController extends Controller
             $data["batchdetails"] = BatchManufacture::select("add_batch_manufacture.*","raw_materials.material_name as productname")->where("add_batch_manufacture.id",$data['Homogenizing'] ->batch_id)->join("raw_materials","raw_materials.id","add_batch_manufacture.proName")->first();
 
 
-               foreach($data['Homogenizing'] as $key=>$val)
-               {
-                    $list = HomogenizingList::select("homogenizing_list.*","users.name as doneby")->where("homogenizing_id",$val->id)->join("users","users.id","homogenizing_list.doneby")->get();
 
-                    $homolist[$val->id] = $list;
-               }
+                    $list = HomogenizingList::select("homogenizing_list.*","users.name as doneby")->where("homogenizing_id",$data['Homogenizing']->id)->join("users","users.id","homogenizing_list.doneby")->get();
+
+                    $homolist = $list;
+
 
 
            }
