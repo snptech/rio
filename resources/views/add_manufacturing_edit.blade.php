@@ -985,5 +985,45 @@
             });
         });
 }
+function viewhomozine(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('homozine-view') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.viewhomozinedet').html(data.html)
+
+
+                }
+            })
+        }
+        function edithomozine(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('homozine-edit') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.edithomozinedet').html(data.html)
+
+
+                }
+            })
+        }
     </script>
 @endpush

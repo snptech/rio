@@ -22,14 +22,15 @@ class Homogenizing extends Model
         'Observedvalue',
         'created_at',
         'updated_at',
+        "proecess_check"
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Homo Genizing')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -38,13 +39,13 @@ class Homogenizing extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Homo Genizing Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Homo Genizing')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -52,8 +53,8 @@ class Homogenizing extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Homo Genizing Updated');
             });
@@ -66,7 +67,7 @@ class Homogenizing extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Homo Genizing Deleted');
         });

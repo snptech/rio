@@ -153,8 +153,9 @@
             <div class="col-12">
                 <div class="form-group">
                     <label class="d-block">In Process Check (After 4 Lot)</label>
-                    Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30
-                    RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).
+                    <input type="text" class="form-control" id="proecess_check" name="proecess_check" value="Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30
+                    RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002)." />
+
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">

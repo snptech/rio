@@ -194,7 +194,7 @@ class ManufactureProcessController extends Controller
 
                 $data['batchproduct'] = Rawmeterial::where("material_type", "F")->where("id",$data['batchdetails']->proName)->first();
 
-            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*',"AddLotsl.id as lotid")->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
+            $lotsdetails = AddLotsl::select('add_lotsl.*','raw_materials.*',"add_lotsl.id as lotid")->where("batchNo",$batch)->leftJoin('raw_materials', 'raw_materials.id','=','add_lotsl.proName')->get();
             if (isset($lotsdetails) && $lotsdetails) {
                 $data["lotsdetails"] = $lotsdetails;
                 $lot_id = AddLotsl::select('id')->where("batchNo",$batch)->first();
@@ -2039,6 +2039,7 @@ class ManufactureProcessController extends Controller
         $arr['Observedvalue'] = $request->Observedvalue;
         $arr['homoTank'] = $request->homoTank;
         $arr['batch_id'] = $request->mainid;
+        $arr['proecess_check'] = $request->proecess_check;
         $homeid = 0;
         /*if(isset($request->id))
         {
@@ -2522,7 +2523,7 @@ class ManufactureProcessController extends Controller
                     $data["process"] = $process;
 
 
-                    /*$Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $lotsdetails->batch_id)->where("type","R")->orderBy('id', 'desc')->get();
+                    $Requisitionissuedmaterial = Requisitionissuedmaterial::where("batch_id", $lotsdetails->batch_id)->where("type","R")->orderBy('id', 'desc')->get();
 
                     if(isset($Requisitionissuedmaterial) && $Requisitionissuedmaterial)
                     {
@@ -2531,7 +2532,7 @@ class ManufactureProcessController extends Controller
 
                                foreach($Requisitionissuedmaterial as $mat)
                                {
-                                   $data['raw_material_bills'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","inward_raw_materials_items.id")
+                                   $data['raw_material_bills_req'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name","inward_raw_materials_items.id")
                                    ->where("issue_material_production_requestion_details.issual_material_id", $mat->id)
                                    ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
                                    ->join("stock", "stock.id", "issue_material_production_requestion_details.batch_id")
@@ -2542,7 +2543,7 @@ class ManufactureProcessController extends Controller
 
 
 
-                   }*/
+                   }
                    $data["raw_material_bills"] = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*',"raw_materials.material_name","inward_raw_materials_items.batch_no")->join("raw_materials","raw_materials.id","add_lots_raw_material_detail.MaterialName")->join("inward_raw_materials_items","inward_raw_materials_items.id","add_lots_raw_material_detail.rmbatchno")->where("add_lots_id",$lotsdetails->id)->get();
 
 
@@ -2674,6 +2675,36 @@ class ManufactureProcessController extends Controller
                     }
                 }
             }
+        }
+    }
+    public function homogenizingView(Request $request)
+    {
+        if($request->id)
+        {
+            $data['Homogenizing'] = Homogenizing::select("homogenizing.*","raw_materials.material_name","equipment_code.code")->join('raw_materials', 'raw_materials.id','=','homogenizing.proName')->join('list_of_equipment_in_manufacturin_process', 'list_of_equipment_in_manufacturin_process.id','=','homogenizing.homoTank')->join('equipment_code', 'equipment_code.id','=','list_of_equipment_in_manufacturin_process.EquipmentCode')->where('homogenizing.id', '=', $request->id)
+                ->first();
+
+           $homolist = array();
+           if(isset($data['Homogenizing']) && $data['Homogenizing'])
+           {
+
+            $data["batchdetails"] = BatchManufacture::select("add_batch_manufacture.*","raw_materials.material_name as productname")->where("add_batch_manufacture.id",$data['Homogenizing'] ->batch_id)->join("raw_materials","raw_materials.id","add_batch_manufacture.proName")->first();
+
+
+               foreach($data['Homogenizing'] as $key=>$val)
+               {
+                    $list = HomogenizingList::select("homogenizing_list.*","users.name as doneby")->where("homogenizing_id",$val->id)->join("users","users.id","homogenizing_list.doneby")->get();
+
+                    $homolist[$val->id] = $list;
+               }
+
+
+           }
+           if(isset($homolist) && $homolist)
+                $data["homoList"] = $homolist;
+
+            $view = view('batch.viewhomozine', $data)->render();
+            return response()->json(['html'=>$view]);
         }
     }
 }

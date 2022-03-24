@@ -306,8 +306,12 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::post('/add_batch_equipment_update', [App\Http\Controllers\ManufactureProcessController::class,'packing_material_issuel_insert_update'])->name("add_batch_equipment_update");
          Route::post('/add_batch_lots', [App\Http\Controllers\ManufactureProcessController::class,'add_batch_lots'])->name("add_batch_lots");
          Route::post('/add_lots_update', [App\Http\Controllers\ManufactureProcessController::class,'add_lots_update'])->name("add_lots_update");
+
+
          Route::post('/homogenizing_insert', [App\Http\Controllers\ManufactureProcessController::class,'homogenizing_insert'])->name("homogenizing_insert");
          Route::post('/homogenizing_update', [App\Http\Controllers\ManufactureProcessController::class,'homogenizing_update'])->name("homogenizing_update");
+         Route::post('/homozine-view', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingView'])->name("homozine-view");
+         Route::post('/homozine-edit', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingView'])->name("homozine-edit");
 
          //get ajax for batch in Add lot
          Route::post("/getbatchofmaterial", [App\Http\Controllers\ManufactureProcessController::class,'getbatchofmaterial'])->name("getbatchofmaterial");
