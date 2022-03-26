@@ -44,7 +44,25 @@
                             <strong>{{ $message }}</strong>
                         </div>
                     @endif
+                    @if(isset($batchdetails))
+                    <div class="row">
 
+                        <div class="col-md-3">
+                            Product Name :  {{ $batchproduct->material_name }}
+                        </div>
+                        <div class="col-md-3">
+                            BMR No. :  {{  $batchdetails->bmrNo }}
+                        </div>
+                        <div class="col-md-3">
+                            Batch No. :  {{ $batchdetails->batchNo }}
+                        </div>
+                        <div class="col-md-3">
+                            Ref. MFR No. :  {{ $batchdetails->refMfrNo }}
+                        </div>
+
+                    </div>
+                    <br>
+                    @endif
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a role="tab" data-toggle="tab" href="#batch" class="active">Batch</a></li>
                         @if (isset($batch) && $batch)
@@ -944,12 +962,95 @@
                 },
                 success: function(data) {
                     console.log(data.status);
-                    $('#viewlotsdet').val(data.html)
+                    $('.viewlotsdet').html(data.html)
 
 
                 }
             })
         }
+        function editslots(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('lots-edit') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.editlotsdet').html(data.html)
+
+
+                }
+            })
+        }
+        function getbatchlotedit(val, pos) {
+
+        $.ajax({
+            url: '{{ route('getbatchofmaterial') }}',
+            method: 'POST',
+            data: {
+                "id": val,
+                "_token": '{{ csrf_token() }}'
+            }
+        }).success(function(data) {
+
+            $("#rmbatchnoedit" + pos).empty();
+            var option = "<option value=''>Choose Batch No.</option>";
+            $("#rmbatchnoedit" + pos).append(option);
+
+            $.each(data.batch, function(key, val) {
+
+                var option = "<option value='" + key + "'>" + val + "</option>";
+                $("#rmbatchnoedit" + pos).append(option);
+            });
+        });
+        }
+        function viewhomozine(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('homozine-view') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.viewhomozinedet').html(data.html)
+
+
+                }
+            })
+        }
+        function edithomozine(id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route('homozine-edit') }}',
+
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    $('.edithomozinedet').html(data.html)
+
+
+                }
+            })
+        }
+
     </script>
 
 @endpush

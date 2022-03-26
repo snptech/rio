@@ -22,6 +22,7 @@ class BatchManufacturingPacking extends Model
         'TemperatureP',
         '50kgDrums',
         '20kgDrums',
+        '30kgDrums',
         'startTime',
         'EndstartTime',
         'areaCleanliness',
@@ -45,11 +46,11 @@ class BatchManufacturingPacking extends Model
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Batch Manufacturing Records Packing')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -58,13 +59,13 @@ class BatchManufacturingPacking extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Batch Manufacturing Records Packing Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Batch Manufacturing Records Packing')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -72,8 +73,8 @@ class BatchManufacturingPacking extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Batch Manufacturing Records Packing Updated');
             });
@@ -86,7 +87,7 @@ class BatchManufacturingPacking extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Batch Manufacturing Records Packing Deleted');
         });

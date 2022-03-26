@@ -7,96 +7,55 @@
         <input type="hidden"
             value="{{ isset($edit_batchmanufacturing->id) ? $edit_batchmanufacturing->id : '' }}"
             name="batch_id">
-
+        <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
+        <input type="hidden" class="form-control" name="bmrNo" id="bmrNo"
+                    value="{{ $edit_batchmanufacturing->bmrNo }}" pattern="\d*" maxlength="120"
+                    onkeypress="" readonly>
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+                    value="{{ $edit_batchmanufacturing->batchNo }}" pattern="\d*" maxlength="120"
+                    onkeypress="" readonly>
+        <input type="hidden" class="form-control" name="refMfrNo" id="refMfrNo"
+                    value="{{ $edit_batchmanufacturing->refMfrNo }}" pattern="\d*" maxlength="120"
+                    onkeypress="" readonly>
         @csrf
 
         <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="proName" class="active">Product Name</label>
-
-                    <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                    {{ Form::select('proName', $product, old('proName') ? old('proName') : $edit_batchmanufacturing->proName, ['class' => 'form-control select', 'id' => 'proName']) }}
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo" id="bmrNo"
-                        value="{{ isset($edit_batchmanufacturing->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
-                        readonly pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo" id="batchNo"
-                        value="{{ isset($edit_batchmanufacturing->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                        readonly pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
-                        value="{{ isset($edit_batchmanufacturing->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
-                        readonly pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
 
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <label for="mfg_date" class="active">MFG Date</label>
+                        <input type="date" class="form-control" name="mfg_date" id="mfg_date"
+                            value="{{ isset($edit_ganerat_lable->mfg_date) ? $edit_ganerat_lable->mfg_date : $edit_batchmanufacturing->ManufacturingDate }}"
+                            placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <label for="retest_date" class="active">Retest Date</label>
+                        <input type="date" class="form-control" name="retest_date"
+                            id="retest_date"
+                            value="{{ isset($edit_ganerat_lable->retest_date) ? $edit_ganerat_lable->retest_date : $edit_batchmanufacturing->RetestDate }}"
+                            placeholder="">
+                    </div>
+                </div>
+                </div>
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
-                    <label class="control-label d-flex">Product Label
+                    <label class="control-label d-flex">Product Label 50 Kg Drums
 
                     </label>
                     <div class="row add-more-wrap after-add-more m-0 mb-4">
                         <!-- <span class="add-count">1</span> -->
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="simethicone" class="active">Simethicone</label>
-                                <input type="text" class="form-control" name="simethicone"
-                                    id="simethicone"
-                                    value="{{ isset($edit_ganerat_lable->simethicone) ? $edit_ganerat_lable->simethicone : '' }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="batch_no_I" class="active">Batch No</label>
-                                <input type="text" class="form-control" name="batch_no_I"
-                                    value="{{ isset($edit_ganerat_lable->batch_no_I) ? $edit_ganerat_lable->batch_no_I : $edit_batchmanufacturing->batchNo }}"
-                                    id="batch_no_I" placeholder="" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="mfg_date" class="active">MFG Date</label>
-                                <input type="date" class="form-control" name="mfg_date" id="mfg_date"
-                                    value="{{ isset($edit_ganerat_lable->mfg_date) ? $edit_ganerat_lable->mfg_date : $edit_batchmanufacturing->ManufacturingDate }}"
-                                    placeholder="">
-                            </div>
-                        </div>
 
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="retest_date" class="active">Retest Date</label>
-                                <input type="date" class="form-control" name="retest_date"
-                                    id="retest_date"
-                                    value="{{ isset($edit_ganerat_lable->retest_date) ? $edit_ganerat_lable->retest_date : $edit_batchmanufacturing->RetestDate }}"
-                                    placeholder="">
-                            </div>
-                        </div>
+
+
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="net_wt" class="active">Net Wt</label>
                                 <input type="text" class="form-control" name="net_wt" id="net_wt"
-                                    value="{{ isset($edit_ganerat_lable->net_wt) ? $edit_ganerat_lable->net_wt : $edit_batchmanufacturing->BatchSize }}"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_50) ? $edit_ganerat_lable->net_wt_50 : old("net_wt") }}"
                                     placeholder="">
                             </div>
                         </div>
@@ -104,7 +63,61 @@
                             <div class="form-group">
                                 <label for="tare_wt" class="active">Tare Wt</label>
                                 <input type="text" class="form-control" name="tare_wt"
-                                    value="{{ isset($edit_ganerat_lable->tare_wt) ? $edit_ganerat_lable->tare_wt : '' }}"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_50) ? $edit_ganerat_lable->tare_wt_50 : old("tare_wt") }}"
+                                    id="tare_wt" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group input_fields_wrap" id="MaterialReceived">
+                    <label class="control-label d-flex">Product Label 200 Kg Drums
+
+                    </label>
+                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <!-- <span class="add-count">1</span> -->
+
+
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="net_wt" class="active">Net Wt</label>
+                                <input type="text" class="form-control" name="net_wt" id="net_wt_200"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_200) ? $edit_ganerat_lable->net_wt_200 : old("net_wt_200") }}"
+                                    placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="tare_wt" class="active">Tare Wt</label>
+                                <input type="text" class="form-control" name="tare_wt_200"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_200) ? $edit_ganerat_lable->tare_wt_200 : old("tare_wt_200") }}"
+                                    id="tare_wt" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group input_fields_wrap" id="MaterialReceived">
+                    <label class="control-label d-flex">Product Label 30 Kg Drums
+
+                    </label>
+                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <!-- <span class="add-count">1</span> -->
+
+
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="net_wt" class="active">Net Wt</label>
+                                <input type="text" class="form-control" name="net_wt" id="net_wt_30"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_30) ? $edit_ganerat_lable->net_wt_30 : old("net_wt_30") }}"
+                                    placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="tare_wt" class="active">Tare Wt</label>
+                                <input type="text" class="form-control" name="tare_wt_30"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_30) ? $edit_ganerat_lable->tare_wt_30 : old("tare_wt_30") }}"
                                     id="tare_wt" placeholder="">
                             </div>
                         </div>

@@ -58,43 +58,20 @@
             <input type="hidden" value="{{ isset($addlots->id) ? $addlots->id : '' }}" name="id">
             <input type="hidden"
                 value="{{ isset($edit_batchmanufacturing->id) ? $edit_batchmanufacturing->id : '' }}" name="mainid">
-            @csrf
-
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="proName" class="active">Product Name</label>
-                    <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ $batchproduct->material_name }}"/>
-
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
-                    <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo" id="bmrNo"
-                        value="{{ $edit_batchmanufacturing->bmrNo }}" pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo" id="batchNo"
-                        value="{{ $edit_batchmanufacturing->batchNo }}" pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
+            <input type="hidden" class="form-control" name="bmrNo" id="bmrNo"
+                value="{{ $edit_batchmanufacturing->bmrNo }}" pattern="\d*" maxlength="120"
+                onkeypress="" readonly>
+            <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
+            <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+            value="{{ $edit_batchmanufacturing->batchNo }}" pattern="\d*" maxlength="120"
+            onkeypress="" readonly>
+            <input type="hidden" class="form-control" name="refMfrNo" id="refMfrNo"
                         value="{{ $edit_batchmanufacturing->refMfrNo }}" pattern="\d*" maxlength="120"
                         onkeypress="" readonly>
-                </div>
-            </div>
+            @csrf
+
+
+
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="Date">Date</label>

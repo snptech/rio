@@ -22,14 +22,7 @@
                     {{ Form::select('to', $department, old('to') ? old('to') : 3, ['class' => 'form-control select', 'id' => 'to']) }}
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control"
-                        value="{{ isset($edit_batchmanufacturing->batchNo) ? $edit_batchmanufacturing->batchNo : old('batchNo') }}"
-                        name="batchNo" id="batchNo" readonly>
-                </div>
-            </div>
+
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="Date" class="active">Date</label>

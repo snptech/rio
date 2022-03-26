@@ -391,7 +391,7 @@ class ManufactureProcessController extends Controller
         $data['edit_batchmanufacturing'] = BatchManufacture::select('add_batch_manufacture.*')
             ->where('add_batch_manufacture.id', '=', $id)->first();
         //session
-            $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.id', '=', $id)->first();
+            $data['edit_ganerat_lable'] = GanerateLable::where('generate_label.batch_id', '=', $id)->first();
 
 
         $data['product'] = Rawmeterial::where("material_type", "F")->pluck("material_name", "id");
@@ -503,7 +503,7 @@ class ManufactureProcessController extends Controller
              $data['res_1'] = ListOfEquipmentManufacturing::where('batch_manufacturing_id', '=', $data['res_data_1']->id)
             ->get();
 
-        $data['packingmateria'] = BatchManufacturingPacking::where('id', '=', $id)
+        $data['packingmateria'] = BatchManufacturingPacking::where('batch_id', '=', $batchdetails->id)
             ->first();
         $data["rawmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "R")->pluck("material_name", "id");
         $data["packingmaterials"] = Rawmeterial::where("material_stock", ">", 0)->where("material_type", "P")->pluck("material_name", "id");
@@ -1687,6 +1687,8 @@ class ManufactureProcessController extends Controller
             "TemperatureP" => $request['TemperatureP'],
             "50kgDrums" => $request['50kgDrums'],
             "20kgDrums" => $request['20kgDrums'],
+            "30kgDrums" => $request['30kgDrums'],
+
             "startTime" => $request['startTime'],
             "EndstartTime" => $request['EndstartTime'],
             "areaCleanliness" => $request['areaCleanliness'],
@@ -2233,8 +2235,12 @@ class ManufactureProcessController extends Controller
             "batch_no_I"=> $request['batch_no_I'],
             "mfg_date"=> $request['mfg_date'],
             "retest_date"=> $request['retest_date'],
-            "net_wt"=> $request['net_wt'],
-            "tare_wt"=> $request['tare_wt'],
+            "net_wt_50"=> $request['net_wt'],
+            "tare_wt_50"=> $request['tare_wt'],
+            "net_wt_200"=> $request['net_wt_200'],
+            "tare_wt_200"=> $request['tare_wt_200'],
+            "net_wt_30"=> $request['net_wt_30'],
+            "tare_wt_30"=> $request['tare_wt_30'],
             "Remark"=> $request['Remark'],
             "batch_id"=> $request['batch_id'],
         ];
@@ -2707,4 +2713,99 @@ class ManufactureProcessController extends Controller
             return response()->json(['html'=>$view]);
         }
     }
+    public function homogenizingEdit(Request $request)
+    {
+        if($request->id)
+        {
+            $data['Homogenizing'] = Homogenizing::select("homogenizing.*","raw_materials.material_name","equipment_code.code")->join('raw_materials', 'raw_materials.id','=','homogenizing.proName')->join('list_of_equipment_in_manufacturin_process', 'list_of_equipment_in_manufacturin_process.id','=','homogenizing.homoTank')->join('equipment_code', 'equipment_code.id','=','list_of_equipment_in_manufacturin_process.EquipmentCode')->where('homogenizing.id', '=', $request->id)
+                ->first();
+
+
+            $homolist = array();
+
+
+            if(isset($data['Homogenizing']) && $data['Homogenizing'])
+            {
+
+                $data["batchdetails"] = BatchManufacture::select("add_batch_manufacture.*","raw_materials.material_name as productname")->where("add_batch_manufacture.id",$data['Homogenizing'] ->batch_id)->join("raw_materials","raw_materials.id","add_batch_manufacture.proName")->first();
+
+
+                $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $data['Homogenizing']->batch_id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
+
+
+                        $list = HomogenizingList::select("homogenizing_list.*","users.name as doneby")->where("homogenizing_id",$data['Homogenizing']->id)->join("users","users.id","homogenizing_list.doneby")->get();
+
+                        $homolist = $list;
+
+
+
+            }
+            if(isset($homolist) && $homolist)
+                    $data["homoList"] = $homolist;
+
+            $data["users"] = User::pluck("name","id");
+
+                $view = view('batch.Edithomozine', $data)->render();
+                return response()->json(['html'=>$view]);
+        }
+    }
+    public function homogenizingEditstore(Request $request)
+    {
+        $arr['proName'] = $request->proName;
+        $arr['bmrNo'] = $request->bmrNo;
+        $arr['batchNo'] = $request->batchNo;
+        $arr['refMfrNo'] = $request->refMfrNo;
+        $order_number = date('dyHs');
+        $arr['order_id'] = $order_number;
+        $arr['homoTank'] = $request->homoTank;
+        $arr['Observedvalue'] = $request->Observedvalue;
+        $arr['homoTank'] = $request->homoTank;
+        $arr['batch_id'] = $request->mainid;
+        $arr['proecess_check'] = $request->proecess_check;
+        $homeid = 0;
+        if(isset($request->id))
+        {
+            $Homogenizing_id = Homogenizing::where('id', $request->id)->update($arr);
+            $homeid = $request->id;
+        }
+
+
+        if ((isset($homeid)) && ($homeid > 0)) {
+            if (count($request->dateProcess)) {
+                HomogenizingList::where('homogenizing_id', $homeid)->delete();
+              foreach ($request->dateProcess as $key => $value) {
+                    $arr_data['dateProcess'] = $value;
+                    $arr_data['qty'] = $request->qty[$key];
+                    $arr_data['stratTime'] = $request->stratTime[$key];
+                    $arr_data['endTime'] = $request->endTime[$key];
+                    $arr_data['lots_name'] = $request->lot[$key];
+                    $arr_data['homogenizing_id'] = $homeid;
+                    $arr_data['doneby'] = $request->doneby[$key];
+                    $result=HomogenizingList::Create($arr_data);
+
+                    $lotsarray = array();
+                    $lotsarray["homogenize_done"]=1;
+                    $lotsarray["homogenize_date"]=\Carbon\Carbon::now();;
+                    if(isset($request->lotsid[$key]) && $request->lotsid[$key] >0)
+                        $lots = AddLotsl::where("id",$request->lotsid[$key])->update($lotsarray);
+
+                }
+
+                 $sequenceId = 1;
+                if (isset($request->sequenceId)) {
+                    $sequenceId = (int)$request->sequenceId + 1;
+                }
+
+                if ($result) {
+                    $batch = BatchManufacture::find($request->mainid);
+                    $batch->stage_6=1;
+                    $batch->save();
+
+
+                        return redirect("add_manufacturing_edit/" . $request->mainid . "/11")->with(['success' => " Batch  Data Update successfully", 'nextdivsequence' => 12]);
+                }
+            }
+        }
+    }
+
 }

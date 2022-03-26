@@ -1,49 +1,24 @@
 <div id="listOfEquipment" class="tab-pane fade">
-    <form id="add_batch_equipment_vali" method="post"
-        action="{{ route('add_batch_equipment_insert') }}">
+    <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_equipment_insert') }}">
+    <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
+    <input type="hidden" class="form-control" name="bmrNo" maxlength="120" onkeypress=""
+                            value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
+                            readonly id="bmrNo" placeholder="BMR No.">
+   <input type="hidden" class="form-control" name="bmrNo" maxlength="120" onkeypress=""
+                            value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
+                            readonly id="bmrNo" placeholder="BMR No.">
+  <input type="hidden" class="form-control" name="batchNo" id="batchNo" maxlength="120"
+                            value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+                            readonly>
+  <input type="hidden" class="form-control" name="refMfrNo" id="refMfrNo"
+                            maxlength="120"
+                           onkeypress=""
+                           value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
+                           readonly placeholder="Ref. MFR No.">
         @csrf
 
         <div class="form-row">
-            <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="proName" class="active">Product Name</label>
-                        <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ isset($batchproduct->material_name)?$batchproduct->material_name:'' }}"/>
 
-                        @if ($errors->has('proName'))
-                            <span class="text-danger">{{ $errors->first('proName') }}</span>
-                        @endif
-                        <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="bmrNo" class="active">BMR No.</label>
-
-                        <input type="text" class="form-control" name="bmrNo" maxlength="120" onkeypress=""
-                            value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
-                            readonly id="bmrNo" placeholder="BMR No.">
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="batchNo">Batch No.</label>
-                        <input type="text" class="form-control" name="batchNo" id="batchNo" maxlength="120"
-                            value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                            readonly>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="refMfrNo">Ref. MFR No.</label>
-                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
-                             maxlength="120"
-                            onkeypress=""
-                            value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
-                            readonly placeholder="Ref. MFR No.">
-                    </div>
-                </div>
-            </div>
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="Remark" class="active">Note / Remark</label>

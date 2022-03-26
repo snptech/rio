@@ -15,6 +15,23 @@
         </div>
         <div class="card main-card">
             <div class="card-body">
+                <div class="row">
+
+                            <div class="col-md-3">
+                                Product Name :  {{ $batchproduct->material_name }}
+                            </div>
+                            <div class="col-md-3">
+                                BMR No. :  {{  $batchdetails->bmrNo }}
+                            </div>
+                            <div class="col-md-3">
+                                Batch No. :  {{ $batchdetails->batchNo }}
+                            </div>
+                            <div class="col-md-3">
+                                Ref. MFR No. :  {{ $batchdetails->refMfrNo }}
+                            </div>
+
+                </div>
+                <br>
                 <ul class="nav nav-tabs tablist" role="tablist">
                     <li><a role="tab" class="{{ $sequenceId == '1' ? 'active' : '' }}"
                             area-selected="{{ $sequenceId == '1' ? 'true' : 'false' }}" data-toggle="tab"

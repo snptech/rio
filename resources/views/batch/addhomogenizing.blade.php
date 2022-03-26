@@ -19,6 +19,7 @@
                 <th>RefMfr.No</th>
                 <th>Date</th>
                 <th>Homogenizing Tank No.</th>
+                <th>Action</th>
 
 
             </tr>
@@ -36,6 +37,7 @@
                         <td>{{ $lots->created_at ? date('d/m/Y', strtotime($lots->created_at)) : '' }}
                         </td>
                         <td>{{ $lots->homoTank }}</td>
+                        <td> <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewhomozine" title="View" onclick="viewhomozine({{$lots->id}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#edithomozine" title="Edit" onclick="edithomozine({{$lots->id}})"><i data-feather="edit"></i></a></td>
 
                     </tr>
                 @endforeach
@@ -52,48 +54,23 @@
 <div id="addhomogenizing" class="tab-pane fade">
     <form id="add_homogninge" method="post" action="{{ route('homogenizing_insert') }}">
         @csrf
-
-        <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="proName" class="active">Product Name</label>
-                    <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ isset($batchproduct->material_name)?$batchproduct->material_name:'' }}"/>
-
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
-                    <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No. </label>
-                    <input type="text" class="form-control" id="bmrNo" name="bmrNo" pattern="\d*"
-                        maxlength="12" onkeypress=""
-                        value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
-                        readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" id="batchNo" name="batchNo"
-                        pattern="\d*" maxlength="12"
-                        onkeypress=""
-                        value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                        readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" id="refMfrNo" name="refMfrNo"
+        <input type="hidden" class="form-control" id="bmrNo" name="bmrNo" pattern="\d*"
+        maxlength="12" onkeypress=""
+        value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
+        readonly>
+        <input type="hidden" class="form-control" id="batchNo" name="batchNo"
+        pattern="\d*" maxlength="12"
+        onkeypress=""
+        value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+        readonly>
+        <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
+        <input type="hidden" class="form-control" id="refMfrNo" name="refMfrNo"
                         pattern="\d*" maxlength="12"
                         onkeypress=""
                         value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
                         readonly>
-                </div>
-            </div>
+        <div class="form-row">
+
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="homoTank">Homogenizing tank No.</label>
@@ -179,3 +156,32 @@
         </div>
     </form>
 </div>
+
+@push("models")
+<div class="modal fade show" id="viewhomozine" tabindex="-1" aria-labelledby="checkllotsLabel" aria-modal="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="checkQuntityLabel">Homogenizing Details</h5>
+      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+    </div>
+    <div class="modal-body viewhomozinedet">
+
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade show" id="edithomozine" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
+    <div class="modal-dialog modal-lg" style="max-width:1000px;">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="checkQuntityLabel">Homogenizing Edit</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body edithomozinedet">
+
+          </div>
+      </div>
+    </div>
+    </div>
+@endpush

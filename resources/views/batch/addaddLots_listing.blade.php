@@ -34,7 +34,7 @@
                             <td>{{ $lots->refMfrNo }}</td>
                             <td>{{ $lots->Date ? date('d/m/Y', strtotime($lots->created_at)) : '' }}
                             </td>
-                            <td><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewlots" title="View" onclick="viewlots({{$lots->id}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#editslots" title="Edit" onclick="editslots({{$lots->id}})"><i data-feather="edit"></i></a>
+                            <td><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewlots" title="View" onclick="viewlots({{$lots->lotid}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#editslots" title="Edit" onclick="editslots({{$lots->lotid}})"><i data-feather="edit"></i></a>
                             </td>
 
 
@@ -52,48 +52,24 @@
 <div id="addLots" class="tab-pane fade">
     <form id="add_batch_equipment_vali" method="post" action="{{ route('add_batch_lots') }}" onsubmit="return confirm('Do you really want to submit the form?');">
         @csrf
-        <div class="form-row">
-            <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="proName" class="active">Product Name</label>
-                        <input type="text" readonly name="proNameName" id="proNameName" class="form-control" value="{{ $proName }}"/>
-
-                        @if ($errors->has('proName'))
-                            <span class="text-danger">{{ $errors->first('proName') }}</span>
-                        @endif
-                        <input type="hidden" name="proName" value="{{ $proId }}" />
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="bmrNo" class="active">BMR No.</label>
-                        <input type="text" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
+        <input type="hidden" name="proName" value="{{ $proId }}" />
+        <input type="hidden" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
                             maxlength="120" onkeypress=""
                             value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
                             readonly>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="batchNo">Batch No.</label>
-                        <input type="text" class="form-control" name="batchNo" id="batchNo"
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
                             pattern="\d*" maxlength="120"
                             onkeypress=""
                             value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
                             readonly>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                        <label for="refMfrNo">Ref. MFR No.</label>
-                        <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
+        <input type="hidden" class="form-control" name="refMfrNo" id="refMfrNo"
                             pattern="\d*" maxlength="120"
                             onkeypress=""
                             value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
                             readonly>
-                    </div>
-                </div>
+        <div class="form-row">
+            <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
+
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="Date">Date</label>
@@ -302,10 +278,17 @@
 </div>
 </div>
 <div class="modal fade show" id="editslots" tabindex="-1" aria-labelledby="checkQuntityLabel" aria-modal="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content editlotsdet">
+    <div class="modal-dialog modal-lg" style="max-width:1000px;">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="checkQuntityLabel">Lot Edit</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body editlotsdet">
 
+          </div>
       </div>
     </div>
     </div>
 @endpush
+

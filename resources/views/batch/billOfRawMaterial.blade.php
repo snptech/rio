@@ -9,44 +9,7 @@
         @csrf
 
         <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="PackingMaterialName" class="active">Product Name</label>
 
-                    {{ Form::select('proName', $product, old('proName'), ['class' => 'form-control select', 'id' => 'proName', 'value' => "$res_data->proName"]) }}
-
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo" id="bmrNo"
-                        value="{{ $res_data->bmrNo }}" pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNoI">Batch No.</label>
-                    <input type="text" class="form-control valid" name="batchNoI" id="batchNoI"
-                        value="{{ $res_data->batchNoI }}" readonly="" aria-invalid="false"
-                        pattern="\d*" maxlength="120"
-                        onkeypress="">
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
-                        value="{{ $res_data->refMfrNo }}" pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                    >
-                </div>
-            </div>
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
                     <label class="control-label d-flex">Bill of Raw Material Details and Weighing

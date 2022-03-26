@@ -311,7 +311,9 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::post('/homogenizing_insert', [App\Http\Controllers\ManufactureProcessController::class,'homogenizing_insert'])->name("homogenizing_insert");
          Route::post('/homogenizing_update', [App\Http\Controllers\ManufactureProcessController::class,'homogenizing_update'])->name("homogenizing_update");
          Route::post('/homozine-view', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingView'])->name("homozine-view");
-         Route::post('/homozine-edit', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingView'])->name("homozine-edit");
+         Route::post('/homozine-edit', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingEdit'])->name("homozine-edit");
+         Route::post('/homogenizing_update_single', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingEditstore'])->name("homogenizing_update_single");
+
 
          //get ajax for batch in Add lot
          Route::post("/getbatchofmaterial", [App\Http\Controllers\ManufactureProcessController::class,'getbatchofmaterial'])->name("getbatchofmaterial");

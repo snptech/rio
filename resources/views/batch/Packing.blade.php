@@ -7,48 +7,23 @@
         <input type="hidden"
             value="{{ isset($edit_batchmanufacturing->id) ? $edit_batchmanufacturing->id : '' }}"
             name="mainid">
+            <input type="hidden"
+            value="{{ isset($edit_batchmanufacturing->id) ? $edit_batchmanufacturing->id : '' }}"
+            name="mainid">
+            <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
+            <input type="hidden" class="form-control" name="bmrNo" id="bmrNo"
+                        value="{{ $edit_batchmanufacturing->bmrNo }}" pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
+            <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+                        value="{{ $edit_batchmanufacturing->batchNo }}" pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
+            <input type="hidden" class="form-control" name="refMfrNo" id="refMfrNo"
+                        value="{{ $edit_batchmanufacturing->refMfrNo }}" pattern="\d*" maxlength="120"
+                        onkeypress="" readonly>
         @csrf
 
         <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="proName" class="active">Product Name</label>
 
-                    <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-
-                    {{ Form::select('proName', $product, old('proName') ? old('proName') : $edit_batchmanufacturing->proName, ['class' => 'form-control select', 'id' => 'proName']) }}
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo"
-                        value="{{ $edit_batchmanufacturing->bmrNo }}" id="bmrNo" pattern="\d*"
-                        maxlength="120" onkeypress=""
-                        readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo"
-                        value="{{ $edit_batchmanufacturing->batchNo }}" id="batchNo" readonly
-                        pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" name="refMfrNo"
-                        value="{{ $edit_batchmanufacturing->refMfrNo }}" id="refMfrNo"
-                        placeholder="Ref. MFR No." pattern="\d*" maxlength="120"
-                        onkeypress="" readonly>
-                </div>
-            </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="ManufacturerDate" class="active">Date</label>
@@ -68,6 +43,14 @@
                     </label>
                     <div class="row add-more-wrap after-add-more m-0 mb-4">
                         <!-- <span class="add-count">1</span> -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="startTime" class="active">Observation Time (Hrs.)</label>
+                                <input type="time" class="form-control time" name="startTime"
+                                    value="{{ isset($packingmateria->startTime) ? $packingmateria->startTime : '' }}"
+                                    id="startTime" placeholder="" data-mask="00:00">
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="Observation" class="active">Area cleanliness
@@ -124,21 +107,15 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="startTime" class="active">Start Time (Hrs.)</label>
-                                <input type="time" class="form-control time" name="startTime"
-                                    value="{{ isset($packingmateria->startTime) ? $packingmateria->startTime : '' }}"
-                                    id="startTime" placeholder="" data-mask="00:00">
+                                <label for="200kgDrums" class="active">30 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="30kgDrums"
+                                    id="30kgDrums"
+                                    value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="EndstartTime" class="active">End Time
-                                    (Hrs.)</label>
-                                <input type="time" class="form-control time" name="EndstartTime"
-                                    value="{{ isset($packingmateria->EndstartTime) ? $packingmateria->EndstartTime : '' }}"
-                                    id="EndstartTime" placeholder="" data-mask="00:00">
-                            </div>
-                        </div>
+
+
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="areaCleanliness">Done By</label>

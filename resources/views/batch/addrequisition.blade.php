@@ -3,6 +3,10 @@
         action="{{ route('packing_material_requisition_slip_insert') }}">
         @csrf
         <input type="hidden" value="issualofrequisition" name="nextForm">
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+                        placeholder="Batch No."
+                        value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+                        readonly>
         <div class="form-row">
          <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -35,15 +39,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo" id="batchNo"
-                        placeholder="Batch No."
-                        value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
-                        readonly>
-                </div>
-            </div>
+
 
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
