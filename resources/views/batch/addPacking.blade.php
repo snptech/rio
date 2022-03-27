@@ -2,54 +2,24 @@
     <form id="add_manufacturing_packing" method="post"
         action="{{ route('add_manufacturing_packing_insert') }}">
         @csrf
-
-        <div class="form-row">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="proName" class="active">Product Name</label>
-
-                    <!-- <input type="text" class="form-control" name="proName" id="proName" placeholder="Product Name" value="Simethicone (Filix-110)"> -->
-                    <select name="proName" id="proName" readonly class="form-control select">
-                        <option value="{{ $proId }}" class="form-control"
-                            selected="selected">
-                            {{ $proName }}
-                        </option>
-                    </select>
-                    {{-- {{ Form::select("proName",$product,old("proName"),array("class"=>"form-control select","id"=>"proName","placeholder"=>"Choose Product Name")) }} --}}
-                    @if ($errors->has('proName'))
-                        <span class="text-danger">{{ $errors->first('proName') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="bmrNo" class="active">BMR No.</label>
-                    <input type="text" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
+        <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
+        <input type="hidden" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
                         maxlength="120" onkeypress=""
                         value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"
                         readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="batchNo">Batch No.</label>
-                    <input type="text" class="form-control" name="batchNo" id="batchNo"
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
                         pattern="\d*" maxlength="120"
                         onkeypress=""
                         value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
                         readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="form-group">
-                    <label for="refMfrNo">Ref. MFR No.</label>
-                    <input type="text" class="form-control" name="refMfrNo" id="refMfrNo"
+        <input type="hidden" class="form-control" name="refMfrNo" id="refMfrNo"
                         pattern="\d*" maxlength="120"
                         onkeypress=""
                         value="{{ isset($batchdetails->refMfrNo) ? $batchdetails->refMfrNo : old('refMfrNo') }}"
                         readonly>
-                </div>
-            </div>
+        <div class="form-row">
+
+
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
                     <label for="ManufacturerDate" class="active">Date</label>
@@ -66,6 +36,15 @@
                     </label>
                     <div class="row add-more-wrap after-add-more m-0 mb-4">
                         <!-- <span class="add-count">1</span> -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="startTime" class="active">Observation Time
+                                    (Hrs.)</label>
+                                <input type="time" class="form-control time" name="startTime"
+                                    id="startTime" placeholder="" data-mask="00:00"
+                                    data-mask="00:00">
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="Observation" class="active">Area cleanliness
@@ -116,21 +95,21 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="startTime" class="active">Start Time
-                                    (Hrs.)</label>
-                                <input type="time" class="form-control time" name="startTime"
-                                    id="startTime" placeholder="" data-mask="00:00"
-                                    data-mask="00:00">
+                                <label for="200kgDrums" class="active">30 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="30kgDrums"
+                                    id="30kgDrums" placeholder="No of Drums">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
+
+                      {{--   <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="EndstartTime" class="active">End Time
                                     (Hrs.)</label>
                                 <input type="time" class="form-control time" name="EndstartTime"
                                     id="EndstartTime" placeholder="" data-mask="00:00">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="areaCleanliness">Done By</label>

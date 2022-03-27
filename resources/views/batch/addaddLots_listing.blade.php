@@ -184,9 +184,9 @@
                             <td><input type="text" name="temp[]" id="temp[1]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[1]"
-                                    class="form-control time" data-mask="00:00" step="3600000"></td>
+                                    class="form-control time" data-mask="00:00"></td>
                             <td><input type="time" name="endTime[]" id="endTime[1]"
-                                    class="form-control time" data-mask="00:00" step="3600000"></td>
+                                    class="form-control time" data-mask="00:00"></td>
                             <td>{{ Form::select('doneby[]', $users, old('doneby')? old('doneby'):Auth::user()->id, ['id' => 'doneby[5]', 'class' => 'form-control select']) }}
                             </td>
                         </tr>

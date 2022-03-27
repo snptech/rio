@@ -881,7 +881,7 @@ class ManufactureProcessController extends Controller
             "50kgDrums" => "required",
             "20kgDrums" => "required",
             "startTime" => "required",
-            "EndstartTime" => "required",
+           /* "EndstartTime" => "required",*/
             "areaCleanliness" => "required",
             "CareaCleanliness" => "required",
             "rmInput" => "required",
@@ -942,8 +942,9 @@ class ManufactureProcessController extends Controller
             "TemperatureP" => $request['TemperatureP'],
             "50kgDrums" => $request['50kgDrums'],
             "20kgDrums" => $request['20kgDrums'],
+            "30kgDrums" => $request['30kgDrums'],
             "startTime" => $request['startTime'],
-            "EndstartTime" => $request['EndstartTime'],
+           /* "EndstartTime" => $request['EndstartTime'],*/
             "areaCleanliness" => Auth::user()->id,
             "CareaCleanliness" => Auth::user()->id,
             "rmInput" => $request['rmInput'],
@@ -1321,12 +1322,14 @@ class ManufactureProcessController extends Controller
             return redirect("add-batch-manufacturing-record#issualofrequisitionpacking")->with('error', " Something went wrong");
         }
     }
-        public function packing_material_requisition_slip_insert_packing(Request $request)
+    public function packing_material_requisition_slip_insert_packing(Request $request)
     {
         if (isset($request->from)) {
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
-        }$arrRules = [
+        }
+
+        $arrRules = [
             "from" => "required",
             "to" => "required",
             "batchNo" => "required",
@@ -1363,7 +1366,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['checkedBy'] =  $request->checkedBy;
-        $arr['ApprovedBy'] =  $request->ApprovedBy;
+        $arr['ApprovedBy'] =  0;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->batch_id;
         $arr['type'] = "P";
@@ -1399,6 +1402,7 @@ class ManufactureProcessController extends Controller
             $request->session()->put('from', $request->from);
             $request->session()->put('to', $request->to);
         }
+
         $arrRules = [
             "from" => "required",
             "from" => "required",
@@ -1434,7 +1438,7 @@ class ManufactureProcessController extends Controller
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['checkedBy'] =  $request->checkedBy;
-        $arr['ApprovedBy'] = $request->ApprovedBy;
+        $arr['ApprovedBy'] = 0;
         $arr['Remark'] = $request->Remark;
         $arr['batch_id'] = $request->batch_id;
         $arr['type'] = "R";
@@ -2147,8 +2151,12 @@ class ManufactureProcessController extends Controller
             "batch_no_I"=> $request['batch_no_I'],
             "mfg_date"=> $request['mfg_date'],
             "retest_date"=> $request['retest_date'],
-            "net_wt"=> $request['net_wt'],
-            "tare_wt"=> $request['tare_wt'],
+            "net_wt_50"=> $request['net_wt'],
+            "tare_wt_50"=> $request['tare_wt'],
+            "net_wt_200"=> $request['net_wt_200'],
+            "tare_wt_200"=> $request['tare_wt_200'],
+            "net_wt_30"=> $request['net_wt_30'],
+            "tare_wt_30"=> $request['tare_wt_30'],
             "Remark"=> $request['Remark'],
             "batch_id"=> $request['batch_id'],
         ];
@@ -2751,6 +2759,7 @@ class ManufactureProcessController extends Controller
     }
     public function homogenizingEditstore(Request $request)
     {
+
         $arr['proName'] = $request->proName;
         $arr['bmrNo'] = $request->bmrNo;
         $arr['batchNo'] = $request->batchNo;

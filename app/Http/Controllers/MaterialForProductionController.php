@@ -43,9 +43,10 @@ class MaterialForProductionController extends Controller
     public function issue_material_for_production_new()
     {
 
-        $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize")
+        $data['issue_material']=RequisitionSlip::select('packing_material_requisition_slip.*',"users.name","add_batch_manufacture.bmrNo","add_batch_manufacture.Viscosity","add_batch_manufacture.BatchSize","inward_raw_materials_items.ar_no_date","inward_raw_materials_items.ar_no_date_date")
         ->join("users", "users.id", "=", "packing_material_requisition_slip.checkedBy")
         ->join("add_batch_manufacture", "add_batch_manufacture.id", "=", "packing_material_requisition_slip.batch_id")
+        ->join("inward_raw_materials_items", "inward_raw_materials_items.id", "=", "packing_material_requisition_slip.batch_id")
       ->get();
 
 

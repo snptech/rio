@@ -47,7 +47,7 @@
                                 <th rowspan="2">Expiry Retest Date</th>
                                 <th colspan="5">Total No. of Drumbs</th>
                                 <th rowspan="2">Total Quantity (Kg.)</th>
-                                <th rowspan="2">AR No.</th>
+                                <th rowspan="2">AR No./Date</th>
                                 <th rowspan="2">Approval Date</th>
                                 <th rowspan="2">Received by</th>
                                 <th rowspan="2">Action</th>
@@ -69,6 +69,7 @@
                                 <td>{{$temp->batch_no}}</td>
                                 <td>{{$temp->grade}}</td>
                                 <td>{{$temp->viscosity}}</td>
+                                <td>{{$temp->viscosity}}</td>
                                 <td>{{$temp->mfg_date}}</td>
                                 <td>{{$temp->expiry_ratest_date}}</td>
                                 <td>{{$temp->total_no_of_200kg_drums}}</td>
@@ -77,7 +78,7 @@
                                 <td>{{$temp->total_no_of_5kg_drums}}</td>
                                 <td>{{$temp->total_no_of_fiber_board_drums}}</td>
                                 <td>{{$temp->total_quantity}}</td>
-                                <td>{{$temp->ar_no}}</td>
+                                <td>{{$temp->ar_no}}/{{$temp->ar_no_date!='0000-00-00 00:00:00'?date("d/m/Y",strtotime($temp->ar_no_date)):""}}</td>
                                 <td>{{$temp->approval_data}}</td>
                                 <td>{{$temp->name}}</td>
                                 <td>
