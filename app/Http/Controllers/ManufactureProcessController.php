@@ -1905,7 +1905,7 @@ class ManufactureProcessController extends Controller
             $lotsid = $AddLotsl->id;
         /*}*/
 
-        if ((isset($lotsid)) && ($lotsid > 0)) {
+        if ((isset($lotsid)) && $lotsid->count() > 0) {
             if (count($request->MaterialName)) {
                 AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->delete();
                 foreach ($request->MaterialName as $key => $value) {
@@ -2815,6 +2815,79 @@ class ManufactureProcessController extends Controller
                 }
             }
         }
+    }
+    public function lotsDelete(Request $request)
+    {
+        if($request->id)
+        {
+            $lots = AddLotsl::find($request->id);
+            if(isset($lots))
+            {
+                $lotsid = 0;
+
+                $lotsid = $request->id;
+
+
+                if ((isset($lotsid)) && ($lotsid > 0)) {
+
+                        $lotdetails = AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->get();
+
+                        if(isset($lotdetails))
+                        {
+                            foreach ($lotdetails as $val)
+                            {
+                                $stockless = array();
+                                $stock = Stock::where("matarial_id",$val->MaterialName)->where("batch_no",$val->rmbatchno)->first();
+                                if(isset($stock) && $stock)
+                                {
+                                    $st = Stock::find($stock->id);
+                                    $stockless["used_qty"] = ($st->used_qty - $val->Quantity);
+                                    $st->update($stockless);
+                                }
+                                AddLotslRawMaterialDetails::where('id', $val->id)->delete();
+                            }
+
+
+                        }
+
+
+
+
+                    $lots->delete();
+
+                    return response()->json(['status'=>1]);
+                }
+            }
+            else
+                return response()->json(['status'=>0]);
+        }
+    }
+    public function homogenizingdelete(Request $request)
+    {
+        if($request->id)
+        {
+           $hom =  Homogenizing::find($request->id);
+
+           if($hom)
+           {
+                $processlist = HomogenizingList::where("homogenizing_id",$hom->id)->get();
+                if(isset($processlist))
+                {
+                    foreach($processlist as $v)
+                    {
+                        $list =  HomogenizingList::where("id",$v->id)->delete();
+                    }
+                }
+
+                $hom->delete();
+
+                return response()->json(['status'=>1]);
+           }
+           else
+            return response()->json(['status'=>0]);
+        }
+        else
+            return response()->json(['status'=>0]);
     }
 
 }

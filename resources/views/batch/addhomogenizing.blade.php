@@ -37,7 +37,7 @@
                         <td>{{ $lots->created_at ? date('d/m/Y', strtotime($lots->created_at)) : '' }}
                         </td>
                         <td>{{ $lots->homoTank }}</td>
-                        <td> <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewhomozine" title="View" onclick="viewhomozine({{$lots->id}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#edithomozine" title="Edit" onclick="edithomozine({{$lots->id}})"><i data-feather="edit"></i></a></td>
+                        <td> <a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewhomozine" title="View" onclick="viewhomozine({{$lots->id}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#edithomozine" title="Edit" onclick="edithomozine({{$lots->id}})"><i data-feather="edit"></i></a><a href="#" class="btn action-btn"  onclick="deletehomozine({{$lots->id}})"><i data-feather="trash"></i></a></td>
 
                     </tr>
                 @endforeach

@@ -34,7 +34,7 @@
                             <td>{{ $lots->refMfrNo }}</td>
                             <td>{{ $lots->Date ? date('d/m/Y', strtotime($lots->created_at)) : '' }}
                             </td>
-                            <td><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewlots" title="View" onclick="viewlots({{$lots->lotid}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#editslots" title="Edit" onclick="editslots({{$lots->lotid}})"><i data-feather="edit"></i></a>
+                            <td><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewlots" title="View" onclick="viewlots({{$lots->lotid}})"><i data-feather="eye"></i></a>  <a href="#" class="btn action-btn" data-toggle="modal" data-target="#editslots" title="Edit" onclick="editslots({{$lots->lotid}})"><i data-feather="edit"></i></a><a href="#" class="btn action-btn"  onclick="deletelots({{$lots->lotid}})"><i data-feather="trash"></i></a>
                             </td>
 
 

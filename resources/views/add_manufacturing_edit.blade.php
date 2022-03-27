@@ -759,6 +759,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" />
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             $('#examplereq').DataTable();
@@ -1042,5 +1044,92 @@ function viewhomozine(id)
                 }
             })
         }
+        function deletelots(id)
+        {
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route("delete-lots") }}',
+
+                    data: {
+                        _token: CSRF_TOKEN,
+                        id: id
+                    },
+                    success: function(data) {
+                        if(data.status)
+                        {
+                            Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                                }
+                            );
+
+                        }
+
+
+                    }
+                })
+
+            }
+            })
+        }
+        function deletehomozine(id)
+        {
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route("delete-homogine") }}',
+
+                    data: {
+                        _token: CSRF_TOKEN,
+                        id: id
+                    },
+                    success: function(data) {
+                        if(data.status)
+                        {
+                            Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                                }
+                            );
+
+                        }
+
+
+                    }
+                })
+
+            }
+            })
+        }
+
     </script>
 @endpush

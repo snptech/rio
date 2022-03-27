@@ -282,6 +282,7 @@ $router->group(['middleware' => ['auth']], function ($router) {
         Route::post("lots-view",[App\Http\Controllers\ManufactureProcessController::class,'viewLots'])->name("lots-view");
         Route::post("lots-edit",[App\Http\Controllers\ManufactureProcessController::class,'editLots'])->name("lots-edit");
         Route::post("add_lots_editupdate",[App\Http\Controllers\ManufactureProcessController::class,'lotseditupdate'])->name("add_lots_editupdate");
+        Route::post("/delete-lots",[App\Http\Controllers\ManufactureProcessController::class,'lotsDelete'])->name("delete-lots");
 
 
 
@@ -313,6 +314,8 @@ $router->group(['middleware' => ['auth']], function ($router) {
          Route::post('/homozine-view', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingView'])->name("homozine-view");
          Route::post('/homozine-edit', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingEdit'])->name("homozine-edit");
          Route::post('/homogenizing_update_single', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingEditstore'])->name("homogenizing_update_single");
+         Route::post('/delete-homogine', [App\Http\Controllers\ManufactureProcessController::class,'homogenizingdelete'])->name("delete-homogine");
+
 
 
          //get ajax for batch in Add lot

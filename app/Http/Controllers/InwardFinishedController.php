@@ -36,7 +36,7 @@ class InwardFinishedController extends Controller
         if($request->id)
         {
              $inward_goods = Inwardfinishedgoods::select("inward_finished_goods.*"
-             ,"raw_materials.material_name","grade",
+             ,"raw_materials.material_name","inward_finished_goods.grade",
              "users.name")->join("raw_materials","raw_materials.id",
              "inward_finished_goods.product_name")
 
