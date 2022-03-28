@@ -539,7 +539,7 @@ class ManufactureProcessController extends Controller
 
         $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
 
-        $data["usersall"] = USER::pluck("name","id");
+        $data["users"] = USER::pluck("name","id");
         $data["usersworker"] = USER::where("role_id",6)->pluck("name","id");
         $data["usersofficer"] = USER::where("role_id",6)->pluck("name","id");
 

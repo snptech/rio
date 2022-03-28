@@ -56,7 +56,7 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table table-bordered">
+		<table class="table table-bordered" style="border-top: 2px solid #000">
 			<thead>
 				<tr>
 					<th rowspan="2">Date</th>
@@ -90,7 +90,7 @@
 				<tr>
 					<th style="text-align:left;">In Process Check<br />(After 4 Lot)<br /><br /><br /></th>
 					<th valign="top">:</th>
-					<td valign="top">Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30 RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).</td>
+					<td valign="top">{{$homo->process_check}}</td>
 				</tr>
 				<tr>
 					<th style="text-align:left;">Observed value</th>

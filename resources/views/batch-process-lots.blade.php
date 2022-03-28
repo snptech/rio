@@ -59,7 +59,7 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table table-bordered" style="margin-bottom:2.5rem;">
+		<table class="table table-bordered" style="margin-bottom:2.5rem;border:2px solid #000;">
 			<thead>
 				<tr>
 					<th width="50%">Raw Material</th>
@@ -79,7 +79,7 @@
 			@endif
 
 		</table>
-		<table class="table table-bordered">
+		<table class="table table-bordered" style="margin-bottom:2.5rem;border:2px solid #000;">
 			<thead>
 				<tr>
 					<th rowspan="2" width="40%">Process</th>
