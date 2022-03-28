@@ -73,7 +73,7 @@
 					<td>Checked by: <span style="display:inline-block;margin-left:2rem;min-width:60%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;margin-left:2rem;min-width:100%;margin-bottom:5px;">{{$manufacture->usercheck}}</span>(Production Manager)</span></td>
 				</tr>
 			</table>
-			<div style="margin:1rem 0 3rem;font-weight:400;">This batch has / has not been produced according to instruction given in MFR No. {{$manufacture->refMfrNo}}</div>
+			<div style="margin:1rem 0 3rem;font-weight:400;"> This batch has been produced according to instruction given MFR no. as mentioned above.</div>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:1rem;font-weight:bold;font-family:serif;margin:0 1.2rem 1.5rem;line-height:1.5;">
 				<thead>
 					<tr>

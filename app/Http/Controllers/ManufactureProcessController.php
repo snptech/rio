@@ -1907,7 +1907,7 @@ class ManufactureProcessController extends Controller
             $lotsid = $AddLotsl->id;
         /*}*/
 
-        if ((isset($lotsid)) && $lotsid->count() > 0) {
+        if ((isset($lotsid)) && $lotsid) {
             if (count($request->MaterialName)) {
                 AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->delete();
                 foreach ($request->MaterialName as $key => $value) {

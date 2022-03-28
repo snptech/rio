@@ -69,7 +69,7 @@
                                 <td>{{$temp->batch_no}}</td>
                                 <td>{{$temp->grade}}</td>
                                 <td>{{$temp->viscosity}}</td>
-                                <td>{{$temp->viscosity}}</td>
+
                                 <td>{{$temp->mfg_date}}</td>
                                 <td>{{$temp->expiry_ratest_date}}</td>
                                 <td>{{$temp->total_no_of_200kg_drums}}</td>

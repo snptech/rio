@@ -18,7 +18,7 @@
                 <div class="row">
 
                             <div class="col-md-3">
-                                Product Name :  {{ $batchproduct->material_name }}
+                               <strong> Product Name :  </strong> {{ $batchproduct->material_name }}
                             </div>
                             <div class="col-md-3">
                                 BMR No. :  {{  $batchdetails->bmrNo }}
