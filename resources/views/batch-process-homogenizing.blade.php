@@ -90,7 +90,7 @@
 				<tr>
 					<th style="text-align:left;">In Process Check<br />(After 4 Lot)<br /><br /><br /></th>
 					<th valign="top">:</th>
-					<td valign="top">{{$homo->process_check}}</td>
+					<td valign="top">{{$homo->proecess_check}}</td>
 				</tr>
 				<tr>
 					<th style="text-align:left;">Observed value</th>
