@@ -116,26 +116,29 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="doneBy">Prepared by</label>
-                        <input type="text" class="form-control select" name="doneBy"
-                            value="{{ Auth::user()->name }}" id="doneBy">
+                        {{ Form::select('doneBy',$users,old("doneBy")?old("doneBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Prepared by","id"=>"doneBy")) }}
+
 
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="checkedBy">Checked by</label>
-                        <input type="text" class="form-control select" name="checkedBy"
-                            value="{{ Auth::user()->name }}" id="checkedBy">
+                        {{ Form::select('checkedBy',$users,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
+
 
                     </div>
                 </div>
+
+
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="checkedByI">Reviewed and Approved by</label>
-                        <input type="text" class="form-control select" name="checkedByI"
-                            value="{{ Auth::user()->name }}" id="checkedByI">
+                        {{ Form::select('checkedByI',$users,old("checkedByI")?old("checkedByI"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Reviewed and Approved by","id"=>"checkedByI")) }}
+
 
                     </div>
+                </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">

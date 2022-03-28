@@ -69,7 +69,7 @@ class QualityControlController extends Controller
     {
         $arrRules = [
             "quantity_approved"=>"required",
-            "quantity_rejected"=>"required",
+            //"quantity_rejected"=>"required",
             "quantity_status"=>"required",
             "date_of_approval"=>"required",
             "inward_material_id"=>"required",
@@ -94,8 +94,8 @@ class QualityControlController extends Controller
           // $validateData = $request->validate($arrRules, $arrMessages);
 
         $data = [
-            'quantity_approved' => $request['quantity_approved'],
-            'quantity_rejected' => $request['quantity_rejected'],
+            //'quantity_approved' => $request['quantity_approved'],
+            //'quantity_rejected' => $request['quantity_rejected'],
             'quantity_status' => $request['quantity_status'],
             'date_of_approval' => $request['date_of_approval'],
             'inward_material_id' => $request['inward_id'],
@@ -107,6 +107,20 @@ class QualityControlController extends Controller
             'checked_by' => $request['checkby'],
             'material_type' =>$request['mat_type']
         ];
+        $appqty = 0;
+        $rejqty = 0;
+        if($request->quantity_status == "Approved")
+        {
+            $data["quantity_approved"] = $request['quantity_approved'];
+            $data["quantity_rejected"] =0;
+            $appqty =  $request['quantity_approved'];
+        }
+        elseif($request->quantity_status == "Rejected")
+        {
+            $data["quantity_rejected"] = $request['quantity_approved'];
+            $data["quantity_approved"] =0;
+            $rejqty =  $request['quantity_approved'];
+        }
 
         $result =Qualitycontroll::create($data);
 
@@ -129,7 +143,7 @@ class QualityControlController extends Controller
                         $stockarr["matarial_id"] = $result->raw_material_id;
                         $stockarr["material_type"] = $request['mat_type'];
                         $stockarr["department"] = 3;
-                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["qty"] = ($appqty-$rejqty);
                         $stockarr["batch_no"] = $request['inward_item_id'];
                         $stockarr["process_batch_id"] = $request['inward_item_id'];
                         $stockarr["ar_no_date"] = $request['ar_number'];
@@ -160,7 +174,7 @@ class QualityControlController extends Controller
                         $stockarr["matarial_id"] = $result->raw_material_id;
                         $stockarr["material_type"] = $request['mat_type'];
                         $stockarr["department"] = 3;
-                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["qty"] =  ($appqty-$rejqty);
                         $stockarr["batch_no"] = $request['inward_item_id'];
                         $stockarr["process_batch_id"] = $request['inward_item_id'];
                         $stockarr["ar_no_date"] = $request['ar_number'];
@@ -191,7 +205,7 @@ class QualityControlController extends Controller
                         $stockarr["matarial_id"] = $result->raw_material_id;
                         $stockarr["material_type"] = $request['mat_type'];
                         $stockarr["department"] = 3;
-                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["qty"] =  ($appqty-$rejqty);
                         $stockarr["batch_no"] = $request['inward_item_id'];
                         $stockarr["process_batch_id"] = $request['inward_item_id'];
                         $stockarr["ar_no_date"] = $request['ar_number'];
@@ -227,7 +241,7 @@ class QualityControlController extends Controller
                         $stockarr["matarial_id"] = $result->raw_material_id;
                         $stockarr["material_type"] = $request['mat_type'];
                         $stockarr["department"] = 3;
-                        $stockarr["qty"] = ($request['quantity_approved']-$request['quantity_rejected']);
+                        $stockarr["qty"] =  ($appqty-$rejqty);
                         $stockarr["batch_no"] = $request['inward_item_id'];
                         $stockarr["process_batch_id"] = $request['inward_item_id'];
                         $stockarr["ar_no_date"] = $request['ar_number'];
@@ -276,7 +290,7 @@ class QualityControlController extends Controller
                 ->on("quality_controll_check.material_type",DB::raw('"R"'));
         })
         ->where("inward_raw_materials_items.id",$request->quality_id)->first();
-        $users = User::pluck("name","id");
+        $users = User::where("role_id",5)->pluck("name","id");
          $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"R","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
@@ -480,7 +494,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"P"'));
         })
         ->where("goods_receipt_note_items.id",$request->quality_id)->first();
-        $users = User::pluck("name","id");
+        $users = User::where("role_id",5)->pluck("name","id");
          $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"P","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
@@ -540,7 +554,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"F"'));
         })
         ->where("inward_finished_goods.id",$request->quality_id)->first();
-        $users = User::pluck("name","id");
+        $users = User::where("role_id",5)->pluck("name","id");
          $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"F","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
@@ -602,7 +616,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"B"'));
         })
         ->where("add_batch_manufacture.id",$request->quality_id)->first();
-        $users = User::pluck("name","id");
+        $users = User::where("role_id",5)->pluck("name","id");
          $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"B","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);

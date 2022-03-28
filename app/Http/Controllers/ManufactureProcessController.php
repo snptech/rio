@@ -539,7 +539,9 @@ class ManufactureProcessController extends Controller
 
         $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
 
-        $data["users"] = USER::pluck("name","id");
+        $data["usersall"] = USER::pluck("name","id");
+        $data["usersworker"] = USER::where("role_id",6)->pluck("name","id");
+        $data["usersofficer"] = USER::where("role_id",6)->pluck("name","id");
 
 
         //$data['sequenceId'] = '#requisition';
@@ -2366,10 +2368,15 @@ class ManufactureProcessController extends Controller
     public function pdfview(Request $request,$id)
     {
 
-        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name',"userdone.name as doneby","usercheck.name as usercheck")
+        $data['manufacture'] = BatchManufacture::select('add_batch_manufacture.*', 'raw_materials.material_name',"userdone.name as doneby","usercheck.name as usercheck","qccheck.name as qcname")
+            ->leftJoin("quality_controll_check",function($join){
+                $join->on("quality_controll_check.inward_material_id","add_batch_manufacture.id");
+                $join->where("quality_controll_check.material_type","B");
+            })
             ->leftJoin('raw_materials', 'raw_materials.id', '=', 'add_batch_manufacture.proName')
             ->leftJoin('users as userdone', 'userdone.id', '=', 'add_batch_manufacture.doneBy')
             ->leftJoin('users as usercheck', 'usercheck.id', '=', 'add_batch_manufacture.checkedBy')
+            ->leftJoin('users as qccheck', 'qccheck.id', '=', 'quality_controll_check.checked_by')
             ->where("add_batch_manufacture.id",$id)
             ->orderBy('add_batch_manufacture.id','desc')
             ->first();
@@ -2380,7 +2387,7 @@ class ManufactureProcessController extends Controller
             $batchid = $data["manufacture"]->id;
             /*$data["requestion"] = RequisitionSlip::select("packing_material_requisition_slip.id","users.name")->where("batch_id", $batchid)->join("users","users.id","packing_material_requisition_slip.ApprovedBy")->where("type","R")->orderBy('id', 'desc')->get();*/
 
-          // Bill of material
+          // Bill of material issual
             $data["Requisitionissuedmaterial"] = Requisitionissuedmaterial::select("issue_material_production_requestion.id","app.name as approvedby","checked.name as checkby")->where("batch_id", $batchid)->where("type","R")->join("users as app","app.id","issue_material_production_requestion.ApprovedBy")->join("users as checked","checked.id","issue_material_production_requestion.checkedBy")->orderBy('id', 'desc')->get();
              if(isset($data["Requisitionissuedmaterial"]) && $data["Requisitionissuedmaterial"])
              {
@@ -2394,7 +2401,22 @@ class ManufactureProcessController extends Controller
                         }
             }
 
-            // packing material
+            // Bill of raw_materials requestion
+            $data["Requisitmaterial"] = RequisitionSlip::select("packing_material_requisition_slip.*","checked.name as checkby")->where("batch_id", $batchid)->where("type","R")->join("users as checked","checked.id","packing_material_requisition_slip.checkedBy")->orderBy('id', 'desc')->get();
+
+            if(isset($data["Requisitmaterial"]) && $data["Requisitmaterial"])
+            {
+                       foreach($data["Requisitmaterial"] as $mat)
+                       {
+                           $data['raw_material_Requisit'][] =  DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name")
+                           ->where("detail_packing_material_requisition.requisition_id", $mat->id)
+                           ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
+
+                           ->get();
+                       }
+           }
+
+            // packing material requestion  issual
 
             $data["Requisitionissuedmaterialpacking"] = Requisitionissuedmaterial::select("issue_material_production_requestion.id","app.name as approvedby","checked.name as checkby")->where("batch_id", $batchid)->where("type","P")->join("users as app","app.id","issue_material_production_requestion.ApprovedBy")->join("users as checked","checked.id","issue_material_production_requestion.checkedBy")->orderBy('id', 'desc')->get();
              if(isset($data["Requisitionissuedmaterialpacking"]) && $data["Requisitionissuedmaterialpacking"])
@@ -2404,6 +2426,23 @@ class ManufactureProcessController extends Controller
                             $data['raw_material_bills_packing'][] =  Requisitionissuedmaterialdetails::select("issue_material_production_requestion_details.*","raw_materials.material_name",DB::raw("''as batch_no"))
                             ->where("issue_material_production_requestion_details.issual_material_id", $mat->id)
                             ->join("raw_materials", "raw_materials.id", "issue_material_production_requestion_details.material_id")
+
+                            ->get();
+                        }
+            }
+
+
+            // packing material requestion
+
+                $data["Requisitmaterialpacking"] = RequisitionSlip::select("packing_material_requisition_slip.*","checked.name as checkby")->where("batch_id", $batchid)->where("type","P")->join("users as checked","checked.id","packing_material_requisition_slip.checkedBy")->orderBy('id', 'desc')->get();
+
+                if(isset($data["Requisitmaterialpacking"]) && $data["Requisitmaterialpacking"])
+                {
+                        foreach($data["Requisitmaterialpacking"] as $mat)
+                        {
+                            $data['raw_material_Requisitpacking'][] =  DetailsRequisition::select("detail_packing_material_requisition.*","raw_materials.material_name")
+                            ->where("detail_packing_material_requisition.requisition_id", $mat->id)
+                            ->join("raw_materials", "raw_materials.id", "detail_packing_material_requisition.PackingMaterialName")
 
                             ->get();
                         }

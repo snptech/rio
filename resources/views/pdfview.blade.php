@@ -9,10 +9,10 @@
   <link rel="stylesheet" href="{{asset('pdf/assets/mdbootstrap4/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('pdf/assets/mdbootstrap4/mdb.min.css')}}">
   <link rel="stylesheet" href="{{asset('pdf/assets/mdbootstrap4/mdb-plugins-gathered.min.css')}}">
- 
-  
+
+
   <link rel="stylesheet" href="{{asset('pdf/assets/css/style.css')}}">
-  <!-- end inject -->  
+  <!-- end inject -->
   <style>
 	table td,table th {
 		font-size: 1rem;
@@ -27,8 +27,8 @@
 }
   </style>
 </head>
-<body style="background: #ffffff;font-size:16px;font-weight:bold;font-family:Georgia, serif;">
-	
+<body style="background: #ffffff;font-size:16px;font-weight:bold;">
+
 	@include("batch-process1")
 	<div class="pagebreak"> </div>
 	@include("batch-process-instruction")
@@ -44,7 +44,7 @@
 	@if(isset($lotsdetails) && $lotsdetails)
 	 @php $l =0; @endphp
 	 @foreach($lotsdetails as $lot)
-	 
+
 		@include("batch-process-lots",array("lot"=>$lot,"process"=>$process[$l],"rawmaterial"=>$lotsrawmaterials[$l]))
 		<div class="pagebreak"></div>
 		@php $l++; @endphp
@@ -58,16 +58,16 @@
 	@if(isset($Homogenizing) && $Homogenizing)
 	 @php $l =0; @endphp
 	 @foreach($Homogenizing as $hom)
-	 
+
 		@include("batch-process-homogenizing",array("homo"=>$hom,"homolist"=>$homoList[$hom->id]))
 		<div class="pagebreak"></div>
 		@php $l++; @endphp
 	 @endforeach
 	@endif
-	
+
 	<div class="pagebreak"></div>
 	@include("batch-process-packing")
 	<div class="pagebreak"></div>
-	
+
 	@include("batch-process-label")
 </body>

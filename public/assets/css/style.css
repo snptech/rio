@@ -570,9 +570,9 @@ textarea.form-control{height:100px;}
 .filter{background:#f6f6f6;padding:15px;margin-bottom:20px;}.filter .form-control{background-color:#fff;}
 .table th, .jsgrid .jsgrid-table th, .table td, .jsgrid .jsgrid-table td {padding: 1.125rem 10px;font-size:13px;font-weight:600;}.table td{font-weight:400;}
 .table td.lead-discription,.table td.remark{font-size:12px;max-width:150px;line-height:normal;white-space:normal;}
-.dataTables_wrapper .dataTable.table .btn{padding:0;width:28px;height:28px;margin:2px;border:1px solid #000;border-radius:4px;line-height:28px;max-width: 28px;
+.dataTables_wrapper .dataTable.table .btn{padding:0;width:28px;height:28px;margin:2px;border:2px solid #000;border-radius:4px;line-height:28px;max-width: 28px;
 min-width: 28px;}
-.btn.btn-email,.btn.btn-edit,.btn.btn-view{background-image:url("../img/btn_icons.png");background-repeat:no-repeat;width:28px;height:28px;margin:2px;border:1px solid #000;border-radius:4px;line-height:28px;max-width: 28px;min-width: 28px;padding:0px;}
+.btn.btn-email,.btn.btn-edit,.btn.btn-view{background-image:url("../img/btn_icons.png");background-repeat:no-repeat;width:28px;height:28px;margin:2px;border:2px solid #000;border-radius:4px;line-height:28px;max-width: 28px;min-width: 28px;padding:0px;}
 .btn.btn-email{background-position:2px 3px;}.btn.btn-email:hover{background-position:2px -19px;}
 .btn.btn-edit{background-position:-38px 3px;}.btn.btn-edit:hover{background-position:-38px -19px;}
 .btn.btn-view{background-position:-77px 3px;}.btn.btn-view:hover{background-position:-77px -19px;}
@@ -743,7 +743,7 @@ nav .nav-item {
     text-align: center;
     background: transparent;
     height: 44px;
-    width: 44px;text-align: center;border-radius: 4px;line-height: 44px;display: block;color:#5f6783; 
+    width: 44px;text-align: center;border-radius: 4px;line-height: 44px;display: block;color:#5f6783;
 }
 .navbar .navbar-menu-wrapper .navbar-nav.navbar-nav-right .dropdown-toggle::after{display:none;}
 nav .nav-item.nav-profile img {

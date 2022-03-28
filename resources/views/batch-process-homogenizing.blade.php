@@ -1,12 +1,12 @@
 <div class="container-scroller">
-    
+
     <div class="container-fluid p-3">
       <!-- Main Container -->
-    <div style="display:block;padding:20px;border:1px solid #000;min-height:11.7in;">
+    <div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
 		<table width="100%" cellpadding="10" cellspacing="0" border="0">
 			<tr>
 				<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>
-				<td style="text-align:center;"><h2 style="font-family:Georgia, serif;font-size: 2rem;">RioCare India Private Limited</h2><p style="font-family:Georgia, serif;font-size:1rem;font-weight:bold;">Plot R-940, TTC Industrial Area, MIDC Rabale, Navi Mumbai &ndash; 400 701, Maharashtra, INDIA.</p></td>
+				<td style="text-align:center;"><h2 style="font-family: serif;font-size: 2rem;">RioCare India Private Limited</h2><p style="font-family: serif;font-size:1rem;font-weight:bold;">Plot R-940,TTC Industrial Area,MIDC Rabale,Navi Mumbai-400701,District Thane,Maharashtra ,INDIA.</p></td>
 				<td width="80">&nbsp;</td>
 			</tr>
 		</table>
@@ -15,7 +15,7 @@
 		<table width="100%" cellpadding="10" cellspacing="0" border="0" class="heading-tbl">
 			<tr>
 				<td>
-					<table width="auto" cellpadding="5" cellspacing="0" border="0" style="font-size:1.1rem;font-weight:bold;font-family:Georgia, serif;margin:0 1.2rem 0rem;line-height:1.2;">
+					<table width="auto" cellpadding="5" cellspacing="0" border="0" style="font-size:1.1rem;font-weight:bold;font-family: serif;margin:0 1.2rem 0rem;line-height:1.2;">
 						<tr>
 							<td>Product name</td>
 							<td>:</td>
@@ -29,7 +29,7 @@
 					</table>
 				</td>
 				<td>
-					<table width="auto" cellpadding="5" cellspacing="0" border="0" style="font-size:1.1rem;font-weight:bold;font-family:Georgia, serif;margin:0 1.2rem 0rem;line-height:1.2;">
+					<table width="auto" cellpadding="5" cellspacing="0" border="0" style="font-size:1.1rem;font-weight:bold;font-family: serif;margin:0 1.2rem 0rem;line-height:1.2;">
 						<tr>
 							<td>BMR No.</td>
 							<td>:</td>
@@ -48,7 +48,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="heading-tbl">
 			<tr>
 				<td>
-					<table width="100%	" cellpadding="5" cellspacing="0" border="0" style="font-size:1.1rem;font-weight:bold;font-family:Georgia, serif;margin:0 0rem 1rem;line-height:1.2;">
+					<table width="100%	" cellpadding="5" cellspacing="0" border="0" style="font-size:1.1rem;font-weight:bold;font-family: serif;margin:0 0rem 1rem;line-height:1.2;">
 						<tr>
 							<td>Homogenizing tank No: <span style="font-weight:400;">{{$homo->code}}</span></td>
 						</tr>
@@ -84,9 +84,9 @@
 				</tr>
 				@endforeach
 			@endif
-				
+
 			</table>
-			<table width="100%" cellpadding="10" cellspacing="0" border="0" style="font-size:1rem;font-weight:400;font-family:Georgia, serif;margin:1rem 0rem 0rem;line-height:1.2;">
+			<table width="100%" cellpadding="10" cellspacing="0" border="0" style="font-size:1rem;font-weight:400;font-family: serif;margin:1rem 0rem 0rem;line-height:1.2;">
 				<tr>
 					<th style="text-align:left;">In Process Check<br />(After 4 Lot)<br /><br /><br /></th>
 					<th valign="top">:</th>
