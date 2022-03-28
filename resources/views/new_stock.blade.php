@@ -64,7 +64,7 @@
                             @if(count($inward_goods))
                             @foreach($inward_goods as $temp)
                             <tr>
-                                <td>{{$temp->createdat?date("d/m/Y",strtotime($temp->createdat)):""}}</td>
+                                <td>{{$temp->created_at?date("Y-m-d",strtotime($temp->created_at)):""}}</td>
                                 <td>{{$temp->material_name}}</td>
                                 <td>{{$temp->batch_no}}</td>
                                 <td>{{$temp->grade}}</td>
@@ -130,7 +130,10 @@
     <!-- End custom js for this page-->
 
     <script>
-        $('.datatable').DataTable({});
+        $('.datatable').DataTable({
+        "order": [[ 0, "desc" ]]
+    } );
+
 
         function viewstock(id) {
             $.ajax({

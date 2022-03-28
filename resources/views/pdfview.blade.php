@@ -22,8 +22,36 @@
 		font-size: 1.1rem;
 		font-weight: 800;
 	}
+    .table-bordered {
+    border: 2px solid #000000;
+    }
+    .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #000000;
+    }
+    .table-bordered td, .table-bordered th {
+    border: 2px solid #000000
+    }
 	@media print {
     .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+    table td,table th {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+	.heading-tbl td {
+		font-size: 1.1rem;
+		font-weight: 800;
+	}
+    .table-bordered {
+    border: 2px solid #000000;
+    }
+    .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #000000;
+    }
+    .table-bordered td, .table-bordered th {
+    border: 2px solid #000000
+    }
 }
   </style>
 </head>

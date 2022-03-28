@@ -15,19 +15,19 @@
         </div>
         <div class="card main-card">
             <div class="card-body">
-                <div class="row">
+                <div class="row add-more-wrap">
 
                             <div class="col-md-3">
-                               <strong> Product Name :  </strong> {{ $batchproduct->material_name }}
+                               <b> Product Name :  </b> {{ $batchproduct->material_name }}
                             </div>
                             <div class="col-md-3">
-                                BMR No. :  {{  $batchdetails->bmrNo }}
+                                <b> BMR No. :</b>   {{  $batchdetails->bmrNo }}
                             </div>
                             <div class="col-md-3">
-                                Batch No. :  {{ $batchdetails->batchNo }}
+                                <b> Batch No. : </b>  {{ $batchdetails->batchNo }}
                             </div>
                             <div class="col-md-3">
-                                Ref. MFR No. :  {{ $batchdetails->refMfrNo }}
+                                <b> Ref. MFR No. :</b>  {{ $batchdetails->refMfrNo }}
                             </div>
 
                 </div>
@@ -682,6 +682,7 @@
                     "Quantity[]": "required",
                     checkedBy: "required",
                     ApprovedBy: "required",
+                    Remark: "required",
                 },
                 messages: {
                     from: "Please  Enter The from Name",

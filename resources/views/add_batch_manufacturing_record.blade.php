@@ -45,19 +45,19 @@
                         </div>
                     @endif
                     @if(isset($batchdetails))
-                    <div class="row">
+                    <div class="row add-more-wrap">
 
                         <div class="col-md-3">
-                            Product Name :  {{ $batchproduct->material_name }}
+                           <b> Product Name :  </b> {{ $batchproduct->material_name }}
                         </div>
                         <div class="col-md-3">
-                            BMR No. :  {{  $batchdetails->bmrNo }}
+                            <b> BMR No. :</b>   {{  $batchdetails->bmrNo }}
                         </div>
                         <div class="col-md-3">
-                            Batch No. :  {{ $batchdetails->batchNo }}
+                            <b> Batch No. : </b>  {{ $batchdetails->batchNo }}
                         </div>
                         <div class="col-md-3">
-                            Ref. MFR No. :  {{ $batchdetails->refMfrNo }}
+                            <b> Ref. MFR No. :</b>  {{ $batchdetails->refMfrNo }}
                         </div>
 
                     </div>
