@@ -1,3 +1,4 @@
+
 <div id="generate_label" class="tab-pane fade {{ $sequenceId == '13' ? 'in active show' : '' }}">
     <form id="add_manufacturing_generate_label" method="post"
         action="{{ route('add_manufacturing_generate_update') }}">

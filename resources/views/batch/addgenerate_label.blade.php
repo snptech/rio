@@ -1,8 +1,9 @@
+
 <div id="generate_label" class="tab-pane fade">
     <form id="add_manufacturing_generate_label" method="post"
         action="{{ route('add_manufacturing_generate_label_insert') }}">
         @csrf
-        <input type="hidden" name="proName" value="{{ $batchproduct->id }}" />
+        <input type="hidden" name="proName" value="{{ isset($batchproduct->id)?$batchproduct->id:0 }}" />
         <input type="hidden" class="form-control" name="bmrNo" id="bmrNo" pattern="\d*"
                         maxlength="12" onkeypress=""
                         value="{{ isset($batchdetails->bmrNo) ? $batchdetails->bmrNo : old('bmrNo') }}"

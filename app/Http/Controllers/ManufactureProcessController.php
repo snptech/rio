@@ -183,7 +183,7 @@ class ManufactureProcessController extends Controller
         if ($request->session()->has('batch')) {
             $batch = $request->session()->get('batch');
         }
-
+        $data['batchproduct']  = array();
         $data["batch"] = $batch;
 
         if (isset($batch) && $batch) {
@@ -1824,6 +1824,10 @@ class ManufactureProcessController extends Controller
         if ((isset($AddLotsl->id)) && ($AddLotsl->id > 0)) {
             $prvCount = ($prvCount == 0) ? 1 : $prvCount;
             (int)$prvCount++;
+            if(empty($request->MaterialName))
+            {
+                return redirect("add-batch-manufacture")->with('error', "Something went wrong. Please check.");
+            }
             if (count($request->MaterialName)) {
                 foreach ($request->MaterialName as $key => $value) {
                     $arr_data['MaterialName'] = $value;
@@ -1906,6 +1910,10 @@ class ManufactureProcessController extends Controller
             $AddLotsl = AddLotsl::create($arr);
             $lotsid = $AddLotsl->id;
         /*}*/
+        if(empty($request->MaterialName))
+        {
+            return redirect("add-batch-manufacture")->with('error', "Something went wrong. Please check.");
+        }
 
         if ((isset($lotsid)) && $lotsid) {
             if (count($request->MaterialName)) {
@@ -2650,7 +2658,10 @@ class ManufactureProcessController extends Controller
 
                 $lotsid = $request->id;
 
-
+                if(empty($request->MaterialName))
+                {
+                    return redirect("add-batch-manufacture")->with('error', "Something went wrong. Please check.");
+                }
                 if ((isset($lotsid)) && ($lotsid > 0)) {
                     if (count($request->MaterialName)) {
                         $lotdetails = AddLotslRawMaterialDetails::where('add_lots_id', $lotsid)->get();
