@@ -905,12 +905,12 @@
                         '<td><input type="text" name="lot[]" id="lot' + x +
                         '" class="form-control" value=""></td>' +
                         '<td><input type="text" name="qty[]" id="qty[' + x +
-                        ']" class="form-control" placeholder=""></td>' +
+                        ']" class="form-control" placeholder="" onkeypress="return validateNumber(event);"></div></divtd>' +
                         '<td><input type="time" name="stratTime[]" id="stratTime[' + x +
                         ']" class="form-control time" placeholder="" data-mask="00:00"></td>' +
                         '<td><input type="time" name="endTime[]" id="endTime[' + x +
                         ']" class="form-control itme" placeholder="" data-mask="00:00"></td>' +
-                        'div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div>' +
+                        '<div class="input-group-btn"><button class="btn btn-danger remove_field_20" type="button"><i class="icon-remove" data-feather="x"></i></button></div>' +
                         '</tr>'); //add input box
                 }
                 feather.replace()
