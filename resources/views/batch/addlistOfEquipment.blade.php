@@ -51,7 +51,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-12">
+            <div class="col-12 col-md-12
+            ">
                 <div class="form-group">
                     <label for="Remark" class="active">Note / Remark</label>
                     <textarea class="form-control" name="Remark" id="Remark"

@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label for="Date">Date</label>
                     <input type="date" class="form-control" name="Date" id="Date"
-                        value="{{ isset($addlots->Date) ? $addlots->Date : date('Y-m-d') }}">
+                        value="{{ date('Y-m-d') }}">
                 </div>
             </div>
             <div class="col-12">
@@ -88,13 +88,13 @@
                 <div class="form-group">
                     <label for="lotNo" class="active">Lot No.</label>
                     <input type="text" class="form-control" name="lotNo" id="lotNo"
-                        value="{{ isset($addlots->lotNo) ? $addlots->lotNo : $lotno }}">
+                        value="{{ $lotno }}">
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group">
                     <label for="ReactorNo">Reactor No.</label>
-                    {{ Form::select('ReactorNo', $selected_crop, old('ReactorNo') ? old('ReactorNo') : (isset($addlots->ReactorNo) ? $addlots->ReactorNo : ''), ['class' => 'form-control select', 'id' => 'ReactorNo', 'placeholder' => 'Reactor No.']) }}
+                    {{ Form::select('ReactorNo', $selected_crop, old('ReactorNo') ? old('ReactorNo') : ''), ['class' => 'form-control select', 'id' => 'ReactorNo', 'placeholder' => 'Reactor No.']) }}
 
                 </div>
             </div>
@@ -102,7 +102,7 @@
                 <div class="form-group">
                     <label for="Date">Date</label>
                     <input type="date" class="form-control" name="Process_date" id="Process_date " placeholder=""
-                        value="{{ isset($addlots->Process_date) ? $addlots->Process_date : date('Y-m-d') }}">
+                        value="{{ date('Y-m-d') }}">
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
