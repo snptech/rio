@@ -94,7 +94,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group">
                     <label for="ReactorNo">Reactor No.</label>
-                    {{ Form::select('ReactorNo', $selected_crop, old('ReactorNo') ? old('ReactorNo') : ''), ['class' => 'form-control select', 'id' => 'ReactorNo', 'placeholder' => 'Reactor No.']) }}
+                    {{ Form::select('ReactorNo', $selected_crop, old('ReactorNo') ? old('ReactorNo') : '', ['class' => 'form-control select', 'id' => 'ReactorNo', 'placeholder' => 'Reactor No.']) }}
 
                 </div>
             </div>
