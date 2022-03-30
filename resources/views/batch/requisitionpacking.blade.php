@@ -114,19 +114,19 @@
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="checkedBy">Checked By</label>
-                    <input type="text" class="form-control select" name="checkedBy" id="checkedBy"
-                        value="{{ \Auth::user()->name }}" readonly>
+                    {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
+
 
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            {{--  <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="ApprovedBy">Approved By</label>
                     <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy"
                         value="{{ \Auth::user()->name }}" readonly>
 
                 </div>
-            </div>
+            </div>--}}
             <div class="col-12">
                 <div class="form-group">
                     <label for="Remark" class="active">Note / Remark</label>

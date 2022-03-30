@@ -88,7 +88,7 @@
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="checkedBy">Checked By</label>
-                    {{ Form::select('checkedBy',$users,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
+                    {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
 
 
                 </div>
