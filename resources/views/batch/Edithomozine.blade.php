@@ -81,8 +81,8 @@
                                                 class="form-control"></td>
                                         <td><input type="text" name="lot[]" id="lot" class="form-control"
                                                 value="{{ $temp->lots_name }}"></td>
-                                        <td><input type="number" name="qty[]" id="qty"
-                                                value="{{ $temp->qty }}" class="form-control"></td>
+                                        <td><input type="text" name="qty[]" id="qty"
+                                                value="{{ $temp->qty }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                         <td><input type="time" name="stratTime[]" id="stratTime"
                                                 value="{{ $temp->stratTime }}" class="form-control time"
                                                 data-mask="00:00"></td>
@@ -102,8 +102,8 @@
                                             class="form-control" value="{{ date('Y-m-d') }}"></td>
                                     <td><input type="text" name="lot[]" id="lot" class="form-control"
                                             value=""><input type="hidden" name="lotsid[]" value=""></td>
-                                    <td><input type="number" name="qty[]" id="qty[1]"
-                                            class="form-control" value=""></td>
+                                    <td><input type="text" name="qty[]" id="qty[1]"
+                                            class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                     <td><input type="time" name="stratTime[]" id="stratTime[1]"
                                             class="form-control time" value="" data-mask="00:00"></td>
                                     <td><input type="time" name="endTime[]" id="endTime[1]"
@@ -141,7 +141,19 @@
     </div>
 </div>
 <script>
+    function validateNumber(event) {
+            var key = window.event ? event.keyCode : event.which;
+            if (event.keyCode === 8 || event.keyCode === 46) {
+                return true;
+            } else if ( key < 48 || key > 57 ) {
+                return false;
+            } else {
+                return true;
+            }
+        };
+
       $(document).ready(function() {
+
             var max_fields_20 = 15; //maximum input boxes allowed
             var wrapper_20 = $(".input_fields_wrap_20_edit"); //Fields wrapper
             var add_button_20 = $(".add_field_button_20_edit"); //Add button ID
@@ -156,7 +168,7 @@
                         '<td><input type="text" name="lot[]" id="lot' + x +
                         '" class="form-control" value=""></td>' +
                         '<td><input type="text" name="qty[]" id="qty[' + x +
-                        ']" class="form-control" placeholder=""></td>' +
+                        ']" class="form-control" placeholder="" onkeypress="return validateNumber(event);"></td>' +
                         '<td><input type="time" name="stratTime[]" id="stratTime[' + x +
                         ']" class="form-control time" placeholder="" data-mask="00:00"></td>' +
                         '<td><input type="time" name="endTime[]" id="endTime[' + x +

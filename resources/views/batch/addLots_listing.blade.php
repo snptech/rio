@@ -153,7 +153,7 @@
                                             <label for="Quantity" class="active">Quantity</label>
                                             <input type="text" class="form-control" name="Quantity[]"
                                                 id="Quantity{{ $lm }}" placeholder=""
-                                                value="{{ isset($mat->requesist_qty) ? $mat->requesist_qty : old('Quantity[]') }}">
+                                                value="{{ isset($mat->requesist_qty) ? $mat->requesist_qty : old('Quantity[]') }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                         </div>
                                     </div>
                                 </div>
@@ -203,7 +203,7 @@
 
                             <tr>
                                 <td>Charge Polydimethylsiloxane in reactor.</td>
-                                <td><input type="number" name="qty[]" id="qty[1]" class="form-control"></td>
+                                <td><input type="text" name="qty[]" id="qty[1]" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                 <td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
                                 <td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time"
                                         data-mask="00:00"></td>

@@ -202,8 +202,8 @@
                                     <tr>
                                         <td>{{ $key == 0 ? 'Charge Polydimethylsiloxane in reactor.' : ($key == 1 ? 'Start heating the reactor and start stirring' : ($key == 2 ? 'Once the temperature is between 100 - 120oC start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.' : ($key == 3 ? 'When temperature reaches 180 - 190 oC stop heating the reactor.' : 'Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number'))) }}
                                         </td>
-                                        <td><input type="number" value="{{ $v->qty }}" name="qty[]" id="qty"
-                                                class="form-control" size="20" maxlength="120"></td>
+                                        <td><input type="text" value="{{ $v->qty }}" name="qty[]" id="qty"
+                                                class="form-control" size="20" maxlength="120" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                         <td><input type="text" value="{{ $v->temp }}" name="temp[]" id="temp"
                                                 class="form-control"  size="20" maxlength="120"></td>
                                         <td><input type="time" value="{{ $v->stratTime }}" name="stratTime[]"
@@ -221,7 +221,7 @@
 
                                 <tr>
                                     <td>Charge Polydimethylsiloxane in reactor.</td>
-                                    <td><input type="number" name="qty[]" id="qty[1]" class="form-control"></td>
+                                    <td><input type="text" name="qty[]" id="qty[1]" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                     <td><input type="text" name="temp[]" id="temp[1]" class="form-control"></td>
                                     <td><input type="time" name="stratTime[]" id="stratTime[1]" class="form-control time"
                                             data-mask="00:00"></td>
@@ -297,7 +297,18 @@
     </div>
 </div>
 <script>
+     function validateNumber(event) {
+            var key = window.event ? event.keyCode : event.which;
+            if (event.keyCode === 8 || event.keyCode === 46) {
+                return true;
+            } else if ( key < 48 || key > 57 ) {
+                return false;
+            } else {
+                return true;
+            }
+        };
     $(document).ready(function() {
+
             var max_fields = 15; //maximum input boxes allowed
             var wrapper = $(".input_fields_wrap_4_update"); //Fields wrapper
             var add_button = $(".add_field_button_4_update"); //Add button ID
@@ -330,8 +341,8 @@
                         x +
                         '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' +
                         x +
-                        '" class="active">Quantity (Kg.)</label><input type="number" class="form-control" id="Quantity' +
-                        x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'
+                        '" class="active">Quantity (Kg.)</label><input type="text" class="form-control" id="Quantity' +
+                        x + '" placeholder="" value="" name="Quantity[]" onkeypress="return validateNumber(event);"></div></div></div>'
                         ); //add input box
                 }
                 feather.replace()

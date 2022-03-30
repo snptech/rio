@@ -121,7 +121,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
     <script>
-        feather.replace()
+        function validateNumber(event) {
+            var key = window.event ? event.keyCode : event.which;
+            if (event.keyCode === 8 || event.keyCode === 46) {
+                return true;
+            } else if ( key < 48 || key > 57 ) {
+                return false;
+            } else {
+                return true;
+            }
+        };
+                feather.replace()
         $(document).ready(function() {
             var max_fields = 15; //maximum input boxes allowed
             var wrapper = $(".input_fields_wrap"); //Fields wrapper
@@ -145,9 +155,9 @@
                         x +
                         ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' +
                         x +
-                        ']" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' +
+                        ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' +
                         x +
-                        ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' +
+                        ']" placeholder="" onkeypress="return validateNumber(event);"></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' +
                         x +
                         ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' +
                         x +
@@ -182,9 +192,9 @@
                             x +
                             ']"><option>Select</option><option>RFLX</option></select></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity[' +
                             x +
-                            ']" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity[' +
+                            ']" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity[' +
                             x +
-                            ']" placeholder=""></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' +
+                            ']" placeholder="" onkeypress="return validateNumber(event);"></div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="arNo[' +
                             x +
                             ']" class="active">AR No.</label><input type="text" class="form-control" name="arNo[]" id="arNo[' +
                             x +
@@ -324,8 +334,8 @@
                         x +
                         '" placeholder="Choose Batch"><option>Choose Batch No</option></select></div></div><div class="col-12 col-md-4"><div class="form-group"><label for="Quantity' +
                         x +
-                        '" class="active">Quantity (Kg.)</label><input type="number" class="form-control" id="Quantity' +
-                        x + '" placeholder="" value="" name="Quantity[]"></div></div></div>'
+                        '" class="active">Quantity (Kg.)</label><input type="text" class="form-control" id="Quantity' +
+                        x + '" placeholder="" value="" name="Quantity[]" onkeypress="return validateNumber(event);"></div></div></div>'
                         ); //add input box
                 }
                 feather.replace()
@@ -405,8 +415,8 @@
                     $(wrapper).append(
                         '<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' +
                         x +
-                        '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select('rawMaterialName[]', $rawmaterials, old('rawMaterialName'), ['id' => 'rawMaterialName', 'class' => 'form-control', 'placeholder' => 'Raw Material Name']) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity' +
-                        x + '" placeholder=""></div></div></div></div>'); //add input box
+                        '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Raw Material Name</label> {{ Form::select('rawMaterialName[]', $rawmaterials, old('rawMaterialName'), ['id' => 'rawMaterialName', 'class' => 'form-control', 'placeholder' => 'Raw Material Name']) }}</div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity' +
+                        x + '" placeholder="" onkeypress="return validateNumber(event);"></div></div></div></div>'); //add input box
                 }
                 feather.replace()
             });
@@ -839,8 +849,8 @@
                     $(wrapper).append(
                         '<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">' +
                         x +
-                        '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label><select name="PackingMaterialName[]" class="form-control select" id="material_name" onchange="getcapacity($(this).val(),'+x+')"><option value="">Packing Material Name</option>@foreach($packingmaterialsarr as $val)<option value="{{$val->id}}">{{$val->material_name}}</option>@endforeach</select></div></div><div class="col-12 col-md-6 col-lg-4"> <div class="form-group">  <label for="Capacity" class="active">Capacity (Kg.)</label> <input type="text" class="form-control" name="Capacity[]" id="Capacity'+x+'" placeholder=""> </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="number" class="form-control" name="Quantity[]" id="Quantity' +
-                        x + '" placeholder=""></div></div></div></div>'); //add input box
+                        '</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="PackingMaterialName" class="active">Packing Material Name</label><select name="PackingMaterialName[]" class="form-control select" id="material_name" onchange="getcapacity($(this).val(),'+x+')"><option value="">Packing Material Name</option>@foreach($packingmaterialsarr as $val)<option value="{{$val->id}}">{{$val->material_name}}</option>@endforeach</select></div></div><div class="col-12 col-md-6 col-lg-4"> <div class="form-group">  <label for="Capacity" class="active">Capacity (Kg.)</label> <input type="text" class="form-control" name="Capacity[]" id="Capacity'+x+'" placeholder=""> </div></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity" class="active">Quantity (Kg.)</label><input type="text" class="form-control" name="Quantity[]" id="Quantity' +
+                        x + '" placeholder="" onkeypress="return validateNumber(event);"></div></div></div></div>'); //add input box
                 }
                 feather.replace()
             });

@@ -149,10 +149,10 @@
                                         <div class="form-group">
                                             <label for="Quantity" class="active">Quantity
                                                 (Kg.)</label>
-                                            <input type="number" class="form-control"
+                                            <input type="text" class="form-control"
                                                 name="Quantity[]" id="Quantity{{ $lm }}"
                                                 placeholder=""
-                                                value="{{ isset($rd->requesist_qty) ? $rd->requesist_qty : old('Quantity[]') }}">
+                                                value="{{ isset($rd->requesist_qty) ? $rd->requesist_qty : old('Quantity[]') }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                         </div>
                                     </div>
                                 </div>
@@ -179,8 +179,8 @@
                     <tbody>
                         <tr>
                             <td>Charge Polydimethylsiloxane in reactor.</td>
-                            <td><input type="number" name="qty[]" id="qty[1]"
-                                    class="form-control "></td>
+                            <td><input type="text" name="qty[]" id="qty[1]"
+                                    class="form-control " oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                             <td><input type="text" name="temp[]" id="temp[1]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[1]"
@@ -207,8 +207,8 @@
                             <td>Once the temperature is between 100 - 120<sup>o</sup>C start the
                                 Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in
                                 reactor simultaneously and increase stirring speed.</td>
-                            <td><input type="number" name="qty[]" id="qty[3]"
-                                    class="form-control"></td>
+                            <td><input type="text" name="qty[]" id="qty[3]"
+                                    class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                             <td><input type="text" name="temp[]" id="temp[3]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[3]"

@@ -45,7 +45,7 @@ class InwardPackingMaterialController extends Controller
         $listquery = "";
 
         $listquery = InwardPackingMaterialItems::select("goods_receipt_notes.*","goods_receipt_note_items.*",
-        "suppliers.name","manufacturers.manufacturer","users.name as uname","department.department as goods_going_from_name","detpto.department as goods_going_to_name","raw_materials.material_name","goods_receipt_note_items.id as itemid","goods_receipt_notes.id as id")
+        "suppliers.name","manufacturers.manufacturer","users.name as uname","department.department as goods_going_from_name","detpto.department as goods_going_to_name","raw_materials.material_name","goods_receipt_note_items.id as itemid","goods_receipt_notes.id as gid")
                     ->join("goods_receipt_notes","goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
                      ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
                      ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
@@ -129,8 +129,8 @@ class InwardPackingMaterialController extends Controller
             foreach ($data as $post) {
 
                 //$show =  route('inwardpackingrawmaterial-view', ["id"=>$post->id]);
-                $delete =  route('inwardpackingrawmaterial-remove', ["id"=>$post->id]);
-                $edit =  route('inwardpackingrawmaterial-edit', ["id"=>$post->id]);
+                $delete =  route('inwardpackingrawmaterial-remove', ["id"=>$post->gid]);
+                $edit =  route('inwardpackingrawmaterial-edit', ["id"=>$post->gid]);
 
 
                 $nestedData['id'] = $i;
@@ -144,7 +144,7 @@ class InwardPackingMaterialController extends Controller
                 $nestedData['qty'] = $post->total_qty;
                 $nestedData['goods_receipt_no'] = $post->goods_receipt_no;
                 $nestedData["submited_by"] = $post->uname;
-                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewrawmatrial('.$post->itemid.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a></div>';
+                $nestedData['action'] = '<div class="actions"><a href="#" class="btn action-btn" data-toggle="modal" data-target="#viewsupplier" title="View" onclick="viewrawmatrial('.$post->gid.')"><i data-feather="eye"></i></a><a href="'.$edit.'" class="btn action-btn" data-toggle="tooltip" title="Edit"><i data-feather="edit-3"></i></a></div>';
 
                 $datas[] = $nestedData;
 
@@ -403,18 +403,28 @@ class InwardPackingMaterialController extends Controller
     {
         if($request->id)
         {
-            $InwardPackingMaterial =  InwardPackingMaterialItems::select("goods_receipt_notes.*","goods_receipt_note_items.*",
-            "suppliers.name","manufacturers.manufacturer","users.name as uname","department.department as goods_going_from_name","detpto.department as goods_going_to_name","raw_materials.material_name","goods_receipt_note_items.id as itemid","goods_receipt_notes.id as id")
-                        ->join("goods_receipt_notes","goods_receipt_notes.id","goods_receipt_note_items.good_receipt_id")
+            $InwardPackingMaterial =  InwardPackingMaterial::select("goods_receipt_notes.*",
+            "suppliers.name","manufacturers.manufacturer","users.name as uname","department.department as goods_going_from_name","detpto.department as goods_going_to_name","goods_receipt_notes.id as id")
                          ->join("suppliers","suppliers.id","goods_receipt_notes.supplier")
                          ->join("manufacturers","manufacturers.id","goods_receipt_notes.manufacurer")
-                         ->join("raw_materials","raw_materials.id","goods_receipt_note_items.material")
+
                          ->leftJoin("users","users.id","goods_receipt_notes.created_by")
                          ->join("department", "department.id", "=", "goods_receipt_notes.goods_going_from")
                          ->join("department as detpto", "detpto.id", "=", "goods_receipt_notes.goods_going_to")
-                         ->where("goods_receipt_note_items.id",$request->id)->first();
+                         ->where("goods_receipt_notes.id",$request->id)->first();
 
-             $view = view('inwardpackingmatrial.view', ['matarial'=> $InwardPackingMaterial])->render();
+            $items = array();
+
+            if(isset($InwardPackingMaterial))
+            {
+
+                $items = InwardPackingMaterialItems::select("goods_receipt_note_items.*","raw_materials.material_name")
+                        ->join("raw_materials","raw_materials.id","goods_receipt_note_items.material")
+                        ->where("goods_receipt_note_items.good_receipt_id",$InwardPackingMaterial->id)->get();
+            }
+
+
+             $view = view('inwardpackingmatrial.view', ['matarial'=> $InwardPackingMaterial,"items"=>$items])->render();
              return response()->json(['html'=>$view]);
 
         }

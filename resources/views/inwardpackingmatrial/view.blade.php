@@ -42,9 +42,30 @@
                          <td>{{ $matarial->total_qty }}</td>
                         </tr>
                         <tr>
-                         <th>AR No. / Date</th>
-                         <td>{{ $matarial->ar_no_date }}</td>
-
+                            <th colspan="2">
+                                Material Details
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                @if(isset($items))
+                                <table class="table table-hover table-bordered">
+                                    <tr>
+                                        <th>Packing Material Name</th>
+                                        <th>Total Quantity Received (Nos.)</th>
+                                        <th>AR No. / Date</th>
+                                    </tr>
+                                    @foreach($items as $value)
+                                        <tr>
+                                            <td>{{ $value->material_name }}</td>
+                                            <td>{{ $value->total_qty }}</td>
+                                            <td>{{ $value->ar_no_date }} {{ $value->ar_no_datedate?date("d/m/Y",strtotime($value->ar_no_datedate)):"" }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                                @endif
+                            </th>
+                        </tr>
 
                         <tr>
                             <th>Remark</th>

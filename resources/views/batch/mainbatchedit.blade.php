@@ -140,7 +140,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+               {{--   <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="approval" class="active">This Batch is approved/not
                             approved</label>
@@ -152,7 +152,7 @@
 
                         </select>
                     </div>
-                </div>
+                </div>--}}
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="Remark" class="active">Note / Remark</label>

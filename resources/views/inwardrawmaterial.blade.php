@@ -67,7 +67,7 @@
                         @foreach($inward_material as $temp)
                         <tr>
 
-                        <td>{{$temp->inward_no}}</td>
+                        <td>{{$i}}</td>
                         <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
                         <!--<td>{{$temp->opening_stock}}</td> -->
                         <td>{{$temp->man_name}}</td>
@@ -129,7 +129,9 @@
   <script>
       feather.replace()
     $(document).ready(function() {
-        $('.datatable').DataTable();
+        $('.datatable').DataTable(
+
+        );
     });
     function viewsupp(id)
     {

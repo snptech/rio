@@ -8,7 +8,7 @@
       <div class="form-row">
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
               <div class="form-group">
-                  <label for="QuantityApproved">Quantity Approved</label>
+                  <label for="QuantityApproved">Quantity</label>
                   <input type="number" class="form-control" name="quantity_approved" id="quantity_approved" placeholder="Quantity Approved" value="{{ $qty_control_view->qty_received_kg }}">
               </div>
           </div>

@@ -116,8 +116,8 @@
                                         class="form-control" value="{{ date('Y-m-d') }}"></td>
                                 <td><input type="text" name="lot[]" id="lot" class="form-control"
                                         value=""><input type="hidden" name="lotsid[]" value=""></td>
-                                <td><input type="number" name="qty[]" id="qty[1]"
-                                        class="form-control" value=""></td>
+                                <td><input type="text" name="qty[]" id="qty[1]"
+                                        class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                 <td><input type="time" name="stratTime[]" id="stratTime[1]"
                                         class="form-control time" value="" data-mask="00:00"></td>
                                 <td><input type="time" name="endTime[]" id="endTime[1]"
