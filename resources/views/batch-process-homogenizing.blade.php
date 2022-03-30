@@ -88,13 +88,13 @@
 			</table>
 			<table width="100%" cellpadding="10" cellspacing="0" border="0" style="font-size:1rem;font-weight:400;font-family: serif;margin:1rem 0rem 0rem;line-height:1.2;">
 				<tr>
-					<th style="text-align:left;">In Process Check<br />(After 4 Lot)<br /><br /><br /></th>
-					<th valign="top">:</th>
+					<th style="text-align:left;" width="15%">In Process Check<br />(After 4 Lot)<br /><br /><br /></th>
+					<th valign="top" width="1%">:</th>
 					<td valign="top">{{$homo->proecess_check}}</td>
 				</tr>
 				<tr>
-					<th style="text-align:left;">Observed value</th>
-					<th>:</th>
+					<th style="text-align:left;" width="15%">Observed value</th>
+					<th width="1%">:</th>
 					<td>{{$homo->Observedvalue}} cSt</td>
 				</tr>
 			</table>

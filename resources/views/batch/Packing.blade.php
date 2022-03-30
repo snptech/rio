@@ -87,6 +87,7 @@
                                     id="TemperatureP" placeholder="Observation">
                             </div>
                         </div>
+                        <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="50kgDrums" class="active">50 Kg No of Drums
@@ -114,23 +115,31 @@
                                     value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
                             </div>
                         </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="200kgDrums" class="active">5 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="5kgDrums"
+                                    id="5kgDrums"
+                                    value="{{ isset($packingmateria['5kgDrums']) ? $packingmateria['5kgDrums'] : '' }}">
+                            </div>
+                        </div>
 
-
+                        <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="areaCleanliness">Done By</label>
                                 <input type="text" class="form-control" name="areaCleanliness"
                                     value="{{ Auth::user()->name }}" id="areaCleanliness"
-                                    value="{{ \Auth::user()->name }}">
+                                    value="{{ \Auth::user()->name }}" readonly>
 
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="CareaCleanliness">Checked By</label>
-                                <input class="form-control" type="text" name="CareaCleanliness"
-                                    value="{{ Auth::user()->name }}" id="CareaCleanliness"
-                                    value="{{ \Auth::user()->name }}">
+                                {{ Form::select('CareaCleanliness',$usersworker,old("CareaCleanliness")?old("CareaCleanliness"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+
                             </div>
                         </div>
                     </div>
@@ -238,9 +247,8 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="checkedBy">Checked By</label>
-                                <input type="text" class="form-control" name="checkedBy"
-                                    value="{{ Auth::user()->name }}" id="checkedBy"
-                                    value="{{ \Auth::user()->name }}">
+                                {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+
 
                             </div>
                         </div>

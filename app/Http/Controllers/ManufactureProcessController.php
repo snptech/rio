@@ -281,6 +281,8 @@ class ManufactureProcessController extends Controller
             $data["eqipment_code"] = DB::table("equipment_code")->pluck("code", "id");
 
             $data["users"] = USER::pluck("name","id");
+            $data["usersworker"] = USER::where("role_id",6)->pluck("name","id");
+            $data["usersofficer"] = USER::where("role_id",5)->pluck("name","id");
 
 
 
@@ -489,13 +491,13 @@ class ManufactureProcessController extends Controller
 
         $data['department'] = Department::where("department_type","W")->pluck("department", "id");
 
-        $data['res_data'] = BillOfRwaMaterial::where('id', '=', $id)->first();
+        $data['res_data'] = BillOfRwaMaterial::where('batch_id', '=', $id)->first();
 
 
         $data['res'] = BillOfRawMaterialsDetails::where('bill_of_raw_material_id', '=', $id)->get();
         $data['res_3'] = MaterialDetails::where('packingmaterial_id', '=', $id)
             ->get();
-        $data['res_data_3'] = PackingMaterialSlip::where('id', '=', $id)
+        $data['res_data_3'] = PackingMaterialSlip::where('batchNo', '=', $id)
             ->first();
         $data['res_data_1'] = BatchManufacturingEquipment::where('batch_id', '=', $id)
             ->first();
@@ -510,7 +512,7 @@ class ManufactureProcessController extends Controller
         $data['AddLotslRawMaterialDetails'] = AddLotslRawMaterialDetails::where('add_lots_id', '=', $id)
             ->get();
 
-        $data['addlots'] = AddLotsl::where('id', '=', $id)
+        $data['addlots'] = AddLotsl::where('batch_id', '=', $batchdetails->id)
             ->first();
        /* $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->join("raw_materials","raw_materials.id","add_lotsl.proName")
             ->get();*/
@@ -541,7 +543,7 @@ class ManufactureProcessController extends Controller
 
         $data["users"] = USER::pluck("name","id");
         $data["usersworker"] = USER::where("role_id",6)->pluck("name","id");
-        $data["usersofficer"] = USER::where("role_id",6)->pluck("name","id");
+        $data["usersofficer"] = USER::where("role_id",5)->pluck("name","id");
 
 
         //$data['sequenceId'] = '#requisition';
@@ -882,6 +884,7 @@ class ManufactureProcessController extends Controller
             "TemperatureP" => "required",
             "50kgDrums" => "required",
             "20kgDrums" => "required",
+
             "startTime" => "required",
            /* "EndstartTime" => "required",*/
             "areaCleanliness" => "required",
@@ -945,6 +948,7 @@ class ManufactureProcessController extends Controller
             "50kgDrums" => $request['50kgDrums'],
             "20kgDrums" => $request['20kgDrums'],
             "30kgDrums" => $request['30kgDrums'],
+            "5kgDrums" => $request['5kgDrums'],
             "startTime" => $request['startTime'],
            /* "EndstartTime" => $request['EndstartTime'],*/
             "areaCleanliness" => Auth::user()->id,
@@ -1694,7 +1698,7 @@ class ManufactureProcessController extends Controller
             "50kgDrums" => $request['50kgDrums'],
             "20kgDrums" => $request['20kgDrums'],
             "30kgDrums" => $request['30kgDrums'],
-
+            "5kgDrums"=> $request['5kgDrums'],
             "startTime" => $request['startTime'],
             "EndstartTime" => $request['EndstartTime'],
             "areaCleanliness" => $request['areaCleanliness'],

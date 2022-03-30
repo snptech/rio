@@ -513,7 +513,7 @@ class MaterialForProductionController extends Controller
             }
             $index = $request->index;
             $detailid = $request->detailsid;
-            $html = '<div class="row add-more-wrap add-more-new input_fields_wrap_4'.$index.' m-0 mb-4 extraDiv_'.$index.'"><div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('.$index.')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4'.$index.'"></i></button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity'.$index.'" class="active">'.$matrialnme.' Batch</label><select name="rBatch'.$detailid.'[]" id="rBatch'.$index.'" class="form-control" data-id="P" placeholder="Choose Batch number" onchange="getarnoandqty($(this).val(),'.$request->id.','.$index.')"><option>Choose Batch number</option>';
+            $html = '<div class="row add-more-wrap add-more-new input_fields_wrap_4'.$index.' m-0 mb-4 extraDiv_'.$index.'"><div class="input-group-btn"><button class="btn btn-danger remove_field" onclick="removedIV('.$index.')" type="button"><i class="icon-remove" data-feather="x" data-id="input_fields_wrap_4'.$index.'"></i>X</button></div><div class="col-12 col-md-6 col-lg-4"><div class="form-group"><label for="Quantity'.$index.'" class="active">'.$matrialnme.' Batch</label><select name="rBatch'.$detailid.'[]" id="rBatch'.$index.'" class="form-control" data-id="P" placeholder="Choose Batch number" onchange="getarnoandqty($(this).val(),'.$request->id.','.$index.')"><option>Choose Batch number</option>';
 
             if(isset($batch))
             {

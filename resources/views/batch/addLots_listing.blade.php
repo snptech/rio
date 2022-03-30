@@ -184,8 +184,8 @@
                                 <tr>
                                     <td>{{ $key == 0 ? 'Charge Polydimethylsiloxane in reactor.' : ($key == 1 ? 'Start heating the reactor and start stirring' : ($key == 2 ? 'Once the temperature is between 100 - 120oC start the Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in reactor simultaneously and increase stirring speed.' : ($key == 3 ? 'When temperature reaches 180 - 190 oC stop heating the reactor.' : 'Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number'))) }}
                                     </td>
-                                    <td><input type="number" value="{{ $v->qty }}" name="qty[]" id="qty"
-                                            class="form-control"></td>
+                                    <td><input type="text" value="{{ $v->qty }}" name="qty[]" id="qty"
+                                            class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                     <td><input type="text" value="{{ $v->temp }}" name="temp[]" id="temp"
                                             class="form-control"></td>
                                     <td><input type="time" value="{{ $v->stratTime }}" name="stratTime[]"
@@ -214,7 +214,7 @@
                             </tr>
                             <tr>
                                 <td>Start heating the reactor and start stirring</td>
-                                <td><input type="number" name="qty[]" id="qty[2]" class="form-control"></td>
+                                <td><input type="text" name="qty[]" id="qty[2]" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                 <td><input type="text" name="temp[]" id="temp[2]" class="form-control"></td>
                                 <td><input type="time" name="stratTime[]" id="stratTime[2]" class="form-control time"
                                         data-mask="00:00"></td>
@@ -227,7 +227,7 @@
                                 <td>Once the temperature is between 100 - 120<sup>o</sup>C start the
                                     Inline mixer and charge ColloidalSilicon Dioxide (Fumed Silica) in
                                     reactor simultaneously and increase stirring speed.</td>
-                                <td><input type="number" name="qty[]" id="qty[3]" class="form-control"></td>
+                                <td><input type="text" name="qty[]" id="qty[3]" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                 <td><input type="text" name="temp[]" id="temp[3]" class="form-control"></td>
                                 <td><input type="time" name="stratTime[]" id="stratTime[3]" class="form-control time"
                                         data-mask="00:00"></td>
@@ -239,7 +239,7 @@
                             <tr>
                                 <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the
                                     reactor.</td>
-                                <td><input type="number" name="qty[]" id="qty[4]" class="form-control"></td>
+                                <td><input type="text" name="qty[]" id="qty[4]" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                 <td><input type="text" name="temp[]" id="temp[4]" class="form-control"></td>
                                 <td><input type="time" name="stratTime[]" id="stratTime4" class="form-control time"
                                         data-mask="00:00"></td>
@@ -251,7 +251,7 @@
                             <tr>
                                 <td>Stop stirrer and transfer the reaction mass to homogenizing tank
                                     No.- PR/BT/Come Tank number</td>
-                                <td><input type="number" name="qty[]" id="qty[5]" class="form-control"></td>
+                                <td><input type="text" name="qty[]" id="qty[5]" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                 <td><input type="text" name="temp[]" id="temp[5]" class="form-control"></td>
                                 <td><input type="time" name="stratTime[]" id="stratTime5" class="form-control time"
                                         data-mask="00:00"></td>

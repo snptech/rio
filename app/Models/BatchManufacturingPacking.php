@@ -23,6 +23,7 @@ class BatchManufacturingPacking extends Model
         '50kgDrums',
         '20kgDrums',
         '30kgDrums',
+        '5kgDrums',
         'startTime',
         'EndstartTime',
         'areaCleanliness',
