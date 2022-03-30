@@ -7,6 +7,10 @@
             name="id">
         <input type="hidden" value="{{ isset($requestion_packing->id) ? $requestion_packing->id : 0 }}"
             name="packingid">
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+            placeholder="Batch No."
+            value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+            readonly>
         @csrf
         <div class="form-row">
 
