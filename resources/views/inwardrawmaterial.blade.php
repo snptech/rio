@@ -41,14 +41,14 @@
                         <tr>
                             <th rowspan="2">Inward No</th>
                             <th rowspan="2">Date of Receipt</th>
-                            <!--<th rowspan="2">Opening Balance</th> -->
+
                             <th rowspan="2">Name of Manufacturer</th>
                             <th rowspan="2">Name of Supplier</th>
                             <th rowspan="2">Raw Material Name</th>
                             <th rowspan="2">Invoice Number</th>
                             <th rowspan="2">GRN</th>
                             <th rowspan="2">Viscosity</th>
-
+                           <th rowspan="2">Ar No./Date</th>
                             <th rowspan="2">Total Quantity (Kg.)</th>
                             <th rowspan="2">Pack Size</th>
                             <th rowspan="2">Batch No.</th>
@@ -69,13 +69,14 @@
 
                         <td>{{$i}}</td>
                         <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
-                        <!--<td>{{$temp->opening_stock}}</td> -->
+
                         <td>{{$temp->man_name}}</td>
                         <td>{{$temp->name}}</td>
                         <td>{{$temp->material_name}}</td>
                         <td>{{$temp->invoice_no}}</td>
                         <td>{{$temp->goods_receipt_no}}</td>
                         <td>{{$temp->viscosity}}</td>
+                        <<td>{{$temp->ar_no_date}}/{{$temp->ar_no_date_date}}</td>
                         <td>{{$temp->qty_received_kg}}</td>
                         <td>{{$temp->mesurment}}</td>
                         <td>{{$temp->batch_no}}</td>

@@ -3,6 +3,7 @@
 					<h3>Inward Raw Material Items Details</h3>
 				</div>
 				<div class="col-12 table-responsive">
+
                      <table class="table table-hover table-bordered">
                          <tr>
                              <th width="30%">Inward Number</th>
@@ -41,6 +42,11 @@
                             <th>Viscosity</th>
                             <td>{{ $inward_material->viscosity }}</td>
                         </tr>
+                        <tr>
+                            <th>Ar No./Date</th>
+                            <td>{{$inward_material->ar_no_date}}/{{$inward_material->ar_no_date_date}}</td>
+                        </tr>
+
                         <tr>
                             <th>TOTAL QUANTITY (KG.)</th>
                             <td>{{ $inward_material->qty_received_kg }}</td>

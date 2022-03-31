@@ -90,6 +90,24 @@
                         <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
+                                <label for="200kgDrums" class="active">5 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="5kgDrums"
+                                    id="5kgDrums"
+                                    value="{{ isset($packingmateria['5kgDrums']) ? $packingmateria['5kgDrums'] : '' }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="200kgDrums" class="active">30 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="30kgDrums"
+                                    id="30kgDrums"
+                                    value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
                                 <label for="50kgDrums" class="active">50 Kg No of Drums
                                     filled</label>
                                 <input type="Number" class="form-control" name="50kgDrums"
@@ -106,24 +124,8 @@
                                     value="{{ isset($packingmateria['20kgDrums']) ? $packingmateria['20kgDrums'] : '' }}">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="200kgDrums" class="active">30 Kg No of Drums
-                                    filled</label>
-                                <input type="Number" class="form-control" name="30kgDrums"
-                                    id="30kgDrums"
-                                    value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="200kgDrums" class="active">5 Kg No of Drums
-                                    filled</label>
-                                <input type="Number" class="form-control" name="5kgDrums"
-                                    id="5kgDrums"
-                                    value="{{ isset($packingmateria['5kgDrums']) ? $packingmateria['5kgDrums'] : '' }}">
-                            </div>
-                        </div>
+
+
 
                         <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
