@@ -7,6 +7,10 @@
             name="id">
         <input type="hidden" value="{{ isset($requestion_packing->id) ? $requestion_packing->id : 0 }}"
             name="packingid">
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+            placeholder="Batch No."
+            value="{{ isset($batchdetails->batchNo) ? $batchdetails->batchNo : old('batchNo') }}"
+            readonly>
         @csrf
         <div class="form-row">
 
@@ -115,13 +119,13 @@
 
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            {{--  <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="ApprovedBy">Approved By</label>
                     {{ Form::select('ApprovedBy',$users,old("ApprovedBy")?old("ApprovedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Approved By","id"=>"checkedByI")) }}
 
                 </div>
-            </div>
+            </div>--}}
             <div class="col-12">
                 <div class="form-group">
                     <label for="Remark" class="active">Note / Remark</label>
