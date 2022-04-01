@@ -119,14 +119,14 @@
 
                 </div>
             </div>
-            {{--  <div class="col-12 col-md-6">
+             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="ApprovedBy">Approved By</label>
-                    <input type="text" class="form-control select" name="ApprovedBy" id="ApprovedBy"
-                        value="{{ \Auth::user()->name }}" readonly>
+                    {{ Form::select('ApprovedBy',$users,old("ApprovedBy")?old("ApprovedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Approved by","id"=>"ApprovedBy")) }}
+
 
                 </div>
-            </div>--}}
+            </div>
             <div class="col-12">
                 <div class="form-group">
                     <label for="Remark" class="active">Note / Remark</label>

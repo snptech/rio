@@ -192,8 +192,8 @@
                         </tr>
                         <tr>
                             <td>Start heating the reactor and start stirring</td>
-                            <td><input type="number" name="qty[]" id="qty[2]"
-                                    class="form-control"></td>
+                            <td><input type="text" name="qty[]" id="qty[2]"
+                                    class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                             <td><input type="text" name="temp[]" id="temp[2]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[2]"
@@ -221,8 +221,8 @@
                         <tr>
                             <td>When temperature reaches 180 - 190 <sup>o</sup>C stop heating the
                                 reactor.</td>
-                            <td><input type="number" name="qty[]" id="qty[4]"
-                                    class="form-control"></td>
+                            <td><input type="text" name="qty[]" id="qty[4]"
+                                    class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                             <td><input type="text" name="temp[]" id="temp[4]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[4]"
@@ -235,8 +235,8 @@
                         <tr>
                             <td>Stop stirrer and transfer the reaction mass to homogenizing tank
                                 No.- PR/BT/Come Tank number</td>
-                            <td><input type="number" name="qty[]" id="qty[5]"
-                                    class="form-control"></td>
+                            <td><input type="text" name="qty[]" id="qty[5]"
+                                    class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                             <td><input type="text" name="temp[]" id="temp[5]"
                                     class="form-control"></td>
                             <td><input type="time" name="stratTime[]" id="stratTime[5]"
