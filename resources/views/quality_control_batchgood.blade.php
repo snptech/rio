@@ -43,10 +43,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @if(count($quality_control))
                                 @foreach($quality_control as $temp)
                                 <tr>
-                                    <td>{{ date('d / m /Y',strtotime($temp->created_at))}}</td>
+                                    <td>{{ date('d/m/Y',strtotime($temp->created_at))}}</td>
 
                                     <td>{{$temp->total_quantity_bal}}</td>
 

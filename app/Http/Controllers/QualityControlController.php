@@ -443,7 +443,7 @@ class QualityControlController extends Controller
             'raw_materials.material_name',
             "suppliers.name",
             "manufacturers.manufacturer",
-            "raw_materials.created_at",
+            "goods_receipt_note_items.created_at",
             "goods_receipt_note_items.id as itemid",
             "goods_receipt_note_items.ar_no_date"
             )

@@ -141,7 +141,7 @@ class InwardPackingMaterialController extends Controller
                 $nestedData['manufacturer'] = $post->manufacturer;
                 $nestedData['supplier'] = $post->name;
                 $nestedData['invoice_no'] = $post->invoice_no;
-                $nestedData['arno_date'] = $post->ar_no_date."/".($post->ar_no_datedate !="0000-00-00 00:00:00"?$post->ar_no_datedate:"");
+                $nestedData['arno_date'] = $post->ar_no_date." / ".($post->ar_no_datedate !="0000-00-00 00:00:00"? date("d/m/Y",strtotime($post->ar_no_datedate)):"");
                 $nestedData['qty'] = $post->total_qty;
                 $nestedData['goods_receipt_no'] = $post->goods_receipt_no;
                 $nestedData["submited_by"] = $post->uname;

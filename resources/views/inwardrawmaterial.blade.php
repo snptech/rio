@@ -68,7 +68,7 @@
                         <tr>
 
                         <td>{{$i}}</td>
-                        <td>{{isset($temp->date_of_receipt)?date("d/m/Y",$temp->date_of_receipt):""}}</td>
+                        <td>{{$temp->date_of_receipt != "0000-00-00 00:00:00"?date("d/m/Y",$temp->date_of_receipt):""}}</td>
 
                         <td>{{$temp->man_name}}</td>
                         <td>{{$temp->name}}</td>
@@ -76,7 +76,7 @@
                         <td>{{$temp->invoice_no}}</td>
                         <td>{{$temp->goods_receipt_no}}</td>
                         <td>{{$temp->viscosity}}</td>
-                        <<td>{{$temp->ar_no_date}}/{{$temp->ar_no_date_date}}</td>
+                        <td>{{$temp->ar_no_date}}/{{$temp->ar_no_date_date}}</td>
                         <td>{{$temp->qty_received_kg}}</td>
                         <td>{{$temp->mesurment}}</td>
                         <td>{{$temp->batch_no}}</td>
@@ -130,9 +130,7 @@
   <script>
       feather.replace()
     $(document).ready(function() {
-        $('.datatable').DataTable(
-
-        );
+        $('.datatable').DataTable();
     });
     function viewsupp(id)
     {
