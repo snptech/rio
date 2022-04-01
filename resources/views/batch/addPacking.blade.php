@@ -80,6 +80,23 @@
                         <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
+                                <label for="200kgDrums" class="active">5 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="5kgDrums"
+                                    id="5kgDrums" placeholder="No of Drums">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="200kgDrums" class="active">30 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="30kgDrums"
+                                    id="30kgDrums" placeholder="No of Drums">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
                                 <label for="50kgDrums" class="active">50 Kg No of Drums
                                     filled</label>
                                 <input type="Number" class="form-control" name="50kgDrums"
@@ -94,22 +111,7 @@
                                     id="20kgDrums" placeholder="No of Drums">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="200kgDrums" class="active">30 Kg No of Drums
-                                    filled</label>
-                                <input type="Number" class="form-control" name="30kgDrums"
-                                    id="30kgDrums" placeholder="No of Drums">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="200kgDrums" class="active">5 Kg No of Drums
-                                    filled</label>
-                                <input type="Number" class="form-control" name="5kgDrums"
-                                    id="5kgDrums" placeholder="No of Drums">
-                            </div>
-                        </div>
+
 
                       {{--   <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">

@@ -90,6 +90,24 @@
                         <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
+                                <label for="200kgDrums" class="active">5 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="5kgDrums"
+                                    id="5kgDrums"
+                                    value="{{ isset($packingmateria['5kgDrums']) ? $packingmateria['5kgDrums'] : '' }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="200kgDrums" class="active">30 Kg No of Drums
+                                    filled</label>
+                                <input type="Number" class="form-control" name="30kgDrums"
+                                    id="30kgDrums"
+                                    value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
                                 <label for="50kgDrums" class="active">50 Kg No of Drums
                                     filled</label>
                                 <input type="Number" class="form-control" name="50kgDrums"
@@ -106,39 +124,22 @@
                                     value="{{ isset($packingmateria['20kgDrums']) ? $packingmateria['20kgDrums'] : '' }}">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="200kgDrums" class="active">30 Kg No of Drums
-                                    filled</label>
-                                <input type="Number" class="form-control" name="30kgDrums"
-                                    id="30kgDrums"
-                                    value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="200kgDrums" class="active">5 Kg No of Drums
-                                    filled</label>
-                                <input type="Number" class="form-control" name="5kgDrums"
-                                    id="5kgDrums"
-                                    value="{{ isset($packingmateria['5kgDrums']) ? $packingmateria['5kgDrums'] : '' }}">
-                            </div>
-                        </div>
+
+
 
                         <div class="col-12"></div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="areaCleanliness">Done By</label>
-                                <input type="text" class="form-control" name="areaCleanliness"
-                                    value="{{ Auth::user()->name }}" id="areaCleanliness"
-                                    value="{{ \Auth::user()->name }}" readonly>
+
+                                    {{ Form::select('areaCleanliness',$users,old("areaCleanliness")?old("areaCleanliness"):($packingmateria['checkedBy']?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Done by")) }}
 
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="CareaCleanliness">Checked By</label>
-                                {{ Form::select('CareaCleanliness',$usersworker,old("CareaCleanliness")?old("CareaCleanliness"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+                                {{ Form::select('CareaCleanliness',$usersworker,old("CareaCleanliness")?old("CareaCleanliness"):($packingmateria['checkedBy']?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Created by")) }}
 
                             </div>
                         </div>
@@ -247,7 +248,7 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="checkedBy">Checked By</label>
-                                {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+                                {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):($packingmateria['checkedBy']?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Created by")) }}
 
 
                             </div>

@@ -2171,6 +2171,8 @@ class ManufactureProcessController extends Controller
             "tare_wt_200"=> $request['tare_wt_200'],
             "net_wt_30"=> $request['net_wt_30'],
             "tare_wt_30"=> $request['tare_wt_30'],
+            "net_wt_5"=> $request['net_wt_5'],
+            "tare_wt_5"=> $request['tare_wt_5'],
             "Remark"=> $request['Remark'],
             "batch_id"=> $request['batch_id'],
         ];
@@ -2263,6 +2265,8 @@ class ManufactureProcessController extends Controller
             "tare_wt_200"=> $request['tare_wt_200'],
             "net_wt_30"=> $request['net_wt_30'],
             "tare_wt_30"=> $request['tare_wt_30'],
+            "net_wt_5"=> $request['net_wt_5'],
+            "tare_wt_5"=> $request['tare_wt_5'],
             "Remark"=> $request['Remark'],
             "batch_id"=> $request['batch_id'],
         ];

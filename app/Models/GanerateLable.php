@@ -22,6 +22,8 @@ class GanerateLable extends Model
         'tare_wt_200',
         'net_wt_30',
         'tare_wt_30',
+        'net_wt_5',
+        'tare_wt_5',
         'Remark',
         'batch_id',
         'mfg_date',

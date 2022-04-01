@@ -122,8 +122,7 @@
              <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="ApprovedBy">Approved By</label>
-                    {{ Form::select('ApprovedBy',$users,old("ApprovedBy")?old("ApprovedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Approved by","id"=>"ApprovedBy")) }}
-
+                    {{ Form::select('ApprovedBy',$users,old("ApprovedBy")?old("ApprovedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Approved By","id"=>"checkedByI")) }}
 
                 </div>
             </div>

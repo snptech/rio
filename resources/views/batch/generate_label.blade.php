@@ -43,6 +43,34 @@
                     </div>
                 </div>
                 </div>
+
+                <div class="form-group input_fields_wrap" id="MaterialReceived">
+                    <label class="control-label d-flex">Product Label 200 Kg Drums
+
+                    </label>
+                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <!-- <span class="add-count">1</span> -->
+
+
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="net_wt" class="active">Net Wt</label>
+                                <input type="text" class="form-control" name="net_wt_200" id="net_wt_200"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_200) ? $edit_ganerat_lable->net_wt_200 : old("net_wt_200") }}"
+                                    placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="tare_wt" class="active">Tare Wt</label>
+                                <input type="text" class="form-control" name="tare_wt_200"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_200) ? $edit_ganerat_lable->tare_wt_200 : old("tare_wt_200") }}"
+                                    id="tare_wt" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
                     <label class="control-label d-flex">Product Label 50 Kg Drums
 
@@ -71,33 +99,6 @@
                     </div>
                 </div>
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
-                    <label class="control-label d-flex">Product Label 200 Kg Drums
-
-                    </label>
-                    <div class="row add-more-wrap after-add-more m-0 mb-4">
-                        <!-- <span class="add-count">1</span> -->
-
-
-
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="net_wt" class="active">Net Wt</label>
-                                <input type="text" class="form-control" name="net_wt" id="net_wt_200"
-                                    value="{{ isset($edit_ganerat_lable->net_wt_200) ? $edit_ganerat_lable->net_wt_200 : old("net_wt_200") }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="tare_wt" class="active">Tare Wt</label>
-                                <input type="text" class="form-control" name="tare_wt_200"
-                                    value="{{ isset($edit_ganerat_lable->tare_wt_200) ? $edit_ganerat_lable->tare_wt_200 : old("tare_wt_200") }}"
-                                    id="tare_wt" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group input_fields_wrap" id="MaterialReceived">
                     <label class="control-label d-flex">Product Label 30 Kg Drums
 
                     </label>
@@ -109,7 +110,7 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="net_wt" class="active">Net Wt</label>
-                                <input type="text" class="form-control" name="net_wt" id="net_wt_30"
+                                <input type="text" class="form-control" name="net_wt_30" id="net_wt_30"
                                     value="{{ isset($edit_ganerat_lable->net_wt_30) ? $edit_ganerat_lable->net_wt_30 : old("net_wt_30") }}"
                                     placeholder="">
                             </div>
@@ -119,7 +120,35 @@
                                 <label for="tare_wt" class="active">Tare Wt</label>
                                 <input type="text" class="form-control" name="tare_wt_30"
                                     value="{{ isset($edit_ganerat_lable->tare_wt_30) ? $edit_ganerat_lable->tare_wt_30 : old("tare_wt_30") }}"
-                                    id="tare_wt" placeholder="">
+                                    id="tare_wt_30" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group input_fields_wrap" id="MaterialReceived">
+                    <label class="control-label d-flex">Product Label 5 Kg Drums
+
+                    </label>
+                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <!-- <span class="add-count">1</span> -->
+
+
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="net_wt" class="active">Net Wt</label>
+                                <input type="text" class="form-control" name="net_wt_5" id="net_wt_5"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_5) ? $edit_ganerat_lable->net_wt_5 : old("net_wt_5") }}"
+                                    placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="tare_wt" class="active">Tare Wt</label>
+                                <input type="text" class="form-control" name="tare_wt_5"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_5) ? $edit_ganerat_lable->tare_wt_5 : old("tare_wt_5") }}"
+                                    id="tare_wt_5" placeholder="">
                             </div>
                         </div>
                     </div>

@@ -55,7 +55,7 @@
                                 <button type="submit" class="btn btn-primary">Search</button>
                                 <button type="submit"  id="btnClear"class="btn btn-primary">clear</button>
                             </div>
-                           
+
                         </div>
                     </form>
                 </div>
@@ -86,6 +86,7 @@
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Date of Receipt</th>
+                                <th>Ar No./Date</th>
                                 <th>Packing Material Name</th>
                                 <th>Name of Manufacturer</th>
                                 <th>Name of Supplier</th>
@@ -187,6 +188,10 @@
                         "orderable": true
                     },
                     {
+                        "data": "arno_date",
+                        "orderable": false
+                    },
+                    {
                         "data": "material_name",
                         "orderable": false
                     },
@@ -245,7 +250,7 @@
         $('#invoiceNo').val('');
 
      })
-         		
+
 	    });
 
         function remove(url) {

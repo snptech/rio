@@ -48,33 +48,6 @@
             </div>
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
-                    <label class="control-label d-flex">Product Label of 50 Kg Drums
-
-                    </label>
-                    <div class="row add-more-wrap after-add-more m-0 mb-4">
-                        <!-- <span class="add-count">1</span> -->
-
-
-
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="net_wt" class="active">Net Wt</label>
-                                <input type="text" class="form-control" name="net_wt" id="net_wt"
-                                    placeholder="{{ isset($batchdetails) ? $batchdetails->net_wt_50 : '' }}">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="tare_wt" class="active">Tare Wt</label>
-                                <input type="text" class="form-control" name="tare_wt"
-                                    id="tare_wt" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="form-group input_fields_wrap" id="MaterialReceived">
                     <label class="control-label d-flex">Product Label of 200 Kg Drums
 
                     </label>
@@ -102,6 +75,34 @@
             </div>
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
+                    <label class="control-label d-flex">Product Label of 50 Kg Drums
+
+                    </label>
+                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <!-- <span class="add-count">1</span> -->
+
+
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="net_wt" class="active">Net Wt</label>
+                                <input type="text" class="form-control" name="net_wt" id="net_wt"
+                                    placeholder="{{ isset($batchdetails) ? $batchdetails->net_wt : '' }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="tare_wt" class="active">Tare Wt</label>
+                                <input type="text" class="form-control" name="tare_wt"
+                                    id="tare_wt" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="form-group input_fields_wrap" id="MaterialReceived">
                     <label class="control-label d-flex">Product Label of 30 Kg Drums
 
                     </label>
@@ -126,7 +127,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group input_fields_wrap" id="MaterialReceived">
+                    <label class="control-label d-flex">Product Label 5 Kg Drums
+
+                    </label>
+                    <div class="row add-more-wrap after-add-more m-0 mb-4">
+                        <!-- <span class="add-count">1</span> -->
+
+
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="net_wt" class="active">Net Wt</label>
+                                <input type="text" class="form-control" name="net_wt_5" id="net_wt_5"
+                                    value="{{ isset($batchdetails->net_wt_5) ? $batchdetails->net_wt_5 : old("net_wt_5") }}"
+                                    placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="tare_wt" class="active">Tare Wt</label>
+                                <input type="text" class="form-control" name="tare_wt_5"
+                                    value="{{ isset($batchdetails->tare_wt_5) ? $batchdetails->tare_wt_5 : old("tare_wt_5") }}"
+                                    id="tare_wt_5" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div class="col-12">
                 <div class="form-group">

@@ -5,7 +5,10 @@
         <input type="hidden" value="{{ isset($requestion->id) ? $requestion->id : '' }}" name="id">
         <input type="hidden" value="{{ $edit_batchmanufacturing->id ? $edit_batchmanufacturing->id : '' }}"
             name="mainid">
-
+        <input type="hidden" class="form-control" name="batchNo" id="batchNo"
+            placeholder="Batch No."
+            value="{{ isset($edit_batchmanufacturing->batchNo) ? $edit_batchmanufacturing->batchNo : old('batchNo') }}"
+            readonly>
         @csrf
         <div class="form-row">
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
@@ -94,7 +97,7 @@
                 <div class="form-group">
                     <label for="checkedBy">Checked By</label>
 
-                        {{ Form::select('checkedBy',$users,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
+                        {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Checked by","id"=>"checkedBy")) }}
 
                 </div>
             </div>
