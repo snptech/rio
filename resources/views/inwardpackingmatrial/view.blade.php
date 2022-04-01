@@ -59,7 +59,7 @@
                                         <tr>
                                             <td>{{ $value->material_name }}</td>
                                             <td>{{ $value->total_qty }}</td>
-                                            <td>{{ $value->ar_no_date }} {{ $value->ar_no_datedate?date("d/m/Y",strtotime($value->ar_no_datedate)):"" }}</td>
+                                            <td>{{ $value->ar_no_date }} {{ $value->ar_no_datedate !="0000-00-00 00:00:00" ?date("d/m/Y",strtotime($value->ar_no_datedate)):"-" }} </td>
                                         </tr>
                                     @endforeach
                                 </table>

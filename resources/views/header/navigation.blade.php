@@ -97,7 +97,7 @@
 
           <li class="nav-item">
             <a class="nav-link" href="{{ route('quality_control_finishgood') }}">
-                Quality Control Finish Good
+                Quality Control Finished Good
 
             </a>
           </li>

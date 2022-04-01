@@ -53,7 +53,7 @@
                                     <td>{{$temp->material_name}}</td>
                                     <td>{{$temp->batch_no}}</td>
 
-                                    <td>{{$temp->ar_no}}</td>
+                                    <td>{{$temp->ar_no}}/{{$temp->ar_no_date !="0000-00-00 00:00:00"?date("m/d/Y",strtotime($temp->ar_no_date))?"-"}}</td>
                                     <td>{{$temp->quantity_approved}}</td>
                                     <td>{{$temp->quantity_rejected}}</td>
                                     <td>{{$temp->date_of_approval}}</td>
