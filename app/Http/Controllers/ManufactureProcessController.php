@@ -964,7 +964,7 @@ class ManufactureProcessController extends Controller
             "CustomerSample" => $request['CustomerSample'],
             "ActualYield" => $request['ActualYield'],
             "checkedBy" => $request['checkedBy'],
-            "ApprovedBy" => $request['ApprovedBy'],
+            "ApprovedBy" => Auth::user()->id,
             "Remark" => $request['Remark'],
             "batch_id"=>$request["batch_id"],
 
@@ -1714,7 +1714,7 @@ class ManufactureProcessController extends Controller
             "CustomerSample" => $request['CustomerSample'],
             "ActualYield" => $request['ActualYield'],
             "checkedBy" =>  $request['checkedBy'],
-            "ApprovedBy" => $request['ApprovedBy'],
+            "ApprovedBy" => Auth::user()->id,
             "Remark" => $request['Remark'],
             "batch_id"=>$request['mainid']
 

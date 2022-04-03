@@ -132,14 +132,14 @@
                             <div class="form-group">
                                 <label for="areaCleanliness">Done By</label>
 
-                                    {{ Form::select('areaCleanliness',$users,old("areaCleanliness")?old("areaCleanliness"):($packingmateria['checkedBy']?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Done by")) }}
+                                    {{ Form::select('areaCleanliness',$users,old("areaCleanliness")?old("areaCleanliness"):(isset($packingmateria['checkedBy'])?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Done by")) }}
 
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="CareaCleanliness">Checked By</label>
-                                {{ Form::select('CareaCleanliness',$usersworker,old("CareaCleanliness")?old("CareaCleanliness"):($packingmateria['checkedBy']?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+                                {{ Form::select('CareaCleanliness',$usersworker,old("CareaCleanliness")?old("CareaCleanliness"):(isset($packingmateria['checkedBy'])?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Created by")) }}
 
                             </div>
                         </div>
@@ -248,7 +248,7 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="checkedBy">Checked By</label>
-                                {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):($packingmateria['checkedBy']?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Created by")) }}
+                                {{ Form::select('checkedBy',$usersworker,old("checkedBy")?old("checkedBy"):(isset($packingmateria['checkedBy'])?$packingmateria['checkedBy']:\Auth::user()->id),array('class'=>'form-control select',"placeholder"=>"Created by")) }}
 
 
                             </div>

@@ -44,6 +44,7 @@
 				</td>
 			</tr>
 		</table>
+		
 		@if(isset($packingmateria) && $packingmateria)
 		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="heading-tbl">
 			<tr>
@@ -60,23 +61,20 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th rowspan="2">Process</th>
-					<th rowspan="2">Observation</th>
-					<th colspan="2">Time (Hrs)</th>
-					<th rowspan="2">Done By</th>
-					<th rowspan="2">checked By</th>
+					<th>Process</th>
+					<th >Observation Time</th>
+					<th>Time (Hrs)</th>
+					<th>Done By</th>
+					<th>checked By</th>
 				</tr>
-				<tr>
-					<th>Start</th>
-					<th>End</th>
-				</tr>
+				
 			</thead>
 				<tr>
 					<td>Area cleanliness checked by Production</td>
 
 					<td>{{$packingmateria->Observation}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					<td>{{$packingmateria->EndstartTime}}</td>
+					
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -84,7 +82,7 @@
 					<td>Temperature ( <sup>o</sup>C) of Filling area</td>
 					<td>{{$packingmateria->Temperature}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					<td>{{$packingmateria->EndstartTime}}</td>
+					
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -92,7 +90,7 @@
 					<td>Humidity (%RH) of Filling area</td>
 					<td>{{$packingmateria->Humidity}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					<td>{{$packingmateria->EndstartTime}}</td>
+					
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -100,7 +98,7 @@
 					<td>Temperature ( <sup>o</sup>C) of Product</td>
 					<td>{{$packingmateria->TemperatureP}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					<td>{{$packingmateria->EndstartTime}}</td>
+					
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -109,25 +107,32 @@
 					$twentydrums = "20kgDrums";
 					@endphp
 					<td rowspan="3">No of Drums filled</td>
+					<th style="text-align:left;">200 Kg. - {{$packingmateria->$twentydrums}}</th>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
 					<th style="text-align:left;">50 Kg. - {{$packingmateria->$fiftykg}}</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
+					
 				</tr>
 				<tr>
-					<th style="text-align:left;">200 Kg. - {{$packingmateria->$twentydrums}}</th>
+					<th style="text-align:left;">30 Kg. - {{$packingmateria->$fiftykg}}</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
+					
 				</tr>
 				<tr>
-					<th style="text-align:left;"></th>
+					<th style="text-align:left;">5 Kg. - {{$packingmateria->$fiftykg}}</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
+					
 				</tr>
 			</table>
 			<div style="padding:0rem 0 0;text-align:left;text-decoration:underline;font-size:1.4rem;font-weight:bold;color:#313131;">Yield:</div>

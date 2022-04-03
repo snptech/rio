@@ -83,6 +83,7 @@
 	<div class="pagebreak"></div>
 	@include("batch-process-lots2")
 	<div class="pagebreak"></div>--}}
+	
 	@if(isset($Homogenizing) && $Homogenizing)
 	 @php $l =0; @endphp
 	 @foreach($Homogenizing as $hom)
