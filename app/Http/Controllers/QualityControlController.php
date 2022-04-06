@@ -463,7 +463,7 @@ class QualityControlController extends Controller
             "goods_receipt_note_items.ar_no_date",
             "quality_controll_check.ar_no_date_date as checkardate",
             "quality_controll_check.ar_no as checkar",
-            "inward_raw_materials_items.created_at as materialdate"
+            "goods_receipt_note_items.created_at as materialdate"
             )
 
         ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
@@ -531,7 +531,7 @@ class QualityControlController extends Controller
             "inward_finished_goods.id as itemid",
             "quality_controll_check.ar_no_date_date as checkardate",
             "quality_controll_check.ar_no as checkar",
-            "inward_raw_materials_items.created_at as materialdate"
+            "inward_finished_goods.created_at as materialdate"
             )
 
 
@@ -595,7 +595,7 @@ class QualityControlController extends Controller
             "add_batch_manufacture.id as itemid",
             "quality_controll_check.ar_no_date_date as checkardate",
             "quality_controll_check.ar_no as checkar",
-            "inward_raw_materials_items.created_at as materialdate"
+            "add_batch_manufacture.created_at as materialdate"
             )
 
 
