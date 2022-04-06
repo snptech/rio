@@ -40,7 +40,7 @@
                             <!-- <th>Viscosity</th> -->
                             <th>Material Type</th>
                             <th>Issual Date</th>
-                            <th>Ar No./Date</th>
+                            <!--<th>Ar No./Date</th> -->
                             <th>Dispensed By</th>
                             <th>Remark</th>
                             <th>Status</th>
@@ -56,7 +56,7 @@
                             <td> {{$temp->batchNo}}</td>
                             <td> {{($temp->type=='P')?'Packing Material':(($temp->type=='R')?'Raw Material': '')}}</td>
                             <td> {{$temp->created_at?date("d/m/Y",strtotime($temp->created_at)):""}}</td>
-                            <td> {{$temp->ar_no_date}}/{{$temp->ar_no_date_date?date("d/m/Y",strtotime($temp->ar_no_date_date)):""}}</td>
+                            <!--<td> {{$temp->ar_no_date}}/{{$temp->ar_no_date_date?date("d/m/Y",strtotime($temp->ar_no_date_date)):""}}</td> -->
                             <td> {{$temp->name}}</td>
                             <td> {{$temp->remark}}</td>
 

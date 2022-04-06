@@ -33,7 +33,7 @@
                                     <th>Quality<br />(Kg)</th>
                                     <th>Raw Material Name</th>
                                     <th>Batch No.</th>
-                                    <th>AR No.</th>
+                                    <th>AR No./Date</th>
                                     <th>Quantity Approved</th>
                                     <th>Quantity Rejected</th>
                                     <th>Date of Approval</th>
@@ -47,14 +47,14 @@
                                 @if(count($quality_control))
                                 @foreach($quality_control as $temp)
                                 <tr>
-                                    <td>{{ date('d/m/Y',strtotime($temp->created_at))}}</td>
+                                    <td>{{ date('d/m/Y',strtotime($temp->materialdate))}}</td>
 
                                     <td>{{$temp->total_quantity_bal}}</td>
 
                                     <td>{{$temp->material_name}}</td>
                                     <td>{{$temp->batch_no}}</td>
 
-                                    <td>{{$temp->ar_no}}</td>
+                                    <td>{{$temp->checkar}} / {{$temp->checkardate != "0000-00-00 00:00:00"?date("d/m/Y",strtotime($temp->checkardate)):""}}</td>
                                     <td>{{$temp->quantity_approved}}</td>
                                     <td>{{$temp->quantity_rejected}}</td>
                                     <td>{{$temp->date_of_approval}}</td>

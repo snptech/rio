@@ -42,6 +42,7 @@
                             <th>Viscosity</th>
                             <td>{{ $inward_material->viscosity }}</td>
                         </tr>
+                        <tr><th colspan="2"><b>Material Details</b></th></tr>
                         <tr>
                             <th>Ar No./Date</th>
                             <td>{{$inward_material->ar_no_date}}/{{$inward_material->ar_no_date_date}}</td>
@@ -77,6 +78,7 @@
                             <td>{{ $inward_material->rio_care_expiry_date!=""?date("d/m/Y",($inward_material->rio_care_expiry_date)):"" }}</td>
                         </tr>
 
+                        <tr><th colspan="2">Other Details</th></tr>
                         <tr>
                             <th>Created By
                             </th>

@@ -44,7 +44,11 @@ class QualityControlController extends Controller
             "suppliers.name",
             "manufacturers.manufacturer",
             "raw_materials.created_at",
-            "inward_raw_materials_items.id as itemid"
+            "inward_raw_materials_items.id as itemid",
+            "quality_controll_check.ar_no_date_date as checkardate",
+            "quality_controll_check.ar_no as checkar",
+            "inward_raw_materials_items.created_at as materialdate"
+
             )
 
         ->join('inward_raw_materials','inward_raw_materials.id','=','inward_raw_materials_items.inward_raw_material_id' )
@@ -60,7 +64,7 @@ class QualityControlController extends Controller
         })
 
         ->groupBy("inward_raw_materials_items.id")
-        ->orderBy('inward_raw_materials.created_at', 'desc')
+        ->orderBy('quality_controll_check.created_at', 'desc')
        ->get();
         return view('quality_control',$data);
     }
@@ -278,7 +282,9 @@ class QualityControlController extends Controller
             'inward_raw_materials.goods_receipt_no',
             'raw_materials.id as r_m_id',
             'raw_materials.material_name',
-            "inward_raw_materials_items.id as itemid"
+            "inward_raw_materials_items.id as itemid",
+            "quality_controll_check.ar_no_date_date as checkardate",
+            "quality_controll_check.ar_no as checkar"
             )
 
         ->join('inward_raw_materials','inward_raw_materials.id','=','inward_raw_materials_items.inward_raw_material_id' )
@@ -320,7 +326,9 @@ class QualityControlController extends Controller
                     'raw_materials.material_name',
                     "suppliers.name",
                     "manufacturers.manufacturer",
-                    "inward_raw_materials_items.id as itemid"
+                    "inward_raw_materials_items.id as itemid",
+                    "quality_controll_check.ar_no_date_date as checkardate",
+                    "quality_controll_check.ar_no as checkar"
                     )
                 ->join('inward_raw_materials','inward_raw_materials.id','=','inward_raw_materials_items.inward_raw_material_id' )
                 ->join('raw_materials','raw_materials.id','=','inward_raw_materials_items.material')
@@ -348,7 +356,9 @@ class QualityControlController extends Controller
                     "manufacturers.manufacturer",
                     "raw_materials.created_at",
                     "goods_receipt_note_items.id as itemid",
-                    "goods_receipt_note_items.ar_no_date"
+                    "goods_receipt_note_items.ar_no_date",
+                    "quality_controll_check.ar_no_date_date as checkardate",
+                    "quality_controll_check.ar_no as checkar"
                     )
 
                 ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
@@ -377,7 +387,9 @@ class QualityControlController extends Controller
                     "inward_finished_goods.id as itemid",
                     "raw_materials.id as r_m_id",
                     "inward_finished_goods.created_at as batch_no",
-                    "inward_finished_goods.id as inward_id"
+                    "inward_finished_goods.id as inward_id",
+                    "quality_controll_check.ar_no_date_date as checkardate",
+                    "quality_controll_check.ar_no as checkar"
                     )
 
 
@@ -405,7 +417,10 @@ class QualityControlController extends Controller
                     "add_batch_manufacture.id as itemid",
                     "raw_materials.id as r_m_id",
                     "add_batch_manufacture.created_at as batch_no",
-                    "add_batch_manufacture.id as inward_id"
+                    "add_batch_manufacture.id as inward_id",
+                    "quality_controll_check.ar_no_date_date as checkardate",
+                    "quality_controll_check.ar_no as checkar"
+
                     )
 
 
@@ -445,7 +460,10 @@ class QualityControlController extends Controller
             "manufacturers.manufacturer",
             "goods_receipt_note_items.created_at",
             "goods_receipt_note_items.id as itemid",
-            "goods_receipt_note_items.ar_no_date"
+            "goods_receipt_note_items.ar_no_date",
+            "quality_controll_check.ar_no_date_date as checkardate",
+            "quality_controll_check.ar_no as checkar",
+            "inward_raw_materials_items.created_at as materialdate"
             )
 
         ->join('goods_receipt_notes','goods_receipt_notes.id','=','goods_receipt_note_items.good_receipt_id' )
@@ -461,7 +479,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"P"'));
         })
         ->groupBy("goods_receipt_note_items.id")
-        ->orderBy('goods_receipt_notes.created_at', 'desc')
+        ->orderBy('quality_controll_check.created_at', 'desc')
        ->get();
         return view('quality_control_packing',$data);
 
@@ -510,7 +528,10 @@ class QualityControlController extends Controller
             "inward_finished_goods.total_quantity_bal as total_quantity_bal",
             "inward_finished_goods.ar_no",
             "inward_finished_goods.ar_no_date",
-            "inward_finished_goods.id as itemid"
+            "inward_finished_goods.id as itemid",
+            "quality_controll_check.ar_no_date_date as checkardate",
+            "quality_controll_check.ar_no as checkar",
+            "inward_raw_materials_items.created_at as materialdate"
             )
 
 
@@ -524,7 +545,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"F"'));
         })
         ->groupBy("inward_finished_goods.id")
-        ->orderBy('inward_finished_goods.created_at', 'desc')
+        ->orderBy('quality_controll_check.created_at', 'desc')
        ->get();
 
 
@@ -571,7 +592,10 @@ class QualityControlController extends Controller
             "add_batch_manufacture.BatchSize as total_quantity_bal",
             "add_batch_manufacture.ar_no",
             "add_batch_manufacture.ar_no_date",
-            "add_batch_manufacture.id as itemid"
+            "add_batch_manufacture.id as itemid",
+            "quality_controll_check.ar_no_date_date as checkardate",
+            "quality_controll_check.ar_no as checkar",
+            "inward_raw_materials_items.created_at as materialdate"
             )
 
 
@@ -586,7 +610,7 @@ class QualityControlController extends Controller
         })
         ->where(["stage_1"=>1,"stage_2"=>1,"stage_3"=>1,"stage_4"=>1,"stage_5"=>1,"stage_6"=>1,"stage_7"=>1,"stage_8"=>1])
         ->groupBy("add_batch_manufacture.id")
-        ->orderBy('add_batch_manufacture.created_at', 'desc')
+        ->orderBy('quality_controll_check.created_at', 'desc')
        ->get();
 
 

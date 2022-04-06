@@ -178,6 +178,7 @@ class MaterialForProductionController extends Controller
                     $batch = Rawmaterialitems::find($request["batch_no"]);
                     if(isset($batch)){
                         $bdata["used_qty"] = ($batch->used_qty-$request['issued_quantity']);
+
                         $batch->update($batch);
                     }
                 }
@@ -401,13 +402,21 @@ class MaterialForProductionController extends Controller
                                                 if($type == 'P'){
 
                                                     $rawmeterial = InwardPackingMaterialItems::find($stock->batch_no);
-
-                                                    $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
+                                                    if(is_null($rawmeterial->ar_no_datedate) || $rawmeterial->ar_no_datedate == "0000-00-00 00:00:00"){
+                                                        $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k]),"ar_no_datedate"=>$request->$arnodate[$k]));
+                                                    }
+                                                    else
+                                                            $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
                                                 }
                                                 else
                                                     {
                                                         $rawmeterial = Rawmaterialitems::find($stock->batch_no);
-                                                        $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
+                                                        if(is_null($rawmeterial->ar_no_date_date) || $rawmeterial->ar_no_date_date == "0000-00-00 00:00:00"){
+                                                            $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k]),"ar_no_date_date"=>$request->$arnodate[$k]));
+                                                        }
+                                                        else
+                                                            $rawmeterial->update(array("used_qty"=>($rawmeterial->used_qty+$request->$appqty[$k])));
+
                                                     }
 
 

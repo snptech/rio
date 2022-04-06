@@ -22,8 +22,8 @@
                 <td>{{ $view_quality->batch_no }}</td>
             </tr>
             <tr>
-                <th>AR No.</th>
-                <td>{{ $view_quality->ar_no_date }}</td>
+                <th>AR No./Date</th>
+                <td>{{$view_quality->checkar}} / {{$view_quality->checkardate != "0000-00-00 00:00:00"?date("d/m/Y",strtotime($view_quality->checkardate)):""}}</td>
             </tr>
 
              <tr>
