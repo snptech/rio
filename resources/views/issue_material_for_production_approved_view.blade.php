@@ -88,8 +88,14 @@
 
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
-                                                <label for="Quantity" class="active">A.R.N. Number/Date</label>
-                                                <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ $mat->ar_no_date }}" readonly>
+                                                <label for="Quantity" class="active">A.R.N. Number</label>
+                                                <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number" value="{{ $mat->ar_no_date }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">A.R.N. Date</label>
+                                                <input type="text" class="form-control" name="arno_date{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number" value="{{ $mat->ar_no_date_date }}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -107,7 +113,7 @@
                                     @foreach ($material_details as $mat)
                                     @php
                                         $batch  = "";
-                                       
+
                                         $batch = App\Models\Rawmaterialitems::select("inward_raw_materials_items.batch_no")->join("stock","stock.batch_no","inward_raw_materials_items.id")->where("stock.id",$mat->batch_id)->first();
 
                                     @endphp
@@ -133,8 +139,14 @@
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
-                                                <label for="Quantity" class="active">A.R.N. Number/Date</label>
-                                                <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number/Date" value="{{ isset($batch->ar_no_date)?$batch->ar_no_date:$mat->ar_no_date}}" readonly>
+                                                <label for="Quantity" class="active">A.R.N. Number</label>
+                                                <input type="text" class="form-control" name="arno_date{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number" value="{{ isset($batch->ar_no_date)?$batch->ar_no_date:$mat->ar_no_date}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Quantity" class="active">A.R.N. Date</label>
+                                                <input type="text" class="form-control" name="arno{{ $mat->details_id }}" id="arno{{ $i }}" placeholder="A.R.N. Number" value="{{ isset($batch->ar_no_date_date)?date("d/m/Y",strtotime($batch->ar_no_date_date)):($mat->ar_no_date_date?date("d/m/Y",strtotime($mat->ar_no_date_date)):"")}}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
