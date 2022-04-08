@@ -480,7 +480,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"P"'));
         })
         ->groupBy("goods_receipt_note_items.id")
-        ->orderBy('quality_controll_check.created_at', 'desc')
+        ->orderBy('goods_receipt_note_items.created_at', 'desc')
        ->get();
         return view('quality_control_packing',$data);
 
@@ -546,7 +546,7 @@ class QualityControlController extends Controller
             $join->on("quality_controll_check.material_type",DB::raw('"F"'));
         })
         ->groupBy("inward_finished_goods.id")
-        ->orderBy('quality_controll_check.created_at', 'desc')
+        ->orderBy('inward_finished_goods.created_at', 'desc')
        ->get();
 
 
@@ -611,7 +611,7 @@ class QualityControlController extends Controller
         })
         ->where(["stage_1"=>1,"stage_2"=>1,"stage_3"=>1,"stage_4"=>1,"stage_5"=>1,"stage_6"=>1,"stage_7"=>1,"stage_8"=>1])
         ->groupBy("add_batch_manufacture.id")
-        ->orderBy('quality_controll_check.created_at', 'desc')
+        ->orderBy('add_batch_manufacture.created_at', 'desc')
        ->get();
 
 
