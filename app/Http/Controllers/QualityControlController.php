@@ -64,8 +64,9 @@ class QualityControlController extends Controller
         })
 
         ->groupBy("inward_raw_materials_items.id")
-        ->orderBy('quality_controll_check.created_at', 'desc')
+        ->orderBy('inward_raw_materials_items.id', 'desc')
        ->get();
+
         return view('quality_control',$data);
     }
 
