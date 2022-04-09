@@ -744,11 +744,11 @@
                     "MaterialName[]": "required",
                     "rmbatchno[]": "required",
                     "Quantity[]": "required",
-                    "qty[]": "required",
+                   /* "qty[]": "required",
                     "temp[]": "required",
                     "stratTime[]": "required",
                     "endTime[]": "required",
-                    "doneby[]": "required",
+                    "doneby[]": "required",*/
                     ApprovedBy: "required",
                 },
                 messages: {

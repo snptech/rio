@@ -247,9 +247,8 @@ class ManufactureProcessController extends Controller
 
             $data["selected_crop_tank"] =  ListOfEquipmentManufacturing::select("equipment_code.code","list_of_equipment_in_manufacturin_process.id")->join("batch_manufacturing_records_list_of_equipment","batch_manufacturing_records_list_of_equipment.id","list_of_equipment_in_manufacturin_process.batch_manufacturing_id")->join("equipment_code","equipment_code.id","list_of_equipment_in_manufacturin_process.EquipmentCode")->where('batch_manufacturing_records_list_of_equipment.batch_id', '=', $batchdetails->id)->where("equipment_code.equipment_id","=",2)->pluck("code","id");
 
-
+            $batchid  = $batchdetails->id;
             $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
-
 
             $lotsnum = AddLotsl::select(DB::raw("max(lotNo) as lotno"))->where('batch_id', $batchdetails->id)->first();
             if(isset($lotsnum) && $lotsnum){
@@ -448,6 +447,7 @@ class ManufactureProcessController extends Controller
                 }
             }
 
+            $batchid  = $request->id;
             $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
 
             $data["lotno"] =1;
@@ -1861,7 +1861,7 @@ class ManufactureProcessController extends Controller
                                         return redirect("add-batch-manufacture")->with('success', "Batch  Data Update successfully");
                                     }
                                     else
-                                        return redirect('add-batch-manufacturing-record#homogenizing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
+                                        return redirect('add-batch-manufacturing-record#addLots_listing')->with(['success' => "Lots added successfully", "prvCount" => $prvCount]);
                                 } else {
                                     if(isset($request->save_q))
                                     {
@@ -2616,6 +2616,12 @@ class ManufactureProcessController extends Controller
                    $data["raw_material_bills"] = AddLotslRawMaterialDetails::select('add_lots_raw_material_detail.*',"raw_materials.material_name","inward_raw_materials_items.batch_no")->join("raw_materials","raw_materials.id","add_lots_raw_material_detail.MaterialName")->join("inward_raw_materials_items","inward_raw_materials_items.id","add_lots_raw_material_detail.rmbatchno")->where("add_lots_id",$lotsdetails->id)->get();
 
 
+
+
+
+                   /*$data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");*/
+
+                   $batchid  = $lotsdetails->batch_id;
                    $data["stock"] = Stock::select("raw_materials.material_name","raw_materials.id")->where("department",3)->where(DB::raw("qty-used_qty"),">",0)->join("raw_materials","raw_materials.id","stock.matarial_id")->where("stock.material_type",'R')->groupBy("raw_materials.id")->pluck("material_name","id");
 
                     $data["users"] = User::pluck("name","id");

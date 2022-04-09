@@ -70,10 +70,10 @@
         <div class="form-row">
             <div class="row add-more-wrap after-add-more m-0 mb-4 col-12">
 
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6" style="display:none">
                     <div class="form-group">
                         <label for="Date">Date</label>
-                        <input type="date" class="form-control" name="Date" id="Date" placeholder=""
+                        <input type="hidden" class="form-control" name="Date" id="Date" placeholder=""
                             value="{{ date('Y-m-d') }}">
                     </div>
                 </div>

@@ -54,7 +54,7 @@
 
     <form method="post" action="{{ route('add_lots_update') }}" id="add_lots_process" name="add_lots_process" onsubmit="return confirm('Do you really want to submit the form?');">
         <div class="form-row">
-            <input type="hidden" value="10" name="sequenceId">
+            <input type="hidden" value="9" name="sequenceId">
             <input type="hidden" value="{{ isset($addlots->id) ? $addlots->id : '' }}" name="id">
             <input type="hidden"
                 value="{{ isset($edit_batchmanufacturing->id) ? $edit_batchmanufacturing->id : '' }}" name="mainid">
@@ -72,10 +72,10 @@
 
 
 
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="col-12 col-md-6 col-lg-6 col-xl-6" style="display:none">
                 <div class="form-group">
                     <label for="Date">Date</label>
-                    <input type="date" class="form-control" name="Date" id="Date"
+                    <input type="hidden" class="form-control" name="Date" id="Date"
                         value="{{ date('Y-m-d') }}">
                 </div>
             </div>
@@ -129,6 +129,8 @@
                                         ->where('stock.material_type', 'R')
                                         ->where('stock.matarial_id', $mat->material_id)
                                         ->pluck('batch_no', 'id');
+
+
                                 @endphp
                                 <div class="row add-more-wrap5 after-add-more m-0 mb-4">
                                     <span class="add-count">{{ $lm }}</span>

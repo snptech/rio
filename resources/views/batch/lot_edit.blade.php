@@ -95,13 +95,14 @@
 
                                     @php
                                         $batchstock = App\Models\Stock::select('inward_raw_materials_items.batch_no', 'inward_raw_materials_items.id')
-                                            ->where('department', 3)
-                                            ->where(DB::raw('qty-stock.used_qty'), '>', 0)
+                                            /*->where('department', 3)
+                                            ->where(DB::raw('qty-stock.used_qty'), '>', 0)*/
                                             ->join('raw_materials', 'raw_materials.id', 'stock.matarial_id')
                                             ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'stock.batch_no')
                                             ->where('stock.material_type', 'R')
                                             ->where('stock.matarial_id', $mat->MaterialName)
                                             ->pluck('batch_no', 'id');
+
                                     @endphp
                                     <div class="row add-more-wrap5 after-add-more m-0 mb-4">
                                         <span class="add-count">{{ $lm }}</span>
@@ -144,9 +145,12 @@
                                         ->where(DB::raw('qty-stock.used_qty'), '>', 0)
                                         ->join('raw_materials', 'raw_materials.id', 'stock.matarial_id')
                                         ->join('inward_raw_materials_items', 'inward_raw_materials_items.id', 'stock.batch_no')
+
                                         ->where('stock.material_type', 'R')
                                         ->where('stock.matarial_id', $mat->material_id)
                                         ->pluck('batch_no', 'id');
+
+
                                 @endphp
                                 <div class="row add-more-wrap5 after-add-more m-0 mb-4">
                                     <span class="add-count">{{ $lm }}</span>
