@@ -102,7 +102,16 @@ class InwardPackingMaterialController extends Controller
                 ->orWhere('goods_receipt_notes.goods_going_to', 'like', "%{$search}%")
                 ->orWhere('goods_receipt_notes.date_of_receipt', '=', "{strtotime($search)}")
                 ->orWhere('goods_receipt_notes.invoice_no', 'like', "%{$search}%")
-                ->orWhere('goods_receipt_notes.goods_receipt_no', 'like', "%{$search}%");
+                ->orWhere('goods_receipt_notes.goods_receipt_no', 'like', "%{$search}%")
+
+                ->orWhere('department.department', 'like', "%{$search}%")
+                ->orWhere('goods_receipt_notes.goods_receipt_no', 'like', "%{$search}%")
+                ->orWhere('goods_receipt_note_items.ar_no_date', 'like', "%{$search}%")
+                ->orWhere('goods_receipt_note_items.ar_no_datedate', 'like', "%{$search}%")
+                ->orWhere('raw_materials.material_name', 'like', "%{$search}%")
+                ->orWhere('manufacturers.manufacturer', 'like', "%{$search}%")
+                ->orWhere('suppliers.name', 'like', "%{$search}%");
+
 
 
 
