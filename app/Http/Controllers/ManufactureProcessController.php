@@ -272,9 +272,9 @@ class ManufactureProcessController extends Controller
 
         }
             $data["department"] = Department::where("department_type","W")->get();
-            $data["packingmaterials"] = Rawmeterial::where("material_type", "P")->pluck("material_name", "id");
+            $data["rawmaterials"] = Rawmeterial::select("raw_materials.id","raw_materials.material_name",DB::raw("(sum(stock.qty)-sum(stock.used_qty)) as tot_stock"))->join("stock","stock.matarial_id","raw_materials.id")->where("raw_materials.material_type", "R")->groupBy("raw_materials.id")->having("tot_stock",">","0")->pluck("material_name", "id");;
+        $data["packingmaterials"] = Rawmeterial::select("raw_materials.id","raw_materials.material_name",DB::raw("(sum(stock.qty)-sum(stock.used_qty)) as tot_stock"))->join("stock","stock.matarial_id","raw_materials.id")->where("raw_materials.material_type", "P")->groupBy("raw_materials.id")->having("tot_stock",">","0")->pluck("material_name", "id");
             $data["packingmaterialsarr"] = Rawmeterial::where("material_type", "P")->select("material_name", "id")->get();
-            $data["rawmaterials"] = Rawmeterial::where("material_type", "R")->pluck("material_name", "id");
             $data["batchName"] = array();
 
             $data["eqipment_name"] = DB::table("equipment_name")->pluck("equipment", "id");
@@ -507,8 +507,8 @@ class ManufactureProcessController extends Controller
 
         $data['packingmateria'] = BatchManufacturingPacking::where('batch_id', '=', $batchdetails->id)
             ->first();
-        $data["rawmaterials"] = Rawmeterial::where("material_type", "R")->pluck("material_name", "id");
-        $data["packingmaterials"] = Rawmeterial::where("material_type", "P")->pluck("material_name", "id");
+        $data["rawmaterials"] = Rawmeterial::select("raw_materials.id","raw_materials.material_name",DB::raw("(sum(stock.qty)-sum(stock.used_qty)) as tot_stock"))->join("stock","stock.matarial_id","raw_materials.id")->where("raw_materials.material_type", "R")->groupBy("raw_materials.id")->having("tot_stock",">","0")->pluck("material_name", "id");;
+        $data["packingmaterials"] = Rawmeterial::select("raw_materials.id","raw_materials.material_name",DB::raw("(sum(stock.qty)-sum(stock.used_qty)) as tot_stock"))->join("stock","stock.matarial_id","raw_materials.id")->where("raw_materials.material_type", "P")->groupBy("raw_materials.id")->having("tot_stock",">","0")->pluck("material_name", "id");
         $data['AddLotslRawMaterialDetails'] = AddLotslRawMaterialDetails::where('add_lots_id', '=', $id)
             ->get();
 
