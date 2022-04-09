@@ -137,7 +137,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
-                    <label for="Observedvalue">Observed value (cSt)</label>
+                    <label for="Observedvalue">Observed value</label>
                     <input type="text" class="form-control" id="Observedvalue"
                         name="Observedvalue" placeholder="" value="">
                 </div>

@@ -68,7 +68,7 @@
                 <td>{{ $Homogenizing->proecess_check }}</td>
             </tr>
             <tr>
-                <th>Observed value (cSt)</th>
+                <th>Observed value</th>
                 <td>{{ $Homogenizing->Observedvalue }}</td>
             </tr>
 
