@@ -196,7 +196,7 @@
 @push('custom-scripts')
 <script>
     $(document).ready(function() {
-        var k=1;
+        var k=99;
         var max_fields      = 16; //maximum input boxes allowed
         var wrapper         =  '.'+ $(".add_field_button").data('id');// $(".input_fields_wrap_4"); //Fields wrapper
         var add_button      = $(".add_field_button"); //Add button ID
