@@ -45,7 +45,7 @@
                 <td>{{$view_quality->quantity_rejected}}</td>
             </tr>
             <tr>
-                <th>Date of Approval</th>
+                <th>Date of Approval/Rejection</th>
                 <td>{{$view_quality->date_of_approval}}</td>
             </tr>
             <tr>

@@ -34,7 +34,7 @@
           </div>
           <div class="col-12 col-md-6 col-lg-6 col-xl-6">
               <div class="form-group">
-                  <label for="ApprovalDate">Date of Approval</label>
+                  <label for="ApprovalDate">Date of Approval/Rejection</label>
                   <input type="date" class="form-control calendar" name="date_of_approval" id="date_of_approval" placeholder="DD-MM-YYYY" value="{{ date("Y-m-d") }}">
               </div>
           </div>
