@@ -59,8 +59,8 @@
         </div>
         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
-                <label for="QuantityRejected">Check By</label>
-                {{ Form::select('checkby',$users,old("checkby")?old("checkby"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"Check by","id"=>"checkby")) }}
+                <label for="QuantityRejected">QC Manager</label>
+                {{ Form::select('checkby',$users,old("checkby")?old("checkby"):\Auth::user()->id,array('class'=>'form-control select',"placeholder"=>"QC Manager","id"=>"checkby")) }}
 
             </div>
         </div>

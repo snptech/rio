@@ -86,7 +86,7 @@
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Date of Receipt</th>
-                                <th>Ar No./Date</th>
+                               <!-- <th>Ar No./Date</th> -->
                                 <th>Packing Material Name</th>
                                 <th>Name of Manufacturer</th>
                                 <th>Name of Supplier</th>
@@ -186,11 +186,11 @@
                     {
                         "data": "date_of_receipt",
                         "orderable": true
-                    },
+                    }/*,
                     {
                         "data": "arno_date",
                         "orderable": false
-                    },
+                    }*/,
                     {
                         "data": "material_name",
                         "orderable": false

@@ -298,6 +298,7 @@ class QualityControlController extends Controller
         })
         ->where("inward_raw_materials_items.id",$request->quality_id)->first();
         $users = User::where("role_id",5)->pluck("name","id");
+
          $view = view('qty_control_view',['qty_control_view'=> $qty_control_view,"mat_type"=>"R","users"=>$users])->render();
          $sms='User does not have the right permissions. Necessary permissions are quality-control-check';
          return response()->json(['html'=>$view ,'message'=>$sms]);
