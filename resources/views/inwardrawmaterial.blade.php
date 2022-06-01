@@ -77,7 +77,7 @@
                         <td>{{$temp->goods_receipt_no}}</td>
                         <td>{{$temp->viscosity}}</td>
                         <td>{{$temp->ar_no_date}}/{{$temp->ar_no_date_date != "0000-00-00 00:00:00"?date("d/m/Y",strtotime($temp->ar_no_date_date)):""}}</td>
-                        <td>{{$temp->qty_received_kg}}</td>
+                        <td>{{number_format($temp->qty_received_kg,3,".","")}}</td>
                         <td>{{$temp->mesurment}}</td>
                         <td>{{$temp->batch_no}}</td>
                         <td>{{$temp->mfg_date!=""?date("d/m/Y",($temp->mfg_date)):""}}</td>

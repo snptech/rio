@@ -39,7 +39,7 @@
                         </tr>
                         <tr>
                         <th> Total Quantity Received (Nos.)</th>
-                         <td>{{ $matarial->total_qty }}</td>
+                         <td>{{ number_format($matarial->total_qty,3,".","") }}</td>
                         </tr>
                         <tr>
                             <th colspan="2">
@@ -58,7 +58,7 @@
                                     @foreach($items as $value)
                                         <tr>
                                             <td>{{ $value->material_name }}</td>
-                                            <td>{{ $value->total_qty }}</td>
+                                            <td>{{ number_format($value->total_qty,3,".","") }}</td>
                                             <td>{{ $value->ar_no_date }} {{ $value->ar_no_datedate !="0000-00-00 00:00:00" ?date("d/m/Y",strtotime($value->ar_no_datedate)):"-" }} </td>
                                         </tr>
                                     @endforeach

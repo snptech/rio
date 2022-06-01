@@ -128,7 +128,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Requestion Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{$mat->requesist_qty}}" readonly>
+                                                <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{number_format($mat->requesist_qty,3,".","")}}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
@@ -152,7 +152,7 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="Quantity" class="active">Approved Quantity (Kg.)</label>
-                                                <input type="text" class="form-control" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="{{ $mat->approved_qty }}" readonly>
+                                                <input type="text" class="form-control" name="Quantity_app{{ $mat->details_id }}" id="Quantity_app{{ $i }}" placeholder="Enter Approved Qty" value="{{ number_format($mat->approved_qty,3,".","") }}" readonly>
 
                                             </div>
                                         </div>

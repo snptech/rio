@@ -44,7 +44,7 @@
                     @if(isset($rawmaterials))
                         @php ($i=1) @endphp
                         @foreach($rawmaterials as $val)
-                        @php 
+                        @php
                                 $stock = App\Models\Stock::where("matarial_id",$val->id)->select(DB::raw("(sum(qty)-sum(used_qty)) as qty"))->first();
                         @endphp
                     <tr>
@@ -59,8 +59,8 @@
                                 Raw Material
                             @endif
                         </td>
-                        <td>{{ $stock->qty	}}</td>
-                        <td>{{ $val->material_preorder_stock }}</td>
+                        <td>{{ number_format($stock->qty,3,".","")	}}</td>
+                        <td>{{ number_format($val->material_preorder_stock,3,".","")	}}</td>
                        {{--   <td>{{ $val->expiry_date?date("d/m/Y",$val->expiry_date):""}}</td>
                         <td>{{ $val->rio_expiry_date?date("d/m/Y",$val->rio_expiry_date):""}}</td> --}}
 

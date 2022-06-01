@@ -141,7 +141,7 @@ class InwardMaterialController extends Controller
                     $itemdata["material"] = $value;
                     $itemdata["batch_no"] = $request->batch[$i];
                     $itemdata["total_no_of_containers_or_bags"] = $request->Containers[$i];
-                    $itemdata["qty_received_kg"] = $request->Quantity[$i];
+                    $itemdata["qty_received_kg"] = number_format($request->Quantity[$i], 3, '.', '');
                     $itemdata["mfg_date"] = $request->mfgDate[$i]!=""?strtotime($request->mfgDate[$i]):"";
                     $itemdata["mfg_expiry_date"] = $request->ExpiryDate[$i]!=""?strtotime($request->ExpiryDate[$i]):"";
                     $itemdata["rio_care_expiry_date"] = $request->RIOExpiryDate[$i]!=""?strtotime($request->RIOExpiryDate[$i]):"";
@@ -159,7 +159,7 @@ class InwardMaterialController extends Controller
                         $stockarr["matarial_id"] = $value;
                         $stockarr["material_type"] = "R";
                         $stockarr["department"] = 3;
-                        $stockarr["qty"] = ($request->Quantity[$i]);
+                        $stockarr["qty"] = number_format($request->Quantity[$i],3,".","");
                         $stockarr["batch_no"] = $request->batch[$i];
                         $stockarr["process_batch_id"] = $resultsItem->id;
                         $stockarr["ar_no_date"] = $request->ARNo[$i]?($request->ARNo[$i]):"";

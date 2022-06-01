@@ -250,6 +250,8 @@
 @endsection
 @push("scripts")
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
 <script>
     feather.replace()
     $(document).ready(function() {
@@ -263,6 +265,8 @@
 			if(x < max_fields){ //max input box allowed
 				x++; //text box increment
 				$(wrapper).append('<div class="row add-more-wrap add-more-new m-0 mb-4"><span class="add-count">'+x+'</span><div class="input-group-btn"><button class="btn btn-danger remove_field" type="button"><i class="icon-remove" data-feather="x"></i></button></div><div class="col-12 col-md-6"><div class="form-group"><label for="rawMaterialName['+x+']">Raw Material Name</label> {{ Form::select("materialnames[]",$rawmaterial,old("materialnames[]"),array("class"=>"form-control select","id"=>"materialname1","placeholder"=>"Choose Material")) }}</div></div><div class="col-12 col-md-6"><div class="form-group"><label for="batch['+x+']">Batch No.</label><input type="text" class="form-control" id="batch['+x+']" name="batch[]" placeholder="Batch" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Containers['+x+']">Total no of Containers / Bags</label><input type="text" class="form-control" id="Containers['+x+']" name="Containers[]" placeholder="No of Containers / Bags" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="Quantity['+x+']">Quantity Received (Kg)</label><input type="text" class="form-control" id="Quantity['+x+']" name="Quantity[]" placeholder="Quantity" pattern="\d*" maxlength="12" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="mfgDate['+x+']">Manufacturer’s Mfg. Date</label><input type="date" name="mfgDate[]" class="form-control calendar" id="mfgDate['+x+']" placeholder="Mfg. Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ExpiryDate['+x+']">Manufacturer’s Expiry Date</label><input type="date" class="form-control calendar" name="ExpiryDate[]" id="ExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group">'+x+'<label for="RIOExpiryDate['+x+']">RIO Care Expiry Date</label><input type="date" class="form-control calendar" name="RIOExpiryDate[]" id="RIOExpiryDate['+x+']" placeholder="Expiry Date"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNo['+x+']">AR No. / Date</label><input type="text" class="form-control" name="ARNo[]" id="ARNo['+x+']" placeholder="AR No." pattern="\d*" maxlength="120" onkeypress="return /[a-z0-9A-Z\s\\/-/_]/i.test(event.key)"></div></div><div class="col-12 col-md-6"><div class="form-group"><label for="ARNodate['+x+']">AR Date</label><input type="date" class="form-control" name="ARNodate[]" id="ARNodate['+x+']" placeholder="AR Date"></div></div></div>');
+
+                $('#Quantity['+x+']').mask("999.999");
 			}
 			feather.replace()
 		});
@@ -278,6 +282,7 @@
 
     <script>
         $(document).ready(function() {
+            $("#Quantity").mask("999.999");
            /* $("#suppliername").change(function(){
                 $.ajax({
                     url:'{{ route("inwardrawmaterial-supplier") }}',

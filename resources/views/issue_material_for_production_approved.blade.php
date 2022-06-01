@@ -99,7 +99,7 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label for="Quantity" class="active">Requestion Quantity (Kg.)</label>
-                                        <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{$mat->Quantity}}" readonly>
+                                        <input type="text" class="form-control" name="Quantity{{ $mat->details_id }}" id="Quantity{{ $i }}" placeholder="" value="{{number_format($mat->Quantity,3,".","")}}" readonly>
                                     </div>
                                 </div>
                             </div>
