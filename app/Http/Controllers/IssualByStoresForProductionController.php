@@ -19,7 +19,7 @@ class IssualByStoresForProductionController extends Controller
 
         $data['issue_stores']=IssualStoresForProduction::select('issual_by_stores_for_production.*',
         'raw_materials.material_name',"inward_raw_materials_items.batch_no","users.name")
-        ->leftJoin('raw_materials','raw_materials.id','issual_by_stores_for_production.id')
+        ->leftJoin('raw_materials','raw_materials.id','issual_by_stores_for_production.product_name')
         ->leftJoin('inward_raw_materials_items','inward_raw_materials_items.id','issual_by_stores_for_production.batch_no')
         ->leftJoin('users','users.id','issual_by_stores_for_production.dispensed_by')
         ->get();
@@ -88,7 +88,7 @@ class IssualByStoresForProductionController extends Controller
         if($request->id)
         {
             $IssualStores = IssualStoresForProduction::select('issual_by_stores_for_production.*','raw_materials.material_name')
-            ->join('raw_materials','raw_materials.id','issual_by_stores_for_production.id')
+            ->join('raw_materials','raw_materials.id','issual_by_stores_for_production.product_name')
             ->where("issual_by_stores_for_production.id",$request->id)->first();
              $view = view('view_issual_stores', ['IssualStores'=> $IssualStores])->render();
              return response()->json(['html'=>$view]);

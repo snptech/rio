@@ -136,7 +136,7 @@ class ManufactureProcessController extends Controller
                 $nestedData['bmrno'] = $post->bmrNo;
                 $nestedData['refmfrno'] = $post->refMfrNo;
                 $nestedData['grade'] = $post->grade;
-                $nestedData['batchsize'] = $post->BatchSize;
+                $nestedData['batchsize'] = number_format($post->BatchSize,3,".","");
                 $nestedData['viscosity'] = $post->Viscosity;
                 $nestedData['product_commence'] = $post->ProductionCommencedon;
                 $nestedData["product_completion"] = $post->ProductionCompletedon;

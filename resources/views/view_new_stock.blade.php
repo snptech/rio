@@ -39,23 +39,23 @@
 
             <tr>
                 <th>200Kg</th>
-                <td>{{$inward_goods->total_no_of_200kg_drums}}</td>
+                <td>{{number_format($inward_goods->total_no_of_200kg_drums,3,".","") }}</td>
             </tr>
             <tr>
                 <th>50Kg</th>
-                <td>{{$inward_goods->total_no_of_50kg_drums}}</td>
+                <td>{{number_format($inward_goods->total_no_of_50kg_drums,3,".","") }}</td>
             </tr>
             <tr>
                 <th>30Kg</th>
-                <td>{{$inward_goods->total_no_of_30kg_drums}}</td>
+                <td>{{number_format($inward_goods->total_no_of_30kg_drums,3,".","") }}</td>
             </tr>
             <tr>
                 <th>5Kg</th>
-                <td>{{$inward_goods->total_no_of_5kg_drums}}</td>
+                <td>{{number_format($inward_goods->total_no_of_5kg_drums,3,".","") }}</td>
             </tr>
             <tr>
                 <th>Fiber board</th>
-                <td>{{$inward_goods->total_no_of_fiber_board_drums}}</td>
+                <td>{{number_format($inward_goods->total_no_of_fiber_board_drums,3,".","") }}</td>
             </tr>
 
 
@@ -66,7 +66,7 @@
             </tr>
             <tr>
                 <th>Total Quantity (Kg.)</th>
-                <td>{{$inward_goods->total_quantity}}</td>
+                <td>{{number_format($inward_goods->total_quantity,3,".","") }}</td>
             </tr>
             <tr>
                 <th>Approval Date</th>

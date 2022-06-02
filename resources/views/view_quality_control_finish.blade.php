@@ -28,11 +28,11 @@
 
              <tr>
                 <th>Quantity Approved</th>
-                <td>{{$view_quality->quantity_approved}}</td>
+                <td>{{number_format($view_quality->quantity_approved,3,".","") }}</td>
             </tr>
             <tr>
                 <th>Quantity Rejected</th>
-                <td>{{$view_quality->quantity_rejected}}</td>
+                <td>{{number_format($view_quality->quantity_rejected,3,".","") }}</td>
             </tr>
             <tr>
                 <th>Date of Approval/Rejection</th>

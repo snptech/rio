@@ -39,7 +39,7 @@
                             <td>{{$temp->issual_date}}</td>
                             <td>{{$temp->material_name}}</td>
                             <td>{{$temp->batch_no}}</td>
-                            <td>{{$temp->quantity}}</td>
+                            <td>{{number_format($temp->quantity,3,".","") }}</td>
                             <td>{{$temp->for_fg_batch_no}}</td>
                             <td>{{$temp->returned_from_day_store}}</td>
                             <td>{{$temp->dispensed_by}}</td>

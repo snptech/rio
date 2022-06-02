@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <th>Issued Quantity</th>
-                <td>{{$issue_material->issued_quantity}}</td>
+                <td>{{number_format($issue_material->issued_quantity,3,".","") }}</td>
             </tr>
             <tr>
                 <th>Finished Batch No</th>
@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <th>Closing Bbalance Qty</th>
-                <td>{{$issue_material->closing_balance_qty}}</td>
+                <td>{{number_format($issue_material->closing_balance_qty,3,".","") }}</td>
             </tr>
             <tr>
                 <th>Dispensed By</th>

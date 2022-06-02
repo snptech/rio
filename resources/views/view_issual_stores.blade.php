@@ -24,7 +24,7 @@
                         </tr>
                         <tr>
                             <th>Quantity</th>
-                            <td>{{ $IssualStores->quantity }}</td>
+                            <td>{{ number_format($IssualStores->quantity,3,".","") }}</td>
                         </tr>
 
                         <tr>

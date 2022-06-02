@@ -50,7 +50,7 @@
                                        {{ $v->dateProcess }}
                                        </td>
                                     <td>{{ $v->lots_name }}</td>
-                                    <td>{{ $v->qty }}</td>
+                                    <td>{{ number_format($v->qty,3,".","") }}</td>
                                     <td>{{ $v->stratTime }}</td>
                                     <td>{{ $v->endTime }}</td>
                                     <td>{{ $v->doneby }}</td>

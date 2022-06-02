@@ -96,12 +96,12 @@
                             <td>{{$temp->batch_no}}</td>
                             <td>{{$temp->grades_name}}</td>
                             <td>{{$temp->viscosity}}</td>
-                            <td>{{$temp->total_no_of_200kg_drums}}</td>
-                            <td>{{$temp->total_no_of_50kg_drums}}</td>
-                            <td>{{$temp->total_no_of_30kg_drums}}</td>
-                            <td>{{$temp->total_no_of_5kg_drums}}</td>
-                            <td>{{$temp->total_no_of_fiber_board_drums}}</td>
-                            <td>{{$temp->total_no_qty}}</td>
+                            <td>{{number_format($temp->total_no_of_200kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_50kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_30kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_5kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_fiber_board_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_qty,3,".","") }}</td>
                             <td>{{$temp->seal_no}}</td>
                             <td>{{$temp->remark}}</td>
                             <td>{{$temp->name}}</td>

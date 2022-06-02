@@ -38,8 +38,8 @@
                                 <td>{{ $req->Date ? $req->Date : '' }}
                                 </td>
                                 <td>{{ $temp->material_name }}</td>
-                                <td>{{ $temp->Quantity }}</td>
-                                <td>{{ $temp->approved_qty }}</td>
+                                <td>{{ number_format($temp->Quantity,3,".","") }}</td>
+                                <td>{{ number_format($temp->approved_qty,3,".","") }}</td>
                                 <td>{!! $temp->approved_qty ? '<span class="badge badge-success p-2">Approved</span>' : '<span class="badge badge-warning p-2">Pending</span>' !!}</td>
                             </tr>
                         @endforeach

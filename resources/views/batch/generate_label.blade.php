@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <label for="net_wt" class="active">Net Wt</label>
                                 <input type="text" class="form-control" name="net_wt_200" id="net_wt_200"
-                                    value="{{ isset($edit_ganerat_lable->net_wt_200) ? $edit_ganerat_lable->net_wt_200 : old("net_wt_200") }}"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_200) ? number_format($edit_ganerat_lable->net_wt_200,3,".","") : old("net_wt_200") }}"
                                     placeholder="">
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                             <div class="form-group">
                                 <label for="tare_wt" class="active">Tare Wt</label>
                                 <input type="text" class="form-control" name="tare_wt_200"
-                                    value="{{ isset($edit_ganerat_lable->tare_wt_200) ? $edit_ganerat_lable->tare_wt_200 : old("tare_wt_200") }}"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_200) ? number_format($edit_ganerat_lable->tare_wt_200,3,".","") : old("tare_wt_200") }}"
                                     id="tare_wt" placeholder="">
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <div class="form-group">
                                 <label for="net_wt" class="active">Net Wt</label>
                                 <input type="text" class="form-control" name="net_wt" id="net_wt"
-                                    value="{{ isset($edit_ganerat_lable->net_wt_50) ? $edit_ganerat_lable->net_wt_50 : old("net_wt") }}"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_50) ? number_format($edit_ganerat_lable->net_wt_50,3,".","") : old("net_wt") }}"
                                     placeholder="">
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                             <div class="form-group">
                                 <label for="tare_wt" class="active">Tare Wt</label>
                                 <input type="text" class="form-control" name="tare_wt"
-                                    value="{{ isset($edit_ganerat_lable->tare_wt_50) ? $edit_ganerat_lable->tare_wt_50 : old("tare_wt") }}"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_50) ? number_format($edit_ganerat_lable->tare_wt_50,3,".","") : old("tare_wt") }}"
                                     id="tare_wt" placeholder="">
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             <div class="form-group">
                                 <label for="net_wt" class="active">Net Wt</label>
                                 <input type="text" class="form-control" name="net_wt_30" id="net_wt_30"
-                                    value="{{ isset($edit_ganerat_lable->net_wt_30) ? $edit_ganerat_lable->net_wt_30 : old("net_wt_30") }}"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_30) ? number_format($edit_ganerat_lable->net_wt_30,3,".","") : old("net_wt_30") }}"
                                     placeholder="">
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                             <div class="form-group">
                                 <label for="tare_wt" class="active">Tare Wt</label>
                                 <input type="text" class="form-control" name="tare_wt_30"
-                                    value="{{ isset($edit_ganerat_lable->tare_wt_30) ? $edit_ganerat_lable->tare_wt_30 : old("tare_wt_30") }}"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_30) ? number_format($edit_ganerat_lable->tare_wt_30,3,".","") : old("tare_wt_30") }}"
                                     id="tare_wt_30" placeholder="">
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                             <div class="form-group">
                                 <label for="net_wt" class="active">Net Wt</label>
                                 <input type="text" class="form-control" name="net_wt_5" id="net_wt_5"
-                                    value="{{ isset($edit_ganerat_lable->net_wt_5) ? $edit_ganerat_lable->net_wt_5 : old("net_wt_5") }}"
+                                    value="{{ isset($edit_ganerat_lable->net_wt_5) ? number_format($edit_ganerat_lable->net_wt_5,3,".","") : old("net_wt_5") }}"
                                     placeholder="">
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                             <div class="form-group">
                                 <label for="tare_wt" class="active">Tare Wt</label>
                                 <input type="text" class="form-control" name="tare_wt_5"
-                                    value="{{ isset($edit_ganerat_lable->tare_wt_5) ? $edit_ganerat_lable->tare_wt_5 : old("tare_wt_5") }}"
+                                    value="{{ isset($edit_ganerat_lable->tare_wt_5) ? number_format($edit_ganerat_lable->tare_wt_5,3,".","") : old("tare_wt_5") }}"
                                     id="tare_wt_5" placeholder="">
                             </div>
                         </div>

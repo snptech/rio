@@ -94,7 +94,7 @@
                                     filled</label>
                                 <input type="Number" class="form-control" name="5kgDrums"
                                     id="5kgDrums"
-                                    value="{{ isset($packingmateria['5kgDrums']) ? $packingmateria['5kgDrums'] : '' }}">
+                                    value="{{ isset($packingmateria['5kgDrums']) ? number_format($packingmateria['5kgDrums'],3,".","") : '' }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -103,7 +103,7 @@
                                     filled</label>
                                 <input type="Number" class="form-control" name="30kgDrums"
                                     id="30kgDrums"
-                                    value="{{ isset($packingmateria['30kgDrums']) ? $packingmateria['30kgDrums'] : '' }}">
+                                    value="{{ isset($packingmateria['30kgDrums']) ? number_format($packingmateria['30kgDrums'],3,".","") : '' }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -111,7 +111,7 @@
                                 <label for="50kgDrums" class="active">50 Kg No of Drums
                                     filled</label>
                                 <input type="Number" class="form-control" name="50kgDrums"
-                                    value="{{ isset($packingmateria['50kgDrums']) ? $packingmateria['50kgDrums'] : 0 }}"
+                                    value="{{ isset($packingmateria['50kgDrums']) ? number_format($packingmateria['50kgDrums'],3,".","") : 0 }}"
                                     id="50kgDrums">
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                                     filled</label>
                                 <input type="Number" class="form-control" name="20kgDrums"
                                     id="20kgDrums"
-                                    value="{{ isset($packingmateria['20kgDrums']) ? $packingmateria['20kgDrums'] : '' }}">
+                                    value="{{ isset($packingmateria['20kgDrums']) ? number_format($packingmateria['20kgDrums'],3,".","") : '' }}">
                             </div>
                         </div>
 

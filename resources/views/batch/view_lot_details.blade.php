@@ -55,7 +55,7 @@
                 </tr>
                 <tr>
                     <th>Quantity (Kg.)</th>
-                    <td>{{$val->Quantity}}</td>
+                    <td>{{number_format($val->Quantity,3,".","") }}</td>
                 </tr>
                 @php $i++; @endphp
             @endforeach
@@ -95,7 +95,7 @@
                                             Stop stirrer and transfer the reaction mass to homogenizing tank No.- PR/BT/Come Tank number
                                         @endif
                                        </td>
-                                    <td>{{ $v->qty }}</td>
+                                    <td>{{ number_format($v->qty,3,".","") }}</td>
                                     <td>{{ $v->temp }}</td>
                                     <td>{{ $v->stratTime }}</td>
                                     <td>{{ $v->endTime }}</td>

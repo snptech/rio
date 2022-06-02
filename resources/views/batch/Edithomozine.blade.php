@@ -82,7 +82,7 @@
                                         <td><input type="text" name="lot[]" id="lot" class="form-control"
                                                 value="{{ $temp->lots_name }}"></td>
                                         <td><input type="text" name="qty[]" id="qty"
-                                                value="{{ $temp->qty }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
+                                                value="{{ number_format($temp->qty,3,".","") }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"></td>
                                         <td><input type="time" name="stratTime[]" id="stratTime"
                                                 value="{{ $temp->stratTime }}" class="form-control time"
                                                 data-mask="00:00"></td>
@@ -119,14 +119,14 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label class="d-block">In Process Check (After 4 Lot)</label>
-                        <input type="text" class="form-control" id="proecess_check" name="proecess_check" value="{{ isset($Homogenizing->proecess_check) ? $Homogenizing->proecess_check : 'Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30 RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).'}}" />
+                        <input type="text" class="form-control" id="proecess_check" name="proecess_check" value="{!! isset($Homogenizing->proecess_check) ? $Homogenizing->proecess_check : 'Remove sample (approx. 100gm) and check for viscosity at 25 <sup>o</sup>C/ 30 RPM with LV3 spindle using Brookfield Viscometer (ID No.: PR/VM/002).'!!}" />
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="form-group">
                         <label for="Observedvalue">Observed value</label>
                         <input type="text" class="form-control" name="Observedvalue" id="Observedvalue"
-                            value="{{ isset($Homogenizing->Observedvalue) ? $Homogenizing->Observedvalue : '' }}"
+                            value="{!! isset($Homogenizing->Observedvalue) ? $Homogenizing->Observedvalue : '' !!}"
                             placeholder="" value="">
                     </div>
                 </div>

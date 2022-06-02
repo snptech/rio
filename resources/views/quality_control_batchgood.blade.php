@@ -55,8 +55,8 @@
                                     <td>{{$temp->batch_no}}</td>
 
                                     <td>{{$temp->checkar}} / {{$temp->checkardate != "0000-00-00 00:00:00"?date("d/m/Y",strtotime($temp->checkardate)):""}}</td>
-                                    <td>{{$temp->quantity_approved}}</td>
-                                    <td>{{$temp->quantity_rejected}}</td>
+                                    <td>{{number_format($temp->quantity_approved,3,".","") }}</td>
+                                    <td>{{number_format($temp->quantity_rejected,3,".","") }}</td>
                                     <td>{{$temp->date_of_approval}}</td>
                                     @if($temp->quantity_status=='Approved')
                                     <td><span class="badges text-success">Approved</span></td>

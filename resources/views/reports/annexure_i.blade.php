@@ -52,7 +52,7 @@
                             <td>{{$temp->invoice_no}}</td>
                             <td>{{$temp->goods_receipt_no}}</td>
                             <td>{{$temp->viscosity}}</td>
-                            <td>{{$temp->qty_received_kg}}</td>
+                            <td>{{number_format($temp->qty_received_kg,3,".","") }}</td>
                             <td>{{$temp->mesurment}}</td>
                             <td>{{$temp->batch_no}}</td>
                             <td>{{$temp->mfg_date!=""?date("d/m/Y",($temp->mfg_date)):""}}</td>

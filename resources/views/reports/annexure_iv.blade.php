@@ -49,12 +49,12 @@
                             <td>{{$temp->viscosity}}</td>
                             <td>{{$temp->mfg_date}}</td>
                             <td>{{$temp->expiry_ratest_date}}</td>
-                            <td>{{$temp->total_no_of_200kg_drums}}</td>
-                            <td>{{$temp->total_no_of_50kg_drums}}</td>
-                            <td>{{$temp->total_no_of_30kg_drums}}</td>
-                            <td>{{$temp->total_no_of_5kg_drums}}</td>
-                            <td>{{$temp->total_no_of_fiber_board_drums}}</td>
-                            <td>{{$temp->total_quantity}}</td>
+                            <td>{{number_format($temp->total_no_of_200kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_50kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_30kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_5kg_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_no_of_fiber_board_drums,3,".","") }}</td>
+                            <td>{{number_format($temp->total_quantity,3,".","") }}</td>
                             <td>{{$temp->ar_no}}</td>
                             <td>{{$temp->approval_data}}</td>
                             <td>{{$temp->name}}</td>

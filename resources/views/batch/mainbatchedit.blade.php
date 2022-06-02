@@ -63,7 +63,7 @@
                 <div class="form-group">
                     <label for="BatchSize" class="active">Batch Size</label>
                     <input type="text" class="form-control" name="BatchSize"
-                        value="{{ $edit_batchmanufacturing->BatchSize }}" id="BatchSize"
+                        value="{{ number_format($edit_batchmanufacturing->BatchSize,3,".","") }}" id="BatchSize"
                         placeholder="" pattern="\d*" maxlength="120"
                         onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                 </div>
