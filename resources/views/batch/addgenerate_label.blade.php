@@ -127,6 +127,7 @@
                         </div>
                     </div>
                 </div>
+                {{--
                 <div class="form-group input_fields_wrap" id="MaterialReceived">
                     <label class="control-label d-flex">Product Label 5 Kg Drums
 
@@ -154,7 +155,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="col-12">

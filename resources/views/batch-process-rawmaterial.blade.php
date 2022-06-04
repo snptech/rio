@@ -45,7 +45,7 @@
 				</tr>
 			</table>
 			<div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:1.2rem;font-weight:bold;color:#616161;">Bill of Raw Material Details and Weighing Record:</div>
-            <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;">Requestion Bill of Raw Material Details</div>
+            <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;">Requisition Bill of Raw Material Details</div>
 
 			@if(isset($raw_material_bills) && count($raw_material_bills) >0)
             <table class="table table-bordered">
@@ -53,8 +53,8 @@
                     <tr>
                         <th>S. No.</th>
                         <th>Raw Material</th>
-                        <th>Requestion Quantity<br />(Kg.)</th>
-                        <th>Checked<br />By</th>
+                        <th>Requisition Quantity<br />(Kg.)</th>
+                       <!-- <th>Checked<br />By</th> -->
                     </tr>
                 </thead>
                 @php $i =1; @endphp
@@ -65,7 +65,7 @@
                         <td>{{$det->material_name}}</td>
                         <td>{{$det->Quantity}}</td>
 
-                        <td>{{isset($Requisitmaterial[0])?$Requisitmaterial[0]->checkby:""}}</td>
+                        <!--<td>{{isset($Requisitmaterial[0])?$Requisitmaterial[0]->checkby:""}}</td> -->
 
                     </tr>
                     @php $i++; @endphp
@@ -73,6 +73,8 @@
                 @endforeach
 
             </table>
+            <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;"><span style="display:inline-block;margin-left:2rem;min-width:10%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{$manufacture->doneby}}</span>(Officer-Production)</span></div>
+
         @endif
             <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;">Issual of Requisition Bill of Raw Material Details</div>
 
@@ -86,7 +88,7 @@
 							<th>Batch No.</th>
 							<th width="20%">AR No. / Date</th>
 							<th>Weighed<br />By</th>
-							<th>Checked<br />By</th>
+							<!--<th>Checked<br />By</th>-->
 						</tr>
 					</thead>
 					@php $i =1; @endphp
@@ -99,13 +101,14 @@
 							<td>{{$det->batch_no}}</td>
 							<td>{{$det->ar_no_date}}</td>
 							<td>{{isset($Requisitionissuedmaterial[0])?$Requisitionissuedmaterial[0]->checkby:""}}</td>
-							<td>{{isset($Requisitionissuedmaterial[0])?$Requisitionissuedmaterial[0]->approvedby:""}}</td>
+							<!--<td>{{isset($Requisitionissuedmaterial[0])?$Requisitionissuedmaterial[0]->approvedby:""}}</td> -->
 						</tr>
 						@php $i++; @endphp
 						@endforeach
 					@endforeach
 
 				</table>
+                <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;"><span style="display:inline-block;margin-left:2rem;min-width:10%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{$manufacture->doneby}}</span>(Manager-Store)</span></div>
 			@endif
 
 			</div>

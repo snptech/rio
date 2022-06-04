@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div class="col-12"></div>
-                        <div class="col-12 col-md-6 col-lg-4">
+                        {{--  <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="200kgDrums" class="active">5 Kg No of Drums
                                     filled</label>
@@ -96,7 +96,7 @@
                                     id="5kgDrums"
                                     value="{{ isset($packingmateria['5kgDrums']) ? number_format($packingmateria['5kgDrums'],3,".","") : '' }}">
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="200kgDrums" class="active">30 Kg No of Drums

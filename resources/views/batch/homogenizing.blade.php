@@ -138,7 +138,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="form-group">
-                    <label for="Observedvalue">Observed value</label>
+                    <label for="Observedvalue">Observed value(cst/cp)</label>
                     <input type="text" class="form-control" name="Observedvalue" id="Observedvalue"
                         value="{{ isset($Homogenizing->Observedvalue) ? $Homogenizing->Observedvalue : '' }}"
                         placeholder="" value="">

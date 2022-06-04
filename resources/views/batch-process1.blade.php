@@ -69,7 +69,7 @@
 			</table>
 			<table width="100%" cellpadding="10" cellspacing="0" border="0" style="margin:3rem 0;">
 				<tr>
-					<td>Prepared by: <span style="display:inline-block;margin-left:2rem;min-width:60%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{$manufacture->doneby}}</span>(Supervisor)</span></td>
+					<td>Prepared by: <span style="display:inline-block;margin-left:2rem;min-width:60%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{$manufacture->doneby}}</span>(Officer-Production)</span></td>
 					<td>Checked by: <span style="display:inline-block;margin-left:2rem;min-width:60%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;margin-left:2rem;min-width:100%;margin-bottom:5px;">{{$manufacture->usercheck}}</span>(Production Manager)</span></td>
 				</tr>
 			</table>
@@ -89,7 +89,7 @@
 					<tr>
 						<th width="40%">Reviewed and Approved by<br /><br /><br /><br /></th>
 						<th valign="top" width="10">:</th>
-						<th valign="top"><span style="display:inline-block;margin-left:2rem;min-width:100px;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{ $manufacture->qcname }}</span>(Sr.Officer - QA)</span></th>
+						<th valign="top"><span style="display:inline-block;margin-left:2rem;min-width:100px;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{ $manufacture->qcname }}</span>(Manager QA)</span></th>
 					</tr>
 				</thead>
 			</table>
