@@ -53,7 +53,7 @@
 							<th>S. No.</th>
 							<th>Material</th>
 							<th>Requestion Quantity<br />(Kg.)</th>
-							<th>Checked<br />By</th>
+							<!--<th>Checked<br />By</th> -->
 						</tr>
 					</thead>
 					@php $i =1; @endphp
@@ -63,7 +63,7 @@
 							<td>{{$i}}</td>
 							<td>{{$det->material_name}}</td>
 							<td>{{$det->approved_qty}}</td>
-							<td>{{isset($Requisitmaterialpacking[0])?$Requisitmaterialpacking[0]->checkby:""}}</td>
+							<!--<td>{{isset($Requisitmaterialpacking[0])?$Requisitmaterialpacking[0]->checkby:""}}</td> -->
 
 						</tr>
 						@php $i++; @endphp
@@ -71,6 +71,7 @@
 					@endforeach
 
 				</table>
+                <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;"><span style="display:inline-block;margin-left:2rem;min-width:10%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{$manufacture->doneby}}</span>(Production Manager)</span></div>
 			@endif
             <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;">Issual of Requisition Packaging Material Details</div>
             @if(isset($raw_material_bills_packing) && count($raw_material_bills_packing) >0)
@@ -83,7 +84,7 @@
 							<th>Batch No.</th>
 							<th width="20%">AR No. / Date</th>
 							<th>Weighed<br />By</th>
-							<th>Checked<br />By</th>
+							<!--<th>Checked<br />By</th> -->
 						</tr>
 					</thead>
 					@php $i =1; @endphp
@@ -96,13 +97,14 @@
 							<td>{{$det->batch_no}}</td>
 							<td>{{$det->ar_no_date}}</td>
 							<td>{{isset($Requisitionissuedmaterial[0])?$Requisitionissuedmaterial[0]->checkby:""}}</td>
-							<td>{{isset($Requisitionissuedmaterial[0])?$Requisitionissuedmaterial[0]->approvedby:""}}</td>
+							<!--<td>{{isset($Requisitionissuedmaterial[0])?$Requisitionissuedmaterial[0]->approvedby:""}}</td> -->
 						</tr>
 						@php $i++; @endphp
 						@endforeach
 					@endforeach
 
 				</table>
+                <div style="padding:1rem 0;text-align:left;text-decoration:underline;font-size:0.8rem;font-weight:bold;color:#616161;"><span style="display:inline-block;margin-left:2rem;min-width:10%;vertical-align:top;text-align:center;"><span style="display:block;border-bottom:2px solid #000;min-width:100%;margin-bottom:5px;">{{$manufacture->doneby}}</span>(Manager-Store)</span></div>
 			@endif
 
 			</div>
