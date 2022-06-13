@@ -2,7 +2,7 @@
 
     <div class="container-fluid p-3">
       <!-- Main Container -->
-    <div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
+    <div style="display:block;padding:20px;border:2px solid #000;min-height:15.4in;">
 		<table width="100%" cellpadding="10" cellspacing="0" border="0">
 			<tr>
 				<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>
@@ -44,7 +44,7 @@
 				</td>
 			</tr>
 		</table>
-		
+
 		@if(isset($packingmateria) && $packingmateria)
 		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="heading-tbl">
 			<tr>
@@ -67,14 +67,14 @@
 					<th>Done By</th>
 					<th>checked By</th>
 				</tr>
-				
+
 			</thead>
 				<tr>
 					<td>Area cleanliness checked by Production</td>
 
 					<td>{{$packingmateria->Observation}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					
+
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -82,7 +82,7 @@
 					<td>Temperature ( <sup>o</sup>C) of Filling area</td>
 					<td>{{$packingmateria->Temperature}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					
+
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -90,7 +90,7 @@
 					<td>Humidity (%RH) of Filling area</td>
 					<td>{{$packingmateria->Humidity}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					
+
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -98,7 +98,7 @@
 					<td>Temperature ( <sup>o</sup>C) of Product</td>
 					<td>{{$packingmateria->TemperatureP}}</td>
 					<td>{{$packingmateria->startTime}}</td>
-					
+
 					<td>{{$packingmateria->doneby}}</td>
 					<td>{{$packingmateria->checkby}}</td>
 				</tr>
@@ -110,7 +110,7 @@
 					<th style="text-align:left;">200 Kg. - {{$packingmateria->$twentydrums}}</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					
+
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
@@ -118,22 +118,22 @@
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					
+
 				</tr>
 				<tr>
 					<th style="text-align:left;">30 Kg. - {{$packingmateria->$fiftykg}}</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					
+
 				</tr>
-				<tr>
+				<!--<tr>
 					<th style="text-align:left;">5 Kg. - {{$packingmateria->$fiftykg}}</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					
-				</tr>
+
+				</tr> -->
 			</table>
 			<div style="padding:0rem 0 0;text-align:left;text-decoration:underline;font-size:1.4rem;font-weight:bold;color:#313131;">Yield:</div>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:1rem;font-weight:400;font-family: serif;margin:1rem 0rem 0rem;line-height:1.7;">

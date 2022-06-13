@@ -2,7 +2,7 @@
 
     <div class="container-fluid p-3">
       <!-- Main Container -->
-    <div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
+    <div style="display:block;padding:20px;border:2px solid #000;height:15.4in;">
 		<table width="100%" cellpadding="10" cellspacing="0" border="0">
 			<tr>
 				<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>

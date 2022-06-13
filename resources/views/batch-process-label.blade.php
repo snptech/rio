@@ -5,7 +5,7 @@
 
 			<div class="container-fluid p-3">
 			<!-- Main Container -->
-				<div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
+				<div style="display:block;padding:20px;border:2px solid #000;height:15.4in;">
 						<table width="100%" cellpadding="10" cellspacing="0" border="0">
 							<tr>
 								<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>
@@ -113,7 +113,7 @@
 
 			<div class="container-fluid p-3">
 			<!-- Main Container -->
-				<div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
+				<div style="display:block;padding:20px;border:2px solid #000;min-height:15.4in;">
 						<table width="100%" cellpadding="10" cellspacing="0" border="0">
 							<tr>
 								<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>
@@ -221,7 +221,7 @@
 
 			<div class="container-fluid p-3">
 			<!-- Main Container -->
-				<div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
+				<div style="display:block;padding:20px;border:2px solid #000;min-height:15.4in;">
 						<table width="100%" cellpadding="10" cellspacing="0" border="0">
 							<tr>
 								<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>
@@ -319,7 +319,7 @@
 				</div>
 			</div>
 		</div>
-		@if(isset($lables->net_wt_5)))
+		@if(isset($lables->net_wt_5))
 			<div class="pagebreak"></div>
 			@php $l++; @endphp
 		@endif
@@ -329,7 +329,7 @@
 
 			<div class="container-fluid p-3">
 			<!-- Main Container -->
-				<div style="display:block;padding:20px;border:2px solid #000;min-height:11.7in;">
+				<div style="display:block;padding:20px;border:2px solid #000;min-height:15.4in;">
 						<table width="100%" cellpadding="10" cellspacing="0" border="0">
 							<tr>
 								<td width="80"><img src="{{asset('pdf/assets/img/print_logo.png')}}" style="width:80px;height:auto;"></td>
@@ -427,7 +427,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	@endif
 
 @endif
