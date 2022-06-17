@@ -517,7 +517,17 @@ class ManufactureProcessController extends Controller
        /* $data['lotsdetails'] = AddLotsl::select("add_lotsl.*","raw_materials.material_name")->where('add_lotsl.batch_id', '=', $id)->join("raw_materials","raw_materials.id","add_lotsl.proName")
             ->get();*/
 
+        // line clearing
+        //master record
+        $data["lineclearace"] = BatchManufacturingRecordsLine::where("batchNo",$batchdetails->id)->first();
 
+
+
+        // Line clearance details
+        if(isset($data["lineclearace"]) && $data["lineclearace"]->id)
+        {
+            $data["lineclearace_details"] = LineClearance::where("line_clearance_id",$data["lineclearace"]->id)->get();
+        }
 
 
         $data['Homogenizing'] = Homogenizing::select("homogenizing.*","raw_materials.material_name")->leftJoin('raw_materials', 'raw_materials.id','=','homogenizing.proName')->where('batch_id', '=', $id)
@@ -1148,14 +1158,13 @@ class ManufactureProcessController extends Controller
     public function add_line_clearance_insert(Request $request)
     {
         $arrRules = [
-            "proName" => "required.",
-            "bmrNo" => "required.",
+            "proName" => "required",
             "batchNo" => "required",
-            "refMfrNo" => "required",
+
             "Date" => "required",
-            "EquipmentName" => "required",
-            "Observation" => "required",
-            "time" => "required",
+            "EquipmentName.*" => "required",
+            "Observation.*" => "required",
+            "time.*" => "required",
         ];
         $arrMessages = [
             "proName" => "This :attribute field is required.",
@@ -1167,15 +1176,17 @@ class ManufactureProcessController extends Controller
             "Observation" => "This :attribute field is required.",
             "time" => "This :attribute field is required.",
         ];
-        // $validated = $request->validate($arrRules, $arrMessages);
+
+        $validated = $request->validate($arrRules, $arrMessages);
+        $arr = array();
         $arr['proName'] = $request->proName;
-        $arr['bmrNo'] = $request->bmrNo;
+
         $order_number = date('dyHs');
         $arr['order_id'] = $order_number;
         $arr['batchNo'] = $request->batchNo;
-        $arr['refMfrNo'] = $request->refMfrNo;
         $arr['Date'] = $request->Date;
         $arr['Remark'] = $request->Remark;
+
         $BatchManufacturing_id = BatchManufacturingRecordsLine::Create($arr);
         if ($BatchManufacturing_id->id) {
             foreach ($request->EquipmentName as $key => $value) {
@@ -1187,10 +1198,10 @@ class ManufactureProcessController extends Controller
             }
             if(isset($request->save_q))
             {
-                return redirect("add-batch-manufacture")->with('success', "  Data Line Clearance created successfully");
+                return redirect("add-batch-manufacture#Line-Clearance")->with('success', "  Data Line Clearance created successfully");
             }
             else
-                return redirect('add-batch-manufacturing-record')->with('success', "Data Line Clearance created successfully");
+                return redirect('add-batch-manufacturing-record#Line-Clearance')->with('success', "Data Line Clearance created successfully");
         } else {
             return redirect('add-batch-manufacturing-record')->with('error', " Something went wrong");
         }

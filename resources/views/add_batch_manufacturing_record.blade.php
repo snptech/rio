@@ -85,7 +85,8 @@
                                     <!--<li><a role="tab" data-toggle="tab" href="#billOfRawMaterialpacking">Bill of Packing Raw Material</a></li>-->
                                 </ul>
                             </li>
-
+                            <li><a role="tab" data-toggle="tab"
+                                href="#Line-Clearance">Line Clearance Record</a></li>
                             <li><a role="tab" data-toggle="tab" href="#listOfEquipment">List of Equipment</a></li>
                             <li><a role="tab" data-toggle="tab" href="#addLots_listing">Lots </a></li>
 
@@ -103,6 +104,7 @@
 						@include("batch.addbatch")
                         @include("batch.addrequisition")
                         @include("batch.addrequisitionpacking")
+                        @include("batch.line-clearance")
 						@include("batch.addlistOfEquipment")
 						@include("batch.addhomogenizing")
 						@include("batch.addaddLots_listing")
@@ -513,9 +515,9 @@
                     batchNo: "required",
                     refMfrNo: "required",
                     Date: "required",
-                    EquipmentName: "required",
-                    Observation: "required",
-                    time: "required",
+                    'EquipmentName[]': "required",
+                    'Observation[]': "required",
+                    'time[]': "required",
                 },
                 messages: {
                     proName: "Please  Enter The Name proName",

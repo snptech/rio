@@ -62,6 +62,9 @@
 
                         </ul>
                     </li>
+                    <li><a role="tab" class="{{ $sequenceId == '6' ? 'active' : '' }}"
+                        area-selected="{{ $sequenceId == '6' ? 'true' : 'false' }}" data-toggle="tab"
+                        href="#Line-Clearance">Line Clearance Record</a></li>
                     <li><a role="tab" class="{{ $sequenceId == '8' ? 'active' : '' }}"
                             area-selected="{{ $sequenceId == '8' ? 'true' : 'false' }}" data-toggle="tab"
                             href="#listOfEquipment">List of Equipment</a></li>
@@ -109,12 +112,14 @@
 
                     @include("batch.issualofrequisition")
 
-                    @include("batch.billOfRawMaterial")
+                    {{-- @include("batch.billOfRawMaterial") --}}
 
                     @include("batch.requisitionpacking")
 
 
                     @include("batch.issualofrequisitionpacking")
+
+                    @include("batch.line-clearance-edit")
 
                     @include("batch.listOfEquipment")
 

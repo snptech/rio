@@ -13,9 +13,7 @@ class BatchManufacturingRecordsLine extends Model
         "id",
         "order_id",
         "proName",
-        "bmrNo",
         "batchNo",
-        "refMfrNo",
         "Date",
         "Remark",
         "created_at ",
@@ -23,11 +21,11 @@ class BatchManufacturingRecordsLine extends Model
     ];
     protected static function boot()
     {
-      
+
         parent::boot();
 
         static::creating(function ($user) {
-           
+
         activity('Batch Manufacturing Records Line Clearance Record')
             ->performedOn($user)
             ->causedBy(auth()->user())
@@ -36,13 +34,13 @@ class BatchManufacturingRecordsLine extends Model
                     'user_id'    =>auth()->user()->id,
                     'first_name' => auth()->user()->name,
                     'ip'=>\Request::ip(),
-                    "event"=> "Created"         
+                    "event"=> "Created"
                 ])
             ->log('Batch Manufacturing Records Line Clearance Record Created');
         });
 
         static::updating(function ($user) {
-           
+
             activity('Batch Manufacturing Records Line Clearance Record')
                 ->performedOn($user)
                 ->causedBy(auth()->user())
@@ -50,8 +48,8 @@ class BatchManufacturingRecordsLine extends Model
                 ->withProperties([
                         'user_id'    =>auth()->user()->id,
                         'first_name' => auth()->user()->name,
-                        'ip'=>\Request::ip(),   
-                        "event"=> "updated" 
+                        'ip'=>\Request::ip(),
+                        "event"=> "updated"
                     ])
                 ->log('Batch Manufacturing Records Line Clearance Record Updated');
             });
@@ -64,7 +62,7 @@ class BatchManufacturingRecordsLine extends Model
                 'user_id'    =>auth()->user()->id,
                 'first_name' => auth()->user()->name,
                 'ip'=>Request::ip(),
-                "event"=> "deleted" 
+                "event"=> "deleted"
                 ])
             ->log('Batch Manufacturing Records Line Clearance Record Deleted');
         });
